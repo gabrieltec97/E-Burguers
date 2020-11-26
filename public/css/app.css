@@ -11159,6 +11159,11 @@ a:hover{
         height: 900px;
         margin-bottom: 50px;
     }
+
+    .img-ped{
+        width: 400px;
+        height: 360px;
+    }
 }
 
 .card-preparo{
@@ -11192,6 +11197,11 @@ a:hover{
     .card-prep-emp{
         height: 830px;
     }
+
+    .img-ped{
+        width: 400px;
+        height: 360px;
+    }
 }
 
 .nav-topo{
@@ -11206,6 +11216,11 @@ a:hover{
 
     .card-prep-emp{
         height: 670px;
+    }
+
+    .img-ped{
+        width: 350px;
+        height: 350px;
     }
 }
 

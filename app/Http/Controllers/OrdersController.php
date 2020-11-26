@@ -18,8 +18,11 @@ class OrdersController extends Controller
     public function index()
     {
         $orders = DB::table('orders')->orderByDesc('updated_at')->paginate(8);
+        $today = date('d/m/Y');
+        $query = DB::table('orders')->where('day', '=', $today)->get()->toArray();
+        $count = count($query);
 
-        return view('Orders.list', compact('orders'));
+        return view('Orders.list', compact('orders', 'count'));
     }
 
     public function clientsOrders()
@@ -132,7 +135,10 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $order = Orders::find($id);
+
+        return view('Orders.order', compact('order'));
     }
 
     /**

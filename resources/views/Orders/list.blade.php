@@ -1,4 +1,6 @@
 @extends('layouts.extend')
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/jqueryStyles.js') }}"></script>
 
 @section('title')
     Histórico de pedidos
@@ -23,7 +25,6 @@
                                 </div>
                             </form>
                         </div>
-
                         <table class="table table-bordered table-hover table-responsive-lg">
                             <thead>
                             <tr>
@@ -37,10 +38,10 @@
                             <tbody>
                                 @foreach($orders as $ord)
                                     <tr>
-                                        <td class="font-weight-bold text-primary"> #{{ $ord->id }}</td>
-                                        <td class="font-weight-bold text-primary"> {{ $ord->day }}</td>
-                                        <td class="font-weight-bold text-primary"> {{ $ord->hour }}</td>
-                                        <td class="font-weight-bold text-primary"> {{ $ord->clientName }}</td>
+                                        <td class="font-weight-bold text-primary"><a href="{{ route('pedidos.show', $ord->id) }}" style="text-decoration:none; ">#{{ $ord->id }}</a></td>
+                                        <td class="font-weight-bold text-primary"><a href="{{ route('pedidos.show', $ord->id) }}" style="text-decoration:none; "> {{ $ord->day }}</a></td>
+                                        <td class="font-weight-bold text-primary"><a href="{{ route('pedidos.show', $ord->id) }}" style="text-decoration:none; "> {{ $ord->hour }}</a></td>
+                                        <td class="font-weight-bold text-primary"><a href="{{ route('pedidos.show', $ord->id) }}" style="text-decoration:none; "> {{ $ord->clientName }}</a></td>
 
                                         @if($ord->status == "Cancelado")
                                             <td class="text-danger font-weight-bold"> {{ $ord->status }}</td>
@@ -62,4 +63,19 @@
 
         </div>
     </div>
+
+    <button class="mydialog56" hidden></button>
+<script>
+
+   $(".mydialog56").on("click", function(){
+
+    bs4pop.notice('<b>Pedidos recebidos hoje: {{ $count }}</b>', {
+        type: 'primary',
+        position: 'topright',
+        appendType: 'append',
+        closeBtn: 'false',
+            className: ''
+        })
+})
+</script>
 @endsection
