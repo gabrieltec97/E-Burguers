@@ -1,0 +1,208 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Adverts;
+use App\Tray;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Symfony\Component\Console\Input\Input;
+
+class menuController extends Controller
+{
+
+    public function foodMenu($insert)
+    {
+        $foods = Adverts::all();
+        $tray = $tray = Auth::user()->userOrderTray()->select('detached')->get();
+
+        if(isset($tray[0]->detached)){
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray'));
+        }else{
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert'));
+        }
+    }
+
+    public function index()
+    {
+        $meals = Adverts::all();
+        return view('adverts.advertsManagement', compact('meals'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('adverts.newAdv');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $rules = [
+            'mealName' => 'required|min:4|max:14',
+            'mealValue' => 'required|min:5|max:5',
+            'valComboPromo' => 'required',
+            'ingredients' => 'required',
+            'mealDescription' => 'required|min:70|max:96'
+
+        ];
+
+        $messages = [
+            'mealName.required' => 'Por favor, insira o nome da refeição.',
+            'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
+            'mealName.max' => 'O nome da refeição não pode ter mais de 14 caracteres.',
+            'valComboPromo.required' => 'Por favor, insira o valor propocional.',
+            'disccount.required' => 'Por favor, insira o descondo a ser aplicado.',
+            'ingredients.required' => 'Por favor, insira os ingredientes da refeição.',
+            'mealDescription.required' => 'Por favor, insira a descrição da refeição.',
+            'mealDescription.min' => 'Este campo deve conter no mínimo 70 caracteres',
+            'mealDescription.max' => 'Este campo deve conter no máximo 96 caracteres'
+        ];
+
+        //$request->validate($rules, $messages);
+
+        $advert = new Adverts();
+
+        $advert->name = $request->mealName;
+        $advert->value = $request->mealValue;
+        $advert->ingredients = $request->ingredients;
+        $advert->foodType = $request->tipoRef;
+
+        if(isset($_POST['combo'])){
+            $advert->combo = $_POST['combo'];
+        }
+
+        $advert->description = $request->mealDescription;
+        $advert->comboValue = $request->promoValue;
+        $advert->picture = 'logo/hamburguer.jpg';
+
+        //Em decisão se fará parte do sistema.
+
+        //        if($request->userPhoto){
+//           $image = $request->userPhoto;
+//           $extension = $image->getClientOriginalExtension();
+//
+//           if ($extension != 'png' && $extension != 'jpg'){
+//              return back()->with('msg', 'Não foi possível fazer o upload da imagem. Por favor, insira uma imagem no formato png ou jpg.
+//              Você inseriu um arquivo no formato .'.$extension);
+//           }
+//        }
+
+//        if($request->userPhoto){
+//            $number = rand(1, 2000000);
+//            File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
+//            $advert->picture = 'imagens/img'.$number.'.'.$extension;
+//        }else{
+//            $advert->picture = 'logo/hamburguer.jpg';
+//        }
+
+        $advert->save();
+
+      return redirect(route('refeicoes.index'))->with('msg-2', 'A refeição foi cadastrada com sucesso e já está disponível no');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $meal = Adverts::find($id);
+
+        return view('adverts.advShow', compact('meal'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $meal = Adverts::find($id);
+
+        return view('adverts.advEdit', compact('meal'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $rules = [
+            'mealName' => 'required|min:4|max:14',
+            'mealValue' => 'required|min:5|max:5',
+            'promoValue' => 'required|min:5|max:5',
+            'ingredients' => 'required',
+            'mealDescription' => 'required|min:70|max:96'
+
+        ];
+
+        $messages = [
+            'mealName.required' => 'Por favor, insira o nome da refeição.',
+            'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
+            'mealName.max' => 'O nome da refeição não pode ter mais de 14 caracteres.',
+            'mealValue.required' => 'Por favor, insira o valor da refeição.',
+            'mealValue.min' => 'Por favor, insira um valor válido.',
+            'promoValue.required' => 'Por favor, insira o valor propocional.',
+            'promoValue.min' => 'Por favor, insira um valor válido.',
+            'disccount.required' => 'Por favor, insira o descondo a ser aplicado.',
+            'ingredients.required' => 'Por favor, insira os ingredientes da refeição.',
+            'mealDescription.required' => 'Por favor, insira a descrição da refeição.',
+            'mealDescription.min' => 'Este campo deve conter no mínimo 70 caracteres',
+            'mealDescription.max' => 'Este campo deve conter no máximo 96 caracteres'
+        ];
+
+        $request->validate($rules, $messages);
+
+        $advert = Adverts::find($id);
+
+        $advert->name = $request->mealName;
+        $advert->value = $request->mealValue;
+        $advert->ingredients = $request->ingredients;
+
+        if(isset($_POST['combo'])){
+            $advert->combo = $_POST['combo'];
+        }
+        $advert->description = $request->mealDescription;
+        $advert->comboValue = $request->promoValue;
+
+        $advert->save();
+
+        return redirect(route('refeicoes.show', $id))->with('msg', 'Anúncio alterado com sucesso!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $advert = Adverts::find($id);
+
+        $advert->destroy($id);
+
+        return redirect(route('refeicoes.index', $id))->with('msg', 'Anúncio deletado com sucesso!');
+    }
+}
