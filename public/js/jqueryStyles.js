@@ -794,4 +794,16 @@ $(".forma-pagamento").on("change", function (){
 //Clique no botão que mostra os pedidos registrados no dia atual.
 $(".mydialog56").click();
 
+
+//Verificações de criação de refeições.
+$(".tipoRef").on("change", function () {
+
+    if ($(this).val() == 'Porção' || $(this).val() == 'Bebida'){
+        $(".igr").hide();
+        $(".comb").addClass('col-md-8');
+    }else{
+        $(".igr").fadeIn('slow');
+        $(".comb").removeClass('col-md-8');
+    }
+})
 });

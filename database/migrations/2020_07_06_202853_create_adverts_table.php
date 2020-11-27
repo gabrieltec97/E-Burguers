@@ -18,10 +18,10 @@ class CreateAdvertsTable extends Migration
             $table->string('name');
             $table->string('value');
             $table->string('foodType');
-            $table->string('ingredients');
+            $table->string('ingredients')->nullable();
             $table->string('combo');
             $table->string('description');
-            $table->string('comboValue');
+            $table->string('comboValue')->nullable();
             $table->string('picture')->nullable();
             $table->timestamps();
         });

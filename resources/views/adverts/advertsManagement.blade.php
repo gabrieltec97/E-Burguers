@@ -42,13 +42,13 @@
                         </div>
 
 
-                        <table class="table table-bordered table-hover table-responsive-lg">
+                        <table class="table table-bordered table-hover table-responsive">
                             <thead>
                             <tr>
                                 <th scope="col" class="text-primary">Nome</th>
                                 <th scope="col" class="text-primary">Valor</th>
-                                <th scope="col" class="text-primary">Participa do combo</th>
                                 <th scope="col" class="text-primary">Descrição</th>
+                                <th scope="col" class="text-primary">Participa do combo</th>
                             </tr>
                             </thead>
                             <tbody>

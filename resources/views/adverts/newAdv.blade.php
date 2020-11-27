@@ -50,7 +50,7 @@
                                         <label class="text-muted font-weight-bold">Tipo de refeição</label>
                                         <select class="form-control tipoRef {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="tipoRef" required>
                                             <option value="" selected hidden>Selecione</option>
-                                            <option value="Acompanhamento" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Acompanhamento</option>
+                                            <option value="Porção" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Porção</option>
                                             <option value="Bebida" {{ old('empOccupation') == 'Atendente' ? 'selected' : '' }}>Bebida</option>
                                             <option value="Hamburguer" {{ old('empOccupation') == 'Cozinheiro' ? 'selected' : '' }}>Hambúrguer</option>
                                             <option value="Sobremesa" {{ old('empOccupation') == 'Garçom' ? 'selected' : '' }}>Sobremesa</option>
@@ -70,7 +70,7 @@
                                         <label class="font-weight-bold text-danger" title="Ao escolher esta opção, esta refeição NÃO participará de um combo promocional.">Não</label><br>
                                     </div>
 
-                                    <div class="col-12 mt-3 col-md-4">
+                                    <div class="col-12 mt-3 col-md-4 comb">
                                         <label class="text-muted font-weight-bold">Valor no combo</label>
                                         <input type="text" class="form-control valComboPromo {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional." name="promoValue" value="{{ old('promoValue') }}" required>
                                         <label class="text-danger verificaPreco mt-2" style="font-size: 13.7px">O valor promocional não pode ser maior ou igual ao valor
@@ -82,7 +82,7 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-12 mt-3 col-md-4">
+                                    <div class="col-12 mt-3 col-md-4 igr">
                                         <label class="text-muted font-weight-bold">Ingredientes</label>
                                         <input type="text" class="form-control ingredientes {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,Tomate,Alface" name="ingredients" value="{{ old('ingredients') }}" required>
                                         <label class="text-primary font-weight-bold mt-2 verifica-ingredientes" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
@@ -105,12 +105,10 @@
                                         @endif
                                     </div>
 
-{{--                                    Em decisão se fará parte do sistema--}}
-
-{{--                                    <div class="col-12 mt-4 col-md-4">--}}
-{{--                                        <label class="text-muted font-weight-bold">Foto (Opcional)</label>--}}
-{{--                                        <input type="file" name="userPhoto">--}}
-{{--                                    </div>--}}
+                                    <div class="col-12  col-md-4">
+                                        <label class="text-muted font-weight-bold">Foto (Opcional)</label>
+                                        <input type="file" name="userPhoto">
+                                    </div>
                                 </div>
 
 
