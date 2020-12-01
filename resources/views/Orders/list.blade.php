@@ -2,6 +2,7 @@
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/jqueryStyles.js') }}"></script>
 
+
 @section('title')
     Histórico de pedidos
 @endsection
@@ -13,48 +14,33 @@
                 <div class="card hist-ped">
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Pedidos registrados</div>
                     <div class="card-body first-table">
-                        <div>
-                            <form action="#" class="form-group">
-                                @csrf
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Digite o número do pedido" name="orderNumber">
-
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" style="font-size: 18px"><i class="fas fa-search font-weight-bold"></i></span>
-                                    </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <input type="text" name="search" id="search" class="form-control" placeholder="Faça sua pesquisa" />
                                 </div>
-                            </form>
-                        </div>
-                        <table class="table table-bordered table-hover table-responsive-lg">
-                            <thead>
-                            <tr>
-                                <th scope="col">ID do pedido</th>
-                                <th scope="col">Data do pedido</th>
-                                <th scope="col">Hora do pedido</th>
-                                <th scope="col">Cliente</th>
-                                <th scope="col">Status do pedido</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($orders as $ord)
-                                    <tr>
-                                        <td class="font-weight-bold text-primary"><a href="{{ route('pedidos.show', $ord->id) }}" style="text-decoration:none; ">#{{ $ord->id }}</a></td>
-                                        <td class="font-weight-bold text-primary"><a href="{{ route('pedidos.show', $ord->id) }}" style="text-decoration:none; "> {{ $ord->day }}</a></td>
-                                        <td class="font-weight-bold text-primary"><a href="{{ route('pedidos.show', $ord->id) }}" style="text-decoration:none; "> {{ $ord->hour }}</a></td>
-                                        <td class="font-weight-bold text-primary"><a href="{{ route('pedidos.show', $ord->id) }}" style="text-decoration:none; "> {{ $ord->clientName }}</a></td>
+                                <div class="table-responsive">
+{{--                                    <label class="font-weight-bold">Total de registros: <span id="total_records"></span></label>--}}
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Data</th>
+                                            <th>Cliente</th>
+                                            <th>Forma de entrega</th>
+                                            <th>Forma de pagamento</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        @if($ord->status == "Cancelado")
-                                            <td class="text-danger font-weight-bold"> {{ $ord->status }}</td>
-                                        @else
-                                            <td class="text-success font-weight-bold"> {{ $ord->status }}</td>
-                                        @endif
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                        <div class="pag">
 
-                        <div class="col-6 offset-4 offset-xl-5">
-                            <span>{{ $orders->links() }}</span>
+                                        </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,4 +64,31 @@
         })
 })
 </script>
+
+    <script>
+        $(document).ready(function(){
+
+            fetch_customer_data();
+
+            function fetch_customer_data(query = '')
+            {
+                $.ajax({
+                    url:"{{ route('buscaPedidos') }}",
+                    method:'GET',
+                    data:{query:query},
+                    dataType:'json',
+                    success:function(data)
+                    {
+                        $('tbody').html(data.table_data);
+                        $('#total_records').text(data.total_data);
+                    }
+                })
+            }
+
+            $(document).on('keyup', '#search', function(){
+                var query = $(this).val();
+                fetch_customer_data(query);
+            });
+        });
+    </script>
 @endsection

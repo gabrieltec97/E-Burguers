@@ -62,7 +62,7 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('pedidos.index') }}">
+            <a class="nav-link" href="{{ route('historicoPedidos') }}">
                 <i class="fas fa-history"></i>
                 <span class="font-weight-bold">Histórico de pedidos</span></a>
         </li>

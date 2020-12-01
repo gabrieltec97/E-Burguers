@@ -95,8 +95,17 @@ Route::resource('/roles', 'RoleController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/dados', 'HomeController@getData')->name('dados');
+
 Route::get('/ajaxpreparo', 'HomeController@getPrepare')->name('prepajax');
+
 Route::get('/ajaxcozinha', 'HomeController@getKitchen')->name('cozjax');
+
+Route::get('/historicoPedidos', 'LiveSearch@index')->name('historicoPedidos');
+
+Route::get('/buscaPedidos', 'LiveSearch@action')->name('buscaPedidos');
+
 Route::get('/pedidoCliente', 'PreparingController@clientOrder')->name('pedidoCliente');
+
 Route::get('/teste', 'PreparingController@teste')->name('teste');

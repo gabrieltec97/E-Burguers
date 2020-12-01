@@ -9,8 +9,6 @@ $(document).ready(() => {
             dataType: 'json',
             success: function(dados){
 
-                console.log(dados.length)
-
                 if (dados.length == 1) {
                     console.log(dados[0].status)
                     $(".ul-pedidos").removeAttr('hidden', 'true');
