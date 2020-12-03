@@ -70,7 +70,7 @@ class LiveSearch extends Controller
             }
             $data = array(
                 'table_data'  => $output,
-                'total_data'  => $total_row
+                'total_data'  => $total_row,
             );
 
             echo json_encode($data);

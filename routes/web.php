@@ -98,6 +98,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/dados', 'HomeController@getData')->name('dados');
 
+//Rotas Ajax
+
 Route::get('/ajaxpreparo', 'HomeController@getPrepare')->name('prepajax');
 
 Route::get('/ajaxcozinha', 'HomeController@getKitchen')->name('cozjax');
@@ -109,3 +111,4 @@ Route::get('/buscaPedidos', 'LiveSearch@action')->name('buscaPedidos');
 Route::get('/pedidoCliente', 'PreparingController@clientOrder')->name('pedidoCliente');
 
 Route::get('/teste', 'PreparingController@teste')->name('teste');
+

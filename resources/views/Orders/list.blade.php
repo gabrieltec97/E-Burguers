@@ -33,12 +33,12 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-
-                                        <div class="pag">
-
-                                        </div>
                                         </tbody>
                                     </table>
+
+                                    <div class="pag">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -80,6 +80,7 @@
                     success:function(data)
                     {
                         $('tbody').html(data.table_data);
+                        $('.pag').html(data.datas);
                         $('#total_records').text(data.total_data);
                     }
                 })

@@ -45,7 +45,7 @@
                             <th scope="col">Tratativas</th>
                         </tr>
                         </thead>
-
+                        <tbody>
                         @if(count($registered) != 0)
                             @foreach($registered as $reg)
                                 <tr>
@@ -115,13 +115,14 @@
 
         </tr>
         @endforeach
+        @else
+            <tr>
+                <td align="center" colspan="6">Sem registros encontrados.</td>
+            </tr>
         @endif
                         </tbody>
                     </table>
 
-        <div class="col-6 offset-4 offset-xl-4">
-            <span>{{ $registered->links() }}</span>
-        </div>
                 </div>
             </div>
         </div>
@@ -211,6 +212,10 @@
                                                    </td>
                                </tr>
                            @endforeach
+                @else
+                    <tr>
+                        <td align="center" colspan="3">Sem pedidos em preparo.</td>
+                    </tr>
                            @endif
             </div>
 
@@ -304,6 +309,10 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                @else
+                    <tr>
+                        <td align="center" colspan="3">Sem pedidos à serem entregues</td>
+                    </tr>
                                 @endif
 
                             </tbody>
@@ -343,7 +352,6 @@
 {{ $prepa->status }}
 @endforeach"
 >
-
 @endsection
 
 
