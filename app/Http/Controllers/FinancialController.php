@@ -118,6 +118,127 @@ class FinancialController extends Controller
 
     public function dashboard()
     {
-        return view('Financial.dashboard');
+
+        setlocale(LC_TIME, 'pt_BR', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+
+        $thisMonth = strftime('%B', strtotime('today'));
+        $thisDay = strftime('%d', strtotime('today'));
+        $now = date('d/m/Y');
+
+        $month = DB::table('orders')
+            ->where('month', '=', $thisMonth)
+            ->where('status', '=', 'Pedido Entregue')
+            ->get()->toArray();
+
+        $nowHere = DB::table('orders')
+            ->where('day', '=', $now)
+            ->where('status', '=', 'Pedido Entregue')
+            ->get()->toArray();
+
+        $totalValue = DB::table('orders')
+            ->where('status', '=', 'Pedido Entregue')
+            ->sum('orders.totalValue');
+
+        $totalValueToday = DB::table('orders')
+            ->where('status', '=', 'Pedido Entregue')
+            ->where('day', '=', $now)
+            ->sum('orders.totalValue');
+
+        $countDayTen = 0;
+        $countDayFifteen = 0;
+        $countDayTwenty = 0;
+        $countDayTwentyFive = 0;
+        $countDayThirty = 0;
+        $countMonth = count($month);
+        $countDayNow = count($nowHere);
+
+        foreach ($month as $mt){
+            if ($mt->monthDay <= 10){
+                $countDayTen += 1;
+            }
+        }
+
+        foreach ($month as $mt){
+            if ($mt->monthDay <= 15){
+                $countDayFifteen += 1;
+            }
+        }
+
+        foreach ($month as $mt){
+            if ($mt->monthDay <= 20){
+                $countDayTwenty += 1;
+            }
+        }
+
+        foreach ($month as $mt){
+            if ($mt->monthDay <= 25){
+                $countDayTwentyFive += 1;
+            }
+        }
+
+        foreach ($month as $mt){
+            if ($mt->monthDay <= 30){
+                $countDayThirty += 1;
+            }
+        }
+
+        $chart = new Grafico();
+
+        if ($thisDay <= 10){
+
+            $chart->labels(['Início do mês','Até dia 10']);
+            $chart->dataset('Total de vendas este mês', 'line' , [0,$countDayTen])->options([
+                'backgroundColor' => '#ccf5ff',
+                'borderColor' => '#008fb3',
+                'lineTension' => 0.5
+            ]);
+
+        }elseif ($thisDay <= 15){
+
+            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15']);
+            $chart->dataset('Total de vendas este mês', 'line' , ['0',$countDayTen,$countDayFifteen])->options([
+                'backgroundColor' => '#ccf5ff',
+                'borderColor' => '#008fb3',
+                'lineTension' => 0.5
+            ]);
+
+        }elseif ($thisDay <= 20){
+
+            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20']);
+            $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty])->options([
+                'backgroundColor' => '#ccf5ff',
+                'borderColor' => '#008fb3',
+                'lineTension' => 0.5
+            ]);
+
+        }elseif ($thisDay <= 25){
+
+            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25']);
+            $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive])->options([
+                'backgroundColor' => '#ccf5ff',
+                'borderColor' => '#008fb3',
+                'lineTension' => 0.5
+            ]);
+
+        }elseif ($thisDay <=30){
+            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
+            $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
+                'backgroundColor' => '#ccf5ff',
+                'borderColor' => '#008fb3',
+                'lineTension' => 0.5
+            ]);
+        }
+
+        $chart2 = new Grafico();
+
+        $chart2->labels(['Janeiro', 'Fevereiro', 'Março']);
+        $chart2->dataset('Total de vendas este ano', 'doughnut' , [100,200,300])->options([
+            'backgroundColor' => '#ccf5ff',
+            'borderColor' => '#008fb3',
+            'lineTension' => 0.5
+        ]);
+
+        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
     }
 }

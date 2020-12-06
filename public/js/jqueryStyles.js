@@ -806,4 +806,42 @@ $(".tipoRef").on("change", function () {
         $(".comb").removeClass('col-md-8');
     }
 })
+
+
+//Estilo para cards dashboard.
+  $(".card-dash1").mouseenter(function () {
+      $(this).animate({'bottom':'15px'}, 'slow');
+      $(this).css('cursor', 'pointer');
+  })
+
+  $(".card-dash1").mouseleave(function () {
+     $(this).animate({'bottom':'0px'}, 'slow');
+  })
+
+    $(".card-dash2").mouseenter(function () {
+        $(this).animate({'bottom':'15px'}, 'slow');
+        $(this).css('cursor', 'pointer');
+    })
+
+    $(".card-dash2").mouseleave(function () {
+        $(this).animate({'bottom':'0px'}, 'slow');
+    })
+
+    $(".card-dash3").mouseenter(function () {
+        $(this).animate({'bottom':'15px'}, 'slow');
+        $(this).css('cursor', 'pointer');
+    })
+
+    $(".card-dash3").mouseleave(function () {
+        $(this).animate({'bottom':'0px'}, 'slow');
+    })
+
+    $(".card-dash4").mouseenter(function () {
+        $(this).animate({'bottom':'15px'}, 'slow');
+        $(this).css('cursor', 'pointer');
+    })
+
+    $(".card-dash4").mouseleave(function () {
+        $(this).animate({'bottom':'0px'}, 'slow');
+    })
 });
