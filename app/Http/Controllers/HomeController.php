@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $registered = DB::table('orders')->select('id', 'hour', 'status')->where('status', '=', 'Pedido registrado')->paginate(11);
+        $registered = DB::table('orders')->select('id', 'hour', 'status')->where('status', '=', 'Pedido registrado')->paginate(10);
         $prepare = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->simplePaginate(2);
         $ready = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->simplePaginate(2);
 

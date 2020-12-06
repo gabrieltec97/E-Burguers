@@ -10931,13 +10931,13 @@ a.text-dark:focus {
 /*Formatação dos documentos*/
 
 @media (min-width: 800px) and (max-width: 1100px) {
-    .first-table{
-        height: 420px;
-    }
+    /*.first-table{*/
+    /*    height: 420px;*/
+    /*}*/
 
-    .third-table{
-        margin-top: -180px;
-    }
+    /*.third-table{*/
+    /*    margin-top: -180px;*/
+    /*}*/
 
     .coupon{
         margin-top: -130px;
@@ -10950,12 +10950,12 @@ a.text-dark:focus {
 
 
 @media (min-width: 1100px) {
-    .first-table{
-        height: 420px;
-    }
+    /*.first-table{*/
+    /*    height: 420px;*/
+    /*}*/
 
     .third-table{
-        margin-top: -230px;
+        margin-top: -120px;
     }
 
     .financial-table{
@@ -11166,25 +11166,25 @@ a:hover{
     }
 }
 
-.card-preparo{
-    height: 400px;
-}
+/*.card-preparo{*/
+/*    height: 400px;*/
+/*}*/
 
-.card-cadastrados{
-    height: 825px;
-}
+/*.card-cadastrados{*/
+/*    height: 825px;*/
+/*}*/
 
 .rota-envio{
     margin-top: 20px;
 }
 
 @media  (min-width: 1100px) {
-    .card-preparo{
-        height: 345px;
-    }
-    .card-cadastrados{
-        height: 635px;
-    }
+    /*.card-preparo{*/
+    /*    height: 345px;*/
+    /*}*/
+    /*.card-cadastrados{*/
+    /*    height: 725px;*/
+    /*}*/
 
     .cardapio-card{
         height: 500px;
@@ -11213,6 +11213,10 @@ a:hover{
     .rota-envio{
         margin-top: -230px;
     }
+
+    /*.card-cadastrados{*/
+    /*    height: 775px;*/
+    /*}*/
 
     .card-prep-emp{
         height: 670px;

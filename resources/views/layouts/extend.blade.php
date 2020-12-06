@@ -48,6 +48,13 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('dashboard') }}">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="font-weight-bold">Dashboard</span></a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-hamburger"></i>
                 <span class="font-weight-bold">Pedidos em andamento</span></a>
@@ -99,7 +106,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('financeiro') }}">
                 <i class="fas fa-chart-bar"></i>
-                <span class="font-weight-bold">Informações financeiras</span></a>
+                <span class="font-weight-bold">Informações de vendas</span></a>
         </li>
 
         <!-- Divider -->

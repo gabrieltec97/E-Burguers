@@ -83,6 +83,8 @@ Route::get('/gerenciamento', 'UserController@management')->name('gerenciamento')
 
 Route::get('/financeiro', 'FinancialController@index')->name('financeiro');
 
+Route::get('/dashboard', 'FinancialController@dashboard')->name('dashboard');
+
 Route::get('/pedidosPendentes', 'OrdersController@pending')->name('pedidosPendentes');
 
 Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido');

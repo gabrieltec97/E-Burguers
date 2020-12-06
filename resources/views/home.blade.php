@@ -32,7 +32,7 @@
         <button type="button" class="mudarStatus5" hidden data-toggle="modal" data-target="#exampleModal5"></button>
         <button type="button" class="mudarStatus6" hidden data-toggle="modal" data-target="#exampleModal6"></button>
         <div class="col-lg-8 col-sm-12">
-            <div class="card card-cadastrados">
+            <div class="card card-cadastrados mb-lg-5">
                 <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Pedidos cadastrados</div>
 
                 <div class="card-body first-table">
@@ -122,7 +122,6 @@
         @endif
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>

@@ -115,4 +115,9 @@ class FinancialController extends Controller
 
         return view('Financial.financial', compact('chart', 'chart2'));
     }
+
+    public function dashboard()
+    {
+        return view('Financial.dashboard');
+    }
 }
