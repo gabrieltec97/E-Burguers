@@ -232,11 +232,11 @@ class FinancialController extends Controller
 
         $chart2 = new Grafico();
 
-        $chart2->labels(['Janeiro', 'Fevereiro', 'Março']);
+        $chart2->labels(['Combo', 'Avulso', 'Sobremesa']);
         $chart2->dataset('Total de vendas este ano', 'doughnut' , [100,200,300])->options([
             'backgroundColor' => '#ccf5ff',
-            'borderColor' => '#008fb3',
-            'lineTension' => 0.5
+//            'borderColor' => '#008fb3',
+//            'lineTension' => 0.5
         ]);
 
         return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));

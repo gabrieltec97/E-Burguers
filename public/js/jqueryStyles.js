@@ -844,4 +844,7 @@ $(".tipoRef").on("change", function () {
     $(".card-dash4").mouseleave(function () {
         $(this).animate({'bottom':'0px'}, 'slow');
     })
+
+//Recolhimento de menu principal
+$(".botao-recolher-menu").click();
 });

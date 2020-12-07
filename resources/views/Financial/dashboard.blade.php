@@ -78,7 +78,7 @@
 
             <div class="col-12 col-lg-8 my-5">
                 <div class="card" style="height: 560px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">Vendas este mês</div>
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;"> <h4 class="m-0 font-weight-bold text-primary">Estatísticas das vendas</h4></div>
 
                     <div class="card-body financial-table">
 
@@ -91,19 +91,35 @@
             </div>
 
             <div class="col-12 col-lg-4 my-5">
-                <div class="card" style="height: 560px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">Vendas este mês</div>
-
-                    <div class="card-body financial-table">
-
-                        <div id="app">
-                            {!! $chart2->container() !!}
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h5 class="m-0 font-weight-bold text-primary">Itens mais vendidos</h5>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="myPieChart"></canvas>
                         </div>
-
+                        <div class="mt-4 text-center small">
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-primary"></i>X-tudo
+                                        </span>
+                            <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i>X-Bacon
+                                        </span>
+                            <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i>X-Picanha
+                                        </span>
+                            <span class="mr-2">
+                                            <i class="fas fa-circle text-danger"></i>Mega Chicken
+                                        </span>
+                        </div>
                     </div>
                 </div>
             </div>
-
+        </div>
         </div>
     </div>
 @endsection

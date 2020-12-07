@@ -114,7 +114,7 @@
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            <button class="rounded-circle border-0 botao-recolher-menu" id="sidebarToggle"></button>
         </div>
 
     </ul>
@@ -218,6 +218,8 @@
 <script src="{{asset('js/jqueryStyles.js')}}"></script>
 <script src="{{asset('js/jquery.mask.js')}}"></script>
 <script src="{{asset('js/sidebar.js')}}"></script>
+<script src="{{asset('js/chart.js/Chart.min.js')}}"></script>
+<script src="{{asset('js/demo/chart-pie-demo.js')}}"></script>
 
 @if(isset($chart))
     <script src="https://unpkg.com/vue"></script>
