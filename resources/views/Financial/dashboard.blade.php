@@ -8,8 +8,8 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-lg-3">
-                <div class="card border-left-danger shadow h-100 py-2 card-dash1" title="Quantas vendas foram realizadas hoje até este momento.">
+            <div class="col-12 mt-3 mt-lg-0 col-lg-3">
+                <div class="card border-left-danger shadow h-100 py-2 card-dash1">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -25,8 +25,8 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-3">
-                <div class="card border-left-success shadow h-100 py-2 card-dash2" title="Valor arrecadado com as vendas de hoje até este momento.">
+            <div class="col-12 mt-3 mt-lg-0 col-lg-3">
+                <div class="card border-left-success shadow h-100 py-2 card-dash2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -42,8 +42,8 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-3">
-                <div class="card border-left-info shadow h-100 py-2 card-dash3" title="Total de vendas realizadas este mês até este momento.">
+            <div class="col-12 mt-3 mt-lg-0 col-lg-3">
+                <div class="card border-left-info shadow h-100 py-2 card-dash3">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -59,8 +59,8 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-3">
-                <div class="card border-left-primary shadow h-100 py-2 card-dash4" title="Total arrecadado este mês até este momento.">
+            <div class="col-12 mt-3 mt-lg-0 col-lg-3">
+                <div class="card border-left-primary shadow h-100 py-2 card-dash4">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -103,6 +103,9 @@
                             <canvas id="myPieChart"></canvas>
                         </div>
                         <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                            <i class="fas fa-circle text-danger"></i>Mega Chicken
+                                        </span>
                                         <span class="mr-2">
                                             <i class="fas fa-circle text-primary"></i>X-tudo
                                         </span>
@@ -111,9 +114,6 @@
                                         </span>
                             <span class="mr-2">
                                             <i class="fas fa-circle text-info"></i>X-Picanha
-                                        </span>
-                            <span class="mr-2">
-                                            <i class="fas fa-circle text-danger"></i>Mega Chicken
                                         </span>
                         </div>
                     </div>

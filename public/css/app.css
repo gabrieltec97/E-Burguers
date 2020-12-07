@@ -10935,10 +10935,6 @@ a.text-dark:focus {
     /*    height: 420px;*/
     /*}*/
 
-    /*.third-table{*/
-    /*    margin-top: -180px;*/
-    /*}*/
-
     .coupon{
         margin-top: -130px;
     }
@@ -10953,10 +10949,6 @@ a.text-dark:focus {
     /*.first-table{*/
     /*    height: 420px;*/
     /*}*/
-
-    .third-table{
-        margin-top: -120px;
-    }
 
     .financial-table{
         height: 350px;
@@ -11174,9 +11166,6 @@ a:hover{
 /*    height: 825px;*/
 /*}*/
 
-.rota-envio{
-    margin-top: 20px;
-}
 
 @media  (min-width: 1100px) {
     /*.card-preparo{*/
@@ -11188,10 +11177,6 @@ a:hover{
 
     .cardapio-card{
         height: 500px;
-    }
-
-    .rota-envio{
-        margin-top: -30px;
     }
 
     .card-prep-emp{
@@ -11210,9 +11195,6 @@ a:hover{
 }
 
 @media (min-width: 950px) and (max-width: 1099px){
-    .rota-envio{
-        margin-top: -230px;
-    }
 
     /*.card-cadastrados{*/
     /*    height: 775px;*/
