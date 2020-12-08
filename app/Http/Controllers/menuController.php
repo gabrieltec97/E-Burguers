@@ -86,27 +86,26 @@ class menuController extends Controller
 
         $advert->description = $request->mealDescription;
         $advert->comboValue = $request->promoValue;
-        $advert->picture = 'logo/hamburguer.jpg';
 
         //Em decisão se fará parte do sistema.
 
-        //        if($request->userPhoto){
-//           $image = $request->userPhoto;
-//           $extension = $image->getClientOriginalExtension();
-//
-//           if ($extension != 'png' && $extension != 'jpg'){
-//              return back()->with('msg', 'Não foi possível fazer o upload da imagem. Por favor, insira uma imagem no formato png ou jpg.
-//              Você inseriu um arquivo no formato .'.$extension);
-//           }
-//        }
+        if($request->hasFile('advPhoto')){
+           $image = $request->file('advPhoto');
+           $extension = $image->getClientOriginalExtension();
 
-//        if($request->userPhoto){
-//            $number = rand(1, 2000000);
-//            File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
-//            $advert->picture = 'imagens/img'.$number.'.'.$extension;
-//        }else{
-//            $advert->picture = 'logo/hamburguer.jpg';
-//        }
+           if ($extension != 'png' && $extension != 'jpg' && $extension != 'jpeg' && $extension != 'gif'){
+              return back()->with('msg', 'Não foi possível fazer o upload da imagem. Por favor, insira uma imagem no formato png ou jpg.
+              Você inseriu um arquivo no formato .'.$extension);
+           }
+        }
+
+        if($request->hasFile('advPhoto')){
+            $number = rand(1, 2000000);
+            File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
+            $advert->picture = 'imagens/img'.$number.'.'.$extension;
+        }else{
+            $advert->picture = 'logo/hamburguer.jpg';
+        }
 
         $advert->save();
 
@@ -202,6 +201,8 @@ class menuController extends Controller
         $advert = Adverts::find($id);
 
         $advert->destroy($id);
+
+        File::delete($advert->picture);
 
         return redirect(route('refeicoes.index', $id))->with('msg', 'Anúncio deletado com sucesso!');
     }

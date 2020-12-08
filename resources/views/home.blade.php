@@ -30,7 +30,7 @@
                     </button>
                 </div>
             @endif
-            <div class="row">
+
                 <button type="button" class="mudarStatus3" hidden data-toggle="modal" data-target="#exampleModal3"></button>
                 <button type="button" class="mudarStatus4" hidden data-toggle="modal" data-target="#exampleModal4"></button>
                 <button type="button" class="mudarStatus5" hidden data-toggle="modal" data-target="#exampleModal5"></button>
@@ -139,8 +139,8 @@
             </div>
         </div>
 
-        <div class="col-lg-6 col-sm-12">
-            <div class="card ">
+        <div class="col-lg-6 mt-4 mt-lg-0 col-sm-12">
+            <div class="card">
                 <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 18px">Em rota de envio <i class="fas fa-motorcycle ml-1"></i></div>
 
                 <div class="card-body">
@@ -235,104 +235,108 @@
     </div>
     </div>
     </div>
-        </div>
 
-    <div class="col-lg-12 mt-4 col-sm-12">
-        <div class="card card-cadastrados mb-lg-5">
-            <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Pedidos cadastrados</div>
 
-            <div class="card-body first-table">
-                <table class="table table-bordered table-hover table-responsive-lg">
-                    <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Hora de registro</th>
-                        <th scope="col">Status do pedido</th>
-                        <th scope="col">Tratativas</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(count($registered) != 0)
-                        @foreach($registered as $reg)
-                            <tr>
-                                <td>#{{ $reg->id }}</td>
-                                <td>{{ $reg->hour }}</td>
-                                <td>{{ $reg->status }}</td>
-                                <td>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-2 mr-2">
-                                                <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo']) }}" method="post">
-                                                    @csrf
-                                                    <i class="fas fa-share text-primary enviarPreparo" data-toggle="modal" data-target="#exampleModal{{$reg->id}}" title="Enviar para preparo" style="font-size: 25px; cursor: pointer"></i>
+   <div class="container">
+       <div class="row">
+           <div class="col-lg-12 mt-4 col-sm-12">
+               <div class="card card-cadastrados mb-lg-5">
+                   <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Pedidos cadastrados</div>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <span class="font-weight-bold texto-mudar-status"></span>
-                                                                    <span class="send"></span>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
-                                                                    <button type="submit" class="btn btn-primary">Confirmar</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="col-6">
-                                                <i class="far fa-times-circle text-danger ml-2 cancelarPedido" data-toggle="modal" data-target="#exampleModal{{$reg->id}}cancelarr" title="Cancelar pedido" style="font-size: 25px; cursor: pointer"></i>
-                                                <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado']) }}" method="post">
-                                                @csrf
-                                                <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal{{$reg->id}}cancelarr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <span class="font-weight-bold texto-mudar-status"></span>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
-                                                                    <button type="submit" class="btn btn-primary">Confirmar</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                </td>
-                            </tr>
-                            </form>
-            </div>
-        </div>
+                   <div class="card-body first-table">
+                       <table class="table table-bordered table-hover table-responsive-lg">
+                           <thead>
+                           <tr>
+                               <th scope="col">Id</th>
+                               <th scope="col">Hora de registro</th>
+                               <th scope="col">Status do pedido</th>
+                               <th scope="col">Tratativas</th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           @if(count($registered) != 0)
+                               @foreach($registered as $reg)
+                                   <tr>
+                                       <td>#{{ $reg->id }}</td>
+                                       <td>{{ $reg->hour }}</td>
+                                       <td>{{ $reg->status }}</td>
+                                       <td>
+                                           <div>
+                                               <div class="row">
+                                                   <div class="col-2 mr-2">
+                                                       <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo']) }}" method="post">
+                                                           @csrf
+                                                           <i class="fas fa-share text-primary enviarPreparo" data-toggle="modal" data-target="#exampleModal{{$reg->id}}" title="Enviar para preparo" style="font-size: 25px; cursor: pointer"></i>
+
+                                                           <!-- Modal -->
+                                                           <div class="modal fade" id="exampleModal{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                               <div class="modal-dialog" role="document">
+                                                                   <div class="modal-content">
+                                                                       <div class="modal-header">
+                                                                           <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
+                                                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                               <span aria-hidden="true">&times;</span>
+                                                                           </button>
+                                                                       </div>
+                                                                       <div class="modal-body">
+                                                                           <span class="font-weight-bold texto-mudar-status"></span>
+                                                                           <span class="send"></span>
+                                                                       </div>
+                                                                       <div class="modal-footer">
+                                                                           <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
+                                                                           <button type="submit" class="btn btn-primary">Confirmar</button>
+                                                                       </div>
+                                                                   </div>
+                                                               </div>
+                                                           </div>
+                                                       </form>
+                                                   </div>
+                                                   <div class="col-6">
+                                                       <i class="far fa-times-circle text-danger ml-2 cancelarPedido" data-toggle="modal" data-target="#exampleModal{{$reg->id}}cancelarr" title="Cancelar pedido" style="font-size: 25px; cursor: pointer"></i>
+                                                       <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado']) }}" method="post">
+                                                       @csrf
+                                                       <!-- Modal -->
+                                                           <div class="modal fade" id="exampleModal{{$reg->id}}cancelarr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                               <div class="modal-dialog" role="document">
+                                                                   <div class="modal-content">
+                                                                       <div class="modal-header">
+                                                                           <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
+                                                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                               <span aria-hidden="true">&times;</span>
+                                                                           </button>
+                                                                       </div>
+                                                                       <div class="modal-body">
+                                                                           <span class="font-weight-bold texto-mudar-status"></span>
+                                                                       </div>
+                                                                       <div class="modal-footer">
+                                                                           <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
+                                                                           <button type="submit" class="btn btn-primary">Confirmar</button>
+                                                                       </div>
+                                                                   </div>
+                                                               </div>
+                                                           </div>
+                                       </td>
+                                   </tr>
+                                   </form>
+                   </div>
+               </div>
+           </div>
+
+
+           @endforeach
+           @else
+               <tr>
+                   <td align="center" colspan="6">Sem registros encontrados.</td>
+               </tr>
+               @endif
+               </tbody>
+               </table>
+       </div>
+   </div>
     </div>
-
-
-    @endforeach
-    @else
-        <tr>
-            <td align="center" colspan="6">Sem registros encontrados.</td>
-        </tr>
-        @endif
-        </tbody>
-        </table>
-        </div>
-        </div>
-        </div>
-        </div>
+    </div>
+       </div>
+   </div>
 
 
 

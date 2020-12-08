@@ -84,7 +84,7 @@
 
                                     <div class="col-12 mt-3 col-md-4 igr">
                                         <label class="text-muted font-weight-bold">Ingredientes</label>
-                                        <input type="text" class="form-control ingredientes {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,Tomate,Alface" name="ingredients" value="{{ old('ingredients') }}" required>
+                                        <input type="text" class="form-control ingredientes {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,Tomate,Alface" name="ingredients" value="{{ old('ingredients') }}">
                                         <label class="text-primary font-weight-bold mt-2 verifica-ingredientes" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
                                         @if($errors->has('ingredients'))
                                        <div class="invalid-feedback">
@@ -107,7 +107,7 @@
 
                                     <div class="col-12  col-md-4">
                                         <label class="text-muted font-weight-bold">Foto (Opcional)</label>
-                                        <input type="file" name="userPhoto">
+                                        <input type="file" name="advPhoto" accept=".png, .jpg, .jpeg, .gif">
                                     </div>
                                 </div>
 
