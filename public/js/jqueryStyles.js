@@ -791,9 +791,6 @@ $(".forma-pagamento").on("change", function (){
         console.log('teste')
     })
 
-//Clique no botão que mostra os pedidos registrados no dia atual.
-$(".mydialog56").click();
-
 
 //Verificações de criação de refeições.
 $(".tipoRef").on("change", function () {

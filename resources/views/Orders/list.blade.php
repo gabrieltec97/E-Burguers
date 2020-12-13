@@ -50,21 +50,6 @@
         </div>
     </div>
 
-    <button class="mydialog56" hidden></button>
-<script>
-
-   $(".mydialog56").on("click", function(){
-
-    bs4pop.notice('<b>Pedidos recebidos hoje: {{ $count }}</b>', {
-        type: 'primary',
-        position: 'topright',
-        appendType: 'append',
-        closeBtn: 'false',
-            className: ''
-        })
-})
-</script>
-
     <script>
         $(document).ready(function(){
 
