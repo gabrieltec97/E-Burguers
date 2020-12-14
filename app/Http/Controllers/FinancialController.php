@@ -239,34 +239,55 @@ class FinancialController extends Controller
 //            'lineTension' => 0.5
         ]);
 
-        //Recuperando os itens mais vendidos.
-        $detached = DB::select('SELECT detached, COUNT(detached) FROM `orders` GROUP BY detached order by COUNT(detached) desc limit 4');
 
+        //Recuperando os itens mais vendidos.
+
+        //Avulso
         $det = DB::table('orders')
             ->select(DB::raw('detached, COUNT(detached) as count'))
             ->groupBy('detached')
             ->orderBy(DB::raw('count(detached)'), 'desc')
             ->limit(4)
             ->get()
-            ->toArray()
-        ;
-        $combo = DB::select('SELECT hamburguer, COUNT(hamburguer) from orders GROUP by hamburguer order by COUNT(hamburguer) desc limit 4');
+            ->toArray();
 
-//        print_r($det);
+        $detached = [];
 
         foreach ($det as $key){
-//            foreach ($key as $k => $value){
-//                print_r($key->detached) ;
-//            }
 
-            $valores = [];
-            array_push($valores, [
-                $key->detached => $key->count
-            ]);
+            if ($key->count != 0){
+                array_push($detached, [
+                    $key->detached => $key->count
+                ]);
+            }
         }
 
-        print_r($valores);
+        //Combo
+        $cb = DB::table('orders')
+            ->select(DB::raw('hamburguer, COUNT(hamburguer) as count2'))
+            ->groupBy('hamburguer')
+            ->orderBy(DB::raw('count(hamburguer)'), 'desc')
+            ->limit(4)
+            ->get()
+            ->toArray();
 
+        $combo = [];
+
+        foreach ($cb as $ck){
+
+           if ($ck->count2 != 0){
+               array_push($combo, [
+                   $ck->hamburguer => $ck->count2
+               ]);
+           }
+        }
+
+        print_r($detached);
+        echo "<br><br><br>";
+        print_r($combo);
+        echo "<br><br><br>";
+
+//        print_r(array_diff_ukey($detached, $combo));
 
 
 
