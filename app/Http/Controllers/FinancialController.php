@@ -239,6 +239,37 @@ class FinancialController extends Controller
 //            'lineTension' => 0.5
         ]);
 
-        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+        //Recuperando os itens mais vendidos.
+        $detached = DB::select('SELECT detached, COUNT(detached) FROM `orders` GROUP BY detached order by COUNT(detached) desc limit 4');
+
+        $det = DB::table('orders')
+            ->select(DB::raw('detached, COUNT(detached) as count'))
+            ->groupBy('detached')
+            ->orderBy(DB::raw('count(detached)'), 'desc')
+            ->limit(4)
+            ->get()
+            ->toArray()
+        ;
+        $combo = DB::select('SELECT hamburguer, COUNT(hamburguer) from orders GROUP by hamburguer order by COUNT(hamburguer) desc limit 4');
+
+//        print_r($det);
+
+        foreach ($det as $key){
+//            foreach ($key as $k => $value){
+//                print_r($key->detached) ;
+//            }
+
+            $valores = [];
+            array_push($valores, [
+                $key->detached => $key->count
+            ]);
+        }
+
+        print_r($valores);
+
+
+
+
+//        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
     }
 }
