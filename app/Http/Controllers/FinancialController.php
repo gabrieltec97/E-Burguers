@@ -257,7 +257,8 @@ class FinancialController extends Controller
 
             if ($key->count != 0){
                 array_push($detached, [
-                    $key->detached => $key->count
+                    'item' => $key->detached,
+                    'quantidade' => $key->count
                 ]);
             }
         }
@@ -271,26 +272,38 @@ class FinancialController extends Controller
             ->get()
             ->toArray();
 
-        $combo = [];
-
         foreach ($cb as $ck){
 
            if ($ck->count2 != 0){
-               array_push($combo, [
-                   $ck->hamburguer => $ck->count2
+               array_push($detached, [
+                   'item' => $ck->hamburguer,
+                   'quantidade' => $ck->count2
                ]);
            }
         }
 
+        $novo = [];
+
+        foreach ($detached as $chave => $valor){
+
+            if (isset($novo[$valor['item']])){
+                $novo[$valor['item']] += $valor['quantidade'];
+            }else{
+                $novo[$valor['item']] = $valor['quantidade'];
+            }
+        }
+
+        $detached = [];
+
+        foreach ($novo as $key2 =>$value2){
+            $detached[] = ['item' =>$key2, 'quantidade' => $value2];
+        }
+
         print_r($detached);
-        echo "<br><br><br>";
-        print_r($combo);
-        echo "<br><br><br>";
 
-//        print_r(array_diff_ukey($detached, $combo));
+        /*Aqui tivemos que inserir tudo no array detached, depois criar o array novo e somar os valores dos índices repetidos,
+        em seguida passamos os valores do array novo para o array detached novamente, declarando-o novamente para que este fosse limpo.*/
 
-
-
-//        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+//        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'detached'));
     }
 }
