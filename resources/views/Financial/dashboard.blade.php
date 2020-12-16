@@ -104,16 +104,16 @@
                         </div>
                         <div class="mt-4 text-center small">
                             <span class="mr-2">
-                                            <i class="fas fa-circle text-danger"></i>Mega Chicken
+                                            <i class="fas fa-circle text-danger"></i>{{ $detached[0]['item'] }}
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i>X-tudo
+                                            <i class="fas fa-circle text-primary"></i>{{ $detached[1]['item'] }}
                                         </span>
                             <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i>X-Bacon
+                                            <i class="fas fa-circle text-success"></i>{{ $detached[2]['item'] }}
                                         </span>
                             <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i>X-Picanha
+                                            <i class="fas fa-circle text-info"></i>{{ $detached[3]['item'] }}
                                         </span>
                         </div>
                     </div>
@@ -122,4 +122,15 @@
         </div>
         </div>
     </div>
+
+
+<button class="lbl1" hidden value="{{ $detached[0]['item'] }}"></button>
+<button class="lbl2" hidden value="{{ $detached[1]['item'] }}"></button>
+<button class="lbl3" hidden value="{{ $detached[2]['item'] }}"></button>
+<button class="lbl4" hidden value="{{ $detached[3]['item'] }}"></button>
+
+<button class="valor1" hidden value="{{ $detached[0]['quantidade'] }}"></button>
+<button class="valor2" hidden value="{{ $detached[1]['quantidade'] }}"></button>
+<button class="valor3" hidden value="{{ $detached[2]['quantidade'] }}"></button>
+<button class="valor4" hidden value="{{ $detached[3]['quantidade'] }}"></button>
 @endsection

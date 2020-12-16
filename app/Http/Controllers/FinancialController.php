@@ -298,12 +298,9 @@ class FinancialController extends Controller
         foreach ($novo as $key2 =>$value2){
             $detached[] = ['item' =>$key2, 'quantidade' => $value2];
         }
-
-        print_r($detached);
-
         /*Aqui tivemos que inserir tudo no array detached, depois criar o array novo e somar os valores dos índices repetidos,
         em seguida passamos os valores do array novo para o array detached novamente, declarando-o novamente para que este fosse limpo.*/
 
-//        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'detached'));
+        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'detached'));
     }
 }
