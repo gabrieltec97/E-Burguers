@@ -147,9 +147,9 @@
                     <table class="table table-bordered table-hover table-responsive">
                         <thead>
                         <tr>
-                            <th scope="col">Id do pedido</th>
-                            <th scope="col">Status do pedido</th>
-                            <th scope="col">Tratativas</th>
+                            <th>Id do pedido</th>
+                            <th>Status do pedido</th>
+                            <th>Tratativas</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -221,7 +221,7 @@
                 @endforeach
                 @else
                     <tr>
-                        <td align="center" colspan="3">Sem pedidos à serem entregues</td>
+                        <td align="center" colspan="5">Sem pedidos à serem entregues</td>
                     </tr>
                     @endif
 

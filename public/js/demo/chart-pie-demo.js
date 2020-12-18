@@ -12,6 +12,8 @@ var quantidade2 = $(".valor2").val();
 var quantidade3 = $(".valor3").val();
 var quantidade4 = $(".valor4").val();
 
+var texto2 = ' pedidos';
+
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {

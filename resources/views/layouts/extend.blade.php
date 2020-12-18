@@ -106,7 +106,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('financeiro') }}">
                 <i class="fas fa-chart-bar"></i>
-                <span class="font-weight-bold">Informações de vendas</span></a>
+                <span class="font-weight-bold">Informações Financeiras</span></a>
         </li>
 
         <!-- Divider -->

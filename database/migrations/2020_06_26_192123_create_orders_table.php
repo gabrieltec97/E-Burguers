@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('orderType');
             $table->string('detached')->nullable();
             $table->string('hamburguer')->nullable();
-            $table->string('portion')->nullable();
+            $table->string('fries')->nullable();
             $table->string('drinks')->nullable();
             $table->string('comments')->nullable();
             $table->string('clientComments')->nullable();

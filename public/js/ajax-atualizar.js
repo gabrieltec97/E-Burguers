@@ -11,9 +11,7 @@ $(document).ready(() => {
                 var valorAtual = data.length;
 
                 if (valorAnterior != valorAtual){
-                    // location.reload();
-                    console.log(valorAnterior)
-                    console.log(valorAtual)
+                    location.reload();
                 }
 
 

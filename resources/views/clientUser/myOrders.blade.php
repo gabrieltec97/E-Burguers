@@ -80,7 +80,7 @@
                                                                @if($ord->orderType == "Avulso")
                                                                    {{ $ord->detached }}
                                                                @elseif($ord->orderType == "Combo")
-                                                                   {{ $ord->hamburguer }}, {{ $ord->portion }}, {{ $ord->drinks }}
+                                                                   {{ $ord->hamburguer }}, {{ $ord->fries }}, {{ $ord->drinks }}
                                                                @endif
                                                            </span>
                                                        </span><br>

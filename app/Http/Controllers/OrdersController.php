@@ -86,7 +86,7 @@ class OrdersController extends Controller
         $newOrder->comments = $updOrder[0]['comments'];
         $newOrder->detached = $updOrder[0]['detached'];
         $newOrder->hamburguer = $updOrder[0]['hamburguer'];
-        $newOrder->portion = $updOrder[0]['portion'];
+        $newOrder->fries = $updOrder[0]['portion'];
         $newOrder->drinks = $updOrder[0]['drinks'];
         $newOrder->clientComments = $updOrder[0]['clientComments'];
         $newOrder->deliverWay = $updOrder[0]['deliverWay'];

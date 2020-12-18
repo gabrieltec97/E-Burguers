@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Adverts;
 use App\Charts\Grafico;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -241,27 +242,7 @@ class FinancialController extends Controller
 
 
         //Recuperando os itens mais vendidos.
-
-        //Avulso
-        $det = DB::table('orders')
-            ->select(DB::raw('detached, COUNT(detached) as count'))
-            ->groupBy('detached')
-            ->orderBy(DB::raw('count(detached)'), 'desc')
-            ->limit(4)
-            ->get()
-            ->toArray();
-
         $detached = [];
-
-        foreach ($det as $key){
-
-            if ($key->count != 0){
-                array_push($detached, [
-                    'item' => $key->detached,
-                    'quantidade' => $key->count
-                ]);
-            }
-        }
 
         //Combo
         $cb = DB::table('orders')
@@ -282,6 +263,43 @@ class FinancialController extends Controller
            }
         }
 
+        $portion = DB::table('orders')
+            ->select(DB::raw('fries, COUNT(fries) as count3'))
+            ->groupBy('fries')
+            ->orderBy(DB::raw('count(fries)'), 'desc')
+            ->limit(1)
+            ->get()
+            ->toArray();
+
+        foreach ($portion as $pt){
+
+            if ($pt->count3 != 0){
+                array_push($detached, [
+                    'item' => $pt->fries,
+                    'quantidade' => $pt->count3
+                ]);
+            }
+        }
+
+        $drinks = DB::table('orders')
+            ->select(DB::raw('drinks, COUNT(drinks) as count4'))
+            ->groupBy('drinks')
+            ->orderBy(DB::raw('count(drinks)'), 'desc')
+            ->limit(1)
+            ->get()
+            ->toArray();
+
+        foreach ($drinks as $dk){
+
+            if ($dk->count4 != 0){
+                array_push($detached, [
+                    'item' => $dk->drinks,
+                    'quantidade' => $dk->count4
+                ]);
+            }
+        }
+
+
         $novo = [];
 
         foreach ($detached as $chave => $valor){
@@ -298,6 +316,7 @@ class FinancialController extends Controller
         foreach ($novo as $key2 =>$value2){
             $detached[] = ['item' =>$key2, 'quantidade' => $value2];
         }
+
         /*Aqui tivemos que inserir tudo no array detached, depois criar o array novo e somar os valores dos índices repetidos,
         em seguida passamos os valores do array novo para o array detached novamente, declarando-o novamente para que este fosse limpo.*/
 

@@ -42,7 +42,7 @@
                                         @if($order->detached != '')
                                             {{ $order->detached }}
                                         @else
-                                            {{ $order->hamburguer }}, {{ $order->portion }}, {{ $order->drinks }}
+                                            {{ $order->hamburguer }}, {{ $order->fries }}, {{ $order->drinks }}
                                         @endif
                                     </td>
                                       <td>
