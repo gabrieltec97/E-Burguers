@@ -110,10 +110,26 @@ class FinancialController extends Controller
             ]);
         }
 
+        $months = array('janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro');
+
+        $countSale = [];
+
+        foreach ($months as $m){
+            $totalThisMonth = DB::table('orders')
+                ->where('month', '=', $m)
+                ->where('status', '=', 'Pedido Entregue')
+                ->sum('orders.totalValue');
+
+            array_push($countSale, [
+                'mes' => $m,
+                'valor' => $totalThisMonth
+            ]);
+        }
+
         $chart2 = new Grafico();
 
         $chart2->labels(['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']);
-        $chart2->dataset('Total de vendas este ano', 'bar' , [100,200,300,600,150, 234, 277, 430, 330, 76, 0, 0])->options([
+        $chart2->dataset('Valor arrecadado', 'bar' , [$countSale[0]['valor'],$countSale[1]['valor'],$countSale[2]['valor'],$countSale[3]['valor'],$countSale[4]['valor'],$countSale[5]['valor'],$countSale[6]['valor'],$countSale[7]['valor'],$countSale[8]['valor'],$countSale[9]['valor'],$countSale[10]['valor'],$countSale[11]['valor']])->options([
             'backgroundColor' => '#ccf5ff',
             'borderColor' => '#008fb3',
             'lineTension' => 0.5
@@ -143,6 +159,7 @@ class FinancialController extends Controller
             ->get()->toArray();
 
         $totalValue = DB::table('orders')
+            ->where('month', '=', $thisMonth)
             ->where('status', '=', 'Pedido Entregue')
             ->sum('orders.totalValue');
 

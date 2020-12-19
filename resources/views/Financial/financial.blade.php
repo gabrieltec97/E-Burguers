@@ -121,7 +121,7 @@
 
             <div class="col-lg-12 col-sm-12 mb-5">
                 <div class="card" style="height: 560px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">Vendas este ano</div>
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">Valor arrecadado em cada mês</div>
 
                     <div class="card-body financial-table">
 
