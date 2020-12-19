@@ -1,4 +1,5 @@
 @extends('layouts.extend')
+<script src="{{ asset('js/jquery.js') }}"></script>
 
 @section('title')
     Dados financeiros
@@ -134,4 +135,43 @@
             </div>
         </div>
     </div>
+
+    <select class="mesHoje" hidden>
+        <option value="{{ $thisMonth }}"></option>
+    </select>
+
+    <?php
+
+    setlocale(LC_TIME, 'pt_BR', 'portuguese');
+    date_default_timezone_set('America/Sao_Paulo');
+
+    $mesAtual = strftime('%B', strtotime('today'));
+
+    ?>
+
+    <select class="mesPHP" hidden>
+        <option value="{{ $mesAtual }}"></option>
+    </select>
+
+    <button class="mydialog56">aaaa</button>
+
+    <script>
+
+        var mesSistema = $(".mesHoje").val();
+        var mesAtual = $(".mesPHP").val();
+
+        if (mesSistema != mesAtual){
+            $(".mydialog56").click();
+        }
+
+        $(".mydialog56").on("click", function(){
+            bs4pop.notice('<b>Estão sendo exibidas as vendas referentes ao mês de <span style="color:red">{{ $thisMonth }}</span>, não do mês atual (<span style="color: red">{{ ucfirst($mesAtual) }}</span>)</b>', {
+                type: 'info',
+                position: 'topright',
+                appendType: 'append',
+                closeBtn: 'false',
+                className: ''
+            })
+        })
+    </script>
 @endsection
