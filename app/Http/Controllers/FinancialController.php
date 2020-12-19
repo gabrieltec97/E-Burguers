@@ -10,12 +10,17 @@ use Illuminate\Support\Facades\DB;
 
 class FinancialController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
-        $thisMonth = strftime('%B', strtotime('today'));
+        if (!isset($req->month)){
+            $thisMonth = strftime('%B', strtotime('today'));
+        }else{
+            $thisMonth = $req->month;
+        }
+
         $thisDay = strftime('%d', strtotime('today'));
         $month = DB::table('orders')
             ->where('month', '=', $thisMonth)
@@ -114,7 +119,7 @@ class FinancialController extends Controller
             'lineTension' => 0.5
         ]);
 
-        return view('Financial.financial', compact('chart', 'chart2'));
+        return view('Financial.financial', compact('chart', 'chart2', 'thisMonth'));
     }
 
     public function dashboard()

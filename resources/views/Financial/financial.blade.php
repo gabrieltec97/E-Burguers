@@ -17,20 +17,94 @@
 
                             <div class="col-lg-7 col-12 d-flex mt-2 mt-lg-0 justify-content-end mb-2">
 
-                                <select name="month" id="" class="form-control w-50">
-                                    <option value="Janeiro">Janeiro</option>
-                                    <option value="Janeiro">Fevereiro</option>
-                                    <option value="Janeiro">Março</option>
-                                    <option value="Janeiro">Abril</option>
-                                    <option value="Janeiro">Maio</option>
-                                    <option value="Janeiro">Junho</option>
-                                    <option value="Janeiro">Julho</option>
-                                    <option value="Janeiro">Agosto</option>
-                                    <option value="Janeiro">Setembro</option>
-                                    <option value="Janeiro">Outubro</option>
-                                    <option value="Janeiro">Novembro</option>
-                                    <option value="Janeiro">Dezembro</option>
-                                </select>
+                                <form action="{{ route('financeiro') }}">
+                                    @csrf
+                                    <select name="month" class="form-control mesVenda">
+                                        <option value="janeiro"
+                                        @if($thisMonth == 'janeiro')
+                                            selected
+                                        @endif>Janeiro</option>
+
+                                        <option value="fevereiro"
+                                        @if($thisMonth == 'fevereiro')
+                                            selected
+                                        @endif>Fevereiro</option>
+
+                                        <option value="março"
+                                        @if($thisMonth == 'março')
+                                            selected
+                                        @endif>Março</option>
+
+                                        <option value="abril"
+                                        @if($thisMonth == 'abril')
+                                            selected
+                                        @endif>Abril</option>
+
+                                        <option value="maio"
+                                        @if($thisMonth == 'maio')
+                                            selected
+                                        @endif>Maio</option>
+
+                                        <option value="junho"
+                                        @if($thisMonth == 'junho')
+                                            selected
+                                        @endif>Junho</option>
+
+                                        <option value="julho"
+                                        @if($thisMonth == 'julho')
+                                            selected
+                                        @endif>Julho</option>
+
+                                        <option value="agosto"
+                                        @if($thisMonth == 'agosto')
+                                            selected
+                                        @endif>Agosto</option>
+
+                                        <option value="setembro"
+                                        @if($thisMonth == 'setembro')
+                                            selected
+                                        @endif>Setembro</option>
+
+                                        <option value="outubro"
+                                        @if($thisMonth == 'outubro')
+                                            selected
+                                        @endif
+                                        >Outubro</option>
+
+                                        <option value="novembro"
+                                        @if($thisMonth == 'novembro')
+                                            selected
+                                        @endif
+                                        >Novembro</option>
+
+                                        <option value="dezembro"
+                                        @if($thisMonth == 'dezembro')
+                                            selected
+                                        @endif
+                                        >Dezembro</option>
+                                    </select>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalConsulta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-weight-normal" style="font-size: 17px; color: black">Deseja trazer os dados sobre as vendas do mês de <span class="mes font-weight-bold text-primary"></span>?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                                    <button type="submit" class="btn btn-success">Confirmar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

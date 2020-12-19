@@ -844,4 +844,11 @@ $(".tipoRef").on("change", function () {
 
 //Recolhimento de menu principal
 $(".botao-recolher-menu").click();
+
+//Modal de mudança de mês em informações financeiras.
+
+$(".mesVenda").on('change', function () {
+    $(".mes").text($(this).val().toLowerCase());
+    $("#modalConsulta").modal();
+})
 });
