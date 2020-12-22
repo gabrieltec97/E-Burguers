@@ -50,7 +50,7 @@
                                         <label class="text-muted font-weight-bold">Tipo de refeição</label>
                                         <select class="form-control tipoRef {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="tipoRef" required>
                                             <option value="" selected hidden>Selecione</option>
-                                            <option value="Porção" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Porção</option>
+                                            <option value="Acompanhamento" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Porção</option>
                                             <option value="Bebida" {{ old('empOccupation') == 'Atendente' ? 'selected' : '' }}>Bebida</option>
                                             <option value="Hamburguer" {{ old('empOccupation') == 'Cozinheiro' ? 'selected' : '' }}>Hambúrguer</option>
                                             <option value="Sobremesa" {{ old('empOccupation') == 'Garçom' ? 'selected' : '' }}>Sobremesa</option>

@@ -795,7 +795,7 @@ $(".forma-pagamento").on("change", function (){
 //Verificações de criação de refeições.
 $(".tipoRef").on("change", function () {
 
-    if ($(this).val() == 'Porção' || $(this).val() == 'Bebida'){
+    if ($(this).val() == 'Acompanhamento' || $(this).val() == 'Bebida'){
         $(".igr").hide();
         $(".comb").addClass('col-md-8');
     }else{

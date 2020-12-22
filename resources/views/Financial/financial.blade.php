@@ -20,7 +20,7 @@
 
                                 <form action="{{ route('financeiro') }}">
                                     @csrf
-                                    <select name="month" class="form-control mesVenda">
+                                    <select name="month" class="form-control mesVenda" style="cursor: pointer">
                                         <option value="janeiro"
                                         @if($thisMonth == 'janeiro')
                                             selected
@@ -153,19 +153,22 @@
         <option value="{{ $mesAtual }}"></option>
     </select>
 
-    <button class="mydialog56">aaaa</button>
+    <button class="disparar">aaaa</button>
 
     <script>
+        $(function () {
 
         var mesSistema = $(".mesHoje").val();
         var mesAtual = $(".mesPHP").val();
 
-        if (mesSistema != mesAtual){
-            $(".mydialog56").click();
-        }
+        // if (mesAtual != mesSistema){
+        //
+        // }
 
-        $(".mydialog56").on("click", function(){
-            bs4pop.notice('<b>Estão sendo exibidas as vendas referentes ao mês de <span style="color:red">{{ $thisMonth }}</span>, não do mês atual (<span style="color: red">{{ ucfirst($mesAtual) }}</span>)</b>', {
+            $(".disparar").click();
+
+        $(".disparar").on("click", function(){
+            bs4pop.notice('<strong>Estão sendo exibidas as vendas referentes ao mês de <span style="color:red">{{ $thisMonth }}</span>, não do mês atual (<span style="color: red">{{ ucfirst($mesAtual) }}</span>)</strong>', {
                 type: 'info',
                 position: 'topright',
                 appendType: 'append',
@@ -173,5 +176,8 @@
                 className: ''
             })
         })
+        });
     </script>
+
+    <button class="disparar">aaaa</button>
 @endsection

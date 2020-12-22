@@ -107,18 +107,18 @@
                             <canvas id="myPieChart"></canvas>
                         </div>
                         <div class="mt-4 text-center small">
-                            @if($detached != '')
+                            @if($FinalSale != '')
                                 <span class="mr-2">
-                                            <i class="fas fa-circle text-danger"></i>{{ $detached[0]['item'] }}
+                                            <i class="fas fa-circle text-danger"></i>{{ $FinalSale[0]['item'] }}
                                         </span>
                                 <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i>{{ $detached[1]['item'] }}
+                                            <i class="fas fa-circle text-primary"></i>{{ $FinalSale[1]['item'] }}
                                         </span>
                                 <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i>{{ $detached[2]['item'] }}
+                                            <i class="fas fa-circle text-success"></i>{{ $FinalSale[2]['item'] }}
                                         </span>
                                 <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i>{{ $detached[3]['item'] }}
+                                            <i class="fas fa-circle text-info"></i>{{ $FinalSale[3]['item'] }}
                                         </span>
                             @endif
                         </div>
@@ -130,15 +130,15 @@
     </div>
 
 
-    @if($detached != '')
-        <button class="lbl1" hidden value="{{ $detached[0]['item'] }}"></button>
-        <button class="lbl2" hidden value="{{ $detached[1]['item'] }}"></button>
-        <button class="lbl3" hidden value="{{ $detached[2]['item'] }}"></button>
-        <button class="lbl4" hidden value="{{ $detached[3]['item'] }}"></button>
+    @if($FinalSale != '')
+        <button class="lbl1" hidden value="{{ $FinalSale[0]['item'] }}"></button>
+        <button class="lbl2" hidden value="{{ $FinalSale[1]['item'] }}"></button>
+        <button class="lbl3" hidden value="{{ $FinalSale[2]['item'] }}"></button>
+        <button class="lbl4" hidden value="{{ $FinalSale[3]['item'] }}"></button>
 
-        <button class="valor1" hidden value="{{ $detached[0]['quantidade'] }}"></button>
-        <button class="valor2" hidden value="{{ $detached[1]['quantidade'] }}"></button>
-        <button class="valor3" hidden value="{{ $detached[2]['quantidade'] }}"></button>
-        <button class="valor4" hidden value="{{ $detached[3]['quantidade'] }}"></button>
+        <button class="valor1" hidden value="{{ $FinalSale[0]['quantidade'] }}"></button>
+        <button class="valor2" hidden value="{{ $FinalSale[1]['quantidade'] }}"></button>
+        <button class="valor3" hidden value="{{ $FinalSale[2]['quantidade'] }}"></button>
+        <button class="valor4" hidden value="{{ $FinalSale[3]['quantidade'] }}"></button>
 @endif
 @endsection
