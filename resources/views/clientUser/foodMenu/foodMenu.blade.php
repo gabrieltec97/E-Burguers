@@ -21,13 +21,11 @@
                     @endif
                     <div class="row">
                         @foreach($foods as $food)
-
-
                             <div class="col-12 col-md-4 mt-5 mt-lg-3 col-lg-3">
                                 <form action="{{ route('adicionarItem', $food->id) }}">
                                     @if($food->foodType == 'Hamburguer')
                                         <div class="card cardapio-card">
-                                            <img class="card-img-top img-card" src="{{ asset($food->picture) }}" alt="Card image cap">
+                                            <img class="card-img-top img-card" src="{{ asset($food->picture) }}">
                                             <div class="card-body">
                                                 <h5 class="card-title font-weight-bold">{{ $food->name }}</h5>
                                                 <p class="card-text"> {{ $food->description }}
@@ -56,7 +54,7 @@
                                         </div>
                                     @else
                                     <article>
-                                        <div class="card cardapio-card">
+                                        <div class="card cardapio-card mb-4">
                                             <img class="card-img-top img-card" src="{{ asset($food->picture) }}" alt="Card image cap">
                                             <div class="card-body">
                                                 <h5 class="card-title font-weight-bold"> {{ $food->id }} {{ $food->name }}</h5>

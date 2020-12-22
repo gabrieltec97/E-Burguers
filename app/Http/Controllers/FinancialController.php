@@ -129,12 +129,11 @@ class FinancialController extends Controller
         $chart2 = new Grafico();
 
         $chart2->labels(['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']);
-        $chart2->dataset('Valor arrecadado', 'bar' , [$countSale[0]['valor'],$countSale[1]['valor'],$countSale[2]['valor'],$countSale[3]['valor'],$countSale[4]['valor'],$countSale[5]['valor'],$countSale[6]['valor'],$countSale[7]['valor'],$countSale[8]['valor'],$countSale[9]['valor'],$countSale[10]['valor'],$countSale[11]['valor']])->options([
+        $chart2->dataset('Valor arrecadado', 'bar' , [$countSale[0]['valor'],$countSale[1]['valor'],$countSale[2]['valor'],$countSale[3]['valor'],$countSale[4]['valor'],$countSale[5]['valor'],$countSale[6]['valor'],$countSale[7]['valor'],$countSale[8]['valor'],$countSale[9]['valor'],$countSale[10]['valor'],round($countSale[11]['valor'])])->options([
             'backgroundColor' => '#ccf5ff',
             'borderColor' => '#008fb3',
             'lineTension' => 0.5
         ]);
-
         return view('Financial.financial', compact('chart', 'chart2', 'thisMonth'));
     }
 

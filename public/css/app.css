@@ -11147,6 +11147,10 @@ a:hover{
         height: 510px;
     }
 
+    .img-card{
+        height: 280px;
+    }
+
     .hist-ped{
         height: 900px;
         margin-bottom: 50px;
@@ -11213,6 +11217,10 @@ a:hover{
 @media (min-width: 950px) {
     .area-carrinho-hide-big{
         visibility: hidden;
+    }
+
+    .img-card{
+        height: 150px;
     }
 
     .nav-saudacao{

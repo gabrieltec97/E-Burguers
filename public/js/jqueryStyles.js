@@ -262,14 +262,15 @@ $(".descricao, .descricao-edit").on("keyup", function (){
    var text = $(".descricao, .descricao-edit").val();
    var totalChar = text.length;
 
-   if(totalChar < 70 || totalChar > 96){
+   if(totalChar < 70 || totalChar > 90){
        $(".contagem").text(totalChar);
        $(".contagem").css('color', 'red');
-       $(".btn-alterar-refeicao").attr('disabled', 'disabled')
+       $(".btn-cadastrar-refeicao").attr('disabled', 'disabled')
+       $(".btn-cadastrar-refeicao").css('cursor', 'not-allowed');
    }else{
        $(".contagem").text(totalChar);
        $(".contagem").css('color', '#5cb85c');
-       $(".btn-alterar-refeicao").removeAttr('disabled', 'disabled')
+       $(".btn-cadastrar-refeicao").removeAttr('disabled', 'disabled')
    }
 });
 
