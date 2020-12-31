@@ -101,7 +101,7 @@ class FinancialController extends Controller
                 'lineTension' => 0.5
             ]);
 
-        }elseif ($thisDay <=30){
+        }elseif ($thisDay <=31){
             $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
             $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
                 'backgroundColor' => '#ccf5ff',
@@ -243,7 +243,7 @@ class FinancialController extends Controller
                 'lineTension' => 0.5
             ]);
 
-        }elseif ($thisDay <=30){
+        }elseif ($thisDay <=31){
             $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
             $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
                 'backgroundColor' => '#ccf5ff',

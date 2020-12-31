@@ -12,8 +12,8 @@
                 <div class="card" style="height: 560px">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
                         <div class="row">
-                            <div class="col-lg-5 col-12">
-                                Vendas este mês
+                            <div class="col-lg-5 col-12 vendaMes">
+
                             </div>
 
                             <div class="col-lg-7 col-12 d-flex mt-2 mt-lg-0 justify-content-end mb-2">
@@ -153,31 +153,17 @@
         <option value="{{ $mesAtual }}"></option>
     </select>
 
-    <button class="disparar">aaaa</button>
-
     <script>
         $(function () {
 
         var mesSistema = $(".mesHoje").val();
         var mesAtual = $(".mesPHP").val();
 
-        // if (mesAtual != mesSistema){
-        //
-        // }
-
-            $(".disparar").click();
-
-        $(".disparar").on("click", function(){
-            bs4pop.notice('<strong>Estão sendo exibidas as vendas referentes ao mês de <span style="color:red">{{ $thisMonth }}</span>, não do mês atual (<span style="color: red">{{ ucfirst($mesAtual) }}</span>)</strong>', {
-                type: 'info',
-                position: 'topright',
-                appendType: 'append',
-                closeBtn: 'false',
-                className: ''
-            })
-        })
+        if (mesAtual != mesSistema){
+            $(".vendaMes").text('Vendas no mês de ' + mesSistema);
+        }else{
+            $(".vendaMes").text('Vendas este mês');
+        }
         });
     </script>
-
-    <button class="disparar">aaaa</button>
 @endsection
