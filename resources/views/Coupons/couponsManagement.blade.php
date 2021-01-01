@@ -98,7 +98,7 @@
 
             <div class="col-lg-4 col-sm-12 mt-3 mb-5 mt-md-0">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-muted bg-warning" style="font-size: 18px">Cupons ativos</div>
+                    <div class="card-header font-weight-bold text-black-50" style="font-size: 18px; background-color: #00FA9A">Cupons ativos</div>
 
                     <div class="card-body">
                         <table class="table table-responsive table-bordered">
