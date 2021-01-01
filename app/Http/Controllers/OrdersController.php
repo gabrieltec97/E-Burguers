@@ -64,7 +64,6 @@ class OrdersController extends Controller
 
         $id = $order[0]['id'];
 
-
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
@@ -93,6 +92,7 @@ class OrdersController extends Controller
         $newOrder->totalValue = $updOrder[0]['totalValue'];
         $newOrder->hour = date("G") .":". date("i");
         $newOrder->day =  date("d/m/Y");
+        $newOrder->year = strftime('%Y');;
         $newOrder->monthDay =  date("d");
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->address = $updOrder[0]['address'];

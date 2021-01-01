@@ -29,6 +29,7 @@ class CreateOrdersTable extends Migration
             $table->string('totalValue')->nullable();
             $table->string('day')->nullable();
             $table->string('monthDay')->nullable();
+            $table->string('year')->nullable();
             $table->string('hour')->nullable();
             $table->string('month')->nullable();
             $table->string('address')->nullable();

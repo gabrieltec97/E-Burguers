@@ -22,8 +22,10 @@ class FinancialController extends Controller
         }
 
         $thisDay = strftime('%d', strtotime('today'));
+        $thisYear = strftime('%Y');
         $month = DB::table('orders')
             ->where('month', '=', $thisMonth)
+            ->where('year', '=', $thisYear)
             ->where('status', '=', 'Pedido Entregue')
             ->get()->toArray();
 
@@ -134,6 +136,7 @@ class FinancialController extends Controller
             'borderColor' => '#008fb3',
             'lineTension' => 0.5
         ]);
+
         return view('Financial.financial', compact('chart', 'chart2', 'thisMonth'));
     }
 
@@ -341,8 +344,12 @@ class FinancialController extends Controller
         array_multisort(array_column($detached,'quantidade'),SORT_DESC, $detached);
 
         $mostSale = array_chunk($detached, 4);
-        $FinalSale = $mostSale[0];
+        if (isset($mostSale[0])){
+            $FinalSale = $mostSale[0];
 
-        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'FinalSale'));
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'FinalSale'));
+        }else{
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+        }
     }
 }
