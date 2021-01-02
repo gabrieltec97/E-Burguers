@@ -441,7 +441,10 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 //Verificação de alterações em refeições.
 
     $(".valorRefeicao-edit").mask('00.00');
-    $(".valComboPromo-edit").mask('00.00');
+
+    if ($.isNumeric($(".valComboPromo-edit").val())){
+        $(".valComboPromo-edit").mask('00.00');
+    }
 
     $(".impComboNao").on('click', function () {
 

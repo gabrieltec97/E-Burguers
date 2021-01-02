@@ -24,7 +24,7 @@
                             <div class="row">
 
                                 <div class="col-12 col-lg-6 mb-4 mb-lg-0">
-                                    <img src="{{ asset('logo/hamburguer.jpg') }}" style="margin-top: 30px" class="img-fluid" alt="">
+                                    <img src="{{ asset($meal->picture) }}" style="margin-top: 30px" class="img-fluid" alt="">
                                 </div>
 
                                 <div class="col-12 col-lg-6 mt-4 mt-lg-0">

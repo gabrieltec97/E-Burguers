@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-sm-12 mb-5">
-                <div class="card" style="height: 560px">
+                <div class="card shadow" style="height: 560px">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
                         <div class="row">
                             <div class="col-lg-5 col-12 vendaMes">
@@ -121,7 +121,7 @@
             </div>
 
             <div class="col-lg-12 col-sm-12 mb-5">
-                <div class="card" style="height: 560px">
+                <div class="card shadow" style="height: 560px">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">Valor arrecadado em cada mês</div>
 
                     <div class="card-body financial-table">

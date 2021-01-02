@@ -81,7 +81,7 @@
             </div>
 
             <div class="col-12 col-lg-8 my-5">
-                <div class="card" style="height: 560px">
+                <div class="card shadow" style="height: 560px">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px;"> <h4 class="m-0 font-weight-bold text-primary">Estatísticas das vendas</h4></div>
 
                     <div class="card-body financial-table">
