@@ -28,7 +28,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <label class="text-muted font-weight-bold">Nome</label>
-                                        <input type="text" class="form-control nome-refeicao {{ ($errors->has('mealName') ? 'is-invalid' : '') }}" title="Nome que identifica a refeição" name="mealName" value="{{ old('mealName') }}" required>
+                                        <input type="text" name="mealName" class="form-control nome-refeicao {{ ($errors->has('mealName') ? 'is-invalid' : '') }}" title="Nome que identifica a refeição" value="{{ old('mealName') }}" required>
                                         @if($errors->has('mealName'))
                                        <div class="invalid-feedback">
                                           <span class="font-weight-bold"> {{ $errors->first('mealName') }}</span>

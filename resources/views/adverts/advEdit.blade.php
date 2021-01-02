@@ -48,7 +48,7 @@
 
                                     <div class="col-12 mt-3 col-md-6">
                                         <label class="text-muted font-weight-bold">Valor no combo</label>
-                                        <input type="text" value="{{ $meal->comboValue }}" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional." name="promoValue" required>
+                                        <input type="text" value="{{$meal->comboValue}}" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional." name="promoValue" required>
                                         <label class="text-danger verificaPreco mt-2 font-weight-bold" style="font-size: 13.7px">O valor promocional não pode ser maior ou igual ao valor
                                             normal.</label>
                                         @if($errors->has('promoValue'))
@@ -60,7 +60,11 @@
 
                                     <div class="col-12 mt-3 col-md-6">
                                         <label class="text-muted font-weight-bold">Ingredientes</label>
-                                        <input type="text" value="{{ $meal->ingredients }}" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,tomate,alface" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" required>
+                                        @if($meal->ingredients == '')
+                                        <input type="text" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Item sem ingredientes" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" disabled style="cursor: not-allowed">
+                                        @else
+                                            <input type="text" value="{{ $meal->ingredients }}" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,tomate,alface" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" required>
+                                        @endif
                                         <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os separando por vírgulas e sem dar espaços.</label>
                                         @if($errors->has('ingredients'))
                                             <div class="invalid-feedback">

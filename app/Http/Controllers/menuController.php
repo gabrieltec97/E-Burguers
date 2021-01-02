@@ -51,27 +51,26 @@ class menuController extends Controller
     {
 
         $rules = [
-            'mealName' => 'required|min:4|max:14',
-            'mealValue' => 'required|min:5|max:5',
-            'valComboPromo' => 'required',
-            'ingredients' => 'required',
-            'mealDescription' => 'required|min:70|max:96'
+            'mealValue' => 'required',
+            'mealName' => 'required|min:4|max:35',
+            'promoValue' => 'required',
+            'mealDescription' => 'required|min:70|max:90'
 
         ];
 
         $messages = [
             'mealName.required' => 'Por favor, insira o nome da refeição.',
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
-            'mealName.max' => 'O nome da refeição não pode ter mais de 14 caracteres.',
+            'mealName.max' => 'O nome da refeição não pode ter mais de 35 caracteres.',
             'valComboPromo.required' => 'Por favor, insira o valor propocional.',
             'disccount.required' => 'Por favor, insira o descondo a ser aplicado.',
             'ingredients.required' => 'Por favor, insira os ingredientes da refeição.',
             'mealDescription.required' => 'Por favor, insira a descrição da refeição.',
             'mealDescription.min' => 'Este campo deve conter no mínimo 70 caracteres',
-            'mealDescription.max' => 'Este campo deve conter no máximo 96 caracteres'
+            'mealDescription.max' => 'Este campo deve conter no máximo 90 caracteres'
         ];
 
-        //$request->validate($rules, $messages);
+        $request->validate($rules, $messages);
 
         $advert = new Adverts();
 
@@ -148,18 +147,15 @@ class menuController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'mealName' => 'required|min:4|max:14',
+            'mealName' => 'required|min:4|max:35',
             'mealValue' => 'required|min:5|max:5',
-            'promoValue' => 'required|min:5|max:5',
-            'ingredients' => 'required',
-            'mealDescription' => 'required|min:70|max:96'
-
+            'mealDescription' => 'required|min:70|max:90'
         ];
 
         $messages = [
             'mealName.required' => 'Por favor, insira o nome da refeição.',
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
-            'mealName.max' => 'O nome da refeição não pode ter mais de 14 caracteres.',
+            'mealName.max' => 'O nome da refeição não pode ter mais de 20 caracteres.',
             'mealValue.required' => 'Por favor, insira o valor da refeição.',
             'mealValue.min' => 'Por favor, insira um valor válido.',
             'promoValue.required' => 'Por favor, insira o valor propocional.',

@@ -271,6 +271,7 @@ $(".descricao, .descricao-edit").on("keyup", function (){
        $(".contagem").text(totalChar);
        $(".contagem").css('color', '#5cb85c');
        $(".btn-cadastrar-refeicao").removeAttr('disabled', 'disabled')
+       $(".btn-cadastrar-refeicao").css('cursor', 'pointer')
    }
 });
 
