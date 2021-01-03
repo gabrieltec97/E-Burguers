@@ -124,7 +124,7 @@
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
                         <div class="row">
                             <div class="col-lg-6 col-12 textoAno">
-                                Valor arrecadado em cada mês
+
                             </div>
                             <div class="col-lg-6 col-12 d-flex mt-2 mt-lg-0 justify-content-end" style="margin-bottom: -25px;">
 
@@ -175,16 +175,25 @@
         <option value="{{ $thisMonth }}"></option>
     </select>
 
+    <select class="anoHoje" hidden>
+        <option value="{{ $year }}"></option>
+    </select>
+
     <?php
 
     setlocale(LC_TIME, 'pt_BR', 'portuguese');
     date_default_timezone_set('America/Sao_Paulo');
 
     $mesAtual = strftime('%B', strtotime('today'));
+    $anoAtual = strftime('%Y');
 
     ?>
 
     <select class="mesPHP" hidden>
+        <option value="{{ $mesAtual }}"></option>
+    </select>
+
+    <select class="anoPHP" hidden>
         <option value="{{ $mesAtual }}"></option>
     </select>
 
@@ -194,11 +203,20 @@
         var mesSistema = $(".mesHoje").val();
         var mesAtual = $(".mesPHP").val();
 
+        var anoSistema = $(".anoHoje").val();
+        var anoAtual = $(".anoPHP").val();
+
         if (mesAtual != mesSistema){
             $(".vendaMes").text('Vendas no mês de ' + mesSistema);
         }else{
             $(".vendaMes").text('Vendas este mês');
         }
+
+            if (anoAtual != anoSistema){
+                $(".textoAno").text('Total arrecadado por mês em ' + anoSistema);
+            }else{
+                $(".textoAno").text('Total arrecadado por mês este ano');
+            }
         });
     </script>
 @endsection

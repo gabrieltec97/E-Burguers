@@ -118,10 +118,12 @@ class FinancialController extends Controller
 
         if (isset($req->year)) {
 
+            $year = $req->year;
+
             foreach ($months as $m){
                 $totalThisMonth = DB::table('orders')
                     ->where('month', '=', $m)
-                    ->where('year', '=', $req->year)
+                    ->where('year', '=', $year)
                     ->where('status', '=', 'Pedido Entregue')
                     ->sum('orders.totalValue');
 
@@ -161,7 +163,7 @@ class FinancialController extends Controller
 
         $yearsBefore = array($thisYear,$lastYear, $beforeLastYear, $evenBeforeLastYear);
 
-        return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore'));
+        return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'year'));
     }
 
     public function dashboard()
