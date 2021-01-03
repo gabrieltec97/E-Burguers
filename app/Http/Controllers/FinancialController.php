@@ -23,25 +23,11 @@ class FinancialController extends Controller
 
         $thisDay = strftime('%d', strtotime('today'));
         $thisYear = strftime('%Y');
-
-        if (isset($req->year)){
-
-            $year = $req->year;
-
-            $month = DB::table('orders')
-//                ->where('month', '=', $thisMonth)
-                ->where('year', '=', $year)
-                ->where('status', '=', 'Pedido Entregue')
-                ->get()->toArray();
-
-            echo $year;
-        }else{
-            $month = DB::table('orders')
+        $month = DB::table('orders')
                 ->where('month', '=', $thisMonth)
-//                ->where('year', '=', $thisYear)
+                ->where('year', '=', $thisYear)
                 ->where('status', '=', 'Pedido Entregue')
                 ->get()->toArray();
-        }
 
         $countDayTen = 0;
         $countDayFifteen = 0;
@@ -130,16 +116,33 @@ class FinancialController extends Controller
 
         $countSale = [];
 
-        foreach ($months as $m){
-            $totalThisMonth = DB::table('orders')
-                ->where('month', '=', $m)
-                ->where('status', '=', 'Pedido Entregue')
-                ->sum('orders.totalValue');
+        if (isset($req->year)) {
 
-            array_push($countSale, [
-                'mes' => $m,
-                'valor' => $totalThisMonth
-            ]);
+            foreach ($months as $m){
+                $totalThisMonth = DB::table('orders')
+                    ->where('month', '=', $m)
+                    ->where('year', '=', $req->year)
+                    ->where('status', '=', 'Pedido Entregue')
+                    ->sum('orders.totalValue');
+
+                array_push($countSale, [
+                    'mes' => $m,
+                    'valor' => $totalThisMonth
+                ]);
+            }
+        }else{
+
+            foreach ($months as $m){
+                $totalThisMonth = DB::table('orders')
+                    ->where('month', '=', $m)
+                    ->where('status', '=', 'Pedido Entregue')
+                    ->sum('orders.totalValue');
+
+                array_push($countSale, [
+                    'mes' => $m,
+                    'valor' => $totalThisMonth
+                ]);
+            }
         }
 
         $chart2 = new Grafico();
