@@ -23,11 +23,25 @@ class FinancialController extends Controller
 
         $thisDay = strftime('%d', strtotime('today'));
         $thisYear = strftime('%Y');
-        $month = DB::table('orders')
-            ->where('month', '=', $thisMonth)
-            ->where('year', '=', $thisYear)
-            ->where('status', '=', 'Pedido Entregue')
-            ->get()->toArray();
+
+        if (isset($req->year)){
+
+            $year = $req->year;
+
+            $month = DB::table('orders')
+//                ->where('month', '=', $thisMonth)
+                ->where('year', '=', $year)
+                ->where('status', '=', 'Pedido Entregue')
+                ->get()->toArray();
+
+            echo $year;
+        }else{
+            $month = DB::table('orders')
+                ->where('month', '=', $thisMonth)
+//                ->where('year', '=', $thisYear)
+                ->where('status', '=', 'Pedido Entregue')
+                ->get()->toArray();
+        }
 
         $countDayTen = 0;
         $countDayFifteen = 0;

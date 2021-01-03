@@ -130,7 +130,7 @@
 
                                 <form action="{{ route('financeiro') }}">
                                     @csrf
-                                    <select name="month" class="form-control anoVenda" style="cursor: pointer">
+                                    <select name="year" class="form-control anoVenda" style="cursor: pointer">
                                         @foreach($yearsBefore as $year)
                                             <option value="{{ $year }}">{{ $year }}</option>
                                         @endforeach
