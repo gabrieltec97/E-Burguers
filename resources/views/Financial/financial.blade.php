@@ -15,8 +15,7 @@
                             <div class="col-lg-5 col-12 vendaMes">
 
                             </div>
-
-                            <div class="col-lg-7 col-12 d-flex mt-2 mt-lg-0 justify-content-end mb-2">
+                            <div class="col-lg-7 col-12 d-flex mt-2 mt-lg-0 justify-content-end" style="margin-bottom: -25px;">
 
                                 <form action="{{ route('financeiro') }}">
                                     @csrf
@@ -122,14 +121,50 @@
 
             <div class="col-lg-12 col-sm-12 mb-5">
                 <div class="card shadow" style="height: 560px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">Valor arrecadado em cada mês</div>
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
+                        <div class="row">
+                            <div class="col-lg-6 col-12 textoAno">
+                                Valor arrecadado em cada mês
+                            </div>
+                            <div class="col-lg-6 col-12 d-flex mt-2 mt-lg-0 justify-content-end" style="margin-bottom: -25px;">
 
-                    <div class="card-body financial-table">
+                                <form action="{{ route('financeiro') }}">
+                                    @csrf
+                                    <select name="month" class="form-control anoVenda" style="cursor: pointer">
+                                        @foreach($yearsBefore as $year)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endforeach
+                                    </select>
 
-                        <div id="app">
-                            {!! $chart2->container() !!}
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalAno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="font-weight-normal" style="font-size: 17px; color: black">Deseja trazer os dados sobre as vendas do ano de <span class="ano font-weight-bold text-primary"></span>?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                                    <button type="submit" class="btn btn-success">Confirmar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
+                    </div>
+                        <div class="card-body financial-table">
+                            <div id="app">
+                                {!! $chart2->container() !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

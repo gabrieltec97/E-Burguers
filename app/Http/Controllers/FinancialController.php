@@ -137,7 +137,14 @@ class FinancialController extends Controller
             'lineTension' => 0.5
         ]);
 
-        return view('Financial.financial', compact('chart', 'chart2', 'thisMonth'));
+        //capturando os 3 anos anteriores para filtro de vendas.
+        $lastYear = $thisYear - 1;
+        $beforeLastYear = $lastYear - 1;
+        $evenBeforeLastYear = $beforeLastYear - 1;
+
+        $yearsBefore = array($thisYear,$lastYear, $beforeLastYear, $evenBeforeLastYear);
+
+        return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore'));
     }
 
     public function dashboard()

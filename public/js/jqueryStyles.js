@@ -856,4 +856,9 @@ $(".mesVenda").on('change', function () {
     $(".mes").text($(this).val().toLowerCase());
     $("#modalConsulta").modal();
 })
+
+    $(".anoVenda").on('change', function () {
+        $(".ano").text($(this).val().toLowerCase());
+        $("#modalAno").modal();
+    })
 });
