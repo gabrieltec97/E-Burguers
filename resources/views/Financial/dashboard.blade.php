@@ -118,9 +118,11 @@
                                     <span class="mr-2">
                                             <i class="fas fa-circle text-success"></i>{{ $FinalSale[2]['item'] }}
                                         </span>
-                                    <span class="mr-2">
+                                @if(isset($FinalSale[3]['item']))
+                                        <span class="mr-2">
                                             <i class="fas fa-circle text-info"></i>{{ $FinalSale[3]['item'] }}
                                         </span>
+                                @endif
                                 @endif
                                 @endif
                         </div>
@@ -137,12 +139,16 @@
            <button class="lbl1" hidden value="{{ $FinalSale[0]['item'] }}"></button>
            <button class="lbl2" hidden value="{{ $FinalSale[1]['item'] }}"></button>
            <button class="lbl3" hidden value="{{ $FinalSale[2]['item'] }}"></button>
+       @if(isset($FinalSale[3]['item']))
            <button class="lbl4" hidden value="{{ $FinalSale[3]['item'] }}"></button>
+       @endif
 
            <button class="valor1" hidden value="{{ $FinalSale[0]['quantidade'] }}"></button>
            <button class="valor2" hidden value="{{ $FinalSale[1]['quantidade'] }}"></button>
            <button class="valor3" hidden value="{{ $FinalSale[2]['quantidade'] }}"></button>
+       @if(isset($FinalSale[3]['item']))
            <button class="valor4" hidden value="{{ $FinalSale[3]['quantidade'] }}"></button>
+       @endif
        @endif
 @endif
 @endsection

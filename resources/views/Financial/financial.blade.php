@@ -129,7 +129,7 @@ $anoAtual = strftime('%Y');
                 </div>
             </div>
 
-            <div class="col-lg-12 col-sm-12 mb-5">
+            <div class="col-lg-12 col-sm-12 mb-5 alvo">
                 <div class="card shadow" style="height: 560px">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
                         <div class="row">
@@ -158,7 +158,7 @@ $anoAtual = strftime('%Y');
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -225,6 +225,12 @@ $anoAtual = strftime('%Y');
 
         if (anoAtual != anoSistema){
             $(".textoAno").text('Total arrecadado por mês em ' + anoSistema);
+
+            setTimeout(function (){
+                $('html, body').animate({
+                    scrollTop: $(".alvo").offset().top
+                }, 1500);
+            }, 250)
         }else{
             $(".textoAno").text('Total arrecadado por mês este ano');
         }

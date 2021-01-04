@@ -137,6 +137,7 @@ class FinancialController extends Controller
             foreach ($months as $m){
                 $totalThisMonth = DB::table('orders')
                     ->where('month', '=', $m)
+                    ->where('year', '=', $thisYear)
                     ->where('status', '=', 'Pedido Entregue')
                     ->sum('orders.totalValue');
 
@@ -183,25 +184,30 @@ class FinancialController extends Controller
 
         $thisMonth = strftime('%B', strtotime('today'));
         $thisDay = strftime('%d', strtotime('today'));
+        $thisYear = strftime('%Y');
         $now = date('d/m/Y');
 
         $month = DB::table('orders')
             ->where('month', '=', $thisMonth)
+            ->where('year', '=', $thisYear)
             ->where('status', '=', 'Pedido Entregue')
             ->get()->toArray();
 
         $nowHere = DB::table('orders')
             ->where('day', '=', $now)
             ->where('status', '=', 'Pedido Entregue')
+            ->where('year', '=', $thisYear)
             ->get()->toArray();
 
         $totalValue = DB::table('orders')
             ->where('month', '=', $thisMonth)
             ->where('status', '=', 'Pedido Entregue')
+            ->where('year', '=', $thisYear)
             ->sum('orders.totalValue');
 
         $totalValueToday = DB::table('orders')
             ->where('status', '=', 'Pedido Entregue')
+            ->where('year', '=', $thisYear)
             ->where('day', '=', $now)
             ->sum('orders.totalValue');
 
