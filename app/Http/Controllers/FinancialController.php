@@ -116,8 +116,8 @@ class FinancialController extends Controller
 
         $countSale = [];
 
+        //Capturando o ano selecionado pelo usuário.
         if (isset($req->year)) {
-
             $year = $req->year;
 
             foreach ($months as $m){
@@ -163,7 +163,16 @@ class FinancialController extends Controller
 
         $yearsBefore = array($thisYear,$lastYear, $beforeLastYear, $evenBeforeLastYear);
 
-        return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'year'));
+
+        if (isset($year)){
+            $ano = $year;
+            return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano'));
+        }else{
+            $ano = $thisYear;
+            return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano'));
+        }
+
+
     }
 
     public function dashboard()

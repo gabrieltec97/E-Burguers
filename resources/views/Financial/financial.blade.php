@@ -5,6 +5,16 @@
     Dados financeiros
 @endsection
 
+<?php
+
+setlocale(LC_TIME, 'pt_BR', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
+
+$mesAtual = strftime('%B', strtotime('today'));
+$anoAtual = strftime('%Y');
+
+?>
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -123,17 +133,24 @@
                 <div class="card shadow" style="height: 560px">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
                         <div class="row">
-                            <div class="col-lg-6 col-12 textoAno">
+                            <div class="col-lg-7 col-12 textoAno">
 
                             </div>
-                            <div class="col-lg-6 col-12 d-flex mt-2 mt-lg-0 justify-content-end" style="margin-bottom: -25px;">
+                            <div class="col-lg-5 col-12 d-flex mt-2 mt-lg-0 justify-content-end" style="margin-bottom: -25px;">
 
                                 <form action="{{ route('financeiro') }}">
                                     @csrf
                                     <select name="year" class="form-control anoVenda" style="cursor: pointer">
-                                        @foreach($yearsBefore as $year)
-                                            <option value="{{ $year }}">{{ $year }}</option>
-                                        @endforeach
+                                        @if($anoAtual == $ano)
+                                            @foreach($yearsBefore as $year)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="">Selecione</option>
+                                            @foreach($yearsBefore as $year)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
 
                                     <!-- Modal -->
@@ -175,26 +192,18 @@
         <option value="{{ $thisMonth }}"></option>
     </select>
 
-    <select class="anoHoje" hidden>
-        <option value="{{ $year }}"></option>
-    </select>
+        <select class="anoHoje" hidden>
+            <option value="{{ $ano }}"></option>
+        </select>
 
-    <?php
 
-    setlocale(LC_TIME, 'pt_BR', 'portuguese');
-    date_default_timezone_set('America/Sao_Paulo');
-
-    $mesAtual = strftime('%B', strtotime('today'));
-    $anoAtual = strftime('%Y');
-
-    ?>
 
     <select class="mesPHP" hidden>
         <option value="{{ $mesAtual }}"></option>
     </select>
 
     <select class="anoPHP" hidden>
-        <option value="{{ $mesAtual }}"></option>
+        <option value="{{ $anoAtual }}"></option>
     </select>
 
     <script>
@@ -206,17 +215,19 @@
         var anoSistema = $(".anoHoje").val();
         var anoAtual = $(".anoPHP").val();
 
+        console.log(anoSistema)
+
         if (mesAtual != mesSistema){
             $(".vendaMes").text('Vendas no mês de ' + mesSistema);
         }else{
             $(".vendaMes").text('Vendas este mês');
         }
 
-            if (anoAtual != anoSistema){
-                $(".textoAno").text('Total arrecadado por mês em ' + anoSistema);
-            }else{
-                $(".textoAno").text('Total arrecadado por mês este ano');
-            }
+        if (anoAtual != anoSistema){
+            $(".textoAno").text('Total arrecadado por mês em ' + anoSistema);
+        }else{
+            $(".textoAno").text('Total arrecadado por mês este ano');
+        }
         });
     </script>
 @endsection
