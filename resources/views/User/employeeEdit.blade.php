@@ -10,7 +10,6 @@
             <div class="col-lg-12 col-sm-12">
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Edição dos dados do funcionário</div>
-
                     <div class="card-body">
                         <div class="container-fluid">
                             <form action="{{ route('usuario.update', $user->id) }}" method="post" class="form-group">
@@ -51,7 +50,6 @@
                                         <label class="text-muted font-weight-bold">Telefone fixo (Opcional)</label>
                                         <input type="tel" class="form-control fixoFuncionario" value="{{ $user->fixedPhone }}" name="empFixedPhone">
                                     </div>
-
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Endereço</label>
                                         <input type="text" class="form-control enderecoFuncionario {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="empAddress" value="{{ $user->address }}" required>
@@ -91,13 +89,8 @@
 
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Perfil de usuário</label>
-                                        <select class="form-control profileFuncionario {{ ($errors->has('empProfile') ? 'is-invalid' : '') }}" name="empProfile" required>
-                                            <option value="" selected hidden>Selecione</option>
-                                            <option {{ ($user->profile == 'Administrador')?'selected':'' }} value="Administrador">Administrador</option>
-                                            <option {{ ($user->profile == 'Atendente')?'selected':'' }} value="Atendente">Atendente</option>
-                                            <option {{ ($user->profile == 'Cozinheiro')?'selected':'' }} value="Cozinheiro">Cozinheiro</option>
-                                            <option {{ ($user->profile == 'Outro (Sem login)')?'selected':'' }} value="Outro (Sem login)">Outro (Sem login)</option>
-                                        </select>
+                                        <input type="text" value="{{ $data->userType }}" class="form-control profileFuncionario {{ ($errors->has('empProfile') ? 'is-invalid' : '') }}" name="empProfile" required>
+
                                         @if($errors->has('empProfile'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empProfile') }}</span>
@@ -110,10 +103,6 @@
                                         <input type="password" class="form-control senhaFuncionario" placeholder="Só digite aqui caso queira alterar a senha." name="empSenha" >
                                     </div>
 
-                                    <div class="col-12 mt-4 col-md-4">
-                                        <label class="text-muted font-weight-bold">Foto (Opcional)</label>
-                                        <input type="file" name="userPhoto">
-                                    </div>
                                 </div>
 
                                 <!-- Modal -->
@@ -186,12 +175,6 @@
                                                         <p class="font-weight-bold text-center"><span class="senha-do-func text-danger"></span></p>
                                                     </div>
 
-
-                                                    <div class="col-6 mt-4 div-foto-func" hidden>
-                                                        <p class="font-weight-bold text-center">Foto de perfil do funcionário</p>
-                                                        <p class="font-weight-bold text-center">Foto anterior: <span class="text-danger">{{ $user->photo }}</span></p>
-                                                        <p class="font-weight-bold text-center">Nova foto: <span class="novo-valor text-success"></span></p>
-                                                    </div>
                                                 </div>
 
                                             </div>

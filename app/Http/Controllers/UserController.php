@@ -185,10 +185,6 @@ class UserController extends Controller
         $user->profile = $request->empProfile;
         $user->workingTime = $request->empWorkingTime;
 
-        if ($request->userPhoto != ''){
-            $user->picture = $request->userPhoto;
-        }
-
         $user->save();
 
         if($request->empSenha != ''){

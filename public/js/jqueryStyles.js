@@ -59,36 +59,40 @@ $(".select-cargo").change(function () {
 
     $(".select-occ").change(function () {
         if($('.select-occ :selected').text() == 'Outro' || $('.select-occ :selected').text() == 'Limpeza' || $('.select-occ :selected').text() == 'Garçom'){
-            $('.select-cargo option[value="Outro (Sem login)"]').attr('selected','selected');
+            $('.select-cargo').val('Outro (Sem login)');
 
-                if($('.select-cargo :selected').text() == 'Outro (Sem login)'){
-                    $(".senha").attr('readonly', 'true');
-                    $(".senha").removeAttr('required', 'true')
-                    $(".empEmail").text('E-mail (opcional)');
-                    $(".empEmail").removeAttr('required', 'true')
-                    $(".senha").removeAttr('required', 'true')
-                }else{
-                    $(".senha").removeAttr('readonly', 'true');
-                    $(".empEmail").text('E-mail');
-                };
+            $(".senha").attr('readonly', 'true');
+            $(".senha").attr('title', 'Como o usuário não terá acesso ao sistema, não é permitido criar uma senha.');
+            $(".senha").removeAttr('required', 'true')
+            $(".empEmail").text('E-mail (opcional)');
+            $(".empEmail").removeAttr('required', 'true')
+            $(".senha").removeAttr('required', 'true')
+            $(".senha").css('cursor', 'not-allowed')
+
 
         } else if ($('.select-occ :selected').text() == 'Administrador'){
-            $('.select-cargo option[value="Administrador"]').attr('selected','selected');
             $(".disparador").click();
+            $('.select-cargo').val('Administrador');
 
             $(".senha").removeAttr('readonly', 'true');
+            $(".senha").removeAttr('title', 'true');
+            $(".senha").css('cursor', 'inherit');
             $(".empEmail").text('E-mail');
 
         }else if($('.select-occ :selected').text() == 'Atendente'){
-            $('.select-cargo option[value="Atendente"]').attr('selected','selected');
+            $('.select-cargo').val('Atendente');
 
             $(".senha").removeAttr('readonly', 'true');
+            $(".senha").removeAttr('title', 'true');
+            $(".senha").css('cursor', 'inherit');
             $(".empEmail").text('E-mail');
 
         }else if($('.select-occ :selected').text() == 'Cozinheiro'){
-            $('.select-cargo option[value="Cozinheiro"]').attr('selected','selected');
+            $('.select-cargo').val('Cozinheiro');
 
             $(".senha").removeAttr('readonly', 'true');
+            $(".senha").removeAttr('title', 'true');
+            $(".senha").css('cursor', 'inherit');
             $(".empEmail").text('E-mail');
         }
     })
@@ -303,25 +307,27 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     $(".telFuncionario").mask('(00) 00000-0000');
     $(".fixoFuncionario").mask('(00) 0000-0000');
     $(".horarioFuncionario").mask('00:00 - 00:00');
+    $(".profileFuncionario").attr('readonly', 'true');
+    $(".profileFuncionario").css('cursor', 'not-allowed');
 
     $(".cargoFuncionario").change(function () {
 
         if($('.cargoFuncionario :selected').text() == 'Outro' || $('.cargoFuncionario :selected').text() == 'Limpeza' || $('.cargoFuncionario :selected').text() == 'Garçom'){
 
-            $('.profileFuncionario option[value="Outro (Sem login)"]').attr('selected','selected');
+            $('.profileFuncionario').val('Outro (Sem login)');
 
         } else if ($('.cargoFuncionario :selected').text() == 'Administrador'){
 
-            $('.profileFuncionario option[value="Administrador"]').attr('selected','selected');
+            $('.profileFuncionario').val('Administrador');
             $(".disparador").click();
 
         }else if($('.cargoFuncionario :selected').text() == 'Atendente'){
 
-            $('.profileFuncionario option[value="Atendente"]').attr('selected','selected');
+            $('.profileFuncionario').val('Atendente');
 
         }else if($('.cargoFuncionario :selected').text() == 'Cozinheiro'){
 
-            $('.profileFuncionario option[value="Cozinheiro"]').attr('selected','selected');
+            $('.profileFuncionario').val('Cozinheiro');
         }
     })
 

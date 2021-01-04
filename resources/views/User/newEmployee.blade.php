@@ -91,13 +91,8 @@
 
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Perfil de usuário</label>
-                                        <select class="form-control select-cargo {{ ($errors->has('empProfile') ? 'is-invalid' : '') }}" name="empProfile" required>
-                                            <option value="" selected hidden>Selecione</option>
-                                            <option value="Administrador" {{ old('empProfile') == 'Administrador' ? 'selected' : '' }}>Administrador</option>
-                                            <option value="Atendente" {{ old('empProfile') == 'Atendente' ? 'selected' : '' }}>Atendente</option>
-                                            <option value="Cozinheiro" {{ old('empProfile') == 'Cozinheiro' ? 'selected' : '' }}>Cozinheiro</option>
-                                            <option value="Outro (Sem login)" {{ old('empProfile') == 'Outro (Sem login)' ? 'selected' : '' }}>Outro (Sem login)</option>
-                                        </select>
+                                        <input type="text" class="form-control select-cargo {{ ($errors->has('empProfile') ? 'is-invalid' : '') }}" name="empProfile" disabled>
+
                                          @if($errors->has('empProfile'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empProfile') }}</span>
@@ -113,11 +108,6 @@
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Senha</label>
                                         <input type="text" class="form-control senha" name="empPassword">
-                                    </div>
-
-                                    <div class="col-12 mt-4 col-md-4">
-                                        <label class="text-muted font-weight-bold">Foto (Opcional)</label>
-                                        <input type="file" name="userPhoto">
                                     </div>
 
                                     <div class="col-12 mt-5 d-flex justify-content-end" style="margin-bottom: -20px">
