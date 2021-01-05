@@ -27,7 +27,7 @@
 
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
-                                                    <span class="text-danger font-weight-bold">{{ $food->comboValue }}</span></p>
+                                                    <span class="text-danger font-weight-bold">R$ {{ $food->comboValue }}</span></p>
                                                 <button type="submit" class="btn btn-primary adicionar-bandeja">Adicionar à bandeja</button>
                                             </div>
                                         </div>

@@ -24,7 +24,6 @@ class CreateEmployeesTable extends Migration
             $table->string('profile')->nullable();
             $table->string('workingTime')->nullable();
             $table->string('email')->nullable()->unique();
-            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

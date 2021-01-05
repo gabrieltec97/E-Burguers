@@ -30,7 +30,7 @@
                                                 <h5 class="card-title font-weight-bold">{{ $food->name }}</h5>
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
-                                                    <span class="text-danger font-weight-bold">{{ $food->value }}</span></p>
+                                                    <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span></p>
                                                 <a class="btn btn-primary adicionar-bandeja text-white" data-toggle="collapse" href="#multiCollapseExample{{$food->id}}" role="button" aria-expanded="false">Personalizar</a>
                                                 <button type="submit" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
 
@@ -60,7 +60,7 @@
                                                 <h5 class="card-title font-weight-bold"> {{ $food->id }} {{ $food->name }}</h5>
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
-                                                    <span class="text-danger font-weight-bold">{{ $food->value }}</span></p>
+                                                    <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span></p>
                                                 <button type="submit" class="btn btn-success adicionar-bandeja">Adicionar à bandeja</button>
                                             </div>
                                         </div>
