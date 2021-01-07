@@ -146,8 +146,12 @@
                                             <div class="col-12 col-lg-6 mt-4 mt-lg-0 div-forma-retirada">
                                                 <label class="font-weight-bold text-muted" style="font-size: 18px">Forma de retirada</label>
                                                 <select name="formaRetirada" class="form-control forma-entrega">
-                                                    <option value="Entrega em domicílio">Entrega em domicílio</option>
-                                                    <option value="Retirada no restaurante">Retirada no restaurante</option>
+                                                    @if(isset($pendings))
+                                                        <option value="{{ $pendings }}">{{ $pendingsx }}</option>
+                                                    @else
+                                                        <option value="Entrega em domicílio">Entrega em domicílio</option>
+                                                        <option value="Retirada no restaurante">Retirada no restaurante</option>
+                                                    @endif
                                                 </select>
                                             </div>
 
@@ -228,8 +232,6 @@
             </div>
         </div>
     </div>
-
-
 
 
     @if(!isset($use) && !isset($couponName) && !isset($notExist))
