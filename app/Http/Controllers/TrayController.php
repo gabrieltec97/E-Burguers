@@ -326,7 +326,6 @@ class TrayController extends Controller
 
         if ($expire != null){
             $formatExpire = $expire[0]->expireDate;
-            $formatCoupon = $couponOld[0]->expireDate;
             $couponId = $couponOld[0]->id;
 
             if ($formatExpire == $date){

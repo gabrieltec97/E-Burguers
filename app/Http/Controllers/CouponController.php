@@ -15,7 +15,18 @@ class CouponController extends Controller
      */
     public function index()
     {
-        $coupons = DB::table('coupons')->paginate(3);
+        $couponsOld = DB::table('coupons')->get()->toArray();
+        $date = date('Y'. '-' . 'm' . '-' . 'd');
+
+        foreach ($couponsOld as $c){
+
+            if ($c->expireDate == $date){
+                $delete = Coupon::find($c->id);
+                $delete->destroy($c->id);
+            }
+        }
+
+        $coupons = DB::table('coupons')->get()->toArray();
 
         return view('Coupons.couponsManagement', compact('coupons'));
     }
@@ -33,10 +44,12 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
+        $date = date('Y'. '-' . 'm' . '-' . 'd');
 
         $rules = [
             'couponName' => 'required|min:5|max:14',
             'expireDate' => 'required|date',
+            'expireDate' => 'different:',
             'disccount' => 'required',
             'disccountRule' => 'required|max:5'
 

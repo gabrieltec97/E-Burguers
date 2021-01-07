@@ -119,10 +119,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-
-                        <div class="col-12 offset-lg-2 offset-xl-3 mt-3">
-                            <span>{{ $coupons->links() }}</span>
-                        </div>
                     </div>
                 </div>
             </div>
