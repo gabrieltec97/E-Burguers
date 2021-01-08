@@ -117,6 +117,16 @@
             <button class="rounded-circle border-0 botao-recolher-menu" id="sidebarToggle"></button>
         </div>
 
+{{--        <!-- Sidebar Toggler (Sidebar) -->--}}
+{{--        <div class="text-center mb-5 d-none d-md-inline custom-control custom-switch">--}}
+{{--           <input type="checkbox" class="custom-control-input" id="customSwitch1">--}}
+{{--           <label class="custom-control-label" for="customSwitch1"</label>--}}
+{{--        </div>--}}
+
+
+
+
+
     </ul>
     <!-- End of Sidebar -->
 
