@@ -45,12 +45,13 @@
 
                                <div class="col-lg-6 mt-3 mt-lg-0 col-12">
                                    <label class="text-muted font-weight-bold">Data de expiração</label>
-                                   <input type="date" name="expireDate" class="form-control {{ ($errors->has('expireDate') ? 'is-invalid' : '') }}" value="{{ old('expireDate') }}" required>
+                                   <input type="date" name="expireDate" class="form-control data-exp-cupom {{ ($errors->has('expireDate') ? 'is-invalid' : '') }}" value="{{ old('expireDate') }}" required>
                                    @if($errors->has('expireDate'))
                                        <div class="invalid-feedback">
                                            <span class="font-weight-bold"> {{ $errors->first('expireDate') }}</span>
                                        </div>
                                    @endif
+                                   <label class="text-danger mt-2 font-weight-bold cupom-expire" style="font-size: 13px">Para usar este cupom hoje, coloque a expiração para amanhã ou mais.</label>
                                </div>
 
                                <div class="col-lg-12 mt-3 mt-lg-4 col-12">
@@ -88,7 +89,7 @@
                                </div>
 
                                <div class="col-12 mt-5 d-flex justify-content-end">
-                                   <button type="submit" class="btn btn-primary">Cadastrar cupom</button>
+                                   <button type="submit" class="btn btn-primary cadatrar-cupom">Cadastrar cupom</button>
                                </div>
                            </div>
                         </form>
@@ -124,4 +125,8 @@
             </div>
         </div>
     </div>
+
+    <select class="diaAtual" hidden>
+        <option value="{{ $date }}"></option>
+    </select>
 @endsection

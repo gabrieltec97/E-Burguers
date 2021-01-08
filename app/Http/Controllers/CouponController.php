@@ -28,7 +28,7 @@ class CouponController extends Controller
 
         $coupons = DB::table('coupons')->get()->toArray();
 
-        return view('Coupons.couponsManagement', compact('coupons'));
+        return view('Coupons.couponsManagement', compact('coupons', 'date'));
     }
 
     public function create()
@@ -44,15 +44,12 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        $date = date('Y'. '-' . 'm' . '-' . 'd');
 
         $rules = [
             'couponName' => 'required|min:5|max:14',
             'expireDate' => 'required|date',
-            'expireDate' => 'different:',
             'disccount' => 'required',
             'disccountRule' => 'required|max:5'
-
         ];
 
         $messages = [
@@ -67,6 +64,12 @@ class CouponController extends Controller
         ];
 
         $request->validate($rules, $messages);
+
+        $date = date('Y'. '-' . 'm' . '-' . 'd');
+
+        if ($request->expireDate == $date){
+            return back()->with('msg-2', 'Cupom não cadastrado! A data de expiração deve ser diferente da data atual.');
+        }
 
         $coupon = new Coupon();
 

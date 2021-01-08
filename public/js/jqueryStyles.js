@@ -225,6 +225,27 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
         }
     })
 
+//Verificando expiração de cupom.
+
+$(".cupom-expire").hide();
+
+    $(".data-exp-cupom").on('change', function (){
+
+        if ($(".diaAtual").val() == $(".data-exp-cupom").val()){
+            $(".cupom-expire").fadeIn('slow');
+            $(".cadatrar-cupom").attr('disabled', 'true')
+            $(".cadatrar-cupom").css('cursor', 'not-allowed')
+            $(".cadatrar-cupom").attr('title', 'Verifique a data de expiração do cupom.')
+        }else{
+            $(".cupom-expire").fadeOut('slow');
+            $(".cadatrar-cupom").removeAttr('disabled', 'true')
+            $(".cadatrar-cupom").removeAttr('title', 'true')
+            $(".cadatrar-cupom").css('cursor', 'pointer')
+        }
+    })
+
+
+
 //Verificação de cadastro de refeição.
 
     $(".verifica-ingredientes").hide();
