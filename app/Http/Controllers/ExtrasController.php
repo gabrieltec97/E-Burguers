@@ -34,7 +34,21 @@ class ExtrasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|min:3|max:50',
+            'value' => 'required|min:3|max:5'
+        ];
+
+        $messages = [
+            'name.required' => 'Por favor, insira o nome do item.',
+            'name.min' => 'O nome do item deve conter no mínimo 4 caracteres.',
+            'name.max' => 'O nome do item deve conter no máximo 50 caracteres.',
+            'value.required' => 'Por favor, insira o valor do item.',
+            'value.min' => 'O valor do item deve conter apenas 5 caracteres.',
+            'value.max' => 'O valor do item deve conter apenas 5 caracteres.'
+        ];
+
+        $request->validate($rules, $messages);
     }
 
     /**

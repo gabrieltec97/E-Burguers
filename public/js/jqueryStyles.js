@@ -884,8 +884,39 @@ $(".mesVenda").on('change', function () {
     $("#modalConsulta").modal();
 })
 
-    $(".anoVenda").on('change', function () {
-        $(".ano").text($(this).val().toLowerCase());
-        $("#modalAno").modal();
-    })
+$(".anoVenda").on('change', function () {
+    $(".ano").text($(this).val().toLowerCase());
+    $("#modalAno").modal();
+})
+
+//Inserção de máscara em cadastro de item adicional.
+
+$(".valor-item-add").mask('00.00');
+// $(".cadastrar-item-add").attr('disabled', 'true');
+// $(".cadastrar-item-add").css('cursor', 'not-allowed');
+// $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
+//
+//     $(".valor-item-add").on('keyup',function () {
+//         var valorItem = $(".valor-item-add").val();
+//
+//         if (valorItem.length < 5){
+//             $(".cadastrar-item-add").attr('disabled', 'true');
+//             $(".cadastrar-item-add").css('cursor', 'not-allowed');
+//         }else{
+//             $(".cadastrar-item-add").removeAttr('disabled', 'true');
+//             $(".cadastrar-item-add").css('cursor', 'pointer');
+//         }
+//     })
+//
+//     $(".nome-item-add").on('keyup',function () {
+//         var nomeItem = $(".nome-item-add").val();
+//
+//         if (nomeItem.length < 3){
+//             $(".cadastrar-item-add").attr('disabled', 'true');
+//             $(".cadastrar-item-add").css('cursor', 'not-allowed');
+//         }else{
+//             $(".cadastrar-item-add").removeAttr('disabled', 'true');
+//             $(".cadastrar-item-add").css('cursor', 'pointer');
+//         }
+//     })
 });
