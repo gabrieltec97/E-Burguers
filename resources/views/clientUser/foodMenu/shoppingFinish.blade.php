@@ -147,7 +147,7 @@
                                                 <label class="font-weight-bold text-muted" style="font-size: 18px">Forma de retirada</label>
                                                 <select name="formaRetirada" class="form-control forma-entrega">
                                                     @if(isset($pendings))
-                                                        <option value="{{ $pendings }}">{{ $pendingsx }}</option>
+                                                        <option value="{{ $pendings }}">{{ $pendings }}</option>
                                                     @else
                                                         <option value="Entrega em domicílio">Entrega em domicílio</option>
                                                         <option value="Retirada no restaurante">Retirada no restaurante</option>

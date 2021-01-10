@@ -31,6 +31,8 @@ Route::resource('/refeicoes', 'menuController');
 
 Route::resource('/minhaBandeja', 'TrayController');
 
+Route::resource('/itensAdicionais', 'ExtrasController');
+
 //Rotas de pedido.
 
 Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido');
@@ -88,7 +90,6 @@ Route::get('/dashboard', 'FinancialController@dashboard')->name('dashboard');
 Route::get('/pedidosPendentes', 'OrdersController@pending')->name('pedidosPendentes');
 
 Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido');
-
 
 //Rotas do ACL
 Route::resource('/roles', 'RoleController');

@@ -1,5 +1,9 @@
 @extends('layouts.extend')
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+
 @section('title')
     Gerenciamento de anúncios
 @endsection
@@ -42,6 +46,20 @@
                         </div>
 
 
+
+                        <div class="col-12 mb-2 d-flex justify-content-end">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" title="Aqui você poderá fazer cadastros" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-plus"></i>
+                                    Novo
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <li><button class="dropdown-item" type="button"><a class="font-weight-bold" href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none;">Nova refeição</a></button></li>
+                                    <li><button class="dropdown-item" type="button"><a class="font-weight-bold" href="{{ route('itensAdicionais.index') }}" title="Itens em que o cliente paga a mais para adicionar no sanduíche." style="font-size: 15px; text-decoration: none; color: #e24d4d;">Novo item adicional</a></button></li>
+                                </ul>
+                            </div>
+                        </div>
+
                         <table class="table table-bordered table-hover table-responsive">
                             <thead>
                             <tr>
@@ -62,12 +80,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div class="col-12 mb-2 d-flex justify-content-end">
-                        <a href="{{ route('refeicoes.create') }}" class="cadastrar-link">
-                            <i class="fas fa-plus"></i>
-                            <label class="cadastrar-link" title="Nova refeição">Cadastrar refeição</label>
-                        </a>
                     </div>
                     </div>
                 </div>
