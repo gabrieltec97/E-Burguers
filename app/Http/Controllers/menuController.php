@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Adverts;
+use App\Extras;
 use App\Tray;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -38,7 +39,8 @@ class menuController extends Controller
      */
     public function create()
     {
-        return view('adverts.newAdv');
+        $items = Extras::all();
+        return view('adverts.newAdv', compact('items'));
     }
 
     /**

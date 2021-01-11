@@ -94,6 +94,17 @@
                                     </div>
 
                                     <div class="col-12 mt-3">
+                                        <label class="font-weight-bold mb-3">Itens que poderão ser adicionados.</label>
+                                        <br>
+                                    @if(isset($items))
+                                        @foreach($items as $item)
+                                                <input type="checkbox" id="{{ $item->name }}" name="{{ $item->name }}">
+                                                <label for="{{ $item->name }}">{{ $item->name }}</label><br>
+                                        @endforeach
+                                    @endif
+                                    </div>
+
+                                    <div class="col-12 mt-3">
                                         <label class="text-muted font-weight-bold">Descrição</label>
                                         <textarea name="mealDescription" title="Breve texto que informa as características da refeição. Mínimo 70 e máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}">{{ old('mealDescription') }}</textarea>
                                         <label class="text-primary font-weight-bold mt-2 total-char">Total de caracteres: <span class="contagem font-weight-bolder"></span></label><br>
