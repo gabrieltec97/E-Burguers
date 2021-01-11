@@ -54,8 +54,8 @@
                                     Novo
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    <li><button class="dropdown-item" type="button"><a class="font-weight-bold" href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none;">Nova refeição</a></button></li>
-                                    <li><button class="dropdown-item" type="button"><a class="font-weight-bold" href="{{ route('itensAdicionais.index') }}" title="Itens em que o cliente paga a mais para adicionar no sanduíche." style="font-size: 15px; text-decoration: none; color: #e24d4d;">Novo item adicional</a></button></li>
+                                    <li><button class="dropdown-item" type="button"><i class="fas fa-hamburger text-primary mr-2"></i><a class="font-weight-bold" href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none;">Nova refeição</a></button></li>
+                                    <li><button class="dropdown-item" type="button"><i class="fas fa-plus-square text-success mr-2"></i><a class="font-weight-bold text-success" href="{{ route('itensAdicionais.index') }}" title="Itens em que o cliente paga a mais para adicionar no sanduíche." style="font-size: 15px; text-decoration: none;">Novo item adicional</a></button></li>
                                 </ul>
                             </div>
                         </div>

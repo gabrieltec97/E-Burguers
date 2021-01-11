@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Extras;
 use Illuminate\Http\Request;
 
 class ExtrasController extends Controller
@@ -13,7 +14,9 @@ class ExtrasController extends Controller
      */
     public function index()
     {
-        return view('adverts.Extras.management');
+        $items = Extras::all();
+
+        return view('adverts.Extras.management', compact('items'));
     }
 
     /**
@@ -34,21 +37,29 @@ class ExtrasController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'name' => 'required|min:3|max:50',
-            'value' => 'required|min:3|max:5'
-        ];
+//        $rules = [
+//            'nome' => 'required',
+//            'value' => 'required|min:3|max:5'
+//        ];
+//
+//        $messages = [
+//            'name.required' => 'Por favor, insira o nome do item.',
+//            'name.min' => 'O nome do item deve conter no mínimo 4 caracteres.',
+//            'name.max' => 'O nome do item deve conter no máximo 50 caracteres.',
+//            'value.required' => 'Por favor, insira o valor do item.',
+//            'value.min' => 'O valor do item deve conter apenas 5 caracteres.',
+//            'value.max' => 'O valor do item deve conter apenas 5 caracteres.'
+//        ];
+//
+//        $request->validate($rules, $messages);
 
-        $messages = [
-            'name.required' => 'Por favor, insira o nome do item.',
-            'name.min' => 'O nome do item deve conter no mínimo 4 caracteres.',
-            'name.max' => 'O nome do item deve conter no máximo 50 caracteres.',
-            'value.required' => 'Por favor, insira o valor do item.',
-            'value.min' => 'O valor do item deve conter apenas 5 caracteres.',
-            'value.max' => 'O valor do item deve conter apenas 5 caracteres.'
-        ];
+        $item = new Extras();
+        $item->name = $request->name;
+        $item->price = $request->value;
 
-        $request->validate($rules, $messages);
+        $item->save();
+
+        return redirect()->route('itensAdicionais.index')->with('msg', 'Item cadastrado com sucesso!');
     }
 
     /**
@@ -93,6 +104,10 @@ class ExtrasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Extras::find($id);
+
+        $item->destroy($id);
+
+        return redirect()->route('itensAdicionais.index')->with('msg-2', 'Item deletado com sucesso!');
     }
 }
