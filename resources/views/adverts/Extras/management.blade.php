@@ -85,7 +85,7 @@
                                         <td>{{ $item->price }}</td>
                                         <td style="cursor: pointer">
                                             <i class="fas fa-trash-alt mr-3 text-danger editar-item" title="Deletar item" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}"></i>
-                                            <i class="fas fa-edit text-info editar-item" title="Editar item"></i>
+                                            <i class="fas fa-edit text-info editar-item" title="Editar item" data-toggle="modal" data-target="#exampleModalCenterEdit{{$item->id}}"></i>
                                         </td>
                                     </tr>
 
@@ -122,6 +122,41 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-success font-weight-bold" data-dismiss="modal">Voltar</button>
                                                         <button type="submit" class="btn btn-danger font-weight-bold">Deletar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <form action="{{ route('itensAdicionais.update', $item->id) }}" class="form-group" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalCenterEdit{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Edição de item adicional.</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-12 col-lg-6">
+                                                                <label class="font-weight-bold">Nome</label>
+                                                                <input type="text" class="form-control nome-item-add-edit" name="name" value="{{ $item->name }}" placeholder="Nome do item">
+                                                            </div>
+
+                                                            <div class="col-12 col-lg-6">
+                                                                <label class="font-weight-bold">Valor</label>
+                                                                <input type="text" class="form-control valor-item-add-edit" name="price" value="{{ $item->price }}" placeholder="R$">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-success font-weight-bold" data-dismiss="modal">Voltar</button>
+                                                        <button type="submit" class="btn btn-primary edit-item-add font-weight-bold">Salvar alterações</button>
                                                     </div>
                                                 </div>
                                             </div>
