@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Extras;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExtrasController extends Controller
 {
@@ -44,9 +45,29 @@ class ExtrasController extends Controller
 //
 //        $request->validate($rules, $messages);
 
+        $items = DB::table('extras')->select('name')->get();
+
+        foreach ($items as $key){
+            foreach ($key as $item) {
+                if ($item == $request->name){
+                   return back()->with('msg-2', 'Item não cadastrado. Já existe um item com o nome "'. $request->name . '". Por favor escolha outro nome.');
+                }
+            }
+        }
+
+        $valor = $request->value;
+
         $item = new Extras();
         $item->name = $request->name;
-        $item->price = $request->value;
+
+        if ($valor[0] == 0){
+            $valor2 = substr($valor, 1);
+            $item->price = $valor2;
+            $item->namePrice = $request->name . ' + ' . $valor2;
+        }else{
+            $item->price = $request->value;
+            $item->namePrice = $request->name . ' + ' . $request->value;
+        }
 
         $item->save();
 
