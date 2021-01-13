@@ -35,6 +35,7 @@ class CreateOrdersTable extends Migration
             $table->string('address')->nullable();
             $table->string('payingMethod')->nullable();
             $table->string('payingValue')->nullable();
+            $table->string('extras')->nullable();
             $table->timestamps();
         });
     }

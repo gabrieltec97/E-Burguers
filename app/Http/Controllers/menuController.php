@@ -40,7 +40,12 @@ class menuController extends Controller
     public function create()
     {
         $items = Extras::all();
-        return view('adverts.newAdv', compact('items'));
+
+        if (count($items) != 0){
+            return view('adverts.newAdv', compact('items'));
+        }else{
+            return view('adverts.newAdv');
+        }
     }
 
     /**
@@ -74,12 +79,16 @@ class menuController extends Controller
 
         $request->validate($rules, $messages);
 
+        $extras = implode(',', $request->extras);
+        print_r($extras);
+
         $advert = new Adverts();
 
         $advert->name = $request->mealName;
         $advert->value = $request->mealValue;
         $advert->ingredients = $request->ingredients;
         $advert->foodType = $request->tipoRef;
+        $advert->extras = $extras;
 
         if(isset($_POST['combo'])){
             $advert->combo = $_POST['combo'];
@@ -88,7 +97,6 @@ class menuController extends Controller
         $advert->description = $request->mealDescription;
         $advert->comboValue = $request->promoValue;
 
-        //Em decisão se fará parte do sistema.
 
         if($request->hasFile('advPhoto')){
            $image = $request->file('advPhoto');

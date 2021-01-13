@@ -1,4 +1,6 @@
 @extends('layouts.extend')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
 @section('title')
     Cadastro de refeição
@@ -48,7 +50,7 @@
 
                                     <div class="col-12 col-md-4">
                                         <label class="text-muted font-weight-bold">Tipo de refeição</label>
-                                        <select class="form-control tipoRef {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="tipoRef" required>
+                                        <select class="form-select tipoRef {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="tipoRef" required>
                                             <option value="" selected hidden>Selecione</option>
                                             <option value="Acompanhamento" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Porção</option>
                                             <option value="Bebida" {{ old('empOccupation') == 'Atendente' ? 'selected' : '' }}>Bebida</option>
@@ -98,9 +100,11 @@
                                         <br>
                                     @if(isset($items))
                                         @foreach($items as $item)
-                                                <input type="checkbox" id="{{ $item->name }}" name="{{ $item->name }}">
-                                                <label for="{{ $item->name }}">{{ $item->name }}</label><br>
+                                                <input type="checkbox" class="form-check-input ml-1" id="{{ $item->name }}" value="{{ $item->name }}" name="extras[]">
+                                                <label class="form-check-label ml-4" for="{{ $item->name }}">{{ $item->name }}</label><br>
                                         @endforeach
+                                        @else
+                                            <label class="font-weight-bold text-danger mb-3">Você deverá primeiro cadastrar os itens adicionais antes de cadastrar uma refeição</label>
                                     @endif
                                     </div>
 
