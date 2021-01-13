@@ -42,6 +42,16 @@
                                                                     <span class="text-muted font-weight-bold">{{ $ing }}</span>
                                                                 </div>
                                                             @endforeach
+
+                                                            <hr>
+
+                                                            @foreach(explode(',', $food->extras) as $ext)
+                                                                <div>
+                                                                    <input class="mr-1" type="checkbox" id="ing" name="ingredients[]" value="{{ $ext }}">
+                                                                    <span class="text-muted font-weight-bold">{{ $ext }}</span>
+                                                                    <span class="text-danger font-weight-bold">  + 2.99</span>
+                                                                </div>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
