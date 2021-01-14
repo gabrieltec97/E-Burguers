@@ -83,7 +83,12 @@ class TrayController extends Controller
             ->where('combo', '=', 'Sim')
             ->get();
 
-        return view('clientUser.foodMenu.hamburguer', compact('foods'));
+        $extras = DB::table('extras')
+            ->select('namePrice')
+            ->get()->toArray();
+
+
+        return view('clientUser.foodMenu.hamburguer', compact('foods', 'extras'));
     }
 
     public function fries(Request $request, $id)

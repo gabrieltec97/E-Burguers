@@ -1,4 +1,6 @@
 @extends('layouts.extend-client')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
 @section('title')
     Escolha seu hambúrguer
@@ -34,23 +36,24 @@
                                                 <div class="col">
                                                     <div class="collapse multi-collapse" id="multiCollapseExample{{$food->id}}">
                                                         <div class="card card-body">
-                                                            <a class="btn btn-primary text-white mb-2" style="position: relative;" data-toggle="collapse" href="#multiCollapseExample{{$food->id}}" role="button" aria-expanded="false">Fechar</a>
+                                                            <a class="btn btn-primary text-white mb-5" style="position: relative;" data-toggle="collapse" href="#multiCollapseExample{{$food->id}}" role="button" aria-expanded="false">Fechar</a>
 
                                                             @foreach(explode(',', $food->ingredients) as $ing)
                                                                 <div>
-                                                                    <input class="mr-1" type="checkbox" id="ing" name="ingredients[]" value="{{ $ing }}" checked>
-                                                                    <span class="text-muted font-weight-bold">{{ $ing }}</span>
+                                                                    <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $ing }}" checked>
+                                                                    <span class="text-muted font-weight-bold ml-4 form-check-label">{{ $ing }}</span>
                                                                 </div>
                                                             @endforeach
 
                                                             <hr>
 
-                                                            @foreach(explode(',', $food->extras) as $ext)
-                                                                <div>
-                                                                    <input class="mr-1" type="checkbox" id="ing" name="ingredients[]" value="{{ $ext }}">
-                                                                    <span class="text-muted font-weight-bold">{{ $ext }}</span>
-                                                                    <span class="text-danger font-weight-bold">  + 2.99</span>
-                                                                </div>
+                                                            @foreach($extras as $ext)
+                                                                @foreach($ext as $e)
+                                                                    <div>
+                                                                        <input class="ml-1 form-check-input" type="checkbox" id="{{ $e }}" name="extras[]" value="{{ $e }}">
+                                                                        <label for="{{ $e }}" class="text-danger ml-4 form-check-label font-weight-bold">{{ $e }}</label>
+                                                                    </div>
+                                                            @endforeach
                                                             @endforeach
                                                         </div>
                                                     </div>
