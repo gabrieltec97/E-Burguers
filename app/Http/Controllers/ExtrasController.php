@@ -85,10 +85,21 @@ class ExtrasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $valor = $request->price;
+
         $item = Extras::find($id);
 
         $item->name = $request->name;
-        $item->price = $request->price;
+
+        if ($valor[0] == 0){
+            $valor2 = substr($valor, 1);
+            $item->price = $valor2;
+            $item->namePrice = $request->name . ' + ' . $valor2;
+        }else{
+            $item->price = $request->price;
+            $item->namePrice = $request->name . ' + ' . $request->price;
+        }
+
         $item->save();
 
         return redirect()->route('itensAdicionais.index')->with('msg', 'Item editado com sucesso!');
