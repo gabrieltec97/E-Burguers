@@ -93,6 +93,30 @@ class TrayController extends Controller
 
     public function fries(Request $request, $id)
     {
+        //Buscando acompanhamento.
+        $extras = [];
+
+        foreach ($request->extras as $ex){
+            $extra = DB::table('extras')
+                ->select('name')
+                ->where('namePrice', '=', $ex)
+                ->get()->toArray();
+
+            foreach ($extra as $e => $value){
+                array_push($extras, $value);
+            }
+        }
+
+        //Ajustando o array que recebe os itens adicionais
+
+        $add = [];
+
+        foreach ($extras as $ext => $val){
+            array_push($add, $val->name);
+        }
+
+        $addItems = implode(', ', $add);
+
         $user = Auth::user()->id;
         $hamburguer = Adverts::find($id);
         $foods = DB::table('adverts')
@@ -114,6 +138,7 @@ class TrayController extends Controller
             $order->hour = date('H:i');
             $order->hamburguer = $hamburguer->name;
             $order->comments = $requirements;
+            $order->extras = $addItems;
             $order->totalValue = $hamburguer->comboValue;
             $order->valueWithoutDisccount = $hamburguer->comboValue;
             $order->save();
@@ -125,6 +150,7 @@ class TrayController extends Controller
                 $order = Tray::find($verifyOrder->id);
                 $order->hamburguer = $hamburguer->name;
                 $order->comments = $requirements;
+                $order->extras = $addItems;
 
                 if($verifyOrder->totalValue != ''){
                     $order->totalValue = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
