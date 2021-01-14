@@ -96,7 +96,7 @@ class TrayController extends Controller
         if (isset ($request->extras)){
             //Buscando acompanhamento.
             $extras = [];
-            $val = 0;
+            $valorNovo = 0;
 
             foreach ($request->extras as $ex){
                 $extra = DB::table('extras')
@@ -117,7 +117,7 @@ class TrayController extends Controller
                     ->get()->toArray();
 
                 foreach ($vals as $v => $vls){
-                    $val += doubleval($vls->price);
+                    $valorNovo += doubleval($vls->price);
                 }
             }
 
@@ -156,9 +156,9 @@ class TrayController extends Controller
 
             if (isset($request->extras)){
                 $order->extras = $addItems;
+                $order->totalValue = doubleval($hamburguer->comboValue) + $valorNovo;
             }
-
-            $order->totalValue = $hamburguer->comboValue + $val;
+            $order->totalValue = $hamburguer->comboValue;
             $order->valueWithoutDisccount = $hamburguer->comboValue;
             $order->save();
 
@@ -176,16 +176,16 @@ class TrayController extends Controller
 
                 if($verifyOrder->totalValue != ''){
                     if (isset($request->extras)){
-                        $order->totalValue = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue + $val;
-                        $order->valueWithoutDisccount = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue + $val;
+                        $order->totalValue = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue + $valorNovo;
+                        $order->valueWithoutDisccount = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue + $valorNovo;
                     }else{
                         $order->totalValue = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
                         $order->valueWithoutDisccount = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
                     }
                 }else{
                     if (isset($request->extras)){
-                        $order->totalValue = $hamburguer->comboValue + $val;
-                        $order->valueWithoutDisccount = $hamburguer->comboValue + $val;
+                        $order->totalValue = $hamburguer->comboValue + $valorNovo;
+                        $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo;
                     }else{
                         $order->totalValue = $hamburguer->comboValue;
                         $order->valueWithoutDisccount = $hamburguer->comboValue;
@@ -287,7 +287,7 @@ class TrayController extends Controller
     public function reviewAndFinish()
     {
         $user = Auth::user();
-        $myOrder= $user->userOrderTray()->select('orderType', 'detached', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->first()->toArray();
+        $myOrder= $user->userOrderTray()->select('orderType', 'detached', 'hamburguer', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
         $pending = DB::table('orders')->select('deliverWay')
             ->where('idClient', '=', $user->id)
             ->where('status', '=', 'Pendente')->get()->toArray();

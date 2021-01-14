@@ -92,12 +92,20 @@
                                         </ul>
                                     </div>
 
-
+                                   @if(isset($extras))
+                                        <div class="col-12">
+                                            <hr>
+                                            <ol>
+                                                {{ $extras }}
+                                            </ol>
+                                        </div>
+                                   @endif
 
                                     <div class="col-12">
                                         <label class="text-muted font-weight-bold" style="font-size: 18px">Valor total:</label>
                                         <span class="text-success font-weight-bold total-val" style="font-size: 18px">{{ $myOrder['totalValue'] }}</span>
                                     </div>
+
 
                                     <form action="{{ route('aplicarCupom') }}" method="post">
                                         @csrf
