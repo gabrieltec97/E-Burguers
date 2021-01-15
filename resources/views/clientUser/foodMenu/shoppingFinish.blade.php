@@ -92,13 +92,17 @@
                                         </ul>
                                     </div>
 
-                                   @if(isset($extras))
-                                        <div class="col-12">
-                                            <hr>
-                                            <ol>
-                                                {{ $extras }}
-                                            </ol>
-                                        </div>
+                                   @if(isset($myOrder['extras']))
+                                        <hr>
+                                    <h5 class="font-weight-bold text-center mb-3">Adicionais:</h5>
+                                       <ol>
+                                           <form action="{{ route('removeadd', $food = $myOrder['drinks']) }}" class="form-group removerAdicional">
+                                               @foreach(explode(', ', $myOrder['extras']) as $extra)
+                                                   <li class="font-weight-bold"><span style="cursor:pointer;" title="Item adicionado ao sanduíche">{{ $extra }}</span> &nbsp;<button type="submit" class="fas fa-times text-danger removeItem" title="Remover item adicional" style="cursor: pointer"></button></li>
+                                               @endforeach
+                                           </form>
+                                       </ol>
+                                        <hr>
                                    @endif
 
                                     <div class="col-12">
@@ -164,8 +168,8 @@
                                             </div>
 
                                             <div class="col-12 col-lg-6 mt-4 mt-lg-0 pagamento">
-                                                <label class="font-weight-bold text-muted" style="font-size: 18px">Método de pagamento</label>
-                                                <select name="formaPagamento" class="form-control forma-pagamento">
+                                                <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
+                                                <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
                                                     <option value="Dinheiro">Dinheiro</option>
                                                     <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
                                                     <option value="Cartão de crédito (Visa)">Cartão de crédito (Visa)</option>

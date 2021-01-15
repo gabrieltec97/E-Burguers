@@ -943,5 +943,5 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
             $(".edit-item-add").removeAttr('disabled', 'true');
             $(".edit-item-add").css('cursor', 'pointer');
         }
-    })
+    });
 });

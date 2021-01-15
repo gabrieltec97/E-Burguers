@@ -156,9 +156,11 @@ class TrayController extends Controller
 
             if (isset($request->extras)){
                 $order->extras = $addItems;
-                $order->totalValue = doubleval($hamburguer->comboValue) + $valorNovo;
+                $order->totalValue = $hamburguer->comboValue + $valorNovo;
+            }else{
+                $order->totalValue = $hamburguer->comboValue;
             }
-            $order->totalValue = $hamburguer->comboValue;
+
             $order->valueWithoutDisccount = $hamburguer->comboValue;
             $order->save();
 
@@ -329,6 +331,11 @@ class TrayController extends Controller
                 return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress'));
             }
         }
+    }
+
+    public function removeExtras($extra)
+    {
+        echo $extra;
     }
 
     public function orderType()
