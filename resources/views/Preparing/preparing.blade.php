@@ -30,30 +30,39 @@
                                 <th scope="col">A preparar</th>
                                 <th scope="col">A inserir</th>
                                 <th scope="col">Detalhes</th>
+                                <th scope="col">Adicionais</th>
                                 <th scope="col">Tratativa</th>
                             </tr>
                             </thead>
                             <tbody>
 
                                 @foreach($orders as $order)
-                                  <tr>
+                                  <tr style="cursor: pointer">
                                     <td>#{{ $order->id }}</td>
-                                    <td>
+                                    <td title="Itens do pedido.">
                                         @if($order->detached != '')
                                             {{ $order->detached }}
                                         @else
                                             {{ $order->hamburguer }}, {{ $order->fries }}, {{ $order->drinks }}
                                         @endif
                                     </td>
-                                      <td>
+                                      <td title="Ingredientes que deverão ser inseridos em cada sanduíche de acordo com o pedido do cliente.">
                                             {{ $order->comments }}
                                       </td>
 
-                                      <td>
+                                      <td title="Comentários que o cliente inseriu sobre este pedido.">
                                           @if($order->clientComments != '')
                                               {{ $order->clientComments }}
                                           @else
                                               <span>Sem comentários adicionados.</span>
+                                          @endif
+                                      </td>
+
+                                      <td>
+                                          @if($order->extras != '')
+                                              <span title="Itens adicionais ao pedido. O(a) cliente pagou a mais para que estes itens fossem adicionados" class="text-danger font-weight-bold">{{ $order->extras }}</span>
+                                          @else
+                                              <span title="Não é necessário inserir itens a mais." class="text-primary">Sem itens extras para adicionar.</span>
                                           @endif
                                       </td>
                                     <td>

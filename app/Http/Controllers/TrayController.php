@@ -36,6 +36,45 @@ class TrayController extends Controller
         $user = Auth::user()->id;
         $item = Adverts::find($id);
 
+        if (isset ($request->extras)){
+            //Buscando acompanhamento.
+            $extras = [];
+            $valorNovo = 0;
+
+            foreach ($request->extras as $ex){
+                $extra = DB::table('extras')
+                    ->select('name')
+                    ->where('namePrice', '=', $ex)
+                    ->get()->toArray();
+
+                foreach ($extra as $e => $value){
+                    array_push($extras, $value);
+                }
+            }
+
+            //Somando os valores dos itens adicionais
+            foreach ($request->extras as $exts){
+                $vals = DB::table('extras')
+                    ->select('price')
+                    ->where('namePrice', '=', $exts)
+                    ->get()->toArray();
+
+                foreach ($vals as $v => $vls){
+                    $valorNovo += doubleval($vls->price);
+                }
+            }
+
+            //Ajustando o array que recebe os itens adicionais
+
+            $add = [];
+
+            foreach ($extras as $ext => $val){
+                array_push($add, $val->name);
+            }
+
+            $addItems = implode(', ', $add);
+        }
+
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
         if(isset($request['ingredients'])){
@@ -51,12 +90,23 @@ class TrayController extends Controller
             $order->hour = date('H:i');
             $order->detached = $item->name;
 
+            if (isset($request->extras)){
+                $order->extras = $addItems;
+                $order->totalValue = $item->value + $valorNovo;
+            }else{
+                $order->totalValue = $item->value;
+            }
+
             if (isset($requirements)){
                 $order->comments = $item->name . ": " .$requirements . ". ";
             }
 
-            $order->totalValue = $item->value;
-            $order->valueWithoutDisccount = $item->value;
+            if (isset($request->extras)){
+                $order->valueWithoutDisccount = $item->value + $valorNovo;
+            }else{
+                $order->valueWithoutDisccount = $item->value;
+            }
+
             $order->save();
 
             return redirect(route('cardapio', $insert = 'added'));
@@ -65,11 +115,24 @@ class TrayController extends Controller
             $order = Tray::find($verifyOrder->id);
             $items = $order->detached;
             $order->detached = $items . ',' . $item->name;
+
             if (isset($requirements)){
               $order->comments = $order->comments . $item->name . ": " .$requirements . ". ";
             }
-            $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
-            $order->totalValue = doubleval($order->totalValue) + doubleval($item->value);
+
+            if (isset($request->extras)){
+                $order->extras = $addItems;
+                $order->totalValue = $item->value + $valorNovo;
+            }else{
+                $order->totalValue = $item->value;
+            }
+
+            if (isset($request->extras)){
+                $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value) + $valorNovo;
+            }else{
+                $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
+            }
+            
             $order->save();
 
             return redirect(route('cardapio', $insert = 'added'));

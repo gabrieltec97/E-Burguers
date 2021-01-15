@@ -8,6 +8,7 @@ use App\Tray;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Console\Input\Input;
 
@@ -18,11 +19,14 @@ class menuController extends Controller
     {
         $foods = Adverts::all();
         $tray = $tray = Auth::user()->userOrderTray()->select('detached')->get();
+        $extras = DB::table('extras')
+            ->select('namePrice')
+            ->get()->toArray();
 
         if(isset($tray[0]->detached)){
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray', 'extras'));
         }else{
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'extras'));
         }
     }
 

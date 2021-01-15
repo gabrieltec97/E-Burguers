@@ -96,6 +96,7 @@ class OrdersController extends Controller
         $newOrder->monthDay =  date("d");
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->address = $updOrder[0]['address'];
+        $newOrder->extras = $updOrder[0]['extras'];
         $newOrder->payingMethod = $updOrder[0]['payingMethod'];
         $newOrder->payingValue = $updOrder[0]['payingValue'];
 
