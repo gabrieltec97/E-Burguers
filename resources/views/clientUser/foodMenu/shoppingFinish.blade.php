@@ -17,6 +17,14 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 col-lg-4 mb-4 mb-lg-0">
+                            @if(session('msg'))
+                                <div class="alert alert-danger alerta-sucesso-ref alert-dismissible fade show" role="alert">
+                                    <span class="font-weight-bold">Poxa!</span> {{ session('msg') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
                             @if(isset($couponName) && !isset($use))
                                 <div class="alert alert-success alerta-sucesso-user mt-2 alert-dismissible fade show" role="alert">
                                     <span class="text-muted font-weight-bold">Cupom inserido com sucesso!</span>
@@ -92,15 +100,24 @@
                                         </ul>
                                     </div>
 
-                                   @if(isset($myOrder['extras']))
+                                   @if($myOrder['extras'] != '')
                                         <hr>
                                     <h5 class="font-weight-bold text-center mb-3">Adicionais:</h5>
                                        <ol>
-                                           <form action="{{ route('removeadd', $food = $myOrder['drinks']) }}" class="form-group removerAdicional">
+
                                                @foreach(explode(', ', $myOrder['extras']) as $extra)
-                                                   <li class="font-weight-bold"><span style="cursor:pointer;" title="Item adicionado ao sanduíche">{{ $extra }}</span> &nbsp;<button type="submit" class="fas fa-times text-danger removeItem" title="Remover item adicional" style="cursor: pointer"></button></li>
+                                               <form action="{{ route('removeadd')}}" class="form-group removerAdicional">
+                                                   <li class="font-weight-bold" style="margin-bottom: -5px;"><span style="cursor:pointer;" title="Item adicionado ao sanduíche">{{ $extra }}</span> &nbsp;<button type="submit" class="fas fa-times text-danger removeItem" title="Remover item adicional" style="cursor: pointer"></button></li>
+                                                   <select name="extra" hidden>
+                                                       <option value="{{ $extra }}"></option>
+                                                   </select>
+
+                                                   <select name="id" hidden>
+                                                       <option value="{{ $myOrder['id'] }}"></option>
+                                                   </select>
+                                               </form>
                                                @endforeach
-                                           </form>
+
                                        </ol>
                                         <hr>
                                    @endif

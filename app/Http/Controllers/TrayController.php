@@ -289,7 +289,7 @@ class TrayController extends Controller
     public function reviewAndFinish()
     {
         $user = Auth::user();
-        $myOrder= $user->userOrderTray()->select('orderType', 'detached', 'hamburguer', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+        $myOrder= $user->userOrderTray()->select('id', 'orderType', 'detached', 'hamburguer', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
         $pending = DB::table('orders')->select('deliverWay')
             ->where('idClient', '=', $user->id)
             ->where('status', '=', 'Pendente')->get()->toArray();
@@ -333,9 +333,52 @@ class TrayController extends Controller
         }
     }
 
-    public function removeExtras($extra)
+    public function removeExtras(Request $req)
     {
-        echo $extra;
+        //Pegando o nome do item, seu valor e o valor total do pedido até o momento.
+        $extra = DB::table('trays')
+            ->select('extras')
+            ->where('id', '=', $req->id)
+            ->get()->toArray();
+
+        $trayPrice = DB::table('trays')
+            ->select('totalValue')
+            ->where('id', '=', $req->id)
+            ->get()->toArray();
+
+        $price = DB::table('extras')
+            ->select('price')
+            ->where('name', '=', $req->extra)
+            ->get()->toArray();
+
+        $price = $price[0]->price;
+
+        $trayPrice = $trayPrice[0]->totalValue;
+
+        $extra = $extra[0]->extras;
+
+        $finalValue = $trayPrice - $price;
+
+        //Removendo o item adicional e subtraindo o valor do pedido.
+
+        if (isset($extra)){
+            $alter = explode(', ', $extra);
+            $position = array_search($req->extra, $alter);
+            unset($alter[$position]);
+            $updatedExtra = implode(', ', $alter);
+
+            $affected = DB::table('trays')
+                ->where('id', '=', $req->id)
+                ->update(['extras' => $updatedExtra]);
+
+            $alterValue = DB::table('trays')
+                ->where('id', '=', $req->id)
+                ->update(['totalValue' => $finalValue]);
+
+            return back()->with('msg', 'Item removido do sanduíche :(');
+        }else{
+            return back();
+        }
     }
 
     public function orderType()
@@ -384,7 +427,7 @@ class TrayController extends Controller
 
     public function couponApply(Request $request)
     {
-        $order = Auth::user()->userOrderTray()->select('id', 'orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+        $order = Auth::user()->userOrderTray()->select('id', 'orderType', 'detached', 'address', 'extras', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
         $couponOld = DB::table('coupons')->where('name', '=', $request->cupomDesconto)->get()->toArray();
         $update = Tray::find($order[0]['id']);
         $date = date('Y'. '-' . 'm' . '-' . 'd');
@@ -430,7 +473,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -467,7 +510,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -503,7 +546,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -539,7 +582,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -575,7 +618,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -611,7 +654,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -647,7 +690,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -683,7 +726,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -719,7 +762,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -795,7 +838,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'extras','detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
