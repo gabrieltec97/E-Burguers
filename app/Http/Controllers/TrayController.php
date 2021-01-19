@@ -187,7 +187,7 @@ class TrayController extends Controller
                 $auxItems->save();
 
             }else{
-                $order->totalValue = $item->value;
+                $order->totalValue = doubleval($order->totalValue) + doubleval($item->value);
                 $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
             }
 
@@ -415,9 +415,14 @@ class TrayController extends Controller
     {
         $user = Auth::user();
         $myOrder= $user->userOrderTray()->select('id', 'orderType', 'detached', 'hamburguer', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+        //Trazendo os itens customizados.
+        $customs = DB::table('auxiliar_detacheds')->select()
+            ->where('idOrder', '=', $myOrder['id'])
+            ->get()->toArray();
         $pending = DB::table('orders')->select('deliverWay')
             ->where('idClient', '=', $user->id)
             ->where('status', '=', 'Pendente')->get()->toArray();
+
 
         if ($pending != null){
             $pendings = $pending[0]->deliverWay;
@@ -432,9 +437,19 @@ class TrayController extends Controller
             $sendAddress = $address[0]->address;
 
             if (isset($pendings)){
-                return view('clientUser.foodMenu.shoppingFinish', compact('pendings','myOrder', 'detached', 'sendAddress'));
+
+                if ($customs == null){
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings','myOrder', 'detached', 'sendAddress'));
+                }else{
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'customs', 'myOrder', 'detached', 'sendAddress'));
+                }
+
             }else{
-                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached', 'sendAddress'));
+                if ($customs == null){
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached', 'sendAddress'));
+                }else{
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'detached', 'sendAddress'));
+                }
             }
 
         }
@@ -442,18 +457,34 @@ class TrayController extends Controller
             $detached = explode(',', $myOrder['detached']);
 
             if (isset($pendings)){
-                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached', 'pendings'));
+                if ($customs == null){
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached', 'pendings'));
+                }else{
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs','detached', 'pendings'));
+                }
             }else{
-                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached'));
+                if ($customs == null){
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached'));
+                }else{
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'detached'));
+                }
             }
         }
         elseif (isset($address[0]->address)){
             $sendAddress = $address[0]->address;
 
             if (isset($pendings)){
-                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'pendings'));
+                if ($customs == null){
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'pendings'));
+                }else{
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs','sendAddress', 'pendings'));
+                }
             }else{
-                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress'));
+                if ($customs == null){
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress'));
+                }else{
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'sendAddress'));
+                }
             }
         }
     }

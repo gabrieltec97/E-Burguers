@@ -86,41 +86,58 @@
                                                 @endif
                                             @elseif($myOrder['orderType'] == 'Avulso')
 
-                                                @foreach($detached as $key => $value)
+                                                @if(isset($customs))
+                                                    @foreach($customs as $key => $val)
+                                                            <li style="position: relative; right: 20px">{{ $val->Item }}</li>
+                                                            <ul>
+                                                                <form action="#" method="post">
+                                                                    @csrf
+                                                                    <li style="position: relative; right: 20px;">{{ $val->nameExtra }}
+                                                                        <button type="submit" class="removeItem ml-1" title="Editar itens extras"><i class="fas fa-edit text-primary" style="font-size: 16px"></i></button></li>
+                                                                </form>
+                                                            </ul>
+                                                    @endforeach
 
-                                                    <form action="{{ route('removerItem', $key)}}" method="post">
-                                                        @csrf
-                                                        <li style="position: relative; right: 20px">{{ $value }}
-                                                            <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
-                                                    </form>
+                                                        <hr>
+                                                @endif
 
-                                                @endforeach
+                                                    @foreach($detached as $key => $value)
+
+                                                        <form action="{{ route('removerItem', $key)}}" method="post">
+                                                            @csrf
+                                                            <li style="position: relative; right: 20px">{{ $value }}
+                                                                <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
+                                                        </form>
+
+                                                    @endforeach
 
                                             @endif
                                         </ul>
                                     </div>
 
-                                   @if($myOrder['extras'] != '')
+                                    @if($myOrder['orderType'] != 'Avulso')
+                                    @if($myOrder['extras'] != '')
                                         <hr>
-                                    <h5 class="font-weight-bold text-center mb-3">Adicionais:</h5>
-                                       <ol>
+                                        <h5 class="font-weight-bold text-center mb-3">Adicionais:</h5>
+                                        <ol>
 
-                                               @foreach(explode(', ', $myOrder['extras']) as $extra)
-                                               <form action="{{ route('removeadd')}}" class="form-group removerAdicional">
-                                                   <li class="font-weight-bold" style="margin-bottom: -5px;"><span style="cursor:pointer;" title="Item adicionado ao sanduíche">{{ $extra }}</span> &nbsp;<button type="submit" class="fas fa-times text-danger removeItem" title="Remover item adicional" style="cursor: pointer"></button></li>
-                                                   <select name="extra" hidden>
-                                                       <option value="{{ $extra }}"></option>
-                                                   </select>
+                                            @foreach(explode(', ', $myOrder['extras']) as $extra)
+                                                <form action="{{ route('removeadd')}}" class="form-group removerAdicional">
+                                                    <li class="font-weight-bold" style="margin-bottom: -5px;"><span style="cursor:pointer;" title="Item adicionado ao sanduíche">{{ $extra }}</span> &nbsp;<button type="submit" class="fas fa-times text-danger removeItem" title="Remover item adicional" style="cursor: pointer"></button></li>
+                                                    <select name="extra" hidden>
+                                                        <option value="{{ $extra }}"></option>
+                                                    </select>
 
-                                                   <select name="id" hidden>
-                                                       <option value="{{ $myOrder['id'] }}"></option>
-                                                   </select>
-                                               </form>
-                                               @endforeach
+                                                    <select name="id" hidden>
+                                                        <option value="{{ $myOrder['id'] }}"></option>
+                                                    </select>
+                                                </form>
+                                            @endforeach
 
-                                       </ol>
+                                        </ol>
                                         <hr>
-                                   @endif
+                                    @endif
+                                    @endif
 
                                     <div class="col-12">
                                         <label class="text-muted font-weight-bold" style="font-size: 18px">Valor total:</label>
