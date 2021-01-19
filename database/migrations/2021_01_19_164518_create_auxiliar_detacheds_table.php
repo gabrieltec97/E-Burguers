@@ -15,9 +15,10 @@ class CreateAuxiliarDetachedsTable extends Migration
     {
         Schema::create('auxiliar_detacheds', function (Blueprint $table) {
             $table->id();
-            $table->string('idOrder');
-            $table->string('Item');
-            $table->string('Extras');
+            $table->string('idOrder')->nullable();
+            $table->string('Item')->nullable();
+            $table->string('Extras')->nullable();
+            $table->string('nameExtra')->nullable();
             $table->timestamps();
         });
     }

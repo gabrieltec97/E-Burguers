@@ -97,46 +97,102 @@ class TrayController extends Controller
                 $order->totalValue = $item->value + $valorNovo;
                 $order->valueWithoutDisccount = $item->value + $valorNovo;
 
+                if (isset($requirements)){
+                    $order->comments = $item->name . ": " .$requirements . ". ";
+                }
+
+                $order->save();
+
                 $auxItems = new AuxiliarDetached();
                 $auxItems->item = $item->name;
-                $auxItems->idOrder = $order->Id;
+                $auxItems->idOrder = $order->id;
                 $auxItems->extras = $addAuxTable;
+                $auxItems->nameExtra = $addItems;
                 $auxItems->save();
 
-                return redirect(route('cardapio', $insert = 'added'));
             }else{
                 $order->valueWithoutDisccount = $item->value;
                 $order->totalValue = $item->value;
-            }
 
-            if (isset($requirements)){
-                $order->comments = $item->name . ": " .$requirements . ". ";
-            }
+                if (isset($requirements)){
+                    $order->comments = $item->name . ": " .$requirements . ". ";
+                }
 
-            $order->save();
+                $order->save();
+            }
 
             return redirect(route('cardapio', $insert = 'added'));
 
         }else{
+
             $order = Tray::find($verifyOrder->id);
             $items = $order->detached;
             $order->detached = $items . ',' . $item->name;
 
-            if (isset($requirements)){
-              $order->comments = $order->comments . $item->name . ": " .$requirements . ". ";
-            }
+            if (isset ($request->extras)) {
+                //Buscando acompanhamento.
+                $extras = [];
+                $valorNovo = 0;
 
-            if (isset($request->extras)){
+                foreach ($request->extras as $ex) {
+                    $extra = DB::table('extras')
+                        ->select('name')
+                        ->where('namePrice', '=', $ex)
+                        ->get()->toArray();
+
+                    foreach ($extra as $e => $value) {
+                        array_push($extras, $value);
+                    }
+                }
+
+                //Somando os valores dos itens adicionais
+                foreach ($request->extras as $exts) {
+                    $vals = DB::table('extras')
+                        ->select('price')
+                        ->where('namePrice', '=', $exts)
+                        ->get()->toArray();
+
+                    foreach ($vals as $v => $vls) {
+                        $valorNovo += doubleval($vls->price);
+                    }
+                }
+
+                //Ajustando o array que recebe os itens adicionais
+
+                $add = [];
+
+                foreach ($extras as $ext => $val) {
+                    array_push($add, $val->name);
+                }
+
+                $addItems = implode(', ', $add);
+
+                $addAuxTable = $item->name . ': ' . $addItems;
+
                 $order->extras = $addItems;
                 $order->totalValue = $item->value + $valorNovo;
+                $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value) + $valorNovo;
+
+                if (isset($requirements)) {
+                    $order->comments = $order->comments . ' ' . $item->name . ": " . $requirements . ". ";
+                }
+
+                $order->save();
+
+                $auxItems = new AuxiliarDetached();
+                $auxItems->item = $item->name;
+                $auxItems->idOrder = $order->id;
+                $auxItems->extras = $addAuxTable;
+                $auxItems->nameExtra = $addItems;
+                $auxItems->save();
+
             }else{
                 $order->totalValue = $item->value;
+                $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
             }
 
-            if (isset($request->extras)){
-                $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value) + $valorNovo;
-            }else{
-                $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
+            if (isset($requirements)){
+              $order->comments = $order->comments . $item->name . ": " .$requirements . ". ";
             }
 
             $order->save();
