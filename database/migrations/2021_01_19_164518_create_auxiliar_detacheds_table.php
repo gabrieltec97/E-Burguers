@@ -17,8 +17,9 @@ class CreateAuxiliarDetachedsTable extends Migration
             $table->id();
             $table->string('idOrder')->nullable();
             $table->string('Item')->nullable();
-            $table->string('Extras')->nullable();
-            $table->string('nameExtra')->nullable();
+            $table->longText('Extras')->nullable();
+            $table->longText('nameExtra')->nullable();
+            $table->string('valueWithExtras')->nullable();
             $table->timestamps();
         });
     }

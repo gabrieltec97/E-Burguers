@@ -18,12 +18,13 @@ class menuController extends Controller
     public function foodMenu($insert)
     {
         $foods = Adverts::all();
-        $tray = $tray = Auth::user()->userOrderTray()->select('detached')->get();
+        $tray = Auth::user()->userOrderTray()->select('id')->get();
         $extras = DB::table('extras')
             ->select('namePrice')
             ->get()->toArray();
 
-        if(isset($tray[0]->detached)){
+
+        if(isset($tray[0]->id)){
             return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray', 'extras'));
         }else{
             return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'extras'));

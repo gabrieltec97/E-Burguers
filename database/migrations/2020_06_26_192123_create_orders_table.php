@@ -16,17 +16,17 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('idClient');
-            $table->string('clientName');
+            $table->longText('clientName');
             $table->string('status');
             $table->string('orderType');
-            $table->string('detached')->nullable();
+            $table->longText('detached')->nullable();
             $table->string('hamburguer')->nullable();
             $table->string('fries')->nullable();
             $table->string('drinks')->nullable();
-            $table->string('comments')->nullable();
-            $table->string('clientComments')->nullable();
+            $table->longText('comments')->nullable();
+            $table->longText('clientComments')->nullable();
             $table->string('deliverWay')->nullable();
-            $table->string('totalValue')->nullable();
+            $table->longText('totalValue')->nullable();
             $table->string('day')->nullable();
             $table->string('monthDay')->nullable();
             $table->string('year')->nullable();
@@ -35,7 +35,7 @@ class CreateOrdersTable extends Migration
             $table->string('address')->nullable();
             $table->string('payingMethod')->nullable();
             $table->string('payingValue')->nullable();
-            $table->string('extras')->nullable();
+            $table->longText('extras')->nullable();
             $table->timestamps();
         });
     }

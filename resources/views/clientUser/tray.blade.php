@@ -13,7 +13,7 @@
                 $count = 0;
 
                 if(isset($detached)){
-                    $count = count($detached);
+                    $count = $counter;
                 }
 
                 if(isset($tray[0])){

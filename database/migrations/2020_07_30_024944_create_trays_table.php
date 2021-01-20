@@ -17,12 +17,12 @@ class CreateTraysTable extends Migration
             $table->id();
             $table->string('idClient');
             $table->string('orderType');
-            $table->string('detached')->nullable();
+            $table->longText('detached')->nullable();
             $table->string('hamburguer')->nullable();
             $table->string('portion')->nullable();
             $table->string('drinks')->nullable();
-            $table->string('comments')->nullable();
-            $table->string('clientComments')->nullable();
+            $table->longText('comments')->nullable();
+            $table->longText('clientComments')->nullable();
             $table->string('deliverWay')->nullable();
             $table->string('totalValue')->nullable();
             $table->string('day')->nullable();
@@ -31,7 +31,7 @@ class CreateTraysTable extends Migration
             $table->string('payingMethod')->nullable();
             $table->string('payingValue')->nullable();
             $table->string('disccountUsed')->nullable();
-            $table->string('extras')->nullable();
+            $table->longText('extras')->nullable();
             $table->string('valueWithoutDisccount')->nullable();
             $table->timestamps();
         });

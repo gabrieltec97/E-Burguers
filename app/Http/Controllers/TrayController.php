@@ -21,14 +21,58 @@ class TrayController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $tray = $user->userOrderTray()->select('orderType', 'detached', 'hamburguer', 'portion', 'drinks')->get()->toArray();
+        $tray = $user->userOrderTray()->select('id', 'orderType', 'detached', 'hamburguer', 'portion', 'drinks')->get()->toArray();
 
-        if(isset($tray[0]['detached'])){
+        if (isset($tray[0]['id'])){
+            $extras = DB::table('auxiliar_detacheds')->select('Item', 'nameExtra')
+                ->where('idOrder', '=', $tray[0]['id'])
+                ->get()->toArray();
+
+            //Formatando arrays
+            $items = [];
+            $addons = [];
+            foreach ($extras as $key => $value){
+                array_push($items, $value->Item);
+            }
+
+//            foreach ($extras as $key => $value){
+//                array_push($addons, $value->Item);
+//            }
+        }
+
+        if (isset($tray[0]['detached'])){
             $detached = explode(',', $tray[0]['detached']);
+        }
 
-            return view('clientUser.tray', compact('tray', 'detached'));
+        //Verificando se a bandeja possui itens.
+        if(isset($tray[0]['detached']) && isset($tray[0]['id'])){
+
+            $detached = explode(',', $tray[0]['detached']);
+            $counter = count($detached) + count($items);
+
+            return view('clientUser.tray', compact('tray', 'detached', 'extras', 'counter'));
+
+        }elseif(isset($tray[0]['detached'])){
+
+            $detached = explode(',', $tray[0]['detached']);
+            $counter = count($detached);
+
+            return view('clientUser.tray', compact('tray', 'detached', 'counter'));
+
+        }elseif (isset($tray[0]['id'])){
+
+            $extras = DB::table('auxiliar_detacheds')->select('Item', 'nameExtra')
+                ->where('idOrder', '=', $tray[0]['id'])
+                ->get()->toArray();
+
+            $counter = count($items);
+
+            return view('clientUser.tray', compact('tray', 'extras', 'counter'));
+
         }else{
-            return view('clientUser.tray', compact('tray'));
+            $counter = 0;
+
+            return view('clientUser.tray', compact('tray', 'counter'));
         }
     }
 
@@ -51,7 +95,6 @@ class TrayController extends Controller
             $order->orderType = "Avulso";
             $order->day = date('d/m/Y');
             $order->hour = date('H:i');
-            $order->detached = $item->name;
 
             if (isset ($request->extras)){
                 //Buscando acompanhamento.
@@ -108,9 +151,11 @@ class TrayController extends Controller
                 $auxItems->idOrder = $order->id;
                 $auxItems->extras = $addAuxTable;
                 $auxItems->nameExtra = $addItems;
+                $auxItems->valueWithExtras = $item->value + $valorNovo;
                 $auxItems->save();
 
             }else{
+                $order->detached = $item->name;
                 $order->valueWithoutDisccount = $item->value;
                 $order->totalValue = $item->value;
 
@@ -127,7 +172,14 @@ class TrayController extends Controller
 
             $order = Tray::find($verifyOrder->id);
             $items = $order->detached;
-            $order->detached = $items . ',' . $item->name;
+
+            if ($items == ''){
+                echo 'vazio';
+                echo $items;
+            }else{
+                echo 'há';
+                echo $items;
+            }
 
             if (isset ($request->extras)) {
                 //Buscando acompanhamento.
@@ -170,7 +222,7 @@ class TrayController extends Controller
                 $addAuxTable = $item->name . ': ' . $addItems;
 
                 $order->extras = $addItems;
-                $order->totalValue = $item->value + $valorNovo;
+                $order->totalValue = $order->totalValue + $item->value + $valorNovo;
                 $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value) + $valorNovo;
 
                 if (isset($requirements)) {
@@ -184,9 +236,15 @@ class TrayController extends Controller
                 $auxItems->idOrder = $order->id;
                 $auxItems->extras = $addAuxTable;
                 $auxItems->nameExtra = $addItems;
+                $auxItems->valueWithExtras = $item->value + $valorNovo;
                 $auxItems->save();
 
             }else{
+                if (isset($order->detached)){
+                    $order->detached = $items . ',' . $item->name;
+                }else{
+                    $order->detached = $item->name;
+                }
                 $order->totalValue = doubleval($order->totalValue) + doubleval($item->value);
                 $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
             }

@@ -18,7 +18,7 @@
             <div class="col-12">
                 <div class="container-fluid">
                     @if(isset($tray))
-                        <div class="col-12 d-flex justify-content-center" style="">
+                        <div class="col-12 d-flex justify-content-center">
                             <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Ir para pagamento</a>
                         </div>
                     @endif
