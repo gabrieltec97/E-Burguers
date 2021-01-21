@@ -30,49 +30,31 @@ class TrayController extends Controller
 
             //Formatando arrays
             $items = [];
-            $addons = [];
             foreach ($extras as $key => $value){
                 array_push($items, $value->Item);
             }
-
-//            foreach ($extras as $key => $value){
-//                array_push($addons, $value->Item);
-//            }
         }
 
-        if (isset($tray[0]['detached'])){
-            $detached = explode(',', $tray[0]['detached']);
-        }
 
         //Verificando se a bandeja possui itens.
         if(isset($tray[0]['detached']) && isset($tray[0]['id'])){
 
             $detached = explode(',', $tray[0]['detached']);
-            $counter = count($detached) + count($items);
 
-            return view('clientUser.tray', compact('tray', 'detached', 'extras', 'counter'));
+            return view('clientUser.tray', compact('tray', 'detached', 'items', 'extras'));
 
         }elseif(isset($tray[0]['detached'])){
 
             $detached = explode(',', $tray[0]['detached']);
-            $counter = count($detached);
 
-            return view('clientUser.tray', compact('tray', 'detached', 'counter'));
+            return view('clientUser.tray', compact('tray', 'detached'));
 
         }elseif (isset($tray[0]['id'])){
 
-            $extras = DB::table('auxiliar_detacheds')->select('Item', 'nameExtra')
-                ->where('idOrder', '=', $tray[0]['id'])
-                ->get()->toArray();
-
-            $counter = count($items);
-
-            return view('clientUser.tray', compact('tray', 'extras', 'counter'));
+            return view('clientUser.tray', compact('tray', 'items', 'extras'));
 
         }else{
-            $counter = 0;
-
-            return view('clientUser.tray', compact('tray', 'counter'));
+            return view('clientUser.tray', compact('tray'));
         }
     }
 

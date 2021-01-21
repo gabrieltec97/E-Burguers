@@ -55,14 +55,34 @@
 
             $user = \Illuminate\Support\Facades\Auth::user();
             $tray = $user->userOrderTray()->select('hamburguer', 'portion', 'drinks')->get()->toArray();
-            $freeTray = $user->userOrderTray()->select('detached')->get()->toArray();
+            $freeTray = $user->userOrderTray()->select('id','detached')->get()->toArray();
+
+            if (isset($freeTray[0]['id'])){
+                $extras = DB::table('auxiliar_detacheds')->select('Item')
+                    ->where('idOrder', '=', $freeTray[0]['id'])
+                    ->get()->toArray();
+
+                //Formatando arrays
+                $items = [];
+                foreach ($extras as $key => $value){
+                    array_push($items, $value->Item);
+                }
+            }
+
             $count = 0;
 
-            if(isset($freeTray[0])){
+            if (isset($freeTray[0]) && isset($items)){
                 $cart = explode(',', $freeTray[0]['detached']);
+                $count = count($cart) + count($items);
 
+            }elseif(isset($freeTray[0])){
+                $cart = explode(',', $freeTray[0]['detached']);
                 $count = count($cart);
+
+            }elseif(isset($items)){
+                $count = count($items);
             }
+
 
             if(isset($tray[0])){
                 if($tray[0]['hamburguer'] != ''){

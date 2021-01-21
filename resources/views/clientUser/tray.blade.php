@@ -1,5 +1,8 @@
 @extends('layouts.extend-client')
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
 @section('title')
     Meu pedido
 @endsection
@@ -12,8 +15,12 @@
 
                 $count = 0;
 
-                if(isset($detached)){
-                    $count = $counter;
+                if (isset($detached) && isset($items)){
+                    $count = count($detached) + count($items);
+                }elseif(isset($detached)){
+                    $count = count($detached);
+                }elseif(isset($items)){
+                    $count = count($items);
                 }
 
                 if(isset($tray[0])){
@@ -31,6 +38,8 @@
                 }
 
                 ?>
+
+
                 @if($count != 0)
                 <h1 class="titulo-cardapio text-center my-3">Hmm... Até o momento seu pedido está assim</h1>
                 @else
@@ -180,7 +189,40 @@
                                             @endforeach
                                         @endif
                                     @endif
-                                @endif
+
+                                        @if(isset($extras))
+                                            @foreach($extras as $chave => $valor)
+                                                <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <form action="#" method="post">
+                                                                @csrf
+                                                                <div class="container-fluid">
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
+                                                                            <span class="text-muted font-weight-bold teste">
+                                                          {{ $valor->Item }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+
+                                                                        </div>
+                                                                        <div class="col-6 mt-4">
+                                                                            @foreach(explode(',', $valor->nameExtra) as $val)
+                                                                            <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $val }}" checked>
+                                                                            <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $val  }}</label>
+                                                                                <br>
+                                                                            @endforeach
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        @endif
                             </div>
                         </div>
                     </div>
