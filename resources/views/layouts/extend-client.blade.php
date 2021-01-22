@@ -73,7 +73,12 @@
 
             if (isset($freeTray[0]) && isset($items)){
                 $cart = explode(',', $freeTray[0]['detached']);
-                $count = count($cart) + count($items);
+                if ($cart[0] == ''){
+                    $count = count($items);
+                }else{
+                    $count = count($cart) + count($items);
+                }
+
 
             }elseif(isset($freeTray[0])){
                 $cart = explode(',', $freeTray[0]['detached']);

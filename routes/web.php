@@ -65,6 +65,10 @@ Route::get('/adicionarItem/{id}', 'TrayController@freeOrder')->name('adicionarIt
 
 Route::post('/removerItem/{id}', 'TrayController@detached')->name('removerItem');
 
+Route::post('/removerPersonalizado/{id}', 'TrayController@removePersonalized')->name('removerPersonalizado');
+
+Route::post('/editarPersonalizado/{id}', 'TrayController@editPersonalized')->name('editarPersonalizado');
+
 //Rota de aplicação de cupom.
 
 Route::post('/aplicarCupom', 'TrayController@couponApply')->name('aplicarCupom');

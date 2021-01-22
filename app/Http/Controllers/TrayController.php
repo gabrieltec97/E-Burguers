@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Adverts;
 use App\AuxiliarDetached;
 use App\Coupon;
+use App\Extras;
 use App\Tray;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,10 @@ class TrayController extends Controller
     {
         $user = Auth::user();
         $tray = $user->userOrderTray()->select('id', 'orderType', 'detached', 'hamburguer', 'portion', 'drinks')->get()->toArray();
+        $addons = Extras::all()->toArray();
 
         if (isset($tray[0]['id'])){
-            $extras = DB::table('auxiliar_detacheds')->select('Item', 'nameExtra')
+            $extras = DB::table('auxiliar_detacheds')->select('id', 'Item', 'nameExtra')
                 ->where('idOrder', '=', $tray[0]['id'])
                 ->get()->toArray();
 
@@ -35,23 +37,22 @@ class TrayController extends Controller
             }
         }
 
-
         //Verificando se a bandeja possui itens.
         if(isset($tray[0]['detached']) && isset($tray[0]['id'])){
 
             $detached = explode(',', $tray[0]['detached']);
 
-            return view('clientUser.tray', compact('tray', 'detached', 'items', 'extras'));
+            return view('clientUser.tray', compact('tray', 'detached', 'items', 'extras', 'addons'));
 
         }elseif(isset($tray[0]['detached'])){
 
             $detached = explode(',', $tray[0]['detached']);
 
-            return view('clientUser.tray', compact('tray', 'detached'));
+            return view('clientUser.tray', compact('tray', 'detached', 'addons'));
 
         }elseif (isset($tray[0]['id'])){
 
-            return view('clientUser.tray', compact('tray', 'items', 'extras'));
+            return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
 
         }else{
             return view('clientUser.tray', compact('tray'));
@@ -239,6 +240,58 @@ class TrayController extends Controller
 
             return redirect(route('cardapio', $insert = 'added'));
         }
+    }
+
+    public function removePersonalized($id)
+    {
+        $personalized = AuxiliarDetached::find($id);
+        $personalized->delete();
+
+        return redirect()->route('minhaBandeja.index')->with('msg', ' ');
+    }
+
+    public function editPersonalized(Request $req, $id)
+    {
+        $personalized = AuxiliarDetached::find($id);
+
+        //Recuperando o valor do produto.
+        $data = DB::table('adverts')->select('name','value')
+            ->where('name', '=', $personalized->Item)
+            ->get()->toArray();
+
+        //Recuperando o valor do adicional e somando com o item.
+        $value = $data[0]->value;
+        $val = 0;
+
+        if (isset($req->ingredients)){
+            foreach ($req->ingredients as $ing){
+                $v = DB::table('extras')->select('price')
+                    ->where('name', '=', $ing)
+                    ->get()->toArray();
+
+                foreach ($v as $item) {
+                    $val += $item->price;
+                }
+            }
+            $ingredients = implode(', ', $req->ingredients);
+            $value += $val;
+
+            //Alterando na tabela
+            $personalized->Extras = $data[0]->name . ': ' . $ingredients;
+            $personalized->nameExtra = $ingredients;
+            $personalized->valueWithExtras = $value;
+        }else{
+            $personalized->Extras = null;
+            $personalized->nameExtra = null;
+            $personalized->valueWithExtras = $value;
+        }
+
+
+
+        $personalized->save();
+
+        return redirect()->route('minhaBandeja.index')->with('msg-2', ' ');
+
     }
 
     public function orderComboHamburguer()

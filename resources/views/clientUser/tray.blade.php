@@ -166,27 +166,45 @@
                                         @endif
 
                                     @elseif($tray[0]['orderType'] == 'Avulso')
-                                        @if(($tray[0]['detached']) != '')
+                                        @if(($tray[0]['detached']) != '' or $extras != '')
                                             <div class="col-12 d-flex justify-content-center" style="">
                                                 <a href="{{ route('cardapio', $insert = true) }}" class="btn btn-danger font-weight-bold mr-2"><i class="fas fa-hamburger mr-2"></i>Ir para cardápio</a>
                                                 <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Ir para pagamento</a>
                                             </div>
-                                            @foreach($detached as $key => $value)
+                                            @if(isset($detached))
+                                                    @foreach($detached as $key => $value)
 
-                                                <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <form action="{{ route('removerItem', $key)}}" method="post">
-                                                                @csrf
-                                                                <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
-                                                                <span class="text-muted font-weight-bold teste">
+                                                        <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <form action="{{ route('removerItem', $key)}}" method="post">
+                                                                        <div class="container-fluid">
+                                                                            <div class="row">
+                                                                                <div class="col-6">
+                                                                                    @csrf
+                                                                                    <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
+                                                                                    <span class="text-muted font-weight-bold teste">
                                                           {{ $value }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
-                                                            </form>
-                                                            </span>
+                                                                                </div>
+
+                                                                                <div class="col-6 mt-4">
+                                                                                    @if(isset($addons))
+                                                                                        @foreach($addons as $pos => $data)
+                                                                                            <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $data['namePrice'] }}">
+                                                                                            <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $data['namePrice']  }}</label>
+                                                                                            <br>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
+                                                    @endforeach
+                                        @endif
                                         @endif
                                     @endif
 
@@ -195,27 +213,34 @@
                                                 <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <form action="#" method="post">
+                                                            <form action="{{ route('removerPersonalizado', $valor->id) }}" method="post">
                                                                 @csrf
                                                                 <div class="container-fluid">
-                                                                    <div class="row">
+                                                                    <div class="row d-flex justify-content-center">
                                                                         <div class="col-6">
                                                                             <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
                                                                             <span class="text-muted font-weight-bold teste">
                                                           {{ $valor->Item }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
 
                                                                         </div>
+                                                            </form>
+                                                            @if(isset($valor->nameExtra))
                                                                         <div class="col-6 mt-4">
+                                                                            <form action="{{ route('editarPersonalizado', $valor->id) }}" method="post">
+                                                                                @csrf
                                                                             @foreach(explode(',', $valor->nameExtra) as $val)
-                                                                            <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $val }}" checked>
-                                                                            <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $val  }}</label>
+                                                                                <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $val }}" checked>
+                                                                                <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $val  }}</label>
                                                                                 <br>
                                                                             @endforeach
                                                                         </div>
+                                                            @endif
+                                                            <button type="submit" class="btn btn-success font-weight-bold mt-5 w-75" title="Salvar alterações">Salvar</button>
+                                                            </form>
                                                                     </div>
                                                                 </div>
 
-                                                            </form>
+
                                                             </span>
                                                         </div>
                                                     </div>
@@ -238,5 +263,9 @@
 
     @if(session('msg'))
         <button hidden class="disparo-rem"></button>
+    @endif
+
+    @if(session('msg-2'))
+        <button hidden class="disparo-edits"></button>
     @endif
 @endsection

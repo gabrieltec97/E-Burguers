@@ -638,6 +638,21 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".disparo-rem").click();
 
+    //Toast de item editado do pedido avulso.
+
+    $(".disparo-edits").on("click", function (){
+        $.toast({
+            text: '<b>Item editado com sucesso!</b>',
+            heading: '<b>Tudo certo!</b>',
+            showHideTransition: 'slide',
+            bgColor : '#38C172',
+            position : 'top-right',
+            hideAfter: 5000
+        })
+    });
+
+    $(".disparo-edits").click();
+
 //Toast de pedido cadastrado com sucesso e novo pedido poder ser feito.
 
     $(".disparo-msg").on("click", function (){
