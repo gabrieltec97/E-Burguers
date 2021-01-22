@@ -37,26 +37,26 @@ class TrayController extends Controller
             }
         }
 
-        //Verificando se a bandeja possui itens.
-        if(isset($tray[0]['detached']) && isset($tray[0]['id'])){
-
-            $detached = explode(',', $tray[0]['detached']);
-
-            return view('clientUser.tray', compact('tray', 'detached', 'items', 'extras', 'addons'));
-
-        }elseif(isset($tray[0]['detached'])){
-
-            $detached = explode(',', $tray[0]['detached']);
-
-            return view('clientUser.tray', compact('tray', 'detached', 'addons'));
-
-        }elseif (isset($tray[0]['id'])){
-
-            return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
-
-        }else{
-            return view('clientUser.tray', compact('tray'));
-        }
+//        //Verificando se a bandeja possui itens.
+//        if(isset($tray[0]['detached']) && isset($tray[0]['id'])){
+//
+//            $detached = explode(',', $tray[0]['detached']);
+//
+//            return view('clientUser.tray', compact('tray', 'detached', 'items', 'extras', 'addons'));
+//
+//        }elseif(isset($tray[0]['detached'])){
+//
+//            $detached = explode(',', $tray[0]['detached']);
+//
+//            return view('clientUser.tray', compact('tray', 'detached', 'addons'));
+//
+//        }elseif (isset($tray[0]['id'])){
+//
+//            return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
+//
+//        }else{
+//            return view('clientUser.tray', compact('tray'));
+//        }
     }
 
     public function freeOrder(Request $request, $id)

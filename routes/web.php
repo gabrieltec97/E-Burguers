@@ -49,7 +49,7 @@ Route::post('/salvamento/{id?}', 'TrayController@shoppingFinish')->name('salvame
 
 Route::get('/finalizarCompra', 'TrayController@reviewAndFinish')->name('fimCompra');
 
-Route::get('/removerAdicional', 'TrayController@removeExtras')->name('removeadd');
+Route::post('/removerAdicional', 'TrayController@removeExtras')->name('removeadd');
 
 //Rotas de edição do combo.
 
