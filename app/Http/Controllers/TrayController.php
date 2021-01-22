@@ -25,6 +25,17 @@ class TrayController extends Controller
         $tray = $user->userOrderTray()->select('id', 'orderType', 'detached', 'hamburguer', 'portion', 'drinks')->get()->toArray();
         $addons = Extras::all()->toArray();
 
+        //Recuperando itens que não são hamburguer
+        $noExtras = DB::table('adverts')->select('name')
+            ->where('foodType', '!=', 'hamburguer')
+            ->get()->toArray();
+
+        $formatedNoExtras = [];
+
+        foreach ($noExtras as $n => $v){
+            array_push($formatedNoExtras, $v->name);
+        }
+
         if (isset($tray[0]['id'])){
             $extras = DB::table('auxiliar_detacheds')->select('id', 'Item', 'nameExtra')
                 ->where('idOrder', '=', $tray[0]['id'])
@@ -37,26 +48,26 @@ class TrayController extends Controller
             }
         }
 
-//        //Verificando se a bandeja possui itens.
-//        if(isset($tray[0]['detached']) && isset($tray[0]['id'])){
-//
-//            $detached = explode(',', $tray[0]['detached']);
-//
-//            return view('clientUser.tray', compact('tray', 'detached', 'items', 'extras', 'addons'));
-//
-//        }elseif(isset($tray[0]['detached'])){
-//
-//            $detached = explode(',', $tray[0]['detached']);
-//
-//            return view('clientUser.tray', compact('tray', 'detached', 'addons'));
-//
-//        }elseif (isset($tray[0]['id'])){
-//
-//            return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
-//
-//        }else{
-//            return view('clientUser.tray', compact('tray'));
-//        }
+        //Verificando se a bandeja possui itens.
+        if(isset($tray[0]['detached']) && isset($tray[0]['id'])){
+
+            $detached = explode(',', $tray[0]['detached']);
+
+            return view('clientUser.tray', compact('tray', 'formatedNoExtras', 'detached', 'items', 'extras', 'addons'));
+
+        }elseif(isset($tray[0]['detached'])){
+
+            $detached = explode(',', $tray[0]['detached']);
+
+            return view('clientUser.tray', compact('tray', 'detached', 'addons', 'formatedNoExtras'));
+
+        }elseif (isset($tray[0]['id'])){
+
+            return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
+
+        }else{
+            return view('clientUser.tray', compact('tray'));
+        }
     }
 
     public function freeOrder(Request $request, $id)
@@ -156,14 +167,6 @@ class TrayController extends Controller
             $order = Tray::find($verifyOrder->id);
             $items = $order->detached;
 
-            if ($items == ''){
-                echo 'vazio';
-                echo $items;
-            }else{
-                echo 'há';
-                echo $items;
-            }
-
             if (isset ($request->extras)) {
                 //Buscando acompanhamento.
                 $extras = [];
@@ -224,7 +227,11 @@ class TrayController extends Controller
 
             }else{
                 if (isset($order->detached)){
-                    $order->detached = $items . ',' . $item->name;
+                    if ($order->detached == ''){
+                        $order->detached = $item->name;
+                    }else{
+                        $order->detached = $items . ',' . $item->name;
+                    }
                 }else{
                     $order->detached = $item->name;
                 }
@@ -667,8 +674,14 @@ class TrayController extends Controller
         $editOrder->save();
 
         if($detached == ''){
-            $editOrder = Tray::find($order['id']);
-            $editOrder->delete();
+            $addons = DB::table('auxiliar_detacheds')->select('idOrder')
+                ->where('idOrder', '=', $order['id'])
+                ->get()->toArray();
+
+            if ($addons == ''){
+                $editOrder = Tray::find($order['id']);
+                $editOrder->delete();
+            }
         }
 
         return redirect(route('minhaBandeja.index'))->with('msg', '.');

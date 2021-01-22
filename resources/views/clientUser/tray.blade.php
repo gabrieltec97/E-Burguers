@@ -171,29 +171,44 @@
                                                 <a href="{{ route('cardapio', $insert = true) }}" class="btn btn-danger font-weight-bold mr-2"><i class="fas fa-hamburger mr-2"></i>Ir para cardápio</a>
                                                 <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Ir para pagamento</a>
                                             </div>
+
+
+{{--                                            Itens avulsos sem personalização--}}
+
                                             @if(isset($detached))
                                                     @foreach($detached as $key => $value)
 
+                                                        @if($value != '')
                                                         <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
                                                             <div class="card">
                                                                 <div class="card-body">
                                                                     <form action="{{ route('removerItem', $key)}}" method="post">
                                                                         <div class="container-fluid">
                                                                             <div class="row">
-                                                                                <div class="col-6">
-                                                                                    @csrf
-                                                                                    <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
-                                                                                    <span class="text-muted font-weight-bold teste">
+
+                                                                                    <div class="col-6">
+                                                                                        @csrf
+                                                                                        <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
+                                                                                        <span class="text-muted font-weight-bold teste">
                                                           {{ $value }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
-                                                                                </div>
+                                                                                    </div>
 
                                                                                 <div class="col-6 mt-4">
-                                                                                    @if(isset($addons))
-                                                                                        @foreach($addons as $pos => $data)
-                                                                                            <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $data['namePrice'] }}">
-                                                                                            <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $data['namePrice']  }}</label>
-                                                                                            <br>
-                                                                                        @endforeach
+                                                                                    @if(in_array($value, $formatedNoExtras))
+
+                                                                                    @else
+
+                                                                                        @if(isset($addons))
+                                                                                            <form action="#">
+                                                                                            @foreach($addons as $pos => $data)
+
+                                                                                                <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $data['namePrice'] }}">
+                                                                                                <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $data['namePrice']  }}</label>
+                                                                                                <br>
+                                                                                            @endforeach
+                                                                                            </form>
+                                                                                        @endif
+
                                                                                     @endif
                                                                                 </div>
                                                                             </div>
@@ -203,6 +218,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        @endif
                                                     @endforeach
                                         @endif
                                         @endif
