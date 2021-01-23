@@ -90,9 +90,11 @@
                                                     @foreach($customs as $key => $val)
                                                             <li style="position: relative; right: 20px">{{ $val->Item }}</li>
                                                             <ul>
+                                                                @if($val->nameExtra != '')
                                                                     <li style="position: relative; right: 20px;">{{ $val->nameExtra }}
                                                                         <a href="{{ route('minhaBandeja.index') }}" class="removeItem ml-1" title="Editar itens extras"><i class="fas fa-edit text-primary" style="font-size: 16px"></i></a></li>
                                                             </ul>
+                                                        @endif
                                                     @endforeach
 
                                                         <hr>
@@ -103,8 +105,10 @@
 
                                                             <form action="{{ route('removerItem', $key)}}" method="post">
                                                                 @csrf
+                                                                @if($value != '')
                                                                 <li style="position: relative; right: 20px">{{ $value }}
                                                                     <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
+                                                                @endif
                                                             </form>
 
                                                         @endforeach

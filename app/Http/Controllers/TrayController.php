@@ -532,6 +532,7 @@ class TrayController extends Controller
             $address = DB::table('users')->select('address')->where('id', '=', $user->id)->get()->toArray();
         }
 
+
         if(isset($myOrder['detached']) && isset($address[0]->address)){
             $detached = explode(',', $myOrder['detached']);
             $sendAddress = $address[0]->address;
@@ -641,10 +642,19 @@ class TrayController extends Controller
     {
         //Verificando se o usuário possui um combo ou um item na bandeja, se tiver, delete-o.
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
+        $addons = DB::table('auxiliar_detacheds')->select('idOrder')
+            ->where('idOrder', '=', $verifyOrder->id)
+            ->get()->toArray();
 
         if($verifyOrder != ''){
             $order = Tray::find($verifyOrder->id);
             $order->delete();
+
+            if ($addons != null) {
+                DB::table('auxiliar_detacheds')
+                    ->where('idOrder', '=', $verifyOrder->id)
+                    ->delete();
+            }
         }
 
         return view('clientUser.orderType');
@@ -678,7 +688,7 @@ class TrayController extends Controller
                 ->where('idOrder', '=', $order['id'])
                 ->get()->toArray();
 
-            if ($addons == ''){
+            if ($addons == null){
                 $editOrder = Tray::find($order['id']);
                 $editOrder->delete();
             }
