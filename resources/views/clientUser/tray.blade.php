@@ -224,6 +224,7 @@
                                         @endif
                                     @endif
 
+{{--                                    Itens avulsos com personalização--}}
                                         @if(isset($extras))
                                             @foreach($extras as $chave => $valor)
                                                 <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">

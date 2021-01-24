@@ -261,6 +261,14 @@ class TrayController extends Controller
     {
         $personalized = AuxiliarDetached::find($id);
 
+        //Recuperando o id do pedido com base no id do item personalizado.
+        $tray = DB::table('auxiliar_detacheds')->select('idOrder')
+            ->where('id', '=', $id)
+            ->get()->first();
+
+        $tray = $tray->idOrder;
+        $editTray = Tray::find($tray);
+
         //Recuperando o valor do produto.
         $data = DB::table('adverts')->select('name','value')
             ->where('name', '=', $personalized->Item)
@@ -270,8 +278,8 @@ class TrayController extends Controller
         $value = $data[0]->value;
         $val = 0;
 
-        if (isset($req->ingredients)){
-            foreach ($req->ingredients as $ing){
+        if (isset($req->ingredients)) {
+            foreach ($req->ingredients as $ing) {
                 $v = DB::table('extras')->select('price')
                     ->where('name', '=', $ing)
                     ->get()->toArray();
@@ -280,22 +288,27 @@ class TrayController extends Controller
                     $val += $item->price;
                 }
             }
+
+        if (isset($req->ingredients)){
             $ingredients = implode(', ', $req->ingredients);
-            $value += $val;
+        }
+
+        $value += $val;
 
             //Alterando na tabela
             $personalized->Extras = $data[0]->name . ': ' . $ingredients;
             $personalized->nameExtra = $ingredients;
             $personalized->valueWithExtras = $value;
+            $editTray->totalValue = $value;
         }else{
             $personalized->Extras = null;
             $personalized->nameExtra = null;
             $personalized->valueWithExtras = $value;
+            $editTray->totalValue = $value;
         }
 
-
-
         $personalized->save();
+        $editTray->save();
 
         return redirect()->route('minhaBandeja.index')->with('msg-2', ' ');
 
@@ -515,6 +528,7 @@ class TrayController extends Controller
     {
         $user = Auth::user();
         $myOrder= $user->userOrderTray()->select('id', 'orderType', 'detached', 'hamburguer', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+
         //Trazendo os itens customizados.
         $customs = DB::table('auxiliar_detacheds')->select()
             ->where('idOrder', '=', $myOrder['id'])
@@ -642,13 +656,14 @@ class TrayController extends Controller
     {
         //Verificando se o usuário possui um combo ou um item na bandeja, se tiver, delete-o.
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
-        $addons = DB::table('auxiliar_detacheds')->select('idOrder')
-            ->where('idOrder', '=', $verifyOrder->id)
-            ->get()->toArray();
 
         if($verifyOrder != ''){
             $order = Tray::find($verifyOrder->id);
             $order->delete();
+
+            $addons = DB::table('auxiliar_detacheds')->select('idOrder')
+            ->where('idOrder', '=', $verifyOrder->id)
+            ->get()->toArray();
 
             if ($addons != null) {
                 DB::table('auxiliar_detacheds')

@@ -84,6 +84,8 @@
                                                 @else
                                                     <li style="position: relative; right: 20px"><a href="{{ route('minhaBandeja.index') }}" class="text-danger font-weight-bold">Escolha uma bebida</a></li>
                                                 @endif
+
+
                                             @elseif($myOrder['orderType'] == 'Avulso')
 
                                                 @if(isset($customs))
