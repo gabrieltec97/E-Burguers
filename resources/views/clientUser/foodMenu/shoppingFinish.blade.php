@@ -90,13 +90,16 @@
 
                                                 @if(isset($customs))
                                                     @foreach($customs as $key => $val)
-                                                            <li style="position: relative; right: 20px">{{ $val->Item }}</li>
-                                                        @if($val->nameExtra != '')
-                                                            <ul>
-                                                              <li style="position: relative; right: 20px;">{{ $val->nameExtra }}
-                                                                 <a href="{{ route('minhaBandeja.index') }}" class="removeItem ml-1" title="Editar itens extras"><i class="fas fa-edit text-primary" style="font-size: 16px"></i></a></li>
-                                                            </ul>
-                                                        @endif
+                                                        <form action="{{ route('removeCustomizado', $id = $val->id) }}" method="post">
+                                                            @csrf
+                                                            <li style="position: relative; right: 20px">{{ $val->Item }} <button type="submit" class="fas fa-times text-danger removeItem" style="cursor: pointer" title="Remover item"></button></li>
+                                                            @if($val->nameExtra != '')
+                                                                <ul>
+                                                                    <li style="position: relative; right: 20px;">{{ $val->nameExtra }}
+                                                                        <a href="{{ route('minhaBandeja.index') }}" class="removeItem ml-1" title="Editar itens extras"><i class="fas fa-edit text-primary" style="font-size: 16px"></i></a></li>
+                                                                </ul>
+                                                            @endif
+                                                        </form>
                                                     @endforeach
 
                                                         <hr>

@@ -252,6 +252,16 @@ class TrayController extends Controller
     public function removePersonalized($id)
     {
         $personalized = AuxiliarDetached::find($id);
+        $order = Tray::find($personalized->idOrder);
+
+        $order->totalValue = $order->totalValue - $personalized->valueWithExtras;
+        $order->save();
+
+        $orderDelete = Tray::find($personalized->idOrder);
+
+        if ($orderDelete->totalValue == 0){
+            $orderDelete->delete();
+        }
         $personalized->delete();
 
         return redirect()->route('minhaBandeja.index')->with('msg', ' ');
@@ -620,6 +630,27 @@ class TrayController extends Controller
                 }
             }
         }
+    }
+
+    public function removeCustom($id)
+    {
+        $delete = AuxiliarDetached::find($id);
+        $order = Tray::find($delete->idOrder);
+
+        $order->totalValue = $order->totalValue - $delete->valueWithExtras;
+        $order->save();
+
+        DB::table('auxiliar_detacheds')
+            ->where('id', '=', $id)
+            ->delete();
+
+        $orderDelete = Tray::find($delete->idOrder);
+
+        if ($orderDelete->totalValue == 0){
+            $orderDelete->delete();
+        }
+
+        return redirect(route('minhaBandeja.index'))->with('msg', '.');
     }
 
     public function removeExtras(Request $req)
