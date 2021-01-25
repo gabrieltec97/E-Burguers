@@ -262,12 +262,11 @@ class TrayController extends Controller
         $personalized = AuxiliarDetached::find($id);
 
         //Recuperando o id do pedido com base no id do item personalizado.
-        $tray = DB::table('auxiliar_detacheds')->select('idOrder')
+        $tray = DB::table('auxiliar_detacheds')->select('idOrder', 'valueWithExtras', 'nameExtra')
             ->where('id', '=', $id)
             ->get()->first();
 
-        $tray = $tray->idOrder;
-        $editTray = Tray::find($tray);
+        $editTray = Tray::find($tray->idOrder);
 
         //Recuperando o valor do produto.
         $data = DB::table('adverts')->select('name','value')
@@ -288,30 +287,49 @@ class TrayController extends Controller
                     $val += $item->price;
                 }
             }
+        }
 
         if (isset($req->ingredients)){
             $ingredients = implode(', ', $req->ingredients);
         }
 
-        $value += $val;
+        //Abatendo o preço com os itens removidos.
+
+        if ($val != 0){
+            $newValue = $value + $val;
+
+            $updateValue = $tray->valueWithExtras - $newValue;
 
             //Alterando na tabela
             $personalized->Extras = $data[0]->name . ': ' . $ingredients;
             $personalized->nameExtra = $ingredients;
-            $personalized->valueWithExtras = $value;
-            $editTray->totalValue = $value;
+            $personalized->valueWithExtras = $newValue;
+            $editTray->totalValue = $editTray->totalValue - $updateValue;
         }else{
+
+            $oldExtras = explode(', ', $tray->nameExtra);
+
+            $updateValue = 0;
+
+            foreach ($oldExtras as $old){
+
+                $extra = DB::table('extras')->select('price')
+                    ->where('name', '=' ,$old)
+                    ->get()->toArray();
+
+                $updateValue += $extra[0]->price;
+            }
+
             $personalized->Extras = null;
             $personalized->nameExtra = null;
             $personalized->valueWithExtras = $value;
-            $editTray->totalValue = $value;
+            $editTray->totalValue = $editTray->totalValue - $updateValue;
         }
 
         $personalized->save();
         $editTray->save();
 
         return redirect()->route('minhaBandeja.index')->with('msg-2', ' ');
-
     }
 
     public function orderComboHamburguer()
