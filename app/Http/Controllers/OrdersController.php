@@ -62,19 +62,48 @@ class OrdersController extends Controller
         $order = Auth::user()->userOrderTray()->get()->toArray();
         $client = DB::table('users')->select('name', 'surname')->where('id', '=', $order[0]['idClient'])->get();
 
+        //Capturando itens adicionais.
+        $extras = DB::table('auxiliar_detacheds')
+            ->where('idOrder', '=', $order[0]['id'])
+            ->get()->toArray();
+
+        if ($extras != null){
+            $comments = '';
+
+            foreach ($extras as $key => $val){
+                $comments = $comments . ' ' .  $val->Extras . "  Adicionais: " . $val->nameExtra . '<br><br>';
+            }
+        }
+
+
         $id = $order[0]['id'];
 
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
         //Terminando de adicionar os itens à bandeja.
-           $tray = Tray::find($id);
-           $tray->deliverWay = $request->formaRetirada;
-           $tray->payingMethod = $request->formaPagamento;
-           $tray->address = $request->localEntrega;
-           $tray->payingValue = $request->valEntregue;
-           $tray->clientComments = $request->obs;
-           $tray->save();
+          if ($extras != null){
+
+              $tray = Tray::find($id);
+              $tray->deliverWay = $request->formaRetirada;
+              $tray->comments = $tray->comments . ' ' . $comments;
+              $tray->payingMethod = $request->formaPagamento;
+              $tray->address = $request->localEntrega;
+              $tray->payingValue = $request->valEntregue;
+              $tray->clientComments = $request->obs;
+              $tray->save();
+
+          }else{
+
+              $tray = Tray::find($id);
+              $tray->deliverWay = $request->formaRetirada;
+              $tray->payingMethod = $request->formaPagamento;
+              $tray->address = $request->localEntrega;
+              $tray->payingValue = $request->valEntregue;
+              $tray->clientComments = $request->obs;
+              $tray->save();
+
+          }
 
         //Cadastrando novo pedido.
         $updOrder = Auth::user()->userOrderTray()->get()->toArray();
