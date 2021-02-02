@@ -134,16 +134,21 @@ class TrayController extends Controller
                 $order->totalValue = $item->value + $valorNovo;
                 $order->valueWithoutDisccount = $item->value + $valorNovo;
 
-                if (isset($requirements)){
-                    $order->comments = $item->name . ": " .$requirements . ". ";
-                }
+//                if (isset($requirements)){
+//                    $order->comments = $item->name . ": " .$requirements . ". " . "  Adicionais: " . $addItems;
+//                }
 
                 $order->save();
 
                 $auxItems = new AuxiliarDetached();
                 $auxItems->item = $item->name;
                 $auxItems->idOrder = $order->id;
-                $auxItems->extras = $addAuxTable;
+
+                if (isset($requirements)){
+                    $auxItems->extras = $item->name . ": " .$requirements . ". ";
+                }
+
+//                $auxItems->extras = $addAuxTable;
                 $auxItems->nameExtra = $addItems;
                 $auxItems->valueWithExtras = $item->value + $valorNovo;
                 $auxItems->save();
@@ -208,19 +213,24 @@ class TrayController extends Controller
                 $addAuxTable = $item->name . ': ' . $addItems;
 
                 $order->extras = $addItems;
+                $order->valueWithoutDisccount = $order->totalValue + $item->value + $valorNovo;
                 $order->totalValue = $order->totalValue + $item->value + $valorNovo;
-                $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value) + $valorNovo;
 
-                if (isset($requirements)) {
-                    $order->comments = $order->comments . ' ' . $item->name . ": " . $requirements . ". ";
-                }
+//                if (isset($requirements)) {
+//                    $order->comments = $order->comments . ' ' . $item->name . ": " . $requirements . ". " . "   Adicionais: " . $addItems;
+//                }
 
                 $order->save();
 
                 $auxItems = new AuxiliarDetached();
                 $auxItems->item = $item->name;
                 $auxItems->idOrder = $order->id;
-                $auxItems->extras = $addAuxTable;
+
+                if (isset($requirements)) {
+                    $auxItems->extras = $item->name . ": " . $requirements . ". ";
+                }
+
+//                $auxItems->extras = $addAuxTable;
                 $auxItems->nameExtra = $addItems;
                 $auxItems->valueWithExtras = $item->value + $valorNovo;
                 $auxItems->save();
@@ -237,10 +247,10 @@ class TrayController extends Controller
                 }
                 $order->totalValue = doubleval($order->totalValue) + doubleval($item->value);
                 $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
-            }
 
-            if (isset($requirements)){
-              $order->comments = $order->comments . $item->name . ": " .$requirements . ". ";
+                if (isset($requirements)){
+                    $order->comments = $order->comments . $item->name . ": " .$requirements . ". ";
+                }
             }
 
             $order->save();
@@ -311,7 +321,7 @@ class TrayController extends Controller
             $updateValue = $tray->valueWithExtras - $newValue;
 
             //Alterando na tabela
-            $personalized->Extras = $data[0]->name . ': ' . $ingredients;
+//            $personalized->Extras = $data[0]->name . ': ' . $ingredients;
             $personalized->nameExtra = $ingredients;
             $personalized->valueWithExtras = $newValue;
             $editTray->totalValue = $editTray->totalValue - $updateValue;
@@ -330,7 +340,7 @@ class TrayController extends Controller
                 $updateValue += $extra[0]->price;
             }
 
-            $personalized->Extras = null;
+//            $personalized->Extras = null;
             $personalized->nameExtra = null;
             $personalized->valueWithExtras = $value;
             $editTray->totalValue = $editTray->totalValue - $updateValue;
