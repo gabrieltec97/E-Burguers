@@ -71,7 +71,7 @@ class OrdersController extends Controller
             $comments = '';
 
             foreach ($extras as $key => $val){
-                $comments = $comments . ' ' .  $val->Extras . "  Adicionais: " . $val->nameExtra . '<br><br>';
+                $comments = $comments . ' ' .  $val->Extras . "  (Adicionais: " . $val->nameExtra . '.)    ||    ';
             }
         }
 
@@ -86,7 +86,7 @@ class OrdersController extends Controller
 
               $tray = Tray::find($id);
               $tray->deliverWay = $request->formaRetirada;
-              $tray->comments = $tray->comments . ' ' . $comments;
+              $tray->comments = $tray->comments . '' . $comments;
               $tray->payingMethod = $request->formaPagamento;
               $tray->address = $request->localEntrega;
               $tray->payingValue = $request->valEntregue;

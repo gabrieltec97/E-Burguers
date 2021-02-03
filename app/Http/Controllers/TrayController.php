@@ -148,7 +148,6 @@ class TrayController extends Controller
                     $auxItems->extras = $item->name . ": " .$requirements . ". ";
                 }
 
-//                $auxItems->extras = $addAuxTable;
                 $auxItems->nameExtra = $addItems;
                 $auxItems->valueWithExtras = $item->value + $valorNovo;
                 $auxItems->save();
@@ -259,6 +258,11 @@ class TrayController extends Controller
         }
     }
 
+    public function addExtraItem(Request $request, $id)
+    {
+        echo $id;
+    }
+
     public function removePersonalized($id)
     {
         $personalized = AuxiliarDetached::find($id);
@@ -320,8 +324,6 @@ class TrayController extends Controller
 
             $updateValue = $tray->valueWithExtras - $newValue;
 
-            //Alterando na tabela
-//            $personalized->Extras = $data[0]->name . ': ' . $ingredients;
             $personalized->nameExtra = $ingredients;
             $personalized->valueWithExtras = $newValue;
             $editTray->totalValue = $editTray->totalValue - $updateValue;

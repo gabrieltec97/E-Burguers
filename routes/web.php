@@ -71,6 +71,8 @@ Route::post('/editarPersonalizado/{id}', 'TrayController@editPersonalized')->nam
 
 Route::post('/removeCustomizado/{id}', 'TrayController@removeCustom')->name('removeCustomizado');
 
+Route::post('/adicionaExtraComum/{id}', 'TrayController@addExtraItem')->name('addExtraItem');
+
 //Rota de aplicação de cupom.
 
 Route::post('/aplicarCupom', 'TrayController@couponApply')->name('aplicarCupom');

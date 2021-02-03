@@ -192,28 +192,33 @@
                                                                                         <span class="text-muted font-weight-bold teste">
                                                           {{ $value }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
                                                                                     </div>
-
-                                                                                <div class="col-6 mt-4">
+                                                                    </form>
+                                                                                <div class="col-6 mt-4 mb-1">
                                                                                     @if(in_array($value, $formatedNoExtras))
 
                                                                                     @else
 
                                                                                         @if(isset($addons))
-                                                                                            <form action="#">
+                                                                                            <form action="{{ route('addExtraItem', $key) }}" method="post">
+                                                                                                @csrf
                                                                                             @foreach($addons as $pos => $data)
 
                                                                                                 <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $data['namePrice'] }}">
                                                                                                 <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $data['namePrice']  }}</label>
                                                                                                 <br>
                                                                                             @endforeach
-                                                                                            </form>
+
                                                                                         @endif
 
                                                                                     @endif
                                                                                 </div>
+
+                                                                    <div class="col-12 d-flex justify-content-center">
+                                                                        <button type="submit" class="btn btn-success font-weight-bold mt-5 w-75" title="Salvar alterações">Salvar</button>
+                                                                        </form>
+                                                                    </div>
                                                                             </div>
                                                                         </div>
-                                                                    </form>
                                                                     </span>
                                                                 </div>
                                                             </div>
