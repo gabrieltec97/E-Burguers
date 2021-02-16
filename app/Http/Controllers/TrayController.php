@@ -6,6 +6,7 @@ use App\Adverts;
 use App\AuxiliarDetached;
 use App\Coupon;
 use App\Extras;
+use App\ItemWithoutExtras;
 use App\Tray;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class TrayController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $tray = $user->userOrderTray()->select('id', 'orderType', 'detached', 'hamburguer', 'portion', 'drinks')->get()->toArray();
+        $tray = $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'portion', 'drinks')->get()->toArray();
         $addons = Extras::all()->toArray();
 
         //Recuperando itens que não são hamburguer
@@ -48,26 +49,33 @@ class TrayController extends Controller
             }
         }
 
-        //Verificando se a bandeja possui itens.
-        if(isset($tray[0]['detached']) && isset($tray[0]['id'])){
+        $pureItems = DB::table('item_without_extras')
+            ->where('idOrder', '=', $tray[0]['id'])
+            ->select()
+            ->get()->toArray();
 
-            $detached = explode(',', $tray[0]['detached']);
+        print_r($pureItems);
 
-            return view('clientUser.tray', compact('tray', 'formatedNoExtras', 'detached', 'items', 'extras', 'addons'));
+        foreach ($pureItems as $key){
 
-        }elseif(isset($tray[0]['detached'])){
-
-            $detached = explode(',', $tray[0]['detached']);
-
-            return view('clientUser.tray', compact('tray', 'detached', 'addons', 'formatedNoExtras'));
-
-        }elseif (isset($tray[0]['id'])){
-
-            return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
-
-        }else{
-            return view('clientUser.tray', compact('tray'));
         }
+
+//        //Verificando se a bandeja possui itens.
+//        if(isset($pureItems) && isset($tray[0]['id'])){
+//
+//            return view('clientUser.tray', compact('tray', 'formatedNoExtras', 'pureItems', 'items', 'extras', 'addons'));
+//
+//        }elseif(isset($pureItems)){
+//
+//            return view('clientUser.tray', compact('tray', 'pureItems', 'addons', 'formatedNoExtras'));
+//
+//        }elseif (isset($tray[0]['id'])){
+//
+//            return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
+//
+//        }else{
+//            return view('clientUser.tray', compact('tray'));
+//        }
     }
 
     public function freeOrder(Request $request, $id)
@@ -84,13 +92,14 @@ class TrayController extends Controller
 
         if ($verifyOrder == null){
 
-            $order = new Tray();
-            $order->idClient = $user;
-            $order->orderType = "Avulso";
-            $order->day = date('d/m/Y');
-            $order->hour = date('H:i');
-
             if (isset ($request->extras)){
+
+                $order = new Tray();
+                $order->idClient = $user;
+                $order->orderType = "Avulso";
+                $order->day = date('d/m/Y');
+                $order->hour = date('H:i');
+
                 //Buscando acompanhamento.
                 $extras = [];
                 $valorNovo = 0;
@@ -153,15 +162,28 @@ class TrayController extends Controller
                 $auxItems->save();
 
             }else{
-                $order->detached = $item->name;
-                $order->valueWithoutDisccount = $item->value;
+
+                //Inserindo itens sem extras.
+
+                $order = new Tray();
+                $order->idClient = $user;
+                $order->orderType = "Avulso";
+                $order->day = date('d/m/Y');
+                $order->hour = date('H:i');
                 $order->totalValue = $item->value;
-
-                if (isset($requirements)){
-                    $order->comments = $item->name . ": " .$requirements . ". ";
-                }
-
                 $order->save();
+
+                $itemWithoutExtras = new ItemWithoutExtras();
+                $itemWithoutExtras->idOrder = $order->id;
+                $itemWithoutExtras->item = $item->name;
+                $itemWithoutExtras->value = $item->value;
+
+
+                //Ative isso quando migrar novamente!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
+//                if (isset($requirements)){
+//                    $itemWithoutExtras->comments = $item->name . ": " .$requirements . ". ";
+//                }
+                $itemWithoutExtras->save();
             }
 
             return redirect(route('cardapio', $insert = 'added'));
@@ -229,27 +251,25 @@ class TrayController extends Controller
                     $auxItems->extras = $item->name . ": " . $requirements . ". ";
                 }
 
-//                $auxItems->extras = $addAuxTable;
                 $auxItems->nameExtra = $addItems;
                 $auxItems->valueWithExtras = $item->value + $valorNovo;
                 $auxItems->save();
 
             }else{
-                if (isset($order->detached)){
-                    if ($order->detached == ''){
-                        $order->detached = $item->name;
-                    }else{
-                        $order->detached = $items . ',' . $item->name;
-                    }
-                }else{
-                    $order->detached = $item->name;
-                }
+
+                $itemWithoutExtras = new ItemWithoutExtras();
+                $itemWithoutExtras->idOrder = $order->id;
+                $itemWithoutExtras->item = $item->name;
+                $itemWithoutExtras->value = $item->value;
+
+//                if (isset($requirements)){
+//                    $itemWithoutExtras->comments = $order->comments . $item->name . ": " .$requirements . ". ";
+//                }
+
+                $itemWithoutExtras->save();
+
                 $order->totalValue = doubleval($order->totalValue) + doubleval($item->value);
                 $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
-
-                if (isset($requirements)){
-                    $order->comments = $order->comments . $item->name . ": " .$requirements . ". ";
-                }
             }
 
             $order->save();

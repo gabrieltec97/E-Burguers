@@ -15,10 +15,10 @@
 
                 $count = 0;
 
-                if (isset($detached) && isset($items)){
-                    $count = count($detached) + count($items);
-                }elseif(isset($detached)){
-                    $count = count($detached);
+                if (isset($pureItems) && isset($items)){
+                    $count = count($pureItems) + count($items);
+                }elseif(isset($pureItems)){
+                    $count = count($pureItems);
                 }elseif(isset($items)){
                     $count = count($items);
                 }
@@ -166,7 +166,7 @@
                                         @endif
 
                                     @elseif($tray[0]['orderType'] == 'Avulso')
-                                        @if(($tray[0]['detached']) != '' or $extras != '')
+                                        @if(($pureItems) != '' or $extras != '')
                                             <div class="col-12 d-flex justify-content-center" style="">
                                                 <a href="{{ route('cardapio', $insert = true) }}" class="btn btn-danger font-weight-bold mr-2"><i class="fas fa-hamburger mr-2"></i>Ir para cardápio</a>
                                                 <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Ir para pagamento</a>
@@ -175,8 +175,8 @@
 
 {{--                                            Itens avulsos sem personalização--}}
 
-                                            @if(isset($detached))
-                                                    @foreach($detached as $key => $value)
+                                            @if(isset($pureItems))
+                                                    @foreach($pureItems as $key => $value)
 
                                                         @if($value != '')
                                                         <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
