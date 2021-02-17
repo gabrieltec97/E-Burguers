@@ -49,33 +49,31 @@ class TrayController extends Controller
             }
         }
 
-        $pureItems = DB::table('item_without_extras')
-            ->where('idOrder', '=', $tray[0]['id'])
-            ->select()
-            ->get()->toArray();
+        if (isset($tray[0])){
+            $pureItems = DB::table('item_without_extras')
+                ->where('idOrder', '=', $tray[0]['id'])
+                ->select()
+                ->get()->toArray();
 
-        print_r($pureItems);
+            //Verificando se a bandeja possui itens.
+            if(isset($pureItems) && isset($tray[0]['id'])){
 
-        foreach ($pureItems as $key){
+                return view('clientUser.tray', compact('tray', 'formatedNoExtras', 'pureItems', 'items', 'extras', 'addons'));
 
+            }elseif(isset($pureItems)){
+
+                return view('clientUser.tray', compact('tray', 'pureItems', 'addons', 'formatedNoExtras'));
+
+            }elseif (isset($tray[0]['id'])){
+
+                return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
+
+            }else{
+                return view('clientUser.tray', compact('tray'));
+            }
+        }else{
+            return view('clientUser.tray', compact('tray'));
         }
-
-//        //Verificando se a bandeja possui itens.
-//        if(isset($pureItems) && isset($tray[0]['id'])){
-//
-//            return view('clientUser.tray', compact('tray', 'formatedNoExtras', 'pureItems', 'items', 'extras', 'addons'));
-//
-//        }elseif(isset($pureItems)){
-//
-//            return view('clientUser.tray', compact('tray', 'pureItems', 'addons', 'formatedNoExtras'));
-//
-//        }elseif (isset($tray[0]['id'])){
-//
-//            return view('clientUser.tray', compact('tray', 'items', 'extras', 'addons'));
-//
-//        }else{
-//            return view('clientUser.tray', compact('tray'));
-//        }
     }
 
     public function freeOrder(Request $request, $id)
@@ -759,36 +757,33 @@ class TrayController extends Controller
     public function detached($key)
     {
         $order = Auth::user()->userOrderTray()->get()->first()->toArray();
-        $detached = explode(',', $order['detached']);
+        $item = DB::table('item_without_extras')
+            ->select()
+            ->where('id', '=', $key)
+            ->get()->toArray();
 
-        //Recuperando alimento para fazer o abatimento no preço
-        $food = $detached[$key];
-        $foodPriceReduce = DB::table('adverts')->select('value')->where('name', '=', $food)->get()->toArray();
+        //Abatendo o preço na tabela de pedido.
+        $updateOrder = $order['totalValue'] - $item[0]->value;
 
-        //Abatimento no preço.
-        $value = $order['totalValue'];
-        $newValue = doubleval($value) - doubleval($foodPriceReduce[0]->value);
+        DB::table('trays')
+            ->where('id', '=', $order['id'])
+            ->update(['totalValue' => $updateOrder]);
 
-        unset($detached[$key]);
+        //Deletando o item da tabela de itens sem extras.
+        DB::table('item_without_extras')
+            ->where('id', '=', $key)
+            ->delete();
 
-        $detached = implode(',',$detached);
-
-        $editOrder = Tray::find($order['id']);
-        $editOrder->detached = $detached;
-        $editOrder->totalValue = $newValue;
-        $editOrder->valueWithoutDisccount = $newValue;
-        $editOrder->save();
-
-        if($detached == ''){
-            $addons = DB::table('auxiliar_detacheds')->select('idOrder')
-                ->where('idOrder', '=', $order['id'])
-                ->get()->toArray();
-
-            if ($addons == null){
-                $editOrder = Tray::find($order['id']);
-                $editOrder->delete();
-            }
-        }
+//        //Deletando coluna da tabela caso ela esteja vazia.
+//        $updTray = Auth::user()->userOrderTray()->get()->first()->toArray();
+//
+//        if ($updTray['totalValue'] == 0){
+//            DB::table('trays')
+//                ->where('id', '=', $order['id'])
+//                ->delete();
+//
+//            return redirect(route('minhaBandeja.index'))->with('msg', '.');
+//        }
 
         return redirect(route('minhaBandeja.index'))->with('msg', '.');
     }

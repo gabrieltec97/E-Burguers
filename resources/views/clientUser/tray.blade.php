@@ -178,11 +178,10 @@
                                             @if(isset($pureItems))
                                                     @foreach($pureItems as $key => $value)
 
-                                                        @if($value != '')
                                                         <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
                                                             <div class="card">
                                                                 <div class="card-body">
-                                                                    <form action="{{ route('removerItem', $key)}}" method="post">
+                                                                    <form action="{{ route('removerItem', $value->id)}}" method="post">
                                                                         <div class="container-fluid">
                                                                             <div class="row">
 
@@ -190,7 +189,7 @@
                                                                                         @csrf
                                                                                         <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
                                                                                         <span class="text-muted font-weight-bold teste">
-                                                          {{ $value }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                                                        {{ $value->item }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
                                                                                     </div>
                                                                     </form>
                                                                                 <div class="col-6 mt-4 mb-1">
@@ -199,7 +198,7 @@
                                                                                     @else
 
                                                                                         @if(isset($addons))
-                                                                                            <form action="{{ route('addExtraItem', $key) }}" method="post">
+                                                                                            <form action="{{ route('addExtraItem', $value->id) }}" method="post">
                                                                                                 @csrf
                                                                                             @foreach($addons as $pos => $data)
 
@@ -223,10 +222,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        @endif
                                                     @endforeach
                                         @endif
-                                        @endif
+                                    @endif
                                     @endif
 
 {{--                                    Itens avulsos com personalização--}}
