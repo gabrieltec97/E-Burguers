@@ -189,7 +189,7 @@
                                                                                         @csrf
                                                                                         <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
                                                                                         <span class="text-muted font-weight-bold teste">
-                                                                                        {{ $value->item }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                                                        {{ $value->itemName }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
                                                                                     </div>
                                                                     </form>
                                                                                 <div class="col-6 mt-4 mb-1">

@@ -173,7 +173,8 @@ class TrayController extends Controller
 
                 $itemWithoutExtras = new ItemWithoutExtras();
                 $itemWithoutExtras->idOrder = $order->id;
-                $itemWithoutExtras->item = $item->name;
+                $itemWithoutExtras->item = $item->name . ': ' . $requirements;
+                $itemWithoutExtras->itemName = $item->name;
                 $itemWithoutExtras->value = $item->value;
 
 
@@ -257,7 +258,8 @@ class TrayController extends Controller
 
                 $itemWithoutExtras = new ItemWithoutExtras();
                 $itemWithoutExtras->idOrder = $order->id;
-                $itemWithoutExtras->item = $item->name;
+                $itemWithoutExtras->item = $item->name . ': ' . $requirements;
+                $itemWithoutExtras->itemName = $item->name;
                 $itemWithoutExtras->value = $item->value;
 
 //                if (isset($requirements)){
@@ -278,7 +280,43 @@ class TrayController extends Controller
 
     public function addExtraItem(Request $request, $id)
     {
-        echo $id;
+       //Buscando os itens e os formatando para entrar na tabela.
+       $extras = array();
+       $price = 0;
+
+       foreach ($request->ingredients as $ingredient){
+
+           $query = DB::table('extras')
+               ->select('name', 'price')
+               ->where('namePrice', '=', $ingredient)
+               ->get()->toArray();
+
+           array_push($extras, $query[0]->name);
+           $price += $query[0]->price;
+       }
+
+       $extras = implode(', ', $extras);
+
+       $item = ItemWithoutExtras::find($id);
+
+       $newExtraItem = new AuxiliarDetached();
+       $newExtraItem->idOrder = $item->idOrder;
+       $newExtraItem->item = $item->itemName;
+       $newExtraItem->Extras = $item->item;
+       $newExtraItem->nameExtra = $extras;
+       $newExtraItem->valueWithExtras = $item->value + $price;
+       $newExtraItem->save();
+
+        $myOrder= Auth::user()->userOrderTray()->select('id', 'totalValue')->get()->first()->toArray();
+
+        DB::table('trays')
+            ->where('id', '=', $myOrder['id'])
+            ->update(['totalValue' => $myOrder['totalValue'] + $price]);
+
+        $item->delete();
+
+        return redirect()->route('minhaBandeja.index')->with('msg-2', ' ');
+
     }
 
     public function removePersonalized($id)
@@ -585,7 +623,11 @@ class TrayController extends Controller
     public function reviewAndFinish()
     {
         $user = Auth::user();
-        $myOrder= $user->userOrderTray()->select('id', 'orderType', 'detached', 'hamburguer', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+        $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+        $items = DB::table('item_without_extras')
+            ->select()
+            ->where('idOrder', '=', $myOrder['id'])
+            ->get()->toArray();
 
         //Trazendo os itens customizados.
         $customs = DB::table('auxiliar_detacheds')->select()
@@ -605,41 +647,39 @@ class TrayController extends Controller
         }
 
 
-        if(isset($myOrder['detached']) && isset($address[0]->address)){
-            $detached = explode(',', $myOrder['detached']);
+        if(isset($items) && isset($address[0]->address)){
             $sendAddress = $address[0]->address;
 
             if (isset($pendings)){
 
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings','myOrder', 'detached', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings','myOrder', 'items', 'sendAddress'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'customs', 'myOrder', 'detached', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'customs', 'myOrder', 'items', 'sendAddress'));
                 }
 
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items', 'sendAddress'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'detached', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'items', 'sendAddress'));
                 }
             }
 
         }
-        elseif (isset($myOrder['detached'])){
-            $detached = explode(',', $myOrder['detached']);
+        elseif (isset($items)){
 
             if (isset($pendings)){
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached', 'pendings'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items', 'pendings'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs','detached', 'pendings'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs','items', 'pendings'));
                 }
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'detached'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'detached'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'items'));
                 }
             }
         }

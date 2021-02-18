@@ -17,7 +17,7 @@ class CreateItemWithoutExtrasTable extends Migration
             $table->id();
             $table->string('idOrder');
             $table->string('item');
-            $table->string('comments');
+            $table->string('itemName');
             $table->string('value');
             $table->timestamps();
         });
