@@ -111,7 +111,7 @@
                                                             <form action="{{ route('removerItem', $value->id)}}" method="post">
                                                                 @csrf
                                                                 @if($value != '')
-                                                                <li style="position: relative; right: 20px">{{ $value->item }}
+                                                                <li style="position: relative; right: 20px">{{ $value->itemName }}
                                                                     <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
                                                                 @endif
                                                             </form>

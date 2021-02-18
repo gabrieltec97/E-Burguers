@@ -193,23 +193,19 @@
                                                                                     </div>
                                                                     </form>
                                                                                 <div class="col-6 mt-4 mb-1">
-                                                                                    @if(in_array($value, $formatedNoExtras))
+                                                                                        @if($value->foodType == 'Hamburguer')
+                                                                                            @if(isset($addons))
+                                                                                                <form action="{{ route('addExtraItem', $value->id) }}" method="post">
+                                                                                                    @csrf
+                                                                                                    @foreach($addons as $pos => $data)
 
-                                                                                    @else
+                                                                                                        <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $data['namePrice'] }}">
+                                                                                                        <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $data['namePrice']  }}</label>
+                                                                                                        <br>
+                                                                                                @endforeach
 
-                                                                                        @if(isset($addons))
-                                                                                            <form action="{{ route('addExtraItem', $value->id) }}" method="post">
-                                                                                                @csrf
-                                                                                            @foreach($addons as $pos => $data)
-
-                                                                                                <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $data['namePrice'] }}">
-                                                                                                <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $data['namePrice']  }}</label>
-                                                                                                <br>
-                                                                                            @endforeach
-
-                                                                                        @endif
-
-                                                                                    @endif
+                                                                                            @endif
+                                                                                            @endif
                                                                                 </div>
 
                                                                     <div class="col-12 d-flex justify-content-center">

@@ -62,57 +62,94 @@ class OrdersController extends Controller
         $order = Auth::user()->userOrderTray()->get()->toArray();
         $client = DB::table('users')->select('name', 'surname')->where('id', '=', $order[0]['idClient'])->get();
 
-        //Capturando itens adicionais.
-        $extras = DB::table('auxiliar_detacheds')
-            ->where('idOrder', '=', $order[0]['id'])
-            ->get()->toArray();
-
-        if ($extras != null){
-            $comments = '';
-
-            foreach ($extras as $key => $val){
-                $comments = $comments . ' ' .  $val->Extras . "  (Adicionais: " . $val->nameExtra . '.)    ||    ';
-            }
-        }
-
+//        //Capturando itens adicionais.
+//        $extras = DB::table('auxiliar_detacheds')
+//            ->where('idOrder', '=', $order[0]['id'])
+//            ->get()->toArray();
+//
+//        if ($extras != null){
+//            $comments = '';
+//
+//            foreach ($extras as $key => $val){
+//                $comments = $comments . ' ' .  $val->Extras . "  (Adicionais: " . $val->nameExtra . '.)    ||    ';
+//            }
+//        }
 
         $id = $order[0]['id'];
+
+        $tray = Tray::find($id);
+        $tray->deliverWay = $request->formaRetirada;
+        $tray->payingMethod = $request->formaPagamento;
+        $tray->address = $request->localEntrega;
+        $tray->payingValue = $request->valEntregue;
+        $tray->clientComments = $request->obs;
+        $tray->save();
+
+
+
 
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
-        //Terminando de adicionar os itens à bandeja.
-          if ($extras != null){
-
-              $tray = Tray::find($id);
-              $tray->deliverWay = $request->formaRetirada;
-              $tray->comments = $tray->comments . '' . $comments;
-              $tray->payingMethod = $request->formaPagamento;
-              $tray->address = $request->localEntrega;
-              $tray->payingValue = $request->valEntregue;
-              $tray->clientComments = $request->obs;
-              $tray->save();
-
-          }else{
-
-              $tray = Tray::find($id);
-              $tray->deliverWay = $request->formaRetirada;
-              $tray->payingMethod = $request->formaPagamento;
-              $tray->address = $request->localEntrega;
-              $tray->payingValue = $request->valEntregue;
-              $tray->clientComments = $request->obs;
-              $tray->save();
-
-          }
+//        //Terminando de adicionar os itens à bandeja.
+//          if ($extras != null){
+//
+//              $tray = Tray::find($id);
+//              $tray->deliverWay = $request->formaRetirada;
+//              $tray->comments = $tray->comments . '' . $comments;
+//              $tray->payingMethod = $request->formaPagamento;
+//              $tray->address = $request->localEntrega;
+//              $tray->payingValue = $request->valEntregue;
+//              $tray->clientComments = $request->obs;
+//              $tray->save();
+//
+//          }else{
+//
+//              $tray = Tray::find($id);
+//              $tray->deliverWay = $request->formaRetirada;
+//              $tray->payingMethod = $request->formaPagamento;
+//              $tray->address = $request->localEntrega;
+//              $tray->payingValue = $request->valEntregue;
+//              $tray->clientComments = $request->obs;
+//              $tray->save();
+//
+//          }
 
         //Cadastrando novo pedido.
         $updOrder = Auth::user()->userOrderTray()->get()->toArray();
+        $itemsNoExtras = DB::table('item_without_extras')
+            ->select()
+            ->where('idOrder', '=', $updOrder[0]['id'])
+            ->get()->toArray();
+
+        $itemOne = array();
+
+        foreach ($itemsNoExtras as $it => $vl){
+            array_push($itemOne, $vl->item);
+        }
+
+        $itemOne = implode('.  ', $itemOne);
+
+        $itemsWithExtras = DB::table('auxiliar_detacheds')
+            ->select()
+            ->where('idOrder', '=', $updOrder[0]['id'])
+            ->get()->toArray();
+
+        $itemTwo = array();
+
+        foreach ($itemsWithExtras as $it => $vl){
+            array_push($itemTwo, '. ' . $vl->Extras . '. Adicionais: ' . $vl->nameExtra);
+        }
+
+        $itemTwo = implode('.  ', $itemTwo);
+
+
         $newOrder = new Orders();
         $newOrder->idClient = $updOrder[0]['idClient'];
         $newOrder->clientName = $client[0]->name. ' ' . $client[0]->surname;
         $newOrder->orderType = $updOrder[0]['orderType'];
         $newOrder->comments = $updOrder[0]['comments'];
-        $newOrder->detached = $updOrder[0]['detached'];
+        $newOrder->detached = $itemOne . $itemTwo;
         $newOrder->hamburguer = $updOrder[0]['hamburguer'];
         $newOrder->fries = $updOrder[0]['portion'];
         $newOrder->drinks = $updOrder[0]['drinks'];
@@ -137,6 +174,7 @@ class OrdersController extends Controller
         $newOrder->save();
 
 
+        //Limpando a bandeja
         $clearTray = Tray::find($updOrder[0]['id']);
         $clearTray->delete();
 

@@ -85,7 +85,7 @@ class TrayController extends Controller
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
         if(isset($request['ingredients'])){
-            $requirements = implode(',', $request['ingredients']);
+            $requirements = implode(', ', $request['ingredients']);
         }
 
         if ($verifyOrder == null){
@@ -150,6 +150,7 @@ class TrayController extends Controller
                 $auxItems = new AuxiliarDetached();
                 $auxItems->item = $item->name;
                 $auxItems->idOrder = $order->id;
+                $auxItems->foodType = $item->foodType;
 
                 if (isset($requirements)){
                     $auxItems->extras = $item->name . ": " .$requirements . ". ";
@@ -173,7 +174,14 @@ class TrayController extends Controller
 
                 $itemWithoutExtras = new ItemWithoutExtras();
                 $itemWithoutExtras->idOrder = $order->id;
-                $itemWithoutExtras->item = $item->name . ': ' . $requirements;
+                $itemWithoutExtras->foodType = $item->foodType;
+
+                if (isset($request['ingredients'])){
+                    $itemWithoutExtras->item = $item->name . ': ' . $requirements;
+                }else{
+                    $itemWithoutExtras->item = $item->name;
+                }
+
                 $itemWithoutExtras->itemName = $item->name;
                 $itemWithoutExtras->value = $item->value;
 
@@ -190,7 +198,6 @@ class TrayController extends Controller
         }else{
 
             $order = Tray::find($verifyOrder->id);
-            $items = $order->detached;
 
             if (isset ($request->extras)) {
                 //Buscando acompanhamento.
@@ -245,6 +252,7 @@ class TrayController extends Controller
                 $auxItems = new AuxiliarDetached();
                 $auxItems->item = $item->name;
                 $auxItems->idOrder = $order->id;
+                $auxItems->foodType = $item->foodType;
 
                 if (isset($requirements)) {
                     $auxItems->extras = $item->name . ": " . $requirements . ". ";
@@ -258,7 +266,14 @@ class TrayController extends Controller
 
                 $itemWithoutExtras = new ItemWithoutExtras();
                 $itemWithoutExtras->idOrder = $order->id;
-                $itemWithoutExtras->item = $item->name . ': ' . $requirements;
+                $itemWithoutExtras->foodType = $item->foodType;
+
+                if (isset($request['ingredients'])){
+                    $itemWithoutExtras->item = $item->name . ': ' . $requirements;
+                }else{
+                    $itemWithoutExtras->item = $item->name;
+                }
+
                 $itemWithoutExtras->itemName = $item->name;
                 $itemWithoutExtras->value = $item->value;
 
@@ -301,6 +316,7 @@ class TrayController extends Controller
 
        $newExtraItem = new AuxiliarDetached();
        $newExtraItem->idOrder = $item->idOrder;
+       $newExtraItem->foodType = $item->foodType;
        $newExtraItem->item = $item->itemName;
        $newExtraItem->Extras = $item->item;
        $newExtraItem->nameExtra = $extras;

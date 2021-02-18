@@ -16,6 +16,7 @@ class CreateItemWithoutExtrasTable extends Migration
         Schema::create('item_without_extras', function (Blueprint $table) {
             $table->id();
             $table->string('idOrder');
+            $table->string('foodType');
             $table->string('item');
             $table->string('itemName');
             $table->string('value');

@@ -16,6 +16,7 @@ class CreateAuxiliarDetachedsTable extends Migration
         Schema::create('auxiliar_detacheds', function (Blueprint $table) {
             $table->id();
             $table->string('idOrder')->nullable();
+            $table->string('foodType')->nullable();
             $table->string('Item')->nullable();
             $table->longText('Extras')->nullable();
             $table->longText('nameExtra')->nullable();
