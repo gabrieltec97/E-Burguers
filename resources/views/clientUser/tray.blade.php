@@ -84,7 +84,7 @@
                                                             @method('DELETE')
                                                             <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
                                                             <span class="text-muted font-weight-bold teste">
-                                                          {{ $tray[0]['hamburguer'] }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                          {{ $tray[0]['comboItem'] }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
                                                         </form>
                                                         </span>
                                                     </div>

@@ -57,6 +57,8 @@ Route::get('/editarComboAcompanhamento', 'TrayController@editPortion')->name('ed
 
 Route::get('/editarComboBebida', 'TrayController@editDrink')->name('editarBebida');
 
+Route::get('/editarComboExtras/{id?}', 'TrayController@editComboExtras')->name('editarComboExtras');
+
 //Rotas de pedido avulso.
 
 Route::get('/cardapio/{insert?}', 'menuController@foodMenu')->name('cardapio');

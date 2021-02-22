@@ -55,9 +55,68 @@
                                                     <form action="{{ route('minhaBandeja.destroy', $food = $myOrder['hamburguer']) }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <li class="font-weight-bold" style="position: relative; right: 20px">{{ $myOrder['hamburguer'] }} <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
-
+                                                            <li class="font-weight-bold" style="position: relative; right: 20px">{{ $myOrder['comboItem'] }} <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
                                                     </form>
+
+                                                   <div style="margin-top: -13px">
+                                                       @if(isset($myOrder['extras']))
+                                                           <ol>
+                                                             @foreach(explode(', ', $myOrder['extras']) as $extra)
+                                                                <li class="font-weight-bold mt-1">{{$extra}}
+                                                                <button class="removeItem ml-1" title="Editar itens extras" data-toggle="modal" data-target="#editarExtrasCombo"><i class="fas fa-edit text-primary" style="font-size: 16px"></i></button></li>
+                                                             @endforeach
+                                                           </ol>
+
+                                                           <form action="{{ route('editarComboExtras') }}">
+                                                               @csrf
+
+                                                               <div class="modal fade" id="editarExtrasCombo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                   <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                       <div class="modal-content">
+                                                                           <div class="modal-header">
+                                                                               <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Edição de itens adicionais</h5>
+                                                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                   <span aria-hidden="true">&times;</span>
+                                                                               </button>
+                                                                           </div>
+                                                                           <div class="modal-body">
+                                                                               <div class="container-fluid">
+                                                                                   <div class="row">
+                                                                                       <div class="col-6">
+                                                                                           <img src="{{ asset($myOrder['image']) }}" style="border-radius: 4px" class="img-fluid" alt="">
+                                                                                       </div>
+
+                                                                                       <div class="col-6">
+                                                                                            <h4 class="font-weight-bold text-center">Itens adicionais</h4>
+
+                                                                                            @foreach($addons as $addon)
+                                                                                               <div>
+                                                                                                   <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $addon }}"
+
+                                                                                                   @foreach(explode(', ', $myOrder['extras']) as $extra)
+                                                                                                       @if($extra == $addon)
+                                                                                                        checked
+                                                                                                       @endif
+                                                                                                   @endforeach
+
+                                                                                                   >
+                                                                                                   <span class="text-muted font-weight-bold ml-4 form-check-label">{{ $addon }}</span>
+                                                                                               </div>
+                                                                                            @endforeach
+                                                                                       </div>
+                                                                                   </div>
+                                                                               </div>
+                                                                           </div>
+                                                                           <div class="modal-footer">
+                                                                               <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">Fechar</button>
+                                                                               <button type="submit" class="btn btn-success font-weight-bold">Salvar alterações</button>
+                                                                           </div>
+                                                                       </div>
+                                                                   </div>
+                                                               </div>
+                                                           </form>
+                                                       @endif
+                                                   </div>
 
                                                 @else
                                                     <li style="position: relative; right: 20px"><a href="{{ route('minhaBandeja.index') }}" class="text-danger font-weight-bold">Escolha um hambúrguer</a></li>

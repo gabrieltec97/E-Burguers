@@ -21,8 +21,9 @@ class CreateTraysTable extends Migration
             $table->string('hamburguer')->nullable();
             $table->string('portion')->nullable();
             $table->string('drinks')->nullable();
-            $table->longText('comments')->nullable();
+            $table->longText('comboItem')->nullable();
             $table->longText('clientComments')->nullable();
+            $table->string('image')->nullable();
             $table->string('deliverWay')->nullable();
             $table->string('totalValue')->nullable();
             $table->string('day')->nullable();

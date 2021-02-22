@@ -23,7 +23,7 @@ class TrayController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $tray = $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'portion', 'drinks')->get()->toArray();
+        $tray = $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'comboItem', 'portion', 'drinks')->get()->toArray();
         $addons = Extras::all()->toArray();
 
         //Recuperando itens que não são hamburguer
@@ -426,6 +426,71 @@ class TrayController extends Controller
         return redirect()->route('minhaBandeja.index')->with('msg-2', ' ');
     }
 
+    public function editComboExtras(Request $request)
+    {
+        $verifyOrder = Auth::user()->userOrderTray()->get()->first();
+
+        if ($request->ingredients != null){
+            $extras = explode(', ', $verifyOrder->extras);
+
+            //Verificando quais itens não tem no array e capturando o preço deles.
+            $difference = array_diff($request->ingredients, $extras);
+            $price = 0;
+
+            if ($difference != null){
+
+                foreach ($difference as $dif){
+
+                    $item = DB::table('extras')
+                        ->select('price')
+                        ->where('name', '=', $dif)
+                        ->get()->toArray();
+
+                    $price += $item[0]->price;
+                }
+
+                $verifyOrder->totalValue = $verifyOrder->totalValue + $price;
+                $verifyOrder->extras = implode(', ', $request->ingredients);
+                $verifyOrder->save();
+
+            }else{
+
+                $remove = array_diff($extras, $request->ingredients);
+
+                foreach ($remove as $rem){
+
+                    $item = DB::table('extras')
+                        ->select('price')
+                        ->where('name', '=', $rem)
+                        ->get()->toArray();
+
+                    $price += $item[0]->price;
+                }
+
+                $verifyOrder->totalValue = $verifyOrder->totalValue - $price;
+                $verifyOrder->extras = implode(', ', $request->ingredients);
+                $verifyOrder->save();
+            }
+
+        } else{
+
+            $extras = $verifyOrder->extras;
+
+            $item = DB::table('extras')
+                ->select('price')
+                ->where('name', '=', $extras)
+                ->get()->toArray();
+
+
+            $verifyOrder->totalValue = $verifyOrder->totalValue - $item[0]->price;
+            $verifyOrder->extras = null;
+            $verifyOrder->save();
+
+        }
+
+        return redirect(route('fimCompra'));
+    }
+
     public function orderComboHamburguer()
     {
         $foods = DB::table('adverts')
@@ -501,8 +566,9 @@ class TrayController extends Controller
             $order->orderType = "Combo";
             $order->day = date('d/m/Y');
             $order->hour = date('H:i');
-            $order->hamburguer = $hamburguer->name;
-            $order->comments = $requirements;
+            $order->image = $hamburguer->picture;
+            $order->hamburguer = $hamburguer->name . ': '. $requirements;
+            $order->comboItem = $hamburguer->name;
 
             if (isset($request->extras)){
                 $order->extras = $addItems;
@@ -519,8 +585,9 @@ class TrayController extends Controller
         if(isset($verifyOrder)){
             if ($verifyOrder->hamburguer == ''){
                 $order = Tray::find($verifyOrder->id);
-                $order->hamburguer = $hamburguer->name;
-                $order->comments = $requirements;
+                $order->image = $hamburguer->picture;
+                $order->hamburguer = $hamburguer->name . ': '. $requirements;
+                $order->comboItem = $hamburguer->name;
 
                 if (isset($request->extras)){
                     $order->extras = $addItems;
@@ -639,7 +706,16 @@ class TrayController extends Controller
     public function reviewAndFinish()
     {
         $user = Auth::user();
-        $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+        $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'image', 'comboItem', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+
+        //Capturando os itens adicionais.
+        $aditionals = Extras::all()->toArray();
+        $addons = array();
+
+        foreach ($aditionals as $ad => $value){
+            array_push($addons, $value['name']);
+        }
+
         $items = DB::table('item_without_extras')
             ->select()
             ->where('idOrder', '=', $myOrder['id'])
@@ -669,16 +745,16 @@ class TrayController extends Controller
             if (isset($pendings)){
 
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings','myOrder', 'items', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings','myOrder', 'items', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'customs', 'myOrder', 'items', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'customs', 'myOrder', 'items', 'sendAddress', 'addons'));
                 }
 
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'items', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'items', 'sendAddress', 'addons'));
                 }
             }
 
@@ -687,15 +763,15 @@ class TrayController extends Controller
 
             if (isset($pendings)){
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items', 'pendings'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items', 'pendings', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs','items', 'pendings'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs','items', 'pendings', 'addons'));
                 }
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'items', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'items'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'items', 'addons'));
                 }
             }
         }
@@ -704,15 +780,15 @@ class TrayController extends Controller
 
             if (isset($pendings)){
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'pendings'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'pendings', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs','sendAddress', 'pendings'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs','sendAddress', 'pendings', 'addons'));
                 }
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'sendAddress'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'customs', 'sendAddress', 'addons'));
                 }
             }
         }
