@@ -62,19 +62,7 @@ class OrdersController extends Controller
         $order = Auth::user()->userOrderTray()->get()->toArray();
         $client = DB::table('users')->select('name', 'surname')->where('id', '=', $order[0]['idClient'])->get();
 
-//        //Capturando itens adicionais.
-//        $extras = DB::table('auxiliar_detacheds')
-//            ->where('idOrder', '=', $order[0]['id'])
-//            ->get()->toArray();
-//
-//        if ($extras != null){
-//            $comments = '';
-//
-//            foreach ($extras as $key => $val){
-//                $comments = $comments . ' ' .  $val->Extras . "  (Adicionais: " . $val->nameExtra . '.)    ||    ';
-//            }
-//        }
-
+        //Terminando de adicionar os itens à bandeja.
         $id = $order[0]['id'];
 
         $tray = Tray::find($id);
@@ -83,15 +71,18 @@ class OrdersController extends Controller
         $tray->address = $request->localEntrega;
         $tray->payingValue = $request->valEntregue;
         $tray->clientComments = $request->obs;
+
+        if ($tray->hamburguer != null && $tray->extras != null){
+
+            $tray->hamburguer = $tray->hamburguer . ' Adicionais: ' . $tray->extras . '.';
+
+        }
         $tray->save();
-
-
-
 
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
-//        //Terminando de adicionar os itens à bandeja.
+//
 //          if ($extras != null){
 //
 //              $tray = Tray::find($id);
@@ -148,7 +139,6 @@ class OrdersController extends Controller
         $newOrder->idClient = $updOrder[0]['idClient'];
         $newOrder->clientName = $client[0]->name. ' ' . $client[0]->surname;
         $newOrder->orderType = $updOrder[0]['orderType'];
-        $newOrder->comments = $updOrder[0]['comments'];
         $newOrder->detached = $itemOne . $itemTwo;
         $newOrder->hamburguer = $updOrder[0]['hamburguer'];
         $newOrder->fries = $updOrder[0]['portion'];
@@ -162,7 +152,6 @@ class OrdersController extends Controller
         $newOrder->monthDay =  date("d");
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->address = $updOrder[0]['address'];
-        $newOrder->extras = $updOrder[0]['extras'];
         $newOrder->payingMethod = $updOrder[0]['payingMethod'];
         $newOrder->payingValue = $updOrder[0]['payingValue'];
 

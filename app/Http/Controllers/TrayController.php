@@ -453,6 +453,8 @@ class TrayController extends Controller
                 $verifyOrder->extras = implode(', ', $request->ingredients);
                 $verifyOrder->save();
 
+                return back()->with('msg-add', 'Item removido do sanduíche :(');
+
             }else{
 
                 $remove = array_diff($extras, $request->ingredients);
@@ -470,6 +472,8 @@ class TrayController extends Controller
                 $verifyOrder->totalValue = $verifyOrder->totalValue - $price;
                 $verifyOrder->extras = implode(', ', $request->ingredients);
                 $verifyOrder->save();
+
+                return back()->with('msg-rem', 'Item removido do sanduíche :(');
             }
 
         } else{
@@ -486,9 +490,10 @@ class TrayController extends Controller
             $verifyOrder->extras = null;
             $verifyOrder->save();
 
+            return back()->with('msg-rem', 'Item removido do sanduíche :(');
         }
 
-        return redirect(route('fimCompra'));
+
     }
 
     public function orderComboHamburguer()
@@ -844,6 +849,7 @@ class TrayController extends Controller
         //Removendo o item adicional e subtraindo o valor do pedido.
 
         if (isset($extra)){
+
             $alter = explode(', ', $extra);
             $position = array_search($req->extra, $alter);
             unset($alter[$position]);

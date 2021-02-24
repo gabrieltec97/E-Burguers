@@ -43,7 +43,11 @@
                                         @if($order->detached != '')
                                             {{ $order->detached }}
                                         @else
-                                            {{ $order->hamburguer }}, {{ $order->fries }}, {{ $order->drinks }}
+                                            <ul>
+                                                <li class="font-weight-bold" style="color: black"><label>{{ $order->hamburguer }}</label></li>
+                                                <li class="font-weight-bold" style="color: black"><label> {{ $order->fries }} </label></li>
+                                                <li class="font-weight-bold" style="color: black"><label>{{ $order->drinks }}</label></li>
+                                            </ul>
                                         @endif
                                     </td>
                                       <td title="Ingredientes que deverão ser inseridos em cada sanduíche de acordo com o pedido do cliente.">

@@ -608,6 +608,37 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".disparo-fim").click();
 
+//Toast de remoção de item.
+
+    $(".disparo-removeCombo").on("click", function (){
+        $.toast({
+            text: '<b style="font-size: 14px">Item adicional removido do seu pedido.</b>',
+            heading: '<b style="font-size: 17px">Que pena!</b>',
+            showHideTransition: 'slide',
+            bgColor : 'red',
+            position : 'top-right',
+            hideAfter: 6000
+        })
+    });
+
+    $(".disparo-removeCombo").click();
+
+
+    //Toast de remoção de item.
+
+    $(".disparo-addCombo").on("click", function (){
+        $.toast({
+            text: '<b style="font-size: 14px">Adicionais inseridos no sanduíche!</b>',
+            heading: '<b style="font-size: 17px">Tudo certo!</b>',
+            showHideTransition: 'slide',
+            bgColor : '#38C172',
+            position : 'top-right',
+            hideAfter: 6000
+        })
+    });
+
+    $(".disparo-addCombo").click();
+
 //Toast de item adicionado de pedido avulso.
 
     $(".disparo-avulso-add").on("click", function (){

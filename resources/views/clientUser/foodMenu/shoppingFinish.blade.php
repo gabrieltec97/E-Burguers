@@ -346,8 +346,13 @@
         </div>
     </div>
 
-
-    @if(!isset($use) && !isset($couponName) && !isset($notExist))
-        <button hidden class="disparo-fim"></button>
+    @if(session('msg-rem'))
+        <button hidden class="disparo-removeCombo"></button>
+    @elseif(session('msg-add'))
+        <button hidden class="disparo-addCombo"></button>
+    @else
+        @if(!isset($use) && !isset($couponName) && !isset($notExist))
+            <button hidden class="disparo-fim"></button>
+        @endif
     @endif
 @endsection
