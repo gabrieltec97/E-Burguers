@@ -135,7 +135,7 @@ class TrayController extends Controller
 
                 $addItems = implode(', ', $add);
 
-                $addAuxTable = $item->name. ': ' . $addItems;
+//                $addAuxTable = $item->name. ': ' . $addItems;
 
                 $order->extras = $addItems;
                 $order->totalValue = $item->value + $valorNovo;
@@ -153,7 +153,7 @@ class TrayController extends Controller
                 $auxItems->foodType = $item->foodType;
 
                 if (isset($requirements)){
-                    $auxItems->extras = $item->name . ": " .$requirements . ". ";
+                    $auxItems->extras = $item->name . ": " .$requirements;
                 }
 
                 $auxItems->nameExtra = $addItems;
@@ -255,7 +255,7 @@ class TrayController extends Controller
                 $auxItems->foodType = $item->foodType;
 
                 if (isset($requirements)) {
-                    $auxItems->extras = $item->name . ": " . $requirements . ". ";
+                    $auxItems->extras = $item->name . ": " . $requirements;
                 }
 
                 $auxItems->nameExtra = $addItems;

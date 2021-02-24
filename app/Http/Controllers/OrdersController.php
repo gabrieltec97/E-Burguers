@@ -119,7 +119,7 @@ class OrdersController extends Controller
             array_push($itemOne, $vl->item);
         }
 
-        $itemOne = implode('.  ', $itemOne);
+        $itemOne = implode('; ', $itemOne);
 
         $itemsWithExtras = DB::table('auxiliar_detacheds')
             ->select()
@@ -129,17 +129,16 @@ class OrdersController extends Controller
         $itemTwo = array();
 
         foreach ($itemsWithExtras as $it => $vl){
-            array_push($itemTwo, '. ' . $vl->Extras . '. Adicionais: ' . $vl->nameExtra);
+            array_push($itemTwo,   $vl->Extras . '. Adicionais: ' . $vl->nameExtra . ';');
         }
 
-        $itemTwo = implode('.  ', $itemTwo);
-
+        $itemTwo = implode('', $itemTwo);
 
         $newOrder = new Orders();
         $newOrder->idClient = $updOrder[0]['idClient'];
         $newOrder->clientName = $client[0]->name. ' ' . $client[0]->surname;
         $newOrder->orderType = $updOrder[0]['orderType'];
-        $newOrder->detached = $itemOne . $itemTwo;
+        $newOrder->detached = $itemOne . ';' . $itemTwo;
         $newOrder->hamburguer = $updOrder[0]['hamburguer'];
         $newOrder->fries = $updOrder[0]['portion'];
         $newOrder->drinks = $updOrder[0]['drinks'];

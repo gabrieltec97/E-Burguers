@@ -41,7 +41,11 @@
                                     <td>#{{ $order->id }}</td>
                                     <td title="Itens do pedido.">
                                         @if($order->detached != '')
-                                            {{ $order->detached }}
+                                            <ul>
+                                                @foreach(explode(';', $order->detached) as $item)
+                                                    <li>{{$item}}.</li>
+                                                @endforeach
+                                            </ul>
                                         @else
                                             <ul>
                                                 <li class="font-weight-bold" style="color: black"><label>{{ $order->hamburguer }}</label></li>
