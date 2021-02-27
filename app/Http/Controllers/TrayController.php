@@ -135,15 +135,9 @@ class TrayController extends Controller
 
                 $addItems = implode(', ', $add);
 
-//                $addAuxTable = $item->name. ': ' . $addItems;
-
                 $order->extras = $addItems;
                 $order->totalValue = $item->value + $valorNovo;
                 $order->valueWithoutDisccount = $item->value + $valorNovo;
-
-//                if (isset($requirements)){
-//                    $order->comments = $item->name . ": " .$requirements . ". " . "  Adicionais: " . $addItems;
-//                }
 
                 $order->save();
 
@@ -561,7 +555,7 @@ class TrayController extends Controller
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
         if(isset($request['ingredients'])){
-            $requirements = implode(',', $request['ingredients']);
+            $requirements = implode(', ', $request['ingredients']);
         }
 
         if ($verifyOrder == null){

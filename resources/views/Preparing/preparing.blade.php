@@ -43,7 +43,9 @@
                                         @if($order->detached != '')
                                             <ul>
                                                 @foreach(explode(';', $order->detached) as $item)
-                                                    <li>{{$item}}.</li>
+                                                    @if($item != null)
+                                                        <li class="mt-2">{{$item}}.</li>
+                                                    @endif
                                                 @endforeach
                                             </ul>
                                         @else

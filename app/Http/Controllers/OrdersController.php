@@ -119,7 +119,7 @@ class OrdersController extends Controller
             array_push($itemOne, $vl->item);
         }
 
-        $itemOne = implode('; ', $itemOne);
+        $itemOne = implode(';', $itemOne);
 
         $itemsWithExtras = DB::table('auxiliar_detacheds')
             ->select()
@@ -132,13 +132,28 @@ class OrdersController extends Controller
             array_push($itemTwo,   $vl->Extras . '. Adicionais: ' . $vl->nameExtra . ';');
         }
 
+        $count2 = count($itemTwo);
+
         $itemTwo = implode('', $itemTwo);
+
+        if ($itemOne == null){
+            echo 'void';
+        }
 
         $newOrder = new Orders();
         $newOrder->idClient = $updOrder[0]['idClient'];
         $newOrder->clientName = $client[0]->name. ' ' . $client[0]->surname;
         $newOrder->orderType = $updOrder[0]['orderType'];
-        $newOrder->detached = $itemOne . ';' . $itemTwo;
+
+        //Verificando a nulidade dos itens para que se evite colocar espaços vazios na hora da impressão em tela.
+        if ($itemOne == null){
+            $newOrder->detached = $itemTwo;
+        }elseif ($itemTwo == null){
+            $newOrder->detached = $itemOne;
+        } else{
+            $newOrder->detached = $itemOne . ';' .$itemTwo;
+        }
+
         $newOrder->hamburguer = $updOrder[0]['hamburguer'];
         $newOrder->fries = $updOrder[0]['portion'];
         $newOrder->drinks = $updOrder[0]['drinks'];
