@@ -132,8 +132,6 @@ class OrdersController extends Controller
             array_push($itemTwo,   $vl->Extras . '. Adicionais: ' . $vl->nameExtra . ';');
         }
 
-        $count2 = count($itemTwo);
-
         $itemTwo = implode('', $itemTwo);
 
         if ($itemOne == null){
@@ -152,6 +150,10 @@ class OrdersController extends Controller
             $newOrder->detached = $itemOne;
         } else{
             $newOrder->detached = $itemOne . ';' .$itemTwo;
+        }
+
+        if (isset($updOrder[0]['comboItem'])){
+            $newOrder->comboItem = $updOrder[0]['comboItem'];
         }
 
         $newOrder->hamburguer = $updOrder[0]['hamburguer'];

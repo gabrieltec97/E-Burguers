@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('status');
             $table->string('orderType');
             $table->longText('detached')->nullable();
+            $table->string('comboItem')->nullable();
             $table->string('hamburguer')->nullable();
             $table->string('fries')->nullable();
             $table->string('drinks')->nullable();

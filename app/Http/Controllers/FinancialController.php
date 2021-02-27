@@ -311,9 +311,9 @@ class FinancialController extends Controller
 
         //Combo
         $cb = DB::table('orders')
-            ->select(DB::raw('hamburguer, COUNT(hamburguer) as count2'))
-            ->groupBy('hamburguer')
-            ->orderBy(DB::raw('count(hamburguer)'), 'desc')
+            ->select(DB::raw('comboItem, COUNT(comboItem) as count2'))
+            ->groupBy('comboItem')
+            ->orderBy(DB::raw('count(comboItem)'), 'desc')
             ->limit(4)
             ->get()
             ->toArray();
@@ -322,7 +322,7 @@ class FinancialController extends Controller
 
            if ($ck->count2 != 0){
                array_push($detached, [
-                   'item' => $ck->hamburguer,
+                   'item' => $ck->comboItem,
                    'quantidade' => $ck->count2
                ]);
            }

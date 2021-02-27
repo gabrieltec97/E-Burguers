@@ -126,7 +126,6 @@ class TrayController extends Controller
                 }
 
                 //Ajustando o array que recebe os itens adicionais
-
                 $add = [];
 
                 foreach ($extras as $ext => $val){
@@ -157,7 +156,6 @@ class TrayController extends Controller
             }else{
 
                 //Inserindo itens sem extras.
-
                 $order = new Tray();
                 $order->idClient = $user;
                 $order->orderType = "Avulso";
@@ -178,12 +176,6 @@ class TrayController extends Controller
 
                 $itemWithoutExtras->itemName = $item->name;
                 $itemWithoutExtras->value = $item->value;
-
-
-                //Ative isso quando migrar novamente!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
-//                if (isset($requirements)){
-//                    $itemWithoutExtras->comments = $item->name . ": " .$requirements . ". ";
-//                }
                 $itemWithoutExtras->save();
             }
 
@@ -231,16 +223,9 @@ class TrayController extends Controller
 
                 $addItems = implode(', ', $add);
 
-                $addAuxTable = $item->name . ': ' . $addItems;
-
                 $order->extras = $addItems;
                 $order->valueWithoutDisccount = $order->totalValue + $item->value + $valorNovo;
                 $order->totalValue = $order->totalValue + $item->value + $valorNovo;
-
-//                if (isset($requirements)) {
-//                    $order->comments = $order->comments . ' ' . $item->name . ": " . $requirements . ". " . "   Adicionais: " . $addItems;
-//                }
-
                 $order->save();
 
                 $auxItems = new AuxiliarDetached();
@@ -270,11 +255,6 @@ class TrayController extends Controller
 
                 $itemWithoutExtras->itemName = $item->name;
                 $itemWithoutExtras->value = $item->value;
-
-//                if (isset($requirements)){
-//                    $itemWithoutExtras->comments = $order->comments . $item->name . ": " .$requirements . ". ";
-//                }
-
                 $itemWithoutExtras->save();
 
                 $order->totalValue = doubleval($order->totalValue) + doubleval($item->value);
