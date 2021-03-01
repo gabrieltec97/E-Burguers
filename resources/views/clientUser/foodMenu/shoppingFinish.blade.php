@@ -52,7 +52,7 @@
                                         <ul>
                                             @if($myOrder['orderType'] == 'Combo')
                                                 @if(isset($myOrder['hamburguer']))
-                                                    <form action="{{ route('minhaBandeja.destroy', $food = $myOrder['hamburguer']) }}" method="post">
+                                                    <form action="{{ route('minhaBandeja.destroy', $food = $myOrder['comboItem']) }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                             <li class="font-weight-bold" style="position: relative; right: 20px">{{ $myOrder['comboItem'] }} <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>

@@ -79,7 +79,7 @@
                                             <div class="col-12 col-lg-6 mt-lg-1 my-lg-0 mt-3">
                                                 <div class="card">
                                                     <div class="card-body">
-                                                        <form action="{{ route('minhaBandeja.destroy', $food = $tray[0]['hamburguer']) }}" method="post">
+                                                        <form action="{{ route('minhaBandeja.destroy', $food = $tray[0]['comboItem']) }}" method="post">
                                                             @csrf
                                                             @method('DELETE')
                                                             <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">

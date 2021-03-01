@@ -162,6 +162,7 @@ class TrayController extends Controller
                 $order->day = date('d/m/Y');
                 $order->hour = date('H:i');
                 $order->totalValue = $item->value;
+                $order->valueWithoutDisccount = $item->value;
                 $order->save();
 
                 $itemWithoutExtras = new ItemWithoutExtras();
@@ -243,6 +244,8 @@ class TrayController extends Controller
 
             }else{
 
+                $updated = Tray::find($verifyOrder->id);
+
                 $itemWithoutExtras = new ItemWithoutExtras();
                 $itemWithoutExtras->idOrder = $order->id;
                 $itemWithoutExtras->foodType = $item->foodType;
@@ -257,8 +260,8 @@ class TrayController extends Controller
                 $itemWithoutExtras->value = $item->value;
                 $itemWithoutExtras->save();
 
-                $order->totalValue = doubleval($order->totalValue) + doubleval($item->value);
-                $order->valueWithoutDisccount = doubleval($order->totalValue) + doubleval($item->value);
+                $order->totalValue = $updated->totalValue + $item->value;
+                $order->valueWithoutDisccount = $updated->totalValue + $item->value;
             }
 
             $order->save();
@@ -1389,7 +1392,7 @@ class TrayController extends Controller
 
         //Encontrando usuário e pedido.
         $user = Auth::user();
-        $tray = $user->userOrderTray()->select('totalValue','hamburguer', 'portion', 'drinks')->get()->toArray();
+        $tray = $user->userOrderTray()->select('totalValue', 'hamburguer', 'portion', 'drinks')->get()->toArray();
         $order = $user->userOrderTray()->select('id')->get()->toArray();
         $orderId = $order[0]['id'];
 
@@ -1403,38 +1406,15 @@ class TrayController extends Controller
 
         $resetPrice = Tray::find($orderId);
         $resetPrice->totalValue = $updatedPrice;
+        $resetPrice->valueWithoutDisccount = $updatedPrice;
         $resetPrice->save();
 
         //Removendo alimento da tabela.
-        $key = array_search($food, $tray[0]);
-
-        if (in_array($food, $tray[0])){
-            DB::table('trays')->where($key, '=', $food)->update([$key => NULL]);
-        }
-
-        //Atualizando contagem de itens.
-        $newTray = $user->userOrderTray()->select('hamburguer', 'portion', 'drinks')->get()->toArray();
-
-        $count = 0;
-
-        if(isset($newTray[0])){
-            if($newTray[0]['hamburguer'] != ''){
-                $count = 1;
-            }
-
-            if($newTray[0]['drinks'] != ''){
-                $count += 1;
-            }
-
-            if($newTray[0]['portion'] != ''){
-                $count += 1;
-            }
-        }
-
-        if($count == 0){
-            $orderDelete = Tray::find($orderId);
-            $orderDelete->delete();
-        }
+        $removeFood = Tray::find($orderId);
+        $removeFood->hamburguer = null;
+        $removeFood->comboItem = null;
+        $removeFood->image = null;
+        $removeFood->save();
 
         return redirect(route('minhaBandeja.index'));
     }

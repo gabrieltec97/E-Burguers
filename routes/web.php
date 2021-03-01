@@ -106,7 +106,6 @@ Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedid
 //Rotas do ACL
 Route::resource('/roles', 'RoleController');
 
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
