@@ -55,7 +55,7 @@ class UserController extends Controller
             'empAddress' => 'required|min:10',
             'empOccupation' => 'required',
             'empWorkingTime' => 'required',
-            'empProfile' => 'required'
+//            'empProfile' => 'required'
 
         ];
 
@@ -69,41 +69,46 @@ class UserController extends Controller
             'empAddress.max' => 'Você inseriu um endereço muito curto, caso esteja correto, preencha com xxxx',
             'empOccupation.required' => 'Por favor, insira o cargo do funcionário',
             'empWorkingTime.required' => 'Por favor, insira o horário de trabalho do funcionário',
-            'empProfile.required' => 'Por favor, insira o perfil de usuário do funcionário'
+//            'empProfile.required' => 'Por favor, insira o perfil de usuário do funcionário'
         ];
 
         $request->validate($rules, $messages);
 
-        $employee = new Employee();
-
-        $employee->name = $request->empName;
-        $employee->surname = $request->empSurname;
-        $employee->phone = $request->empPhone;
-        $employee->fixedPhone = $request->empFixedPhone;
-        $employee->address = $request->empAddress;
-        $employee->occupation = $request->empOccupation;
-        $employee->profile = $request->empProfile;
-        $employee->workingTime = $request->empWorkingTime;
-        $employee->email = $request->empEmail;
-        $employee->photo = $request->userPhoto;
-
-        $employee->save();
-
-        if($request->empProfile != "Outro (Sem login)"){
-
-            $user = new User();
-
-            $user->name = $request->empName;
-            $user->surname = $request->empSurname;
-            $user->address = $request->empAddress;
-            $user->email = $request->empEmail;
-            $user->userType = $request->empOccupation;
-            $user->password = bcrypt($request->empPassword);
-
-            $user->save();
-        }
-
-        return redirect(route('gerenciamento'))->with('msg', 'Usuário cadastrado com sucesso!');
+        echo 'perfil é: ' . $request->empProfile;
+//
+//        $employee = new Employee();
+//
+//        $employee->name = $request->empName;
+//        $employee->surname = $request->empSurname;
+//        $employee->phone = $request->empPhone;
+//        $employee->fixedPhone = $request->empFixedPhone;
+//        $employee->address = $request->empAddress;
+//        $employee->occupation = $request->empOccupation;
+//        $employee->profile = $request->empProfile;
+//        $employee->workingTime = $request->empWorkingTime;
+//        $employee->email = $request->empEmail;
+//
+//        if (isset($request->userPhoto)){
+//            $employee->photo = $request->userPhoto;
+//        }
+//
+//        $employee->save();
+//
+//        if($request->empProfile != "Outro (Sem login)"){
+//
+//            $user = new User();
+//
+//            $user->name = $request->empName;
+//            $user->surname = $request->empSurname;
+//            $user->address = $request->empAddress;
+//            $user->email = $request->empEmail;
+//            $user->userType = $request->empOccupation;
+//            $user->password = bcrypt($request->empPassword);
+//
+//            $user->save();
+//        }
+//
+//        return redirect(route('gerenciamento'))->with('msg', 'Usuário cadastrado com sucesso!');
     }
 
     /**

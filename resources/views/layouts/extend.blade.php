@@ -149,13 +149,20 @@
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
+
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?php
                             date_default_timezone_set('America/Sao_Paulo');
                             $agora =getdate();
                             $hora = $agora["hours"];
                             $usuario = \Illuminate\Support\Facades\Auth::user()->name;
+                            $valores = \Illuminate\Support\Facades\DB::select("SELECT COUNT(*) as retorno from orders WHERE status = 'Pedido registrado'");
+                            $valores = $valores[0]->retorno;
                             ?>
+
+                                <i class="fas fa-bell mr-3">
+                                <span class="badge bg-secondary registereds">{{ $valores }}</span>
+                                </i>
 
                             @if($hora >= 5 && $hora < 12)
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small font-weight-bold" style="font-size: 15px">Bom dia, {{ $usuario }}</span>

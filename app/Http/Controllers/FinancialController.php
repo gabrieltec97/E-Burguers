@@ -15,102 +15,255 @@ class FinancialController extends Controller
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
-        if (!isset($req->month)){
-            $thisMonth = strftime('%B', strtotime('today'));
-        }else{
-            $thisMonth = $req->month;
-        }
+        if (isset($req->month)){
 
-        $thisDay = strftime('%d', strtotime('today'));
-        $thisYear = strftime('%Y');
-        $month = DB::table('orders')
+            if ($req->month == strftime('%B')){
+
+                $thisMonth = strftime('%B');
+
+                $thisDay = strftime('%d', strtotime('today'));
+                $thisYear = strftime('%Y');
+                $month = DB::table('orders')
+                    ->where('month', '=', $thisMonth)
+                    ->where('year', '=', $thisYear)
+                    ->where('status', '=', 'Pedido Entregue')
+                    ->get()->toArray();
+
+                $countDayTen = 0;
+                $countDayFifteen = 0;
+                $countDayTwenty = 0;
+                $countDayTwentyFive = 0;
+                $countDayThirty = 0;
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 10){
+                        $countDayTen += 1;
+                    }
+                }
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 15){
+                        $countDayFifteen += 1;
+                    }
+                }
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 20){
+                        $countDayTwenty += 1;
+                    }
+                }
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 25){
+                        $countDayTwentyFive += 1;
+                    }
+                }
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 30){
+                        $countDayThirty += 1;
+                    }
+                }
+
+                $chart = new Grafico();
+
+                if ($thisDay <= 10){
+
+                    $chart->labels(['Início do mês','Até dia 10']);
+                    $chart->dataset('Total de vendas este mês', 'line' , [0,$countDayTen])->options([
+                        'backgroundColor' => '#ccf5ff',
+                        'borderColor' => '#008fb3',
+                        'lineTension' => 0.5
+                    ]);
+
+                }elseif ($thisDay <= 15){
+
+                    $chart->labels(['Início do mês','Até dia 10', 'Até dia 15']);
+                    $chart->dataset('Total de vendas este mês', 'line' , ['0',$countDayTen,$countDayFifteen])->options([
+                        'backgroundColor' => '#ccf5ff',
+                        'borderColor' => '#008fb3',
+                        'lineTension' => 0.5
+                    ]);
+
+                }elseif ($thisDay <= 20){
+
+                    $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20']);
+                    $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty])->options([
+                        'backgroundColor' => '#ccf5ff',
+                        'borderColor' => '#008fb3',
+                        'lineTension' => 0.5
+                    ]);
+
+                }elseif ($thisDay <= 25){
+
+                    $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25']);
+                    $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive])->options([
+                        'backgroundColor' => '#ccf5ff',
+                        'borderColor' => '#008fb3',
+                        'lineTension' => 0.5
+                    ]);
+
+                }elseif ($thisDay <=31){
+                    $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
+                    $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
+                        'backgroundColor' => '#ccf5ff',
+                        'borderColor' => '#008fb3',
+                        'lineTension' => 0.5
+                    ]);
+                }
+
+            }else{
+                $thisMonth = $req->month;
+
+                $thisYear = strftime('%Y');
+                $month = DB::table('orders')
+                    ->where('month', '=', $thisMonth)
+                    ->where('year', '=', $thisYear)
+                    ->where('status', '=', 'Pedido Entregue')
+                    ->get()->toArray();
+
+                $countDayTen = 0;
+                $countDayFifteen = 0;
+                $countDayTwenty = 0;
+                $countDayTwentyFive = 0;
+                $countDayThirty = 0;
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 10){
+                        $countDayTen += 1;
+                    }
+                }
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 15){
+                        $countDayFifteen += 1;
+                    }
+                }
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 20){
+                        $countDayTwenty += 1;
+                    }
+                }
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 25){
+                        $countDayTwentyFive += 1;
+                    }
+                }
+
+                foreach ($month as $mt){
+                    if ($mt->monthDay <= 30){
+                        $countDayThirty += 1;
+                    }
+                }
+
+                $chart = new Grafico();
+
+                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
+                $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
+                    'backgroundColor' => '#ccf5ff',
+                    'borderColor' => '#008fb3',
+                    'lineTension' => 0.5
+                ]);
+
+            }
+
+        }else{
+            $thisMonth = strftime('%B');
+
+            $thisDay = strftime('%d', strtotime('today'));
+            $thisYear = strftime('%Y');
+            $month = DB::table('orders')
                 ->where('month', '=', $thisMonth)
                 ->where('year', '=', $thisYear)
                 ->where('status', '=', 'Pedido Entregue')
                 ->get()->toArray();
 
-        $countDayTen = 0;
-        $countDayFifteen = 0;
-        $countDayTwenty = 0;
-        $countDayTwentyFive = 0;
-        $countDayThirty = 0;
+            $countDayTen = 0;
+            $countDayFifteen = 0;
+            $countDayTwenty = 0;
+            $countDayTwentyFive = 0;
+            $countDayThirty = 0;
 
-        foreach ($month as $mt){
-            if ($mt->monthDay <= 10){
-                $countDayTen += 1;
+            foreach ($month as $mt){
+                if ($mt->monthDay <= 10){
+                    $countDayTen += 1;
+                }
+            }
+
+            foreach ($month as $mt){
+                if ($mt->monthDay <= 15){
+                    $countDayFifteen += 1;
+                }
+            }
+
+            foreach ($month as $mt){
+                if ($mt->monthDay <= 20){
+                    $countDayTwenty += 1;
+                }
+            }
+
+            foreach ($month as $mt){
+                if ($mt->monthDay <= 25){
+                    $countDayTwentyFive += 1;
+                }
+            }
+
+            foreach ($month as $mt){
+                if ($mt->monthDay <= 30){
+                    $countDayThirty += 1;
+                }
+            }
+
+            $chart = new Grafico();
+
+            if ($thisDay <= 10){
+
+                $chart->labels(['Início do mês','Até dia 10']);
+                $chart->dataset('Total de vendas este mês', 'line' , [0,$countDayTen])->options([
+                    'backgroundColor' => '#ccf5ff',
+                    'borderColor' => '#008fb3',
+                    'lineTension' => 0.5
+                ]);
+
+            }elseif ($thisDay <= 15){
+
+                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15']);
+                $chart->dataset('Total de vendas este mês', 'line' , ['0',$countDayTen,$countDayFifteen])->options([
+                    'backgroundColor' => '#ccf5ff',
+                    'borderColor' => '#008fb3',
+                    'lineTension' => 0.5
+                ]);
+
+            }elseif ($thisDay <= 20){
+
+                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20']);
+                $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty])->options([
+                    'backgroundColor' => '#ccf5ff',
+                    'borderColor' => '#008fb3',
+                    'lineTension' => 0.5
+                ]);
+
+            }elseif ($thisDay <= 25){
+
+                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25']);
+                $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive])->options([
+                    'backgroundColor' => '#ccf5ff',
+                    'borderColor' => '#008fb3',
+                    'lineTension' => 0.5
+                ]);
+
+            }elseif ($thisDay <=31){
+                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
+                $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
+                    'backgroundColor' => '#ccf5ff',
+                    'borderColor' => '#008fb3',
+                    'lineTension' => 0.5
+                ]);
             }
         }
 
-        foreach ($month as $mt){
-            if ($mt->monthDay <= 15){
-                $countDayFifteen += 1;
-            }
-        }
-
-        foreach ($month as $mt){
-            if ($mt->monthDay <= 20){
-                $countDayTwenty += 1;
-            }
-        }
-
-        foreach ($month as $mt){
-            if ($mt->monthDay <= 25){
-                $countDayTwentyFive += 1;
-            }
-        }
-
-        foreach ($month as $mt){
-            if ($mt->monthDay <= 30){
-                $countDayThirty += 1;
-            }
-        }
-
-        $chart = new Grafico();
-
-        if ($thisDay <= 10){
-
-            $chart->labels(['Início do mês','Até dia 10']);
-            $chart->dataset('Total de vendas este mês', 'line' , [0,$countDayTen])->options([
-                'backgroundColor' => '#ccf5ff',
-                'borderColor' => '#008fb3',
-                'lineTension' => 0.5
-            ]);
-
-        }elseif ($thisDay <= 15){
-
-            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15']);
-            $chart->dataset('Total de vendas este mês', 'line' , ['0',$countDayTen,$countDayFifteen])->options([
-                'backgroundColor' => '#ccf5ff',
-                'borderColor' => '#008fb3',
-                'lineTension' => 0.5
-            ]);
-
-        }elseif ($thisDay <= 20){
-
-            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20']);
-            $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty])->options([
-                'backgroundColor' => '#ccf5ff',
-                'borderColor' => '#008fb3',
-                'lineTension' => 0.5
-            ]);
-
-        }elseif ($thisDay <= 25){
-
-            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25']);
-            $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive])->options([
-                'backgroundColor' => '#ccf5ff',
-                'borderColor' => '#008fb3',
-                'lineTension' => 0.5
-            ]);
-
-        }elseif ($thisDay <=31){
-            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
-            $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
-                'backgroundColor' => '#ccf5ff',
-                'borderColor' => '#008fb3',
-                'lineTension' => 0.5
-            ]);
-        }
 
         $months = array('janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro');
 
@@ -164,16 +317,13 @@ class FinancialController extends Controller
 
         $yearsBefore = array($thisYear,$lastYear, $beforeLastYear, $evenBeforeLastYear);
 
-
         if (isset($year)){
             $ano = $year;
-            return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano'));
+            return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay'));
         }else{
             $ano = $thisYear;
-            return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano'));
+            return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay'));
         }
-
-
     }
 
     public function dashboard()

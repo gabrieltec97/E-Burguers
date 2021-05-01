@@ -281,7 +281,7 @@
 
                                             <div class="col-12 col-lg-9 mt-4 mt-lg-4 val-entregue">
                                                 <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
-                                                <input type="text" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco">
+                                                <input type="text" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
                                                 <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                 <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
                                             </div>
@@ -297,7 +297,7 @@
 
                                             <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
                                                 <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
-                                                <input type="text" class="form-control end-entrega" name="localEntrega" value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                <input type="text" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
                                             </div>
 
                                             <div class="col-12 col-lg-12 mt-4 mt-lg-4">

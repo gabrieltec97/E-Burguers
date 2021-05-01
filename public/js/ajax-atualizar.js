@@ -14,6 +14,7 @@ $(document).ready(() => {
                     location.reload();
                 }
 
+                $(".registereds").text(valorAtual);
 
             },
             error: function(erro){console.log(erro)}})

@@ -990,4 +990,11 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
             $(".edit-item-add").css('cursor', 'pointer');
         }
     });
+
+    //Animação de novo pedido registrado
+
+
+
+
+
 });
