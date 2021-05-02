@@ -317,12 +317,63 @@ class FinancialController extends Controller
 
         $yearsBefore = array($thisYear,$lastYear, $beforeLastYear, $evenBeforeLastYear);
 
+        if (isset($req->dia) && isset($req->mesvenda)){
+
+            $day = $req->dia;
+
+            $sales = DB::table('orders')
+                ->where('monthDay', '=', $req->dia)
+                ->where('month', '=', $req->mesvenda)
+                ->where('year', '=', $thisYear)
+                ->where('status', '=', 'Pedido Entregue')
+                ->get()->toArray();
+
+            $money = DB::table('orders')
+                ->where('monthDay', '=', $req->dia)
+                ->where('month', '=', $req->mesvenda)
+                ->where('year', '=', $thisYear)
+                ->where('status', '=', 'Pedido Entregue')
+                ->sum('totalValue');
+
+            $sales = count($sales);
+        }else{
+
+            $day = strftime('%d', strtotime('today'));
+
+            $sales = DB::table('orders')
+                ->where('monthDay', '=', strftime('%d', strtotime('today')))
+                ->where('month', '=', strftime('%B'))
+                ->where('year', '=', $thisYear)
+                ->where('status', '=', 'Pedido Entregue')
+                ->get()->toArray();
+
+            $money = DB::table('orders')
+                ->where('monthDay', '=', strftime('%d', strtotime('today')))
+                ->where('month', '=', strftime('%B'))
+                ->where('year', '=', $thisYear)
+                ->where('status', '=', 'Pedido Entregue')
+                ->sum('totalValue');
+
+            $sales = count($sales);
+        }
+
         if (isset($year)){
             $ano = $year;
-            return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay'));
+
+            if (isset($day)){
+                return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money', 'day'));
+            }else{
+                return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money'));
+            }
+
         }else{
             $ano = $thisYear;
-            return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay'));
+
+            if (isset($day)){
+                return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money', 'day'));
+            }else{
+                return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money'));
+            }
         }
     }
 

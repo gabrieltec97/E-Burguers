@@ -186,7 +186,7 @@ $anoAtual = strftime('%Y');
                 </div>
 
             <div class="col-lg-12 col-sm-12 mb-5">
-                <div class="card shadow" style="height: 230px">
+                <div class="card shadow" style="height: 330px">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
                         <div class="row">
                             <div class="col-lg-7 col-12">
@@ -216,7 +216,6 @@ $anoAtual = strftime('%Y');
                                             </div>
                                         </div>
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -225,37 +224,37 @@ $anoAtual = strftime('%Y');
                             <div class="col-2">
                                 <label>Dia</label>
                                 <select name="dia" class="form-control">
-                                    <option value="" @if($thisDay == 1) selected @endif>1</option>
-                                    <option value="" @if($thisDay == 2) selected @endif>2</option>
-                                    <option value="" @if($thisDay == 3) selected @endif>3</option>
-                                    <option value="" @if($thisDay == 4) selected @endif>4</option>
-                                    <option value="" @if($thisDay == 5) selected @endif>5</option>
-                                    <option value="" @if($thisDay == 6) selected @endif>6</option>
-                                    <option value="" @if($thisDay == 7) selected @endif>7</option>
-                                    <option value="" @if($thisDay == 8) selected @endif>8</option>
-                                    <option value="" @if($thisDay == 9) selected @endif>9</option>
-                                    <option value="" @if($thisDay == 10) selected @endif>10</option>
-                                    <option value="" @if($thisDay == 11) selected @endif>11</option>
-                                    <option value="" @if($thisDay == 12) selected @endif>12</option>
-                                    <option value="" @if($thisDay == 13) selected @endif>13</option>
-                                    <option value="" @if($thisDay == 14) selected @endif>14</option>
-                                    <option value="" @if($thisDay == 15) selected @endif>15</option>
-                                    <option value="" @if($thisDay == 16) selected @endif>16</option>
-                                    <option value="" @if($thisDay == 17) selected @endif>17</option>
-                                    <option value="" @if($thisDay == 18) selected @endif>18</option>
-                                    <option value="" @if($thisDay == 19) selected @endif>19</option>
-                                    <option value="" @if($thisDay == 20) selected @endif>20</option>
-                                    <option value="" @if($thisDay == 21) selected @endif>21</option>
-                                    <option value="" @if($thisDay == 22) selected @endif>22</option>
-                                    <option value="" @if($thisDay == 23) selected @endif>23</option>
-                                    <option value="" @if($thisDay == 24) selected @endif>24</option>
-                                    <option value="" @if($thisDay == 25) selected @endif>25</option>
-                                    <option value="" @if($thisDay == 26) selected @endif>26</option>
-                                    <option value="" @if($thisDay == 27) selected @endif>27</option>
-                                    <option value="" @if($thisDay == 28) selected @endif>28</option>
-                                    <option value="" @if($thisDay == 29) selected @endif>29</option>
-                                    <option value="" @if($thisDay == 30) selected @endif>30</option>
-                                    <option value="" @if($thisDay == 31) selected @endif>31</option>
+                                    <option value="01" @if($day == 01) selected @endif>01</option>
+                                    <option value="02" @if($day == '02') selected @endif>02</option>
+                                    <option value="03" @if($day == '03') selected @endif>03</option>
+                                    <option value="04" @if($day == 04) selected @endif>04</option>
+                                    <option value="05" @if($day == 05) selected @endif>05</option>
+                                    <option value="06" @if($day == 06) selected @endif>06</option>
+                                    <option value="07" @if($day == 07) selected @endif>07</option>
+                                    <option value="08" @if($day == '08') selected @endif>08</option>
+                                    <option value="09" @if($day == '09') selected @endif>09</option>
+                                    <option value="10" @if($day == 10) selected @endif>10</option>
+                                    <option value="11" @if($day == 11) selected @endif>11</option>
+                                    <option value="12" @if($day == 12) selected @endif>12</option>
+                                    <option value="13" @if($day == 13) selected @endif>13</option>
+                                    <option value="14" @if($day == 14) selected @endif>14</option>
+                                    <option value="15" @if($day == 15) selected @endif>15</option>
+                                    <option value="16" @if($day == 16) selected @endif>16</option>
+                                    <option value="17" @if($day == 17) selected @endif>17</option>
+                                    <option value="18" @if($day == 18) selected @endif>18</option>
+                                    <option value="19" @if($day == 19) selected @endif>19</option>
+                                    <option value="20" @if($day == 20) selected @endif>20</option>
+                                    <option value="21" @if($day == 21) selected @endif>21</option>
+                                    <option value="22" @if($day == 22) selected @endif>22</option>
+                                    <option value="23" @if($day == 23) selected @endif>23</option>
+                                    <option value="24" @if($day == 24) selected @endif>24</option>
+                                    <option value="25" @if($day == 25) selected @endif>25</option>
+                                    <option value="26" @if($day == 26) selected @endif>26</option>
+                                    <option value="27" @if($day == 27) selected @endif>27</option>
+                                    <option value="28" @if($day == 28) selected @endif>28</option>
+                                    <option value="29" @if($day == 29) selected @endif>29</option>
+                                    <option value="30" @if($day == 30) selected @endif>30</option>
+                                    <option value="31" @if($day == 31) selected @endif>31</option>
                                 </select>
                             </div>
 
@@ -326,6 +325,24 @@ $anoAtual = strftime('%Y');
                                     >Dezembro</option>
                                 </select>
                             </div>
+
+                            <div class="col-8 mt-4 target">
+                                <label>Total de vendas: <b>
+                                        @if($sales < 1)
+                                            <span class="text-danger">{{ $sales }} vendas</span>
+                                        @elseif($sales >= 1)
+                                            <span class="text-success">{{ $sales }} vendas</span>
+                                        @endif
+                                    </b></label>
+                                <br>
+                                <label>Total de arrecadado: <b>
+                                        @if($money < 1)
+                                            <span class="text-danger">R$ {{ $money }}</span>
+                                        @elseif($money >= 1)
+                                            <span class="text-success">R$ {{ $money }}</span>
+                                        @endif
+                                    </b></label>
+                            </div>
                         </div>
 
                         <div class="row mt-4">
@@ -335,6 +352,7 @@ $anoAtual = strftime('%Y');
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
             </div>
         </div>
@@ -358,6 +376,18 @@ $anoAtual = strftime('%Y');
         <option value="{{ $anoAtual }}"></option>
     </select>
 
+    @if(isset($thisDay))
+        <select class="diaHoje" hidden>
+            <option value="{{ $thisDay }}"></option>
+        </select>
+    @endif
+
+    @if(isset($day))
+        <select class="diaPHP" hidden>
+            <option value="{{ $day }}"></option>
+        </select>
+    @endif
+
     <script>
         $(function () {
 
@@ -367,6 +397,9 @@ $anoAtual = strftime('%Y');
         var anoSistema = $(".anoHoje").val();
         var anoAtual = $(".anoPHP").val();
 
+        var diaSistema = $(".diaPHP").val();
+        var diaAtual = $(".diaHoje").val();
+
         console.log(anoSistema)
 
         if (mesAtual != mesSistema){
@@ -374,6 +407,15 @@ $anoAtual = strftime('%Y');
         }else{
             $(".vendaMes").text('Vendas este mês');
         }
+
+        if (diaAtual != diaSistema){
+
+                setTimeout(function (){
+                    $('html, body').animate({
+                        scrollTop: $(".target").offset().top
+                    }, 1500);
+                }, 250)
+            }
 
         if (anoAtual != anoSistema){
             $(".textoAno").text('Total arrecadado por mês em ' + anoSistema);
