@@ -320,6 +320,7 @@ class FinancialController extends Controller
         if (isset($req->dia) && isset($req->mesvenda)){
 
             $day = $req->dia;
+            $reqmonth = $req->mesvenda;
 
             $sales = DB::table('orders')
                 ->where('monthDay', '=', $req->dia)
@@ -339,6 +340,7 @@ class FinancialController extends Controller
         }else{
 
             $day = strftime('%d', strtotime('today'));
+            $reqmonth = strftime('%B');
 
             $sales = DB::table('orders')
                 ->where('monthDay', '=', strftime('%d', strtotime('today')))
@@ -361,7 +363,7 @@ class FinancialController extends Controller
             $ano = $year;
 
             if (isset($day)){
-                return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money', 'day'));
+                return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money', 'day', 'reqmonth'));
             }else{
                 return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money'));
             }
@@ -370,7 +372,7 @@ class FinancialController extends Controller
             $ano = $thisYear;
 
             if (isset($day)){
-                return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money', 'day'));
+                return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money', 'day', 'reqmonth'));
             }else{
                 return view('Financial.financial', compact('chart', 'chart2', 'thisMonth', 'yearsBefore', 'ano', 'thisDay', 'sales', 'money'));
             }

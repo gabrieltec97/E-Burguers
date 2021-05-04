@@ -245,7 +245,6 @@ $(".cupom-expire").hide();
     })
 
 
-
 //Verificação de cadastro de refeição.
 
     $(".verifica-ingredientes").hide();
@@ -734,6 +733,8 @@ $(".forma-entrega").on("change", function () {
     var pagamento = $(".forma-pagamento").val();
 
     if(retirada == 'Retirada no restaurante'){
+
+        $(".troco").removeAttr('required', 'true');
         $(".pagamento").hide('slow');
         $(".entrega").hide('slow');
         $(".local-entrega").hide('slow');
@@ -757,8 +758,10 @@ $(".forma-pagamento").on("change", function () {
 
     if(pagamento != 'Dinheiro'){
         $(".val-entregue").fadeOut('slow');
+        $(".troco").removeAttr('required', 'true');
     }else {
         $(".val-entregue").fadeIn('slow');
+        $(".troco").attr('required', 'true');
     }
 });
 
@@ -864,10 +867,6 @@ $(".forma-pagamento").on("change", function (){
         $(".troco").removeAttr('required', 'true');
     }
 })
-
-    $(".back").on("click", function (){
-        console.log('teste')
-    })
 
 
 //Verificações de criação de refeições.

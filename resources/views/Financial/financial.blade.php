@@ -262,64 +262,64 @@ $anoAtual = strftime('%Y');
                                 <label>Mês</label>
                                 <select name="mesvenda" class="form-control">
                                     <option value="janeiro"
-                                            @if($thisMonth == 'janeiro')
+                                            @if($reqmonth == 'janeiro')
                                             selected
                                         @endif>Janeiro</option>
 
                                     <option value="fevereiro"
-                                            @if($thisMonth == 'fevereiro')
+                                            @if($reqmonth == 'fevereiro')
                                             selected
                                         @endif>Fevereiro</option>
 
                                     <option value="março"
-                                            @if($thisMonth == 'março')
+                                            @if($reqmonth == 'março')
                                             selected
                                         @endif>Março</option>
 
                                     <option value="abril"
-                                            @if($thisMonth == 'abril')
+                                            @if($reqmonth == 'abril')
                                             selected
                                         @endif>Abril</option>
 
                                     <option value="maio"
-                                            @if($thisMonth == 'maio')
+                                            @if($reqmonth == 'maio')
                                             selected
                                         @endif>Maio</option>
 
                                     <option value="junho"
-                                            @if($thisMonth == 'junho')
+                                            @if($reqmonth == 'junho')
                                             selected
                                         @endif>Junho</option>
 
                                     <option value="julho"
-                                            @if($thisMonth == 'julho')
+                                            @if($reqmonth == 'julho')
                                             selected
                                         @endif>Julho</option>
 
                                     <option value="agosto"
-                                            @if($thisMonth == 'agosto')
+                                            @if($reqmonth == 'agosto')
                                             selected
                                         @endif>Agosto</option>
 
                                     <option value="setembro"
-                                            @if($thisMonth == 'setembro')
+                                            @if($reqmonth == 'setembro')
                                             selected
                                         @endif>Setembro</option>
 
                                     <option value="outubro"
-                                            @if($thisMonth == 'outubro')
+                                            @if($reqmonth == 'outubro')
                                             selected
                                         @endif
                                     >Outubro</option>
 
                                     <option value="novembro"
-                                            @if($thisMonth == 'novembro')
+                                            @if($reqmonth == 'novembro')
                                             selected
                                         @endif
                                     >Novembro</option>
 
                                     <option value="dezembro"
-                                            @if($thisMonth == 'dezembro')
+                                            @if($reqmonth == 'dezembro')
                                             selected
                                         @endif
                                     >Dezembro</option>
@@ -329,8 +329,10 @@ $anoAtual = strftime('%Y');
                             <div class="col-8 mt-4 target">
                                 <label>Total de vendas: <b>
                                         @if($sales < 1)
-                                            <span class="text-danger">{{ $sales }} vendas</span>
-                                        @elseif($sales >= 1)
+                                            <span class="text-danger">{{ $sales }} venda</span>
+                                        @elseif($sales == 1)
+                                            <span class="text-success">{{ $sales }} venda</span>
+                                        @elseif($sales > 1)
                                             <span class="text-success">{{ $sales }} vendas</span>
                                         @endif
                                     </b></label>
@@ -342,10 +344,12 @@ $anoAtual = strftime('%Y');
                                             <span class="text-success">R$ {{ $money }}</span>
                                         @endif
                                     </b></label>
+                                <br>
+                                <label class="text-danger dadosReferentes font-weight-bold"></label>
                             </div>
                         </div>
 
-                        <div class="row mt-4">
+                        <div class="row mt-2">
                             <div class="col-3">
                                 <button type="submit" class="btn btn-primary">Buscar dados</button>
                             </div>
@@ -382,6 +386,12 @@ $anoAtual = strftime('%Y');
         </select>
     @endif
 
+    @if(isset($reqmonth))
+        <select class="mesHojeFiltro" hidden>
+            <option value="{{ $reqmonth }}"></option>
+        </select>
+    @endif
+
     @if(isset($day))
         <select class="diaPHP" hidden>
             <option value="{{ $day }}"></option>
@@ -393,6 +403,7 @@ $anoAtual = strftime('%Y');
 
         var mesSistema = $(".mesHoje").val();
         var mesAtual = $(".mesPHP").val();
+        var mesVendaFiltro = $(".mesHojeFiltro").val();
 
         var anoSistema = $(".anoHoje").val();
         var anoAtual = $(".anoPHP").val();
@@ -400,7 +411,6 @@ $anoAtual = strftime('%Y');
         var diaSistema = $(".diaPHP").val();
         var diaAtual = $(".diaHoje").val();
 
-        console.log(anoSistema)
 
         if (mesAtual != mesSistema){
             $(".vendaMes").text('Vendas no mês de ' + mesSistema);
@@ -408,14 +418,23 @@ $anoAtual = strftime('%Y');
             $(".vendaMes").text('Vendas este mês');
         }
 
-        if (diaAtual != diaSistema){
+        if (diaAtual != undefined){
+            if (diaAtual != diaSistema || mesVendaFiltro != mesAtual){
+
+                $(".dadosReferentes").text("*Vendas referentes ao dia " + diaSistema + " de " + mesVendaFiltro + " de " + anoAtual);
 
                 setTimeout(function (){
                     $('html, body').animate({
                         scrollTop: $(".target").offset().top
                     }, 1500);
                 }, 250)
+
+                setTimeout(function (){
+                    $(".dadosReferentes").fadeOut('slow');
+                }, 8000)
             }
+
+        }
 
         if (anoAtual != anoSistema){
             $(".textoAno").text('Total arrecadado por mês em ' + anoSistema);
