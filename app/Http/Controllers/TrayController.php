@@ -757,6 +757,7 @@ class TrayController extends Controller
                 }
             }
         }
+
         elseif (isset($address[0]->address)){
             $sendAddress = $address[0]->address;
 
@@ -905,10 +906,18 @@ class TrayController extends Controller
 
     public function couponApply(Request $request)
     {
-        $order = Auth::user()->userOrderTray()->select('id', 'orderType', 'detached', 'address', 'extras', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+        $order = Auth::user()->userOrderTray()->select('id', 'orderType', 'comboItem', 'detached', 'address', 'extras', 'hamburguer', 'portion', 'image', 'drinks', 'totalValue')->get()->toArray();
         $couponOld = DB::table('coupons')->where('name', '=', $request->cupomDesconto)->get()->toArray();
         $update = Tray::find($order[0]['id']);
         $date = date('Y'. '-' . 'm' . '-' . 'd');
+
+        //Capturando os itens adicionais.
+        $aditionals = Extras::all()->toArray();
+        $addons = array();
+
+        foreach ($aditionals as $ad => $value){
+            array_push($addons, $value['name']);
+        }
 
         //Encontrando a data de expiração do cupom e deletando se estiver vencido.
         $expire = DB::table('coupons')
@@ -951,7 +960,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'image','extras', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -964,7 +973,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -976,7 +985,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
 
                 }elseif ($coupon[0]->disccount == '5% de desconto' && $update->disccountUsed != 'Sim'){
@@ -988,7 +997,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'image','comboItem', 'extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1001,7 +1010,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1013,7 +1022,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 }elseif ($coupon[0]->disccount == '15% de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1024,7 +1033,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'image','extras', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1037,7 +1046,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1049,7 +1058,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 } elseif ($coupon[0]->disccount == '20% de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1060,7 +1069,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1073,7 +1082,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1085,7 +1094,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 } elseif ($coupon[0]->disccount == '30% de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1096,7 +1105,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image','comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1109,7 +1118,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1121,7 +1130,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 } elseif ($coupon[0]->disccount == '50% de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1132,7 +1141,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'detached', 'comboItem', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1145,7 +1154,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1157,7 +1166,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 } elseif ($coupon[0]->disccount == 'R$ 5 reais de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1168,7 +1177,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1181,7 +1190,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1193,7 +1202,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 } elseif ($coupon[0]->disccount == 'R$ 7 reais de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1204,7 +1213,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1217,7 +1226,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1229,7 +1238,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 } elseif ($coupon[0]->disccount == 'R$ 10 reais de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1240,7 +1249,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1253,7 +1262,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1265,7 +1274,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 } elseif ($coupon[0]->disccount == 'R$ 15 reais de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1276,7 +1285,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'image', 'address', 'comboItem', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1289,7 +1298,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1301,7 +1310,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 }
 
@@ -1316,7 +1325,7 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'extras','detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'extras','detached', 'image', 'comboItem', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
 
                     //Inserindo endereço de entrega.
                     if (isset($order[0])){
@@ -1329,7 +1338,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
                     }
 
                     //Verificando se o cupom já está sendo utilizado.
@@ -1341,7 +1350,7 @@ class TrayController extends Controller
                         $detached = explode(',', $myOrder['detached']);
                         return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
                     }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName', 'use'));
+                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
                     }
                 }
             } else{
@@ -1351,7 +1360,7 @@ class TrayController extends Controller
                     $detached = explode(',', $myOrder['detached']);
                     return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress','detached', 'notExist'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'notExist'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'notExist'));
                 }
             }
 
@@ -1363,7 +1372,7 @@ class TrayController extends Controller
                 $detached = explode(',', $myOrder['detached']);
                 return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress','detached', 'notExist'));
             }else{
-                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'notExist'));
+                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'notExist'));
             }
             }
         }

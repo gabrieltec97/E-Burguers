@@ -62,9 +62,29 @@
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title text-center font-weight-bold text-muted">Itens do pedido</h5>
-                                                @if(isset($ord->detached))
-                                                    <span class="font-weight-bold text-primary"> {{ $ord->detached }}</span>
-                                                @endif
+
+{{--                                                @if(isset($ord->detached))--}}
+{{--                                                    <span class="font-weight-bold text-primary"> {{ $ord->detached }}</span>--}}
+{{--                                                @endif--}}
+
+                                                <ul>
+                                                @if(isset($ord->hamburguer))
+                                                        <li><span class="font-weight-bold text-primary"> {{ $ord->hamburguer }}</span></li>
+                                                    @endif
+
+                                                    @if(isset($ord->fries))
+                                                        <li><span class="font-weight-bold text-primary"> {{ $ord->fries }}</span></li>
+                                                    @endif
+
+                                                    @if(isset($ord->drinks))
+                                                        <li><span class="font-weight-bold text-primary"> {{ $ord->drinks }}</span></li>
+                                                    @endif
+                                                </ul>
+
+                                                <div class="row">
+                                                    <div class="col-6"><button class="btn btn-danger float-right">Deletar pedido</button></div>
+                                                    <div class="col-6"><button class="btn btn-success float-left">Confirmar pedido</button></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

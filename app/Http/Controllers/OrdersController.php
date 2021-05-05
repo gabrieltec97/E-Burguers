@@ -37,7 +37,12 @@ class OrdersController extends Controller
             ->where('status', '=', 'Pendente')
             ->get();
 
-        return view('clientUser.pending', compact('order'));
+        foreach ($order as $dt){
+            $teste = explode(';', $dt->detached);
+            print_r($teste);
+        }
+
+//        return view('clientUser.pending', compact('order'));
     }
 
     public function confirm()
