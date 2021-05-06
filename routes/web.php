@@ -101,6 +101,10 @@ Route::get('/dashboard', 'FinancialController@dashboard')->name('dashboard');
 
 Route::get('/pedidosPendentes', 'OrdersController@pending')->name('pedidosPendentes');
 
+Route::get('/deletarPendente/{id}', 'OrdersController@deletePending')->name('deletaPendente');
+
+Route::get('/confirmarPendente/{id}', 'OrdersController@confirmPending')->name('confirmaPendente');
+
 Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido');
 
 //Rotas do ACL

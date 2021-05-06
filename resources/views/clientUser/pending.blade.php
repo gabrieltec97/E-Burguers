@@ -1,5 +1,6 @@
 @extends('layouts.extend-client')
 
+
 @section('title')
     Meu pedido
 @endsection
@@ -63,9 +64,9 @@
                                             <div class="card-body">
                                                 <h5 class="card-title text-center font-weight-bold text-muted">Itens do pedido</h5>
 
-{{--                                                @if(isset($ord->detached))--}}
-{{--                                                    <span class="font-weight-bold text-primary"> {{ $ord->detached }}</span>--}}
-{{--                                                @endif--}}
+                                                @if(isset($ord->detached))
+                                                    <span class="font-weight-bold text-primary"> {{ $ord->detached }}</span>
+                                                @endif
 
                                                 <ul>
                                                 @if(isset($ord->hamburguer))
@@ -81,10 +82,41 @@
                                                     @endif
                                                 </ul>
 
-                                                <div class="row">
-                                                    <div class="col-6"><button class="btn btn-danger float-right">Deletar pedido</button></div>
-                                                    <div class="col-6"><button class="btn btn-success float-left">Confirmar pedido</button></div>
-                                                </div>
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                        <form action="{{ route('deletaPendente', $id= $ord->id) }}">
+                                                            <div class="col-12"><button class="btn btn-danger float-right">Deletar pedido</button></div>
+                                                        </form>
+
+                                                        <form action="{{ route('confirmaPendente', $id= $ord->id) }}">
+
+                                                            <div class="col-12"><button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success float-left">Confirmar pedido</button></div>
+
+
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <p style="font-size: 15px">Ao confirmar pedido, ele será cadastrado e começará a ser preparado. Deseja prosseguir?</p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-danger font-weight-bold" data-dismiss="modal">Sair</button>
+                                                                            <button type="submit" class="btn btn-primary font-weight-bold">Confirmar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -106,4 +138,8 @@
                     </div>
                 </div>
             @endif
+
+        @if(session('msg-rem'))
+            <button hidden class="disparo-removePendente"></button>
+        @endif
 @endsection

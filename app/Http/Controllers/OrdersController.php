@@ -37,12 +37,25 @@ class OrdersController extends Controller
             ->where('status', '=', 'Pendente')
             ->get();
 
-        foreach ($order as $dt){
-            $teste = explode(';', $dt->detached);
-            print_r($teste);
-        }
+        return view('clientUser.pending', compact('order'));
+    }
 
-//        return view('clientUser.pending', compact('order'));
+    public function deletePending($id)
+    {
+        DB::table('orders')
+            ->where('id', '=', $id)
+            ->delete();
+
+        return back()->with('msg-rem', 'deletado');
+    }
+
+    public function confirmPending($id)
+    {
+        DB::table('orders')
+            ->where('id', '=', $id)
+            ->update(['status' => 'Pedido registrado']);
+
+        return redirect()->route('preparo.index');
     }
 
     public function confirm()

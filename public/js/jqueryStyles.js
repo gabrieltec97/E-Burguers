@@ -622,6 +622,21 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".disparo-removeCombo").click();
 
+    //Toast de remoção de pedido pendente.
+
+    $(".disparo-removePendente").on("click", function (){
+        $.toast({
+            text: '<b style="font-size: 14px">Pedido removido dos pendentes.</b>',
+            heading: '<b style="font-size: 17px">Que pena :(</b>',
+            showHideTransition: 'slide',
+            bgColor : 'red',
+            position : 'top-right',
+            hideAfter: 6000
+        })
+    });
+
+    $(".disparo-removePendente").click();
+
 
     //Toast de remoção de item.
 
