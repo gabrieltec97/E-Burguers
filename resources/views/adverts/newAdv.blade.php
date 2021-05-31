@@ -95,7 +95,14 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-12 mt-3">
+                                    <div class="col-4 mt-3">
+                                        <label class="font-weight-bold">Sabores</label>
+                                        <br>
+                                        <input type="text" class="form-control ingredientes" placeholder="Uva, Morango, Natural">
+                                        <label class="text-primary font-weight-bold mt-2 verifica-ingredientes" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
+                                    </div>
+
+                                    <div class="col-4 mt-3 itr">
                                         <label class="font-weight-bold mb-3">Itens que poderão ser adicionados.</label>
                                         <br>
                                     @if(isset($items))

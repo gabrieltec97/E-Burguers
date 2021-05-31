@@ -889,9 +889,11 @@ $(".tipoRef").on("change", function () {
 
     if ($(this).val() == 'Acompanhamento' || $(this).val() == 'Bebida'){
         $(".igr").hide();
+        $(".itr").hide();
         $(".comb").addClass('col-md-8');
     }else{
         $(".igr").fadeIn('slow');
+        $(".itr").fadeIn('slow');
         $(".comb").removeClass('col-md-8');
     }
 })

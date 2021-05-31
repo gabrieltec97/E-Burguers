@@ -60,7 +60,7 @@ class FinancialController extends Controller
                 }
 
                 foreach ($month as $mt){
-                    if ($mt->monthDay <= 30){
+                    if ($mt->monthDay <= 31){
                         $countDayThirty += 1;
                     }
                 }
@@ -104,7 +104,7 @@ class FinancialController extends Controller
                     ]);
 
                 }elseif ($thisDay <=31){
-                    $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
+                    $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 31']);
                     $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
                         'backgroundColor' => '#ccf5ff',
                         'borderColor' => '#008fb3',
@@ -153,14 +153,14 @@ class FinancialController extends Controller
                 }
 
                 foreach ($month as $mt){
-                    if ($mt->monthDay <= 30){
+                    if ($mt->monthDay <= 31){
                         $countDayThirty += 1;
                     }
                 }
 
                 $chart = new Grafico();
 
-                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
+                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 31']);
                 $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
                     'backgroundColor' => '#ccf5ff',
                     'borderColor' => '#008fb3',
@@ -211,7 +211,7 @@ class FinancialController extends Controller
             }
 
             foreach ($month as $mt){
-                if ($mt->monthDay <= 30){
+                if ($mt->monthDay <= 31){
                     $countDayThirty += 1;
                 }
             }
@@ -255,7 +255,7 @@ class FinancialController extends Controller
                 ]);
 
             }elseif ($thisDay <=31){
-                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
+                $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 31']);
                 $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
                     'backgroundColor' => '#ccf5ff',
                     'borderColor' => '#008fb3',
@@ -447,7 +447,7 @@ class FinancialController extends Controller
         }
 
         foreach ($month as $mt){
-            if ($mt->monthDay <= 30){
+            if ($mt->monthDay <= 31){
                 $countDayThirty += 1;
             }
         }
@@ -491,7 +491,7 @@ class FinancialController extends Controller
             ]);
 
         }elseif ($thisDay <=31){
-            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 30']);
+            $chart->labels(['Início do mês','Até dia 10', 'Até dia 15', 'Até dia 20', 'Até dia 25', 'Até dia 31']);
             $chart->dataset('Total de vendas este mês', 'line' , [0, $countDayTen,$countDayFifteen,$countDayTwenty,$countDayTwentyFive,$countDayThirty])->options([
                 'backgroundColor' => '#ccf5ff',
                 'borderColor' => '#008fb3',
