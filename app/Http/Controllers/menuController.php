@@ -90,6 +90,7 @@ class menuController extends Controller
         $advert->value = $request->mealValue;
         $advert->ingredients = $request->ingredients;
         $advert->foodType = $request->tipoRef;
+        $advert->tastes = $request->sabores;
 
         if (isset($request->extras)){
             $extras = implode(',', $request->extras);
@@ -126,6 +127,8 @@ class menuController extends Controller
         $advert->save();
 
       return redirect(route('refeicoes.index'))->with('msg-2', 'A refeição foi cadastrada com sucesso e já está disponível no');
+
+
     }
 
     /**
@@ -191,6 +194,7 @@ class menuController extends Controller
         $advert->name = $request->mealName;
         $advert->value = $request->mealValue;
         $advert->ingredients = $request->ingredients;
+        $advert->tastes = $request->sabores;
 
         if(isset($_POST['combo'])){
             $advert->combo = $_POST['combo'];

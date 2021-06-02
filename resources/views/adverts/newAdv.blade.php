@@ -98,7 +98,7 @@
                                     <div class="col-4 mt-3">
                                         <label class="font-weight-bold">Sabores</label>
                                         <br>
-                                        <input type="text" class="form-control ingredientes" placeholder="Uva, Morango, Natural">
+                                        <input type="text" class="form-control ingredientes" placeholder="Uva, Morango, Natural" name="sabores">
                                         <label class="text-primary font-weight-bold mt-2 verifica-ingredientes" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
                                     </div>
 

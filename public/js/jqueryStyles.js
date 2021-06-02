@@ -249,11 +249,11 @@ $(".cupom-expire").hide();
 
     $(".verifica-ingredientes").hide();
 
-    $(".valComboPromo, .nome-refeicao, .impComboSim, .impComboNao, .descricao, .valorRefeicao, .ingredientes-edit, .nome-refeicao-edit, .valorRefeicao-edi, .valComboPromo-edit, .descricao-edit").on("click", function (){
+    $(".valComboPromo, .nome-refeicao, .impComboSim, .impComboNao, .descricao, .valorRefeicao, .sabores-edit, .ingredientes-edit, .nome-refeicao-edit, .valorRefeicao-edi, .valComboPromo-edit, .descricao-edit").on("click", function (){
         $(".verifica-ingredientes").fadeOut('slow');
     })
 
-$(".ingredientes, .ingredientes-edit").on("click", function () {
+$(".ingredientes, .ingredientes-edit, .sabores-edit").on("click", function () {
     $(".verifica-ingredientes").fadeIn('slow')
 })
 
@@ -493,6 +493,7 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     const participaCombo = $("input:radio:checked").val();
     const valorCombo =  $(".valComboPromo-edit").val();
     const ingredientes =  $(".ingredientes-edit").val();
+    const sabores =  $(".sabores-edit").val();
     const descricao =  $(".descricao-edit").val();
 
     if(valorCombo == 'Esta refeição não participará do combo.'){
@@ -502,7 +503,7 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".btn-alterar-refeicao").on("click", function () {
 
-        if(nomeRef == $(".nome-refeicao-edit").val() && valor == $(".valorRefeicao-edit").val() && participaCombo == $("input:radio:checked").val() && valorCombo == $(".valComboPromo-edit").val() && ingredientes == $(".ingredientes-edit").val() && descricao == $(".descricao-edit").val()){
+        if(sabores == $(".sabores-edit").val() && nomeRef == $(".nome-refeicao-edit").val() && valor == $(".valorRefeicao-edit").val() && participaCombo == $("input:radio:checked").val() && valorCombo == $(".valComboPromo-edit").val() && ingredientes == $(".ingredientes-edit").val()  && descricao == $(".descricao-edit").val() ){
 
             $(".a-mudancas").text("Você não efetuou nenhuma alteração.");
             $(".imagem-alteracao").removeAttr('hidden');
@@ -563,6 +564,16 @@ $(".btn-cadastrar-refeicao").on("click", function () {
         }else{
             $(".div-ingrediente-ant").attr('hidden', 'true');
             $(".div-novo-ingrediente-2").attr('hidden', 'true');
+        }
+
+        if(sabores != $(".sabores-edit").val()){
+            $(".div-novo-sabor-2").removeAttr('hidden', 'true');
+            $(".div-sabor-ant").removeAttr('hidden', 'true');
+            $(".sabores-refeicao2-edit").text($(".sabores-edit").val());
+
+        }else{
+            $(".div-sabor-ant").attr('hidden', 'true');
+            $(".div-novo-sabor-2").attr('hidden', 'true');
         }
 
         if(descricao != $(".descricao-edit").val()){

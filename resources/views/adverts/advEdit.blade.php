@@ -58,20 +58,55 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-12 mt-3 col-md-6">
-                                        <label class="text-muted font-weight-bold">Ingredientes</label>
-                                        @if($meal->ingredients == '')
-                                        <input type="text" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Item sem ingredientes" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" disabled style="cursor: not-allowed">
-                                        @else
-                                            <input type="text" value="{{ $meal->ingredients }}" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,tomate,alface" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" required>
-                                        @endif
-                                        <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os separando por vírgulas e sem dar espaços.</label>
-                                        @if($errors->has('ingredients'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('ingredients') }}</span>
-                                            </div>
-                                        @endif
-                                    </div>
+{{--                                    <div class="col-12 mt-3 col-md-6">--}}
+{{--                                        <label class="text-muted font-weight-bold">Ingredientes</label>--}}
+{{--                                        @if($meal->ingredients == '')--}}
+{{--                                        <input type="text" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Item sem ingredientes" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" disabled style="cursor: not-allowed">--}}
+{{--                                        @else--}}
+{{--                                            <input type="text" value="{{ $meal->ingredients }}" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,tomate,alface" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" required>--}}
+{{--                                        @endif--}}
+{{--                                        <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os separando por vírgulas e sem dar espaços.</label>--}}
+{{--                                        @if($errors->has('ingredients'))--}}
+{{--                                            <div class="invalid-feedback">--}}
+{{--                                                <span class="font-weight-bold"> {{ $errors->first('ingredients') }}</span>--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+
+                                    @if($meal->foodType != 'Bebida')
+                                        <div class="col-12 mt-3 col-md-6">
+                                            <label class="text-muted font-weight-bold">Ingredientes</label>
+                                            @if($meal->ingredients == '')
+                                                <input type="text" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Item sem ingredientes" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" disabled style="cursor: not-allowed">
+                                            @else
+                                                <input type="text" value="{{ $meal->ingredients }}" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,tomate,alface" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" required>
+                                            @endif
+                                            <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os separando por vírgulas e sem dar espaços.</label>
+                                            @if($errors->has('ingredients'))
+                                                <div class="invalid-feedback">
+                                                    <span class="font-weight-bold"> {{ $errors->first('ingredients') }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="col-12 mt-3 col-md-6">
+                                            <label class="text-muted font-weight-bold">Sabores</label>
+                                            <input type="text" value="{{ $meal->tastes }}" class="form-control sabores-edit" placeholder="Exemplo:Uva,Morango,Laranja" title="Insira-os separando por vírgula e sem dar espaços." name="sabores" required>
+                                            <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os com a primeira letra maiúscula, separando por vírgulas e sem dar espaços.</label>
+                                            @if($errors->has('tastes'))
+                                                <div class="invalid-feedback">
+                                                    <span class="font-weight-bold"> {{ $errors->first('tastes') }}</span>
+                                                </div>
+                                            @endif
+
+                                            @if($errors->has('ingredients'))
+                                                <div class="invalid-feedback">
+                                                    <span class="font-weight-bold"> {{ $errors->first('ingredients') }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endif
+
 
                                     <div class="col-12 mt-3">
                                         <label class="text-muted font-weight-bold">Descrição</label>
@@ -90,7 +125,7 @@
                                 <!-- Modal -->
                                 <div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
+                                          <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title font-weight-bold" id="TituloModalCentralizado">Quase lá!</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
@@ -111,26 +146,27 @@
                                                    <div class="col-6 div-valor-ant" hidden>
                                                        <p class="text-muted font-weight-bold ">Valor anterior: <span class="text-success">{{ $meal->value }}</span></p>
                                                        <p class="text-muted font-weight-bold div-novo-valor-2" hidden>Novo valor: <span class="valor-refeicao2-edit text-danger"></span></p>
-
                                                    </div>
 
                                                    <div class="col-6 div-partCombo-ant">
                                                        <p class="text-muted font-weight-bold partCombo" hidden>Participa do combo</p>
                                                        <p class="text-muted font-weight-bold">Valor anterior: <span class="text-success">{{ $meal->combo }}</span></p>
                                                        <p class="text-muted font-weight-bold div-novo-partCombo-2" hidden>Novo valor: <span class="partCombo-refeicao2-edit text-danger"></span></p>
-
                                                    </div>
 
                                                    <div class="col-6 div-valorPromo-ant">
                                                        <p class="text-muted font-weight-bold">Valor promocional anterior: <span class="text-success">{{ $meal->comboValue }}</span></p>
                                                        <p class="text-muted font-weight-bold div-novo-valorPromo-2" hidden>Novo valor promocional: <span class="valorPromo-refeicao2-edit text-danger"></span></p>
-
                                                    </div>
 
                                                    <div class="col-12 div-ingrediente-ant">
                                                        <p class="text-muted font-weight-bold">Ingredientes Anteriormente: <span class="text-success">{{ $meal->ingredients }}</span></p>
                                                        <p class="text-muted font-weight-bold div-novo-ingrediente-2" hidden>Ingredientes Agora: <span class="ingrediente-refeicao2-edit text-danger"></span></p>
+                                                   </div>
 
+                                                   <div class="col-12 div-sabor-ant">
+                                                       <p class="text-muted font-weight-bold">Sabores anteriormente: <span class="text-success">{{ $meal->tastes }}</span></p>
+                                                       <p class="text-muted font-weight-bold div-novo-sabor-2" hidden>Sabores agora: <span class="sabores-refeicao2-edit text-danger"></span></p>
                                                    </div>
 
                                                    <div class="col-12 div-descricao-ant">
