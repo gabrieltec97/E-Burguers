@@ -175,7 +175,12 @@ class TrayController extends Controller
                     $itemWithoutExtras->item = $item->name;
                 }
 
-                $itemWithoutExtras->itemName = $item->name;
+                if($request->sabor == ''){
+                    $itemWithoutExtras->itemName = $item->name;
+                }else{
+                    $itemWithoutExtras->itemName = $item->name . ' sabor: ' . $request->sabor;
+                }
+
                 $itemWithoutExtras->value = $item->value;
                 $itemWithoutExtras->save();
             }
@@ -660,7 +665,7 @@ class TrayController extends Controller
         return view('clientUser.foodMenu.drinks', compact('foods', 'edit'));
     }
 
-    public function shoppingFinish ($idFood)
+    public function shoppingFinish (Request $request, $idFood)
     {
         $user = Auth::user();
         $myOrder = $user->userOrderTray()->get()->first()->toArray();
@@ -671,7 +676,13 @@ class TrayController extends Controller
         if ($myOrder['drinks'] == ''){
 
             $order = Tray::find($idOrder);
-            $order->drinks = $thirdFood->name;
+
+            if($request->sabor == ''){
+                $order->drinks = $thirdFood->name;
+            }else{
+                $order->drinks = $thirdFood->name . '| sabor: ' . $request->sabor;
+            }
+
             $order->totalValue = $valueOrder;
             $order->valueWithoutDisccount = $valueOrder;
             $order->save();

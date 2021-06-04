@@ -25,6 +25,16 @@
                                             <div class="card-body">
                                                 <h5 class="card-title font-weight-bold">{{ $food->name }}</h5>
 
+                                                @if($food->foodType == 'Bebida')
+                                                    @if($food->tastes != '')
+                                                        <select name="sabor" class="mb-3" title="Selecione um sabor" style="width: 100%;cursor: pointer; ">
+                                                            @foreach(explode(',', $food->tastes) as $taste)
+                                                                <option value="{{ $taste }}">{{ $taste }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    @endif
+                                                @endif
+
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->comboValue }}</span></p>
