@@ -33,6 +33,7 @@
                                     <br>
                                     @if($meal->foodType != 'Bebida')
                                         <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Ingredientes:</span><span class="text-primary"> {{$meal->ingredients}} </span></label>
+                                        <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Adicionais:</span><span class="text-primary"> {{$meal->extras}} </span></label>
                                     @else
                                         <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Sabores:</span><span class="text-primary"> {{$meal->tastes}} </span></label>
                                     @endif

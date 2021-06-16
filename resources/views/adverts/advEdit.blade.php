@@ -107,6 +107,24 @@
                                         </div>
                                     @endif
 
+                                    <div class="col-4 mt-3 itr">
+                                        <label class="font-weight-bold mb-3">Itens que poderão ser adicionados.</label>
+                                        <br>
+                                        @if(isset($count))
+                                            @foreach($count as $c => $v)
+                                                @if($v == 2)
+                                                    <input type="checkbox" class="form-check-input ml-1 cameFromDB" id="{{ $c }}" value="{{ $c }}" checked name="extras[]">
+                                                    <label class="form-check-label ml-4" for="{{ $c }}">{{ $c }}</label><br>
+                                                @else
+                                                    <input type="checkbox" class="form-check-input ml-1 atual" id="{{ $c }}" value="{{ $c }}" name="extras[]">
+                                                    <label class="form-check-label ml-4" for="{{ $c }}">{{ $c }}</label><br>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <label class="font-weight-bold text-danger mb-3">Você deverá primeiro cadastrar os itens adicionais antes de cadastrar uma refeição</label>
+                                        @endif
+                                    </div>
+
 
                                     <div class="col-12 mt-3">
                                         <label class="text-muted font-weight-bold">Descrição</label>
@@ -133,48 +151,49 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="font-weight-bold text-muted text-center a-mudancas"></p>
+{{--                                                <p class="font-weight-bold text-muted text-center a-mudancas"></p>--}}
 
-                                                <img src="{{ asset('logo/cara.svg') }}" class="imagem-alteracao" style="width: 100px; margin-left: 40%; height: 100px" hidden>
+{{--                                                <img src="{{ asset('logo/cara.svg') }}" class="imagem-alteracao" style="width: 100px; margin-left: 40%; height: 100px" hidden>--}}
 
-                                               <div class="row">
-                                                   <div class="col-6 div-nome-ant" hidden>
-                                                       <p class="text-muted font-weight-bold">Nome anterior: <span class="text-success">{{ $meal->name }}</span></p>
-                                                       <p class="text-muted font-weight-bold div-novo-nome-2" hidden>Novo nome: <span class="nome-refeicao2-edit text-danger"></span></p>
-                                                   </div>
+{{--                                               <div class="row">--}}
+{{--                                                   <div class="col-6 div-nome-ant" hidden>--}}
+{{--                                                       <p class="text-muted font-weight-bold">Nome anterior: <span class="text-success">{{ $meal->name }}</span></p>--}}
+{{--                                                       <p class="text-muted font-weight-bold div-novo-nome-2" hidden>Novo nome: <span class="nome-refeicao2-edit text-danger"></span></p>--}}
+{{--                                                   </div>--}}
 
-                                                   <div class="col-6 div-valor-ant" hidden>
-                                                       <p class="text-muted font-weight-bold ">Valor anterior: <span class="text-success">{{ $meal->value }}</span></p>
-                                                       <p class="text-muted font-weight-bold div-novo-valor-2" hidden>Novo valor: <span class="valor-refeicao2-edit text-danger"></span></p>
-                                                   </div>
+{{--                                                   <div class="col-6 div-valor-ant" hidden>--}}
+{{--                                                       <p class="text-muted font-weight-bold ">Valor anterior: <span class="text-success">{{ $meal->value }}</span></p>--}}
+{{--                                                       <p class="text-muted font-weight-bold div-novo-valor-2" hidden>Novo valor: <span class="valor-refeicao2-edit text-danger"></span></p>--}}
+{{--                                                   </div>--}}
 
-                                                   <div class="col-6 div-partCombo-ant">
-                                                       <p class="text-muted font-weight-bold partCombo" hidden>Participa do combo</p>
-                                                       <p class="text-muted font-weight-bold">Valor anterior: <span class="text-success">{{ $meal->combo }}</span></p>
-                                                       <p class="text-muted font-weight-bold div-novo-partCombo-2" hidden>Novo valor: <span class="partCombo-refeicao2-edit text-danger"></span></p>
-                                                   </div>
+{{--                                                   <div class="col-6 div-partCombo-ant">--}}
+{{--                                                       <p class="text-muted font-weight-bold partCombo" hidden>Participa do combo</p>--}}
+{{--                                                       <p class="text-muted font-weight-bold">Valor anterior: <span class="text-success">{{ $meal->combo }}</span></p>--}}
+{{--                                                       <p class="text-muted font-weight-bold div-novo-partCombo-2" hidden>Novo valor: <span class="partCombo-refeicao2-edit text-danger"></span></p>--}}
+{{--                                                   </div>--}}
 
-                                                   <div class="col-6 div-valorPromo-ant">
-                                                       <p class="text-muted font-weight-bold">Valor promocional anterior: <span class="text-success">{{ $meal->comboValue }}</span></p>
-                                                       <p class="text-muted font-weight-bold div-novo-valorPromo-2" hidden>Novo valor promocional: <span class="valorPromo-refeicao2-edit text-danger"></span></p>
-                                                   </div>
+{{--                                                   <div class="col-6 div-valorPromo-ant">--}}
+{{--                                                       <p class="text-muted font-weight-bold">Valor promocional anterior: <span class="text-success">{{ $meal->comboValue }}</span></p>--}}
+{{--                                                       <p class="text-muted font-weight-bold div-novo-valorPromo-2" hidden>Novo valor promocional: <span class="valorPromo-refeicao2-edit text-danger"></span></p>--}}
+{{--                                                   </div>--}}
 
-                                                   <div class="col-12 div-ingrediente-ant">
-                                                       <p class="text-muted font-weight-bold">Ingredientes Anteriormente: <span class="text-success">{{ $meal->ingredients }}</span></p>
-                                                       <p class="text-muted font-weight-bold div-novo-ingrediente-2" hidden>Ingredientes Agora: <span class="ingrediente-refeicao2-edit text-danger"></span></p>
-                                                   </div>
+{{--                                                   <div class="col-12 div-ingrediente-ant">--}}
+{{--                                                       <p class="text-muted font-weight-bold">Ingredientes Anteriormente: <span class="text-success">{{ $meal->ingredients }}</span></p>--}}
+{{--                                                       <p class="text-muted font-weight-bold div-novo-ingrediente-2" hidden>Ingredientes Agora: <span class="ingrediente-refeicao2-edit text-danger"></span></p>--}}
+{{--                                                   </div>--}}
 
-                                                   <div class="col-12 div-sabor-ant">
-                                                       <p class="text-muted font-weight-bold">Sabores anteriormente: <span class="text-success">{{ $meal->tastes }}</span></p>
-                                                       <p class="text-muted font-weight-bold div-novo-sabor-2" hidden>Sabores agora: <span class="sabores-refeicao2-edit text-danger"></span></p>
-                                                   </div>
+{{--                                                   <div class="col-12 div-sabor-ant">--}}
+{{--                                                       <p class="text-muted font-weight-bold">Sabores anteriormente: <span class="text-success">{{ $meal->tastes }}</span></p>--}}
+{{--                                                       <p class="text-muted font-weight-bold div-novo-sabor-2" hidden>Sabores agora: <span class="sabores-refeicao2-edit text-danger"></span></p>--}}
+{{--                                                   </div>--}}
 
-                                                   <div class="col-12 div-descricao-ant">
-                                                       <p class="text-muted font-weight-bold">Descrição anterior: <span class="text-success">{{ $meal->description }}</span></p>
-                                                       <p class="text-muted font-weight-bold div-novo-descricao-2" hidden>Novadescricao descrição: <span class="descricao-refeicao2-edit text-danger"></span></p>
-                                                   </div>
-                                               </div>
+{{--                                                   <div class="col-12 div-descricao-ant">--}}
+{{--                                                       <p class="text-muted font-weight-bold">Descrição anterior: <span class="text-success">{{ $meal->description }}</span></p>--}}
+{{--                                                       <p class="text-muted font-weight-bold div-novo-descricao-2" hidden>Novadescricao descrição: <span class="descricao-refeicao2-edit text-danger"></span></p>--}}
+{{--                                                   </div>--}}
+{{--                                               </div>--}}
 
+                                                    <p class="text-danger">Tem certeza que deseja salvar as alterações? Revise-as antes de salvar.</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar à edição</button>

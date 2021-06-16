@@ -488,104 +488,106 @@ $(".btn-cadastrar-refeicao").on("click", function () {
         $(".valComboPromo-edit").css('cursor', 'initial')
     })
 
-    const nomeRef = $(".nome-refeicao-edit").val();
-    const valor = $(".valorRefeicao-edit").val();
-    const participaCombo = $("input:radio:checked").val();
-    const valorCombo =  $(".valComboPromo-edit").val();
-    const ingredientes =  $(".ingredientes-edit").val();
-    const sabores =  $(".sabores-edit").val();
-    const descricao =  $(".descricao-edit").val();
-
-    if(valorCombo == 'Esta refeição não participará do combo.'){
-        $(".valComboPromo-edit").attr('readonly', 'true');
-        $(".valComboPromo-edit").css('cursor', 'not-allowed');
-    }
-
-    $(".btn-alterar-refeicao").on("click", function () {
-
-        if(sabores == $(".sabores-edit").val() && nomeRef == $(".nome-refeicao-edit").val() && valor == $(".valorRefeicao-edit").val() && participaCombo == $("input:radio:checked").val() && valorCombo == $(".valComboPromo-edit").val() && ingredientes == $(".ingredientes-edit").val()  && descricao == $(".descricao-edit").val() ){
-
-            $(".a-mudancas").text("Você não efetuou nenhuma alteração.");
-            $(".imagem-alteracao").removeAttr('hidden');
-            $(".salvar-agora").attr('hidden', 'true');
-        }else{
-            $(".a-mudancas").text('Você está fazendo alterações neste anúncio. Por favor, revise as alterações antes de prosseguir com\n' +
-                'o salvamento.');
-            $(".imagem-alteracao").attr('hidden', 'true');
-            $(".salvar-agora").removeAttr('hidden', 'true');
-        }
-
-        if(nomeRef != $(".nome-refeicao-edit").val()){
-            $(".div-novo-nome-2").removeAttr('hidden', 'true');
-            $(".div-nome-ant").removeAttr('hidden', 'true');
-            $(".nome-refeicao2-edit").text($(".nome-refeicao-edit").val());
-        }else{
-            $(".div-nome-ant").attr('hidden', 'true');
-            $(".div-novo-nome-2").attr('hidden', 'true');
-        }
-
-        if(valor != $(".valorRefeicao-edit").val()){
-            $(".div-novo-valor-2").removeAttr('hidden', 'true');
-            $(".div-valor-ant").removeAttr('hidden', 'true');
-            $(".valor-refeicao2-edit").text($(".valorRefeicao-edit").val());
-
-        }else{
-            $(".div-valor-ant").attr('hidden', 'true');
-            $(".div-novo-valor-2").attr('hidden', 'true');
-        }
-
-        if(participaCombo != $("input:radio:checked").val()){
-            $(".partCombo").removeAttr('hidden', 'true');
-            $(".div-novo-partCombo-2").removeAttr('hidden', 'true');
-            $(".div-partCombo-ant").removeAttr('hidden', 'true');
-            $(".partCombo-refeicao2-edit").text($("input:radio:checked").val());
-
-        }else{
-            $(".div-partCombo-ant").attr('hidden', 'true');
-            $(".partCombo").attr('hidden', 'true');
-            $(".div-novo-partCombo-2").attr('hidden', 'true');
-        }
-
-        if(valorCombo != $(".valComboPromo-edit").val()){
-            $(".div-novo-valorPromo-2").removeAttr('hidden', 'true');
-            $(".div-valorPromo-ant").removeAttr('hidden', 'true');
-            $(".valorPromo-refeicao2-edit").text($(".valComboPromo-edit").val());
-
-        }else{
-            $(".div-valorPromo-ant").attr('hidden', 'true');
-            $(".div-novo-valorPromo-2").attr('hidden', 'true');
-        }
-
-        if(ingredientes != $(".ingredientes-edit").val()){
-            $(".div-novo-ingrediente-2").removeAttr('hidden', 'true');
-            $(".div-ingrediente-ant").removeAttr('hidden', 'true');
-            $(".ingrediente-refeicao2-edit").text($(".ingredientes-edit").val());
-
-        }else{
-            $(".div-ingrediente-ant").attr('hidden', 'true');
-            $(".div-novo-ingrediente-2").attr('hidden', 'true');
-        }
-
-        if(sabores != $(".sabores-edit").val()){
-            $(".div-novo-sabor-2").removeAttr('hidden', 'true');
-            $(".div-sabor-ant").removeAttr('hidden', 'true');
-            $(".sabores-refeicao2-edit").text($(".sabores-edit").val());
-
-        }else{
-            $(".div-sabor-ant").attr('hidden', 'true');
-            $(".div-novo-sabor-2").attr('hidden', 'true');
-        }
-
-        if(descricao != $(".descricao-edit").val()){
-            $(".div-novo-descricao-2").removeAttr('hidden', 'true');
-            $(".div-descricao-ant").removeAttr('hidden', 'true');
-            $(".descricao-refeicao2-edit").text($(".descricao-edit").val());
-
-        }else{
-            $(".div-descricao-ant").attr('hidden', 'true');
-            $(".div-novo-descricao-2").attr('hidden', 'true');
-        }
-    })
+    // const nomeRef = $(".nome-refeicao-edit").val();
+    // const valor = $(".valorRefeicao-edit").val();
+    // const participaCombo = $("input:radio:checked").val();
+    // const valorCombo =  $(".valComboPromo-edit").val();
+    // const ingredientes =  $(".ingredientes-edit").val();
+    // const sabores =  $(".sabores-edit").val();
+    // const descricao =  $(".descricao-edit").val();
+    // const bancoExtras =  $(".cameFromDB").val();
+    // const atual =  $(".atual").val();
+    //
+    // if(valorCombo == 'Esta refeição não participará do combo.'){
+    //     $(".valComboPromo-edit").attr('readonly', 'true');
+    //     $(".valComboPromo-edit").css('cursor', 'not-allowed');
+    // }
+    //
+    // $(".btn-alterar-refeicao").on("click", function () {
+    //
+    //     if(atual ==  $(".atual").val() && bancoExtras ==  $(".cameFromDB").val() && sabores == $(".sabores-edit").val() && nomeRef == $(".nome-refeicao-edit").val() && valor == $(".valorRefeicao-edit").val() && participaCombo == $("input:radio:checked").val() && valorCombo == $(".valComboPromo-edit").val() && ingredientes == $(".ingredientes-edit").val()  && descricao == $(".descricao-edit").val() ){
+    //
+    //         $(".a-mudancas").text("Você não efetuou nenhuma alteração.");
+    //         $(".imagem-alteracao").removeAttr('hidden');
+    //         $(".salvar-agora").attr('hidden', 'true');
+    //     }else{
+    //         $(".a-mudancas").text('Você está fazendo alterações neste anúncio. Por favor, revise as alterações antes de prosseguir com\n' +
+    //             'o salvamento.');
+    //         $(".imagem-alteracao").attr('hidden', 'true');
+    //         $(".salvar-agora").removeAttr('hidden', 'true');
+    //     }
+    //
+    //     if(nomeRef != $(".nome-refeicao-edit").val()){
+    //         $(".div-novo-nome-2").removeAttr('hidden', 'true');
+    //         $(".div-nome-ant").removeAttr('hidden', 'true');
+    //         $(".nome-refeicao2-edit").text($(".nome-refeicao-edit").val());
+    //     }else{
+    //         $(".div-nome-ant").attr('hidden', 'true');
+    //         $(".div-novo-nome-2").attr('hidden', 'true');
+    //     }
+    //
+    //     if(valor != $(".valorRefeicao-edit").val()){
+    //         $(".div-novo-valor-2").removeAttr('hidden', 'true');
+    //         $(".div-valor-ant").removeAttr('hidden', 'true');
+    //         $(".valor-refeicao2-edit").text($(".valorRefeicao-edit").val());
+    //
+    //     }else{
+    //         $(".div-valor-ant").attr('hidden', 'true');
+    //         $(".div-novo-valor-2").attr('hidden', 'true');
+    //     }
+    //
+    //     if(participaCombo != $("input:radio:checked").val()){
+    //         $(".partCombo").removeAttr('hidden', 'true');
+    //         $(".div-novo-partCombo-2").removeAttr('hidden', 'true');
+    //         $(".div-partCombo-ant").removeAttr('hidden', 'true');
+    //         $(".partCombo-refeicao2-edit").text($("input:radio:checked").val());
+    //
+    //     }else{
+    //         $(".div-partCombo-ant").attr('hidden', 'true');
+    //         $(".partCombo").attr('hidden', 'true');
+    //         $(".div-novo-partCombo-2").attr('hidden', 'true');
+    //     }
+    //
+    //     if(valorCombo != $(".valComboPromo-edit").val()){
+    //         $(".div-novo-valorPromo-2").removeAttr('hidden', 'true');
+    //         $(".div-valorPromo-ant").removeAttr('hidden', 'true');
+    //         $(".valorPromo-refeicao2-edit").text($(".valComboPromo-edit").val());
+    //
+    //     }else{
+    //         $(".div-valorPromo-ant").attr('hidden', 'true');
+    //         $(".div-novo-valorPromo-2").attr('hidden', 'true');
+    //     }
+    //
+    //     if(ingredientes != $(".ingredientes-edit").val()){
+    //         $(".div-novo-ingrediente-2").removeAttr('hidden', 'true');
+    //         $(".div-ingrediente-ant").removeAttr('hidden', 'true');
+    //         $(".ingrediente-refeicao2-edit").text($(".ingredientes-edit").val());
+    //
+    //     }else{
+    //         $(".div-ingrediente-ant").attr('hidden', 'true');
+    //         $(".div-novo-ingrediente-2").attr('hidden', 'true');
+    //     }
+    //
+    //     if(sabores != $(".sabores-edit").val()){
+    //         $(".div-novo-sabor-2").removeAttr('hidden', 'true');
+    //         $(".div-sabor-ant").removeAttr('hidden', 'true');
+    //         $(".sabores-refeicao2-edit").text($(".sabores-edit").val());
+    //
+    //     }else{
+    //         $(".div-sabor-ant").attr('hidden', 'true');
+    //         $(".div-novo-sabor-2").attr('hidden', 'true');
+    //     }
+    //
+    //     if(descricao != $(".descricao-edit").val()){
+    //         $(".div-novo-descricao-2").removeAttr('hidden', 'true');
+    //         $(".div-descricao-ant").removeAttr('hidden', 'true');
+    //         $(".descricao-refeicao2-edit").text($(".descricao-edit").val());
+    //
+    //     }else{
+    //         $(".div-descricao-ant").attr('hidden', 'true');
+    //         $(".div-novo-descricao-2").attr('hidden', 'true');
+    //     }
+    // })
 
 
 //Toast de item adicionado à bandeja
@@ -713,12 +715,12 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".disparo-msg").on("click", function (){
         $.toast({
-            text: '<b>Você pode escolher novos itens para seu novo pedido.</b>',
-            heading: '<b>Tudo certo!</b>',
+            text: '<b>Seu pedido foi feito e ESTÁ NA ABA PEDIDOS PENDENTES. Você pode escolher novos itens para seu novo pedido.</b>',
+            heading: '<b>Atenção aqui!</b>',
             showHideTransition: 'slide',
             bgColor : '#38C172',
             position : 'top-right',
-            hideAfter: 5000
+            hideAfter: 15000
         })
     });
 
@@ -753,6 +755,7 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     $(".disparo-ok-one").click();
 
 //Tratativas de finalização de compra.
+$(".finalizar-pedido").attr('disabled', 'true');
 
 $(".forma-entrega").on("change", function () {
     var retirada = $(".forma-entrega").val();
@@ -766,6 +769,7 @@ $(".forma-entrega").on("change", function () {
         $(".local-entrega").hide('slow');
         $(".val-entregue").hide('slow');
         pagamento = 'Pagar no restaurante';
+        $(".finalizar-pedido").removeAttr('disabled', 'true');
     }else{
         $(".pagamento").show('slow');
         $(".entrega").show('slow');
@@ -781,6 +785,7 @@ $(".forma-entrega").on("change", function () {
 
 $(".forma-pagamento").on("change", function () {
     var pagamento = $(this).val();
+    var troco2 = $(".troco").val()
 
     if(pagamento != 'Dinheiro'){
         $(".val-entregue").fadeOut('slow');
@@ -788,6 +793,10 @@ $(".forma-pagamento").on("change", function () {
     }else {
         $(".val-entregue").fadeIn('slow');
         $(".troco").attr('required', 'true');
+
+        if (troco2 == ''){
+            $(".finalizar-pedido").attr('disabled', 'true');
+        }
     }
 });
 
@@ -862,13 +871,16 @@ var valorPedido = parseFloat($(".total-val").text());
 var clienteTroco = $(".troco").val()
 $(".verifica-val-troco").hide();
 
+
 $(".troco").on("keyup", function (){
     clienteTroco = parseInt($(".troco").val());
 
-    if (valorPedido > clienteTroco){
+    if (isNaN(clienteTroco) || valorPedido > clienteTroco){
         $(".verifica-val-troco").fadeIn('slow');
+        $(".finalizar-pedido").attr('disabled', 'true');
     }else{
         $(".verifica-val-troco").fadeOut('slow');
+        $(".finalizar-pedido").removeAttr('disabled', 'true');
     }
 })
 
@@ -891,6 +903,7 @@ $(".forma-pagamento").on("change", function (){
         $(".troco").attr('required', 'true');
     }else{
         $(".troco").removeAttr('required', 'true');
+        $(".finalizar-pedido").removeAttr('disabled', 'true');
     }
 })
 

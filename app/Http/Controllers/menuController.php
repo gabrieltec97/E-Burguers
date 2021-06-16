@@ -153,8 +153,22 @@ class menuController extends Controller
     public function edit($id)
     {
         $meal = Adverts::find($id);
+        $extras = Extras::all();
+        $options = array();
 
-        return view('adverts.advEdit', compact('meal'));
+        foreach ($extras as $ext => $val){
+            array_push( $options, $val['name']);
+        }
+
+        //Juntando extras do lanche com os extras gerais.
+        $xtras = explode(',', $meal->extras);
+        foreach ($xtras as $xt){
+            array_push($options, $xt);
+        }
+
+        $count = array_count_values($options);
+
+        return view('adverts.advEdit', compact('meal', 'count'));
     }
 
     /**
@@ -201,6 +215,9 @@ class menuController extends Controller
         }
         $advert->description = $request->mealDescription;
         $advert->comboValue = $request->promoValue;
+
+        $addExtra = implode(',', $request->extras);
+        $advert->extras = $addExtra;
 
         $advert->save();
 
