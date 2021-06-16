@@ -47,6 +47,7 @@
                                 <tr>
                                     <th scope="col">Id do pedido</th>
                                     <th scope="col">Status do pedido</th>
+                                    <th scope="col">Informações</th>
                                     <th scope="col">Tratativas</th>
                                 </tr>
                                 </thead>
@@ -250,6 +251,7 @@
                                <th scope="col">Id</th>
                                <th scope="col">Hora de registro</th>
                                <th scope="col">Status do pedido</th>
+                               <th scope="col">Informações</th>
                                <th scope="col">Tratativas</th>
                            </tr>
                            </thead>
@@ -260,6 +262,13 @@
                                        <td>#{{ $reg->id }}</td>
                                        <td>{{ $reg->hour }}</td>
                                        <td>{{ $reg->status }}</td>
+                                       <td>
+                                           @if($reg->deliverWay == 'Retirada no restaurante')
+                                               <b style="color: black">Item a ser retirado no restaurante.</b>
+                                           @else
+                                           <button class="btn btn-primary" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações a serem repassadas ao entregador."><i class="fas fa-info-circle mr-1"></i> Informações de entrega</button>
+                                           @endif
+                                       </td>
                                        <td>
                                            <div>
                                                <div class="row">
@@ -316,6 +325,47 @@
                                                                </div>
                                                            </div>
                                        </td>
+
+                                       <!-- Modal -->
+                                       <div class="modal fade" id="modalSend{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                           <div class="modal-dialog modal-dialog-centered" role="document">
+                                               <div class="modal-content">
+                                                   <div class="modal-header">
+                                                       <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                           <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                       <p class="text-center" style="color: black; font-size: 18px;">Passe estas informações ao responsável pela entrega.</p>
+
+                                                            <b style="color: black">Pedido:</b> <span style="color: black">{{ $reg->id }}</span> <br>
+
+                                                            <b style="color: black">Cliente:</b> <span style="color: black">{{ $reg->clientName }}</span> <br>
+                                                           {{--                                           Endereço: {{ $reg-> }} <br>--}}
+
+                                                           @if($reg->detached == '')
+                                                               <b style="color: black">Itens: </b> <span style="color: black">{{ $reg->comboItem }},  {{ $reg->fries }}, {{ $reg->drinks }}</span><br><br>
+                                                           @else
+                                                               <b style="color: black">Itens: </b> <span style="color: black">{{ $reg->detached }}</span><br><br>
+                                                           @endif
+
+                                                           @if($reg->payingMethod == 'Dinheiro')
+                                                               <b style="color: black">Valor total:</b> <span style="color: black"> {{ $reg->totalValue }}</span><br>
+                                                               <b style="color: black">Troco para: </b> <span style="color: black">{{ $reg->payingValue }}</span><br>
+                                                           @else
+                                                           <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $reg->payingMethod }}</span>
+                                                           @endif
+
+
+                                                   </div>
+                                                   <div class="modal-footer">
+                                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                       <button type="button" class="btn btn-primary">Save changes</button>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
                                    </tr>
                                    </form>
                    </div>
@@ -338,12 +388,7 @@
        </div>
    </div>
 
-
-
-
-
     <button id="mydialog3" hidden></button>
-
 
 <script>
 
