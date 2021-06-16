@@ -911,15 +911,32 @@ $(".forma-pagamento").on("change", function (){
 //Verificações de criação de refeições.
 $(".tipoRef").on("change", function () {
 
-    if ($(this).val() == 'Acompanhamento' || $(this).val() == 'Bebida'){
+    if ($(this).val() == 'Bebida'){
         $(".igr").hide();
         $(".itr").hide();
+        $('.tastes').fadeIn('slow');
         $(".comb").addClass('col-md-8');
+
+    }else if ($(this).val() == 'Hamburguer'){
+
+        $('.tastes').fadeOut('slow')
+        $(".igr").fadeIn('slow');
+        $(".itr").fadeIn('slow');
+        $(".comb").removeClass('col-md-8');
+
+    }else if ($(this).val() == 'Sobremesa' || $(this).val() == 'Acompanhamento'){
+
+        $(".igr").hide();
+        $(".itr").hide();
+        $(".tastes").fadeOut('slow');
+        $(".comb").addClass('col-md-8');
+
     }else{
         $(".igr").fadeIn('slow');
         $(".itr").fadeIn('slow');
         $(".comb").removeClass('col-md-8');
     }
+
 })
 
 

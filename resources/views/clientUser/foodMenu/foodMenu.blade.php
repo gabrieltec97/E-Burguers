@@ -81,8 +81,8 @@
                                                         </select>
                                                     @endif
                                                 @endif
-                                                <p class="card-text"> {{ $food->description }}
-                                                    <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span></p>
+                                                <p class="card-text"> {{ $food->description }}</p>
+                                                    <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span><br>
                                                 <button type="submit" class="btn btn-success adicionar-bandeja">Adicionar à bandeja</button>
                                             </div>
                                         </div>

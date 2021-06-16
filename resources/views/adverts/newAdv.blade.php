@@ -28,6 +28,23 @@
                             <form action="{{ route('refeicoes.store') }}" method="post" class="form-group form-refeicao" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
+
+                                    <div class="col-12 col-md-4">
+                                        <label class="text-muted font-weight-bold">Tipo de refeição</label>
+                                        <select class="form-select tipoRef {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="tipoRef" required>
+                                            <option value="" selected hidden>Selecione</option>
+                                            <option value="Acompanhamento" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Porção</option>
+                                            <option value="Bebida" {{ old('empOccupation') == 'Atendente' ? 'selected' : '' }}>Bebida</option>
+                                            <option value="Hamburguer" {{ old('empOccupation') == 'Cozinheiro' ? 'selected' : '' }}>Hambúrguer</option>
+                                            <option value="Sobremesa" {{ old('empOccupation') == 'Garçom' ? 'selected' : '' }}>Sobremesa</option>
+                                        </select>
+                                        @if($errors->has('empOccupation'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('empOccupation') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
                                     <div class="col-12 col-md-4">
                                         <label class="text-muted font-weight-bold">Nome</label>
                                         <input type="text" name="mealName" class="form-control nome-refeicao {{ ($errors->has('mealName') ? 'is-invalid' : '') }}" title="Nome que identifica a refeição" value="{{ old('mealName') }}" required>
@@ -45,22 +62,6 @@
                                        <div class="invalid-feedback">
                                           <span class="font-weight-bold"> {{ $errors->first('mealValue') }}</span>
                                        </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-12 col-md-4">
-                                        <label class="text-muted font-weight-bold">Tipo de refeição</label>
-                                        <select class="form-select tipoRef {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="tipoRef" required>
-                                            <option value="" selected hidden>Selecione</option>
-                                            <option value="Acompanhamento" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Porção</option>
-                                            <option value="Bebida" {{ old('empOccupation') == 'Atendente' ? 'selected' : '' }}>Bebida</option>
-                                            <option value="Hamburguer" {{ old('empOccupation') == 'Cozinheiro' ? 'selected' : '' }}>Hambúrguer</option>
-                                            <option value="Sobremesa" {{ old('empOccupation') == 'Garçom' ? 'selected' : '' }}>Sobremesa</option>
-                                        </select>
-                                        @if($errors->has('empOccupation'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('empOccupation') }}</span>
-                                            </div>
                                         @endif
                                     </div>
 
@@ -95,13 +96,6 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-4 mt-3">
-                                        <label class="font-weight-bold">Sabores</label>
-                                        <br>
-                                        <input type="text" class="form-control ingredientes" placeholder="Uva, Morango, Natural" name="sabores">
-                                        <label class="text-primary font-weight-bold mt-2 verifica-ingredientes" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
-                                    </div>
-
                                     <div class="col-4 mt-3 itr">
                                         <label class="font-weight-bold mb-3">Itens que poderão ser adicionados.</label>
                                         <br>
@@ -113,6 +107,13 @@
                                         @else
                                             <label class="font-weight-bold text-danger mb-3">Você deverá primeiro cadastrar os itens adicionais antes de cadastrar uma refeição</label>
                                     @endif
+                                    </div>
+
+                                    <div class="col-4 mt-3 tastes">
+                                        <label class="font-weight-bold">Sabores</label>
+                                        <br>
+                                        <input type="text" class="form-control ingredientes" placeholder="Uva, Morango, Natural" name="sabores">
+                                        <label class="text-primary font-weight-bold mt-2 verifica-ingredientes" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
                                     </div>
 
                                     <div class="col-12 mt-3">
