@@ -39,10 +39,10 @@
 
                 <div class="col-lg-6 col-sm-12 mt-3 mt-md-0">
                     <div class="card card-preparo">
-                        <div class="card-header font-weight-bold text-muted bg-warning" style="font-size: 18px">Em preparo <i class="fas fa-bread-slice ml-1"></i></div>
+                        <div class="card-header font-weight-bold text-muted" style="font-size: 18px; background: linear-gradient(90deg, rgba(248,249,252,1) 36%, rgba(110,231,69,1) 100%);">Em preparo <i class="fas fa-bread-slice ml-1"></i></div>
 
                         <div class="card-body">
-                            <table class="table table-bordered table-hover table-responsive">
+                            <table class="table table-bordered table-hover table-responsive-lg">
                                 <thead>
                                 <tr>
                                     <th scope="col">Id do pedido</th>
@@ -57,6 +57,13 @@
                                         <tr>
                                             <td>#{{ $prep->id }}</td>
                                             <td>{{ $prep->status }}</td>
+                                            <td>
+                                                @if($prep->deliverWay == 'Retirada no restaurante')
+                                                    <b style="color: black">Item a ser retirado no restaurante.</b>
+                                                @else
+                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalSend{{$prep->id}}" title="Informações a serem repassadas ao entregador."><i class="fas fa-info-circle mr-1"></i> Dados</button>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <div>
                                                     <div class="row">
@@ -119,16 +126,55 @@
                                                                 </div>
                                                             </div>
                                             </td>
-                        </div>
-                        </td>
-                        </tr>
-                        @endforeach
-                        @else
+                                        </tr>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalSend{{$prep->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="text-center" style="color: black; font-size: 18px;">Passe estas informações ao responsável pela entrega.</p>
+
+                                                        <b style="color: black">Pedido:</b> <span style="color: black">{{ $prep->id }}</span> <br>
+
+                                                        <b style="color: black">Cliente:</b> <span style="color: black">{{ $prep->clientName }}</span> <br>
+                                                        {{--                                           Endereço: {{ $reg-> }} <br>--}}
+
+                                                        @if($prep->detached == '')
+                                                            <b style="color: black">Itens: </b> <span style="color: black">{{ $prep->comboItem }},  {{ $prep->fries }}, {{ $prep->drinks }}</span><br><br>
+                                                        @else
+                                                            <b style="color: black">Itens: </b> <span style="color: black">{{ $prep->detached }}</span><br><br>
+                                                        @endif
+
+                                                        @if($prep->payingMethod == 'Dinheiro')
+                                                            <b style="color: black">Valor total:</b> <span style="color: black"> {{ $prep->totalValue }}</span><br>
+                                                            <b style="color: black">Troco para: </b> <span style="color: black">{{ $prep->payingValue }}</span><br>
+                                                        @else
+                                                            <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $prep->payingMethod }}</span>
+                                                        @endif
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    @endforeach
+                                @else
                             <tr>
                                 <td align="center" colspan="3">Sem pedidos em preparo.</td>
                             </tr>
                         @endif
-                    </div>
+                        </div>
 
                     </tbody>
                     </table>
@@ -140,12 +186,14 @@
             </div>
         </div>
 
+
+
         <div class="col-lg-6 mt-4 mt-lg-0 col-sm-12">
             <div class="card">
-                <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 18px">Em rota de envio <i class="fas fa-motorcycle ml-1"></i></div>
+                <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(238,8,8,1) 24%, rgba(248,249,252,1) 76%);"><span style="color: black;" class="font-weight-bold">Em rota de envio</span> <i class="fas fa-motorcycle ml-1"></i></div>
 
                 <div class="card-body">
-                    <table class="table table-bordered table-hover table-responsive">
+                    <table class="table table-bordered table-hover table-responsive-lg">
                         <thead>
                         <tr>
                             <th>Id do pedido</th>
@@ -242,7 +290,7 @@
        <div class="row">
            <div class="col-lg-12 mt-4 col-sm-12">
                <div class="card card-cadastrados mb-lg-5">
-                   <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Pedidos cadastrados</div>
+                   <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);"><span class="text-white">Pedidos cadastrados</span></div>
 
                    <div class="card-body first-table">
                        <table class="table table-bordered table-hover table-responsive-lg">
@@ -360,8 +408,7 @@
 
                                                    </div>
                                                    <div class="modal-footer">
-                                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                       <button type="button" class="btn btn-primary">Save changes</button>
+                                                       <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
                                                    </div>
                                                </div>
                                            </div>

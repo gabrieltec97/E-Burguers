@@ -82,7 +82,7 @@
 
             <div class="col-12 col-lg-8 my-5">
                 <div class="card shadow" style="height: 560px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;"> <h4 class="m-0 font-weight-bold text-primary">Estatísticas das vendas</h4></div>
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: linear-gradient(90deg, rgba(248,249,252,1) 36%, rgba(110,231,69,1) 100%);"> <h4 class="m-0 font-weight-bold text-primary">Estatísticas das vendas</h4></div>
 
                     <div class="card-body financial-table">
 
@@ -97,9 +97,8 @@
             <div class="col-12 col-lg-4 my-5">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
-                    <div
-                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h5 class="m-0 font-weight-bold text-primary">Itens de combo mais vendidos</h5>
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">
+                        <h5 class="m-0 font-weight-bold text-white">Itens de combo mais vendidos</h5>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
