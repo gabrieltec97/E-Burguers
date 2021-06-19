@@ -39,7 +39,8 @@
 
                 <div class="col-lg-6 col-sm-12 mt-3 mt-md-0">
                     <div class="card card-preparo">
-                        <div class="card-header font-weight-bold text-muted" style="font-size: 18px; background: linear-gradient(90deg, rgba(248,249,252,1) 36%, rgba(110,231,69,1) 100%);">Em preparo <i class="fas fa-bread-slice ml-1"></i></div>
+                        <div class="card-header font-weight-bold text-muted" style="font-size: 18px; background: linear-gradient(90deg, rgba(113,231,73,1) 24%, rgba(248,249,252,1) 76%);">
+                            <span class="text-white">Em preparo</span> </div>
 
                         <div class="card-body">
                             <table class="table table-bordered table-hover table-responsive-lg">
@@ -190,7 +191,8 @@
 
         <div class="col-lg-6 mt-4 mt-lg-0 col-sm-12">
             <div class="card">
-                <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(238,8,8,1) 24%, rgba(248,249,252,1) 76%);"><span style="color: black;" class="font-weight-bold">Em rota de envio</span> <i class="fas fa-motorcycle ml-1"></i></div>
+                <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(238,8,8,1) 24%, rgba(248,249,252,1) 76%);">
+                    <span style="color: white;" class="font-weight-bold">Em rota de entrega</span></div>
 
                 <div class="card-body">
                     <table class="table table-bordered table-hover table-responsive-lg">
@@ -290,7 +292,8 @@
        <div class="row">
            <div class="col-lg-12 mt-4 col-sm-12">
                <div class="card card-cadastrados mb-lg-5">
-                   <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);"><span class="text-white">Pedidos cadastrados</span></div>
+                   <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(88,101,236,1) 26%, rgba(0,249,158,1) 68%);">
+                       <span class="text-white">Pedidos cadastrados</span></div>
 
                    <div class="card-body first-table">
                        <table class="table table-bordered table-hover table-responsive-lg">

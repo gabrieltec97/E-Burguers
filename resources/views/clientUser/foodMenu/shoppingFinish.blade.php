@@ -89,20 +89,20 @@
                                                                                        <div class="col-6">
                                                                                             <h4 class="font-weight-bold text-center">Itens adicionais</h4>
 
-{{--                                                                                            @foreach($addons as $addon)--}}
-{{--                                                                                               <div>--}}
-{{--                                                                                                   <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $addon }}"--}}
+                                                                                            @foreach($addons as $addon)
+                                                                                               <div>
+                                                                                                   <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $addon }}"
 
-{{--                                                                                                   @foreach(explode(', ', $myOrder['extras']) as $extra)--}}
-{{--                                                                                                       @if($extra == $addon)--}}
-{{--                                                                                                        checked--}}
-{{--                                                                                                       @endif--}}
-{{--                                                                                                   @endforeach--}}
+                                                                                                   @foreach(explode(', ', $myOrder['extras']) as $extra)
+                                                                                                       @if($extra == $addon)
+                                                                                                        checked
+                                                                                                       @endif
+                                                                                                   @endforeach
 
-{{--                                                                                                   >--}}
-{{--                                                                                                   <span class="text-muted font-weight-bold ml-4 form-check-label">{{ $addon }}</span>--}}
-{{--                                                                                               </div>--}}
-{{--                                                                                            @endforeach--}}
+                                                                                                   >
+                                                                                                   <span class="text-muted font-weight-bold ml-4 form-check-label">{{ $addon }}</span>
+                                                                                               </div>
+                                                                                            @endforeach
                                                                                        </div>
                                                                                    </div>
                                                                                </div>

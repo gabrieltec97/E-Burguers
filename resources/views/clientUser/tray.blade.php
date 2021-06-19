@@ -240,16 +240,35 @@
 
                                                                         </div>
                                                             </form>
-                                                            @if(isset($valor->nameExtra))
-                                                                        <div class="col-6 mt-4">
-                                                                            <form action="{{ route('editarPersonalizado', $valor->id) }}" method="post">
-                                                                                @csrf
-                                                                            @foreach(explode(',', $valor->nameExtra) as $val)
-                                                                                <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $val }}" checked>
-                                                                                <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $val  }}</label>
-                                                                                <br>
-                                                                            @endforeach
-                                                                        </div>
+{{--                                                            @if(isset($valor->nameExtra))--}}
+{{--                                                                        <div class="col-6 mt-4">--}}
+{{--                                                                            <form action="{{ route('editarPersonalizado', $valor->id) }}" method="post">--}}
+{{--                                                                                @csrf--}}
+{{--                                                                            @foreach(explode(',', $valor->nameExtra) as $val)--}}
+{{--                                                                                <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $val }}" checked>--}}
+{{--                                                                                <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $val  }}</label>--}}
+{{--                                                                                <br>--}}
+{{--                                                                            @endforeach--}}
+{{--                                                                        </div>--}}
+{{--                                                            @endif--}}
+
+                                                            @if(isset($addons))
+                                                                <div class="col-6 mt-4">
+                                                                @foreach($addons as $addon)
+
+                                                                       <form action="{{ route('editarPersonalizado', $valor->id) }}" method="post">
+                                                                       @csrf
+                                                                       <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $addon['name'] }}"
+                                                                       @foreach(explode(',', $valor->nameExtra) as $val)
+                                                                           @if(ltrim($val) == $addon['name'])
+                                                                           checked
+                                                                           @endif
+                                                                       @endforeach
+                                                                       >
+                                                                           <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $addon['name']  }}</label>
+                                                                           <br>
+                                                                @endforeach
+                                                                </div>
                                                             @endif
                                                             <button type="submit" class="btn btn-success font-weight-bold mt-5 w-75" title="Salvar alterações">Salvar</button>
                                                             </form>

@@ -405,7 +405,7 @@ class TrayController extends Controller
         $personalized->save();
         $editTray->save();
 
-        return redirect()->route('minhaBandeja.index')->with('msg-2', ' ');
+        return redirect()->route('fimCompra')->with('msg-2', ' ');
     }
 
     public function editComboExtras(Request $request)
