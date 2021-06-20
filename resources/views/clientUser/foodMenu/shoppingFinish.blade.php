@@ -87,7 +87,6 @@
                                                                                        </div>
 
                                                                                        <div class="col-6">
-                                                                                            <h4 class="font-weight-bold text-center">Itens adicionais</h4>
 
                                                                                             @foreach($addons as $addon)
                                                                                                <div>

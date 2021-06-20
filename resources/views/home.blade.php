@@ -20,16 +20,18 @@
                         </button>
                     </div>
                 @endif
+
+                @if(session('msg-2'))
+                    <div class="alert alert-danger sumir-feedback alert-dismissible fade show" role="alert">
+                        <strong>{{ session('msg-2') }}aaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
             </div>
 
-            @if(session('msg-2'))
-                <div class="alert alert-danger sumir-feedback alert-dismissible fade show" role="alert">
-                    <strong>{{ session('msg-2') }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
+
 
                 <button type="button" class="mudarStatus3" hidden data-toggle="modal" data-target="#exampleModal3"></button>
                 <button type="button" class="mudarStatus4" hidden data-toggle="modal" data-target="#exampleModal4"></button>

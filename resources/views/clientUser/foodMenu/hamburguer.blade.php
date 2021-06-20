@@ -28,33 +28,56 @@
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->comboValue }}</span></p>
-                                                <a class="btn btn-primary adicionar-bandeja text-white" data-toggle="collapse" href="#multiCollapseExample{{$food->id}}" role="button" aria-expanded="false">Personalizar</a>
+                                                <a class="btn btn-primary adicionar-bandeja text-white" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</a>
                                                 <button type="submit" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
 
                                             </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="collapse multi-collapse" id="multiCollapseExample{{$food->id}}">
-                                                        <div class="card card-body">
-                                                            <a class="btn btn-primary text-white mb-5" style="position: relative;" data-toggle="collapse" href="#multiCollapseExample{{$food->id}}" role="button" aria-expanded="false">Fechar</a>
 
-                                                            @foreach(explode(',', $food->ingredients) as $ing)
-                                                                <div>
-                                                                    <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $ing }}" checked>
-                                                                    <span class="text-muted font-weight-bold ml-4 form-check-label">{{ $ing }}</span>
-                                                                </div>
-                                                            @endforeach
-
-                                                            <hr>
-
-                                                            @foreach($extras as $ext)
-                                                                @foreach($ext as $e)
-                                                                    <div>
-                                                                        <input class="ml-1 form-check-input" type="checkbox" id="{{ $e }}" name="extras[]" value="{{ $e }}">
-                                                                        <label for="{{ $e }}" class="text-danger ml-4 form-check-label font-weight-bold">{{ $e }}</label>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="multiCollapseExample{{$food->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Personalização de item</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <img class="card-img-top" src="{{ asset($food->picture) }}">
                                                                     </div>
-                                                            @endforeach
-                                                            @endforeach
+
+                                                                    <div class="col-6">
+                                                                        @foreach(explode(',', $food->ingredients) as $ing)
+                                                                            <div>
+                                                                                <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $ing }}" checked>
+                                                                                <span class="text-muted ml-4 form-check-label font-weight-bold">{{ $ing }}</span>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+
+                                                                    <hr class="mt-4">
+
+                                                                    <div class="col-12">
+                                                                        @foreach($extras as $ext)
+                                                                            @foreach($ext as $e)
+                                                                                <div>
+                                                                                    <input class="ml-1 form-check-input" type="checkbox" id="{{ $e }}" name="extras[]" value="{{ $e }}">
+                                                                                    <label for="{{ $e }}" class="ml-4 form-check-label font-weight-bold">{{ $e }}</label>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        @endforeach
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger mt-1" data-dismiss="modal">Cancelar</button>
+                                                            <button type="submit" style="margin-top: 2px;" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
                                                         </div>
                                                     </div>
                                                 </div>

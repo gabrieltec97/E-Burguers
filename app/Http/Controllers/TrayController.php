@@ -1413,7 +1413,6 @@ class TrayController extends Controller
 
     public function destroy($food)
     {
-
         //Encontrando usuário e pedido.
         $user = Auth::user();
         $tray = $user->userOrderTray()->select('totalValue', 'hamburguer', 'portion', 'drinks')->get()->toArray();
@@ -1425,21 +1424,39 @@ class TrayController extends Controller
         $price = $foodToResetPrice[0]->comboValue;
         $currentPrice = $tray[0]['totalValue'];
 
-        //Atualizando o valor atual do combo.
-        $updatedPrice = doubleval($currentPrice) - doubleval($price);
+        //Encontrando extras para abatimento de preço.
+        $extras = $user->userOrderTray()->select('extras')->get()->toArray();
+        $extras = $extras[0]['extras'];
+        $extras = explode(',', $extras);
 
-        $resetPrice = Tray::find($orderId);
-        $resetPrice->totalValue = $updatedPrice;
-        $resetPrice->valueWithoutDisccount = $updatedPrice;
-        $resetPrice->save();
+        //Recuperando o preço de cada adicional.
+        $extraPrice = 0;
+        foreach ($extras as $extra){
+            $test = DB::table('extras')->select('price')->where('name', '=', $extra)->get()->toArray();
 
-        //Removendo alimento da tabela.
-        $removeFood = Tray::find($orderId);
-        $removeFood->hamburguer = null;
-        $removeFood->comboItem = null;
-        $removeFood->image = null;
-        $removeFood->save();
+        }
 
-        return redirect(route('minhaBandeja.index'));
+//        //Atualizando o valor atual do combo.
+//        $updatedPrice = doubleval($currentPrice) - doubleval($price);
+//        $resetPrice = Tray::find($orderId);
+//        $resetPrice->totalValue = $updatedPrice;
+//        $resetPrice->valueWithoutDisccount = $updatedPrice;
+//        $resetPrice->save();
+//
+//        //Removendo alimento da tabela.
+//        $removeFood = Tray::find($orderId);
+//
+//        if ($removeFood->comboItem == $food){
+//            $removeFood->hamburguer = null;
+//            $removeFood->comboItem = null;
+//            $removeFood->image = null;
+//        }elseif ($removeFood->drinks == $food){
+//            $removeFood->drinks = null;
+//        }elseif ($removeFood->portion == $food){
+//            $removeFood->portion = null;
+//        }
+//        $removeFood->save();
+
+//        return redirect(route('minhaBandeja.index'));
     }
 }
