@@ -1420,7 +1420,9 @@ class TrayController extends Controller
         $orderId = $order[0]['id'];
 
         //Encontrando alimento para abatimento de preço.
-        $foodToResetPrice = DB::table('adverts')->select('comboValue')->where('name', '=', $food)->get()->toArray();
+        $formatFood = explode('|', $food);
+        $formatFood = $formatFood[0];
+        $foodToResetPrice = DB::table('adverts')->select('comboValue')->where('name', '=', $formatFood)->get()->toArray();
         $price = $foodToResetPrice[0]->comboValue;
         $currentPrice = $tray[0]['totalValue'];
 
@@ -1429,34 +1431,42 @@ class TrayController extends Controller
         $extras = $extras[0]['extras'];
         $extras = explode(',', $extras);
 
-        //Recuperando o preço de cada adicional.
-        $extraPrice = 0;
-        foreach ($extras as $extra){
-            $test = DB::table('extras')->select('price')->where('name', '=', $extra)->get()->toArray();
+        if ($extras[0] != ''){
 
+        //Recuperando o preço de cada adicional.
+        $extraPrices = 0;
+        foreach ($extras as $extra){
+            $test = DB::table('extras')->select('price')->where('name', '=', ltrim($extra))->get()->toArray();
+            $extraPrices += doubleval($test[0]->price);
+            }
         }
 
-//        //Atualizando o valor atual do combo.
-//        $updatedPrice = doubleval($currentPrice) - doubleval($price);
-//        $resetPrice = Tray::find($orderId);
-//        $resetPrice->totalValue = $updatedPrice;
-//        $resetPrice->valueWithoutDisccount = $updatedPrice;
-//        $resetPrice->save();
-//
-//        //Removendo alimento da tabela.
-//        $removeFood = Tray::find($orderId);
-//
-//        if ($removeFood->comboItem == $food){
-//            $removeFood->hamburguer = null;
-//            $removeFood->comboItem = null;
-//            $removeFood->image = null;
-//        }elseif ($removeFood->drinks == $food){
-//            $removeFood->drinks = null;
-//        }elseif ($removeFood->portion == $food){
-//            $removeFood->portion = null;
-//        }
-//        $removeFood->save();
+        //Atualizando o valor atual do combo.
+        if (isset($extraPrices)){
+            $updatedPrice = doubleval($currentPrice) - doubleval($price) - doubleval($extraPrices);
+        }else{
+            $updatedPrice = doubleval($currentPrice) - doubleval($price);
+        }
 
-//        return redirect(route('minhaBandeja.index'));
+        $resetPrice = Tray::find($orderId);
+        $resetPrice->totalValue = $updatedPrice;
+        $resetPrice->valueWithoutDisccount = $updatedPrice;
+        $resetPrice->save();
+
+        //Removendo alimento da tabela.
+        $removeFood = Tray::find($orderId);
+
+        if ($removeFood->comboItem == $food){
+            $removeFood->hamburguer = null;
+            $removeFood->comboItem = null;
+            $removeFood->image = null;
+        }elseif ($removeFood->drinks == $food){
+            $removeFood->drinks = null;
+        }elseif ($removeFood->portion == $food){
+            $removeFood->portion = null;
+        }
+        $removeFood->save();
+
+        return redirect(route('minhaBandeja.index'));
     }
 }
