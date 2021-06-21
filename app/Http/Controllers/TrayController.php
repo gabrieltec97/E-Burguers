@@ -975,33 +975,12 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'image','extras', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
-
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 }elseif ($coupon[0]->disccount == '5% de desconto' && $update->disccountUsed != 'Sim'){
 
@@ -1012,33 +991,13 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'image','comboItem', 'extras', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
                 }elseif ($coupon[0]->disccount == '15% de desconto' && $update->disccountUsed != 'Sim'){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.15);
@@ -1048,33 +1007,13 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'image','extras', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
                 } elseif ($coupon[0]->disccount == '20% de desconto' && $update->disccountUsed != 'Sim'){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.2);
@@ -1084,33 +1023,13 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
                 } elseif ($coupon[0]->disccount == '30% de desconto' && $update->disccountUsed != 'Sim'){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.3);
@@ -1120,33 +1039,13 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image','comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
                 } elseif ($coupon[0]->disccount == '50% de desconto' && $update->disccountUsed != 'Sim'){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.5);
@@ -1156,33 +1055,13 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'detached', 'comboItem', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
                 } elseif ($coupon[0]->disccount == 'R$ 5 reais de desconto' && $update->disccountUsed != 'Sim'){
 
                     $disccount = doubleval($myOrder['totalValue']) - 5;
@@ -1192,33 +1071,13 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
+                    return redirect()->back()->with('msg-success', $couponName);
 
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
-
-                    //Verificando se o cupom já está sendo utilizado.
+                  //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
                 } elseif ($coupon[0]->disccount == 'R$ 7 reais de desconto' && $update->disccountUsed != 'Sim'){
 
                     $disccount = doubleval($myOrder['totalValue']) - 7;
@@ -1228,33 +1087,13 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
                 } elseif ($coupon[0]->disccount == 'R$ 10 reais de desconto' && $update->disccountUsed != 'Sim'){
 
                     $disccount = doubleval($myOrder['totalValue']) - 10;
@@ -1264,33 +1103,13 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType','extras', 'image', 'comboItem', 'detached', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
                 } elseif ($coupon[0]->disccount == 'R$ 15 reais de desconto' && $update->disccountUsed != 'Sim'){
 
                     $disccount = doubleval($myOrder['totalValue']) - 15;
@@ -1300,33 +1119,12 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'detached', 'image', 'address', 'comboItem', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
-
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
                 }
 
                 //Adicionando cupom de frete grátis. (Veja com o cliente o valor de seu frete).
@@ -1340,55 +1138,23 @@ class TrayController extends Controller
                     $update->disccountUsed = 'Sim';
                     $update->save();
 
-                    $order= Auth::user()->userOrderTray()->select('id','orderType', 'extras','detached', 'image', 'comboItem', 'address', 'hamburguer', 'portion', 'drinks', 'totalValue')->get()->toArray();
-
-                    //Inserindo endereço de entrega.
-                    if (isset($order[0])){
-                        $myOrder = $order[0];
-                        $sendAddress = $myOrder['address'];
-                    }
-
-                    //Verificando se é pedido avulso.
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName'));
-                    }
+                    return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed == 'Sim'){
 
-                    $use = 'Este cupom já está sendo utilizado.';
-
-                    if (isset($myOrder['detached'])){
-                        $detached = explode(',', $myOrder['detached']);
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress', 'couponName','detached', 'use'));
-                    }else{
-                        return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'couponName', 'use'));
-                    }
+                    return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
                 }
             } else{
                 $notExist = 'Este cupom só pode ser utilizado nos pedidos acima de R$' . $coupon[0]->disccountRule;
 
-                if (isset($myOrder['detached'])){
-                    $detached = explode(',', $myOrder['detached']);
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress','detached', 'notExist'));
-                }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'notExist'));
-                }
+                return redirect()->back()->with('msg-exp', $notExist);
             }
 
         }elseif($coupon == null) {
 
-            $notExist = 'Este cupom não existe ou já expirou.';
+            return redirect()->back()->with('msg-exp', 'Este cupom não existe ou já expirou');
 
-            if (isset($myOrder['detached'])){
-                $detached = explode(',', $myOrder['detached']);
-                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'sendAddress','detached', 'notExist'));
-            }else{
-                return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'addons','sendAddress', 'notExist'));
-            }
             }
         }
 

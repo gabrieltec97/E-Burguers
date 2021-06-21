@@ -25,7 +25,7 @@
                                     </button>
                                 </div>
                             @endif
-                            @if(isset($couponName) && !isset($use))
+                            @if(session('msg-success'))
                                 <div class="alert alert-success alerta-sucesso-user mt-2 alert-dismissible fade show" role="alert">
                                     <span class="text-muted font-weight-bold">Cupom inserido com sucesso!</span>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -34,9 +34,9 @@
                                 </div>
                             @endif
 
-                            @if(isset($notExist) or isset($use))
+                            @if(session('msg-exp') or session('msg-use'))
                                 <div class="alert alert-danger alerta-sucesso-user mt-2 alert-dismissible fade show" role="alert">
-                                    <span class="text-muted font-weight-bold">{{ isset($notExist)? $notExist : '' }} {{ isset($use)? $use : '' }} </span>
+                                    <span class="text-muted font-weight-bold">{{ session('msg-exp') }} {{ session('msg-use') }} </span>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -217,25 +217,26 @@
                                             <label class="font-weight-bold text-muted" style="font-size: 18px">Cupom de desconto
 
                                             </label>
-                                            <input type="text" class="form-control cupomDesconto" name="cupomDesconto"
+                                            <input type="text" autocomplete="off" class="form-control cupomDesconto" name="cupomDesconto"
 
-                                                   @if(isset($couponName))
-                                                       value="{{ $couponName }}" style="cursor: not-allowed;" readonly
+                                                   @if(session('msg-success'))
+                                                       value="{{ session('msg-success') }}" style="cursor: not-allowed;" readonly
+                                                        title="Cupom já aplicado"
                                                    @endif
                                                    placeholder="Insira um cupom (se tiver).">
                                         </div>
 
                                         <div class="col-12 mt-4 d-flex justify-content-end">
                                             <button type="submit"  class="btn btn-success font-weight-bold"
-                                                    @if(isset($couponName))
+                                                    @if(session('msg-success'))
                                                     hidden
                                                     @endif
                                             >Aplicar cupom</button>
                                         </div>
                                     </form>
 
-                                    @if(isset($couponName))
-                                        <form action="{{ route('removerCupom', $couponName) }}" method="post">
+                                    @if(session('msg-success'))
+                                        <form action="{{ route('removerCupom', session('msg-success')) }}" method="post">
                                             @csrf
                                             <div class="col-12 mt-1 d-flex justify-content-end">
                                                 <button type="submit" class="btn btn-danger font-weight-bold" title="Remover item">Remover Cupom</button></li>
@@ -244,8 +245,6 @@
                                     @endif
                                 </div>
                             </div>
-
-
                         </div>
 
 
@@ -284,7 +283,7 @@
 
                                                 <div class="col-12 col-lg-9 mt-4 mt-lg-4 val-entregue">
                                                     <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
-                                                    <input type="text" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
+                                                    <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
                                                     <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                     <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
                                                 </div>
@@ -300,12 +299,13 @@
 
                                                 <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
                                                     <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
-                                                    <input type="text" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                    <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
                                                 </div>
 
                                             @endif
                                             @endif
 
+                                                @if(isset($separated))
                                                 @if($separated == 0)
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-0 pagamento">
@@ -341,6 +341,7 @@
                                                     </div>
 
                                                 @endif
+                                            @endif
 
                                             <div class="col-12 col-lg-12 mt-4 mt-lg-4">
                                                 <label class="font-weight-bold text-muted" style="font-size: 18px">Observações</label>
