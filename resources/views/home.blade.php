@@ -21,18 +21,29 @@
                     </div>
                 @endif
 
+                    @if(session('msg-venda'))
+                        <script>
+                            $.toast({
+                                text: '<b style="font-size: 14px;">O pedido foi entregue com sucesso. Parabéns a todos pelo empenho!</b>',
+                                heading: '<b style="font-size: 17px">Muito bem!</b>',
+                                showHideTransition: 'slide',
+                                bgColor : '#38C172',
+                                position : 'top-right',
+                                hideAfter: 9000
+                            })
+                        </script>
+                    @endif
+
                 @if(session('msg-2'))
                     <div class="alert alert-danger sumir-feedback alert-dismissible fade show" role="alert">
-                        <strong>{{ session('msg-2') }}aaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong>
+                        <strong>{{ session('msg-2') }}</strong>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                 @endif
+
             </div>
-
-
-
                 <button type="button" class="mudarStatus3" hidden data-toggle="modal" data-target="#exampleModal3"></button>
                 <button type="button" class="mudarStatus4" hidden data-toggle="modal" data-target="#exampleModal4"></button>
                 <button type="button" class="mudarStatus5" hidden data-toggle="modal" data-target="#exampleModal5"></button>
@@ -42,7 +53,7 @@
                 <div class="col-lg-6 col-sm-12 mt-3 mt-md-0">
                     <div class="card card-preparo">
                         <div class="card-header font-weight-bold text-muted" style="font-size: 18px; background: linear-gradient(90deg, rgba(113,231,73,1) 24%, rgba(248,249,252,1) 76%);">
-                            <span class="text-white">Em preparo</span> </div>
+                            <span class="text-white">Em preparo</span> <span class="badge bg-secondary text-white">{{ count($prepare) }}</span> </div>
 
                         <div class="card-body">
                             <table class="table table-bordered table-hover table-responsive-lg">
@@ -194,7 +205,7 @@
         <div class="col-lg-6 mt-4 mt-lg-0 col-sm-12">
             <div class="card">
                 <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(238,8,8,1) 24%, rgba(248,249,252,1) 76%);">
-                    <span style="color: white;" class="font-weight-bold">Em rota de entrega</span></div>
+                    <span style="color: white;" class="font-weight-bold">Em rota de entrega</span> <span class="badge bg-secondary">{{count($ready)}}</span></div>
 
                 <div class="card-body">
                     <table class="table table-bordered table-hover table-responsive-lg">
@@ -295,7 +306,7 @@
            <div class="col-lg-12 mt-4 col-sm-12">
                <div class="card card-cadastrados mb-lg-5">
                    <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(88,101,236,1) 26%, rgba(0,249,158,1) 68%);">
-                       <span class="text-white">Pedidos cadastrados</span></div>
+                       <span class="text-white">Pedidos cadastrados</span> <span class="badge bg-secondary">{{count($registered)}}</span></div>
 
                    <div class="card-body first-table">
                        <table class="table table-bordered table-hover table-responsive-lg">
@@ -440,26 +451,35 @@
        </div>
    </div>
 
-    <button id="mydialog3" hidden></button>
+{{--    <button id="mydialog3">1111</button>--}}
+
+    <audio id="newOne">
+        <source src="{{ asset('audio/newOne.mp3') }}" type="audio/mp3">
+    </audio>
+
+    <audio id="readyOne">
+        <source src="{{ asset('audio/ready.mp3') }}" type="audio/mp3">
+    </audio>
+
+    <select class="count" hidden>
+        <option value="{{ count($registered) }}"></option>
+    </select>
 
 <script>
 
-    $("#mydialog3").on("click", function(e){
-        e.preventDefault();
+    // $("#mydialog3").on("click", function(e){
+    //     e.preventDefault();
+    //
+    //     bs4pop.notice('<i class="fas fa-concierge-bell mr-2"></i><b>Novo pedido registrado.</b>', {
+    //         type: 'success',
+    //         position: 'topright',
+    //         appendType: 'append',
+    //         closeBtn: 'false',
+    //         className: ''
+    //     })
+    // })
 
-        bs4pop.notice('<i class="fas fa-concierge-bell mr-2"></i><b>Novo pedido registrado.</b>', {
-            type: 'success',
-            position: 'topright',
-            appendType: 'append',
-            closeBtn: 'false',
-            className: ''
-        })
-    })
 </script>
-
-<select class="count" hidden>
-    <option value="{{ count($registered) }}"></option>
-</select>
 
 <input class="status-ref" hidden value="@foreach($prepare as $prepa)
 {{ $prepa->status }}

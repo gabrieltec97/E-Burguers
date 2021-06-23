@@ -284,8 +284,8 @@ class OrdersController extends Controller
             $order->status = $acao;
             $order->save();
 
-        return redirect()->route('home')->with('msg',
-                'O pedido foi entregue ao cliente, parabéns à todos pelo empenho!');
+        return redirect()->back()->with('msg-venda',
+               ' ');
         }
 
     }

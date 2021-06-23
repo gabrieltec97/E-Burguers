@@ -9,13 +9,20 @@ $(document).ready(() => {
 
                 var valorAnterior = $(".count").val();
                 var valorAtual = data.length;
+                var tocar = document.getElementById("newOne");
 
+                function playAudio() {
+                    tocar.play();
+                }
                 if (valorAnterior != valorAtual){
-                    location.reload();
+                   playAudio();
+
+                    setTimeout(function (){
+                        location.reload();
+                    }, 800)
                 }
 
                 $(".registereds").text(valorAtual);
-
             },
             error: function(erro){console.log(erro)}})
 
@@ -27,13 +34,22 @@ $(document).ready(() => {
 
                 var status = $(".status-ref").val();
                 var data = '';
+                var tocar2 = document.getElementById("readyOne");
+
+                function playAudio2() {
+                    tocar2.play();
+                }
 
                for (let pedido of prepare){
                   data+=(pedido.status);
                }
 
                if (data != status){
-                   location.reload();
+                   playAudio2();
+
+                   setTimeout(function (){
+                       location.reload();
+                   }, 800)
                }
             },
             error: function(erro){console.log(erro)}})

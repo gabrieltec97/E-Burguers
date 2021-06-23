@@ -1049,9 +1049,9 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
     });
 
     //Animação de novo pedido registrado
+$(".teste12").on("click", function (){
 
-
-
+})
 
 
 });

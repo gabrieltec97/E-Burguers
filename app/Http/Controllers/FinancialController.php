@@ -339,6 +339,7 @@ class FinancialController extends Controller
             $sales = count($sales);
         }else{
 
+            $thisDay = strftime('%d', strtotime('today'));
             $day = strftime('%d', strtotime('today'));
             $reqmonth = strftime('%B');
 
