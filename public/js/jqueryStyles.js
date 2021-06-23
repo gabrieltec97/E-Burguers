@@ -885,8 +885,11 @@ $(".troco").on("keyup", function (){
 })
 
 //Ajustes em pedido para pedir novo.
-$(".finalizar-pedido").attr("data-toggle", "modal");
-$(".finalizar-pedido").attr("data-target", "#exampleModalCentercompra");
+$('.verifica-outro').on("click", function (e){
+    e.preventDefault();
+})
+$(".finalizar-pedido, .verifica-outro").attr("data-toggle", "modal");
+$(".finalizar-pedido, .verifica-outro").attr("data-target", "#exampleModalCentercompra");
 
 $(".finalizar-pedido").on("click", function (e){
     e.preventDefault();

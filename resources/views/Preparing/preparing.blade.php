@@ -20,7 +20,7 @@
                 @endif
                 <div class="card card-prep-emp mb-4">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: linear-gradient(90deg, rgba(230,85,85,1) 45%, rgba(231,224,73,1) 76%);">
-                        <span class="text-white">Pedidos à serem preparados</span></div>
+                        <span class="text-white">Pedidos à serem preparados</span> <span class="badge bg-secondary text-white">{{ count($orders) }}</span></div>
 
                     <div class="card-body first-table">
 

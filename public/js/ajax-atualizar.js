@@ -32,24 +32,25 @@ $(document).ready(() => {
             dataType: 'json',
             success: function(prepare){
 
-                var status = $(".status-ref").val();
-                var data = '';
+                var sum = 0;
+                for (let pedido of prepare){
+                    if (pedido.status == 'Pronto'){
+                        sum += 1;
+                    }
+                }
+                var valorAnterior2 = $(".status-ref").val();
                 var tocar2 = document.getElementById("readyOne");
 
                 function playAudio2() {
                     tocar2.play();
                 }
 
-               for (let pedido of prepare){
-                  data+=(pedido.status);
-               }
-
-               if (data != status){
+               if (valorAnterior2 != sum){
                    playAudio2();
 
                    setTimeout(function (){
-                       location.reload();
-                   }, 800)
+                   location.reload();
+               }, 800)
                }
             },
             error: function(erro){console.log(erro)}})

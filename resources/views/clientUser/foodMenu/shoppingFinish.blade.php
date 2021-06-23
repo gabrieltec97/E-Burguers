@@ -355,7 +355,15 @@
                                             </div>
 
                                             <div class="col-12 mt-3 d-flex justify-content-end" style="bottom: -20px">
-                                                <button class="btn btn-success font-weight-bold finalizar-pedido"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                                @if(isset($pendings))
+                                                    @if($pendings == 'Entrega em domicílio')
+                                                        <button class="btn btn-success font-weight-bold finalizar-pedido"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                                    @else
+                                                        <button class="btn btn-success font-weight-bold verifica-outro"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                                    @endif
+                                                @else
+                                                    <button class="btn btn-success font-weight-bold finalizar-pedido"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                                @endif
                                             </div>
                                         </div>
 

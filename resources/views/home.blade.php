@@ -53,7 +53,7 @@
                 <div class="col-lg-6 col-sm-12 mt-3 mt-md-0">
                     <div class="card card-preparo">
                         <div class="card-header font-weight-bold text-muted" style="font-size: 18px; background: linear-gradient(90deg, rgba(113,231,73,1) 24%, rgba(248,249,252,1) 76%);">
-                            <span class="text-white">Em preparo</span> <span class="badge bg-secondary text-white">{{ count($prepare) }}</span> </div>
+                            <span class="text-white">Em preparo</span> <span class="badge bg-secondary text-white">{{ count($total) }}</span> </div>
 
                         <div class="card-body">
                             <table class="table table-bordered table-hover table-responsive-lg">
@@ -185,7 +185,7 @@
                                     @endforeach
                                 @else
                             <tr>
-                                <td align="center" colspan="3">Sem pedidos em preparo.</td>
+                                <td align="center" colspan="5">Sem pedidos em preparo.</td>
                             </tr>
                         @endif
                         </div>
@@ -205,7 +205,7 @@
         <div class="col-lg-6 mt-4 mt-lg-0 col-sm-12">
             <div class="card">
                 <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(238,8,8,1) 24%, rgba(248,249,252,1) 76%);">
-                    <span style="color: white;" class="font-weight-bold">Em rota de entrega</span> <span class="badge bg-secondary">{{count($ready)}}</span></div>
+                    <span style="color: white;" class="font-weight-bold">Em rota de entrega</span> <span class="badge bg-secondary">{{count($totalReady)}}</span></div>
 
                 <div class="card-body">
                     <table class="table table-bordered table-hover table-responsive-lg">
@@ -465,6 +465,10 @@
         <option value="{{ count($registered) }}"></option>
     </select>
 
+    <select class="status-ref" hidden>
+        <option value="{{ count($prepareCount) }}"></option>
+    </select>
+
 <script>
 
     // $("#mydialog3").on("click", function(e){
@@ -481,10 +485,6 @@
 
 </script>
 
-<input class="status-ref" hidden value="@foreach($prepare as $prepa)
-{{ $prepa->status }}
-@endforeach"
->
 @endsection
 
 
