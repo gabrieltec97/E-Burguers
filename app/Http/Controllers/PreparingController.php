@@ -13,13 +13,13 @@ class PreparingController extends Controller
     public function index()
     {
         $idUser = Auth::user()->id;
-        $order = DB::table('orders')->select('id','status', 'deliverWay', 'payingValue', 'totalValue')->where('idClient', '=', $idUser)->where('status', '!=', 'Pedido Entregue')->where('status', '!=', 'Cancelado')->get()->toArray();
+        $order = DB::table('orders')->select('id','status', 'deliverWay', 'payingValue', 'totalValue', 'hour')->where('idClient', '=', $idUser)->where('status', '!=', 'Pedido Entregue')->where('status', '!=', 'Cancelado')->get()->toArray();
 
         if (isset($order[0])){
             $orderStatus = $order[0]->status;
             $orderDeliver = $order[0]->deliverWay;
 
-            return view('clientUser.preparing-client', compact('order', 'orderStatus', 'orderDeliver'));
+            return view('clientUser.preparing-client', compact('order', 'orderStatus', 'orderDeliver', 'idUser'));
         }
         else {
             $void = 'void';

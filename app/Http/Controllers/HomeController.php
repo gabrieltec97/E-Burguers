@@ -25,10 +25,10 @@ class HomeController extends Controller
     public function index()
     {
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->paginate(10);
-        $prepare = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->simplePaginate(2);
+        $prepare = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->simplePaginate(4);
         $total = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->get()->toArray();
         $prepareCount = DB::table('orders')->where('status', '=', 'Pronto')->get()->toArray();
-        $ready = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->simplePaginate(2);
+        $ready = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->simplePaginate(4);
         $totalReady = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get()->toArray();
 
         return view('home', compact('registered', 'prepare', 'ready', 'prepareCount', 'total', 'totalReady'));

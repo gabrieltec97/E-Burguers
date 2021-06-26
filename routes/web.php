@@ -83,7 +83,7 @@ Route::post('/removerCupom/{couponName}', 'TrayController@couponRemove')->name('
 
 
 //Rotas de alteração de status dos pedidos.
-Route::post('/alterarStatus/{id}/{acao}', 'OrdersController@changeStatus')->name('alterarStatus');
+Route::post('/alterarStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@changeStatus')->name('alterarStatus');
 
 
 //Rotas de gerenciamento.

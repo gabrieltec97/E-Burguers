@@ -109,6 +109,9 @@
         </div>
     </div>
 
+    <audio id="newPrepare">
+        <source src="{{ asset('audio/kitchen.mp3') }}" type="audio/mp3">
+    </audio>
 
     <select class="count2" hidden>
         <option value="{{ count($orders) }}"></option>

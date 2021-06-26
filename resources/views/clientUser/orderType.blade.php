@@ -1,4 +1,6 @@
 @extends('layouts.extend-client')
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/ajax-atualizar.js') }}"></script>
 
 @section('title')
     Como deseja pedir?
@@ -48,6 +50,30 @@
     </div>
 
     @if(session('msg'))
-        <button hidden class="disparo-msg"></button>
+        <script>
+            $.toast({
+                text: '<b>Seu pedido foi feito e ESTÁ NA ABA PEDIDOS PENDENTES. Você pode escolher novos itens para seu novo pedido.</b>',
+                heading: '<b>Atenção aqui!</b>',
+                showHideTransition: 'slide',
+                bgColor : '38C172',
+                position : 'top-right',
+                hideAfter: 15000
+            })
+        </script>
     @endif
+
+
+    @if(session('msg-cancel'))
+        <script>
+            $.toast({
+                text: '<b>Seu pedido foi cancelado, mas fique à vontade para fazer um novo pedido, ok?</b>',
+                heading: '<b>Poxa!</b>',
+                showHideTransition: 'slide',
+                bgColor : 'red',
+                position : 'top-right',
+                hideAfter: 15000
+            })
+        </script>
+    @endif
+
 @endsection

@@ -31,11 +31,10 @@ class LiveSearch extends Controller
                     ->orWhere('deliverWay', 'like', '%'.$query.'%')
                     ->orWhere('payingMethod', 'like', '%'.$query.'%')
                     ->orWhere('status', 'like', '%'.$query.'%')
-                    ->orderBy('id', 'desc')
-                    ->paginate(8);
+                    ->paginate(10);
 
             }elseif ($query == ''){
-                $data = DB::table('orders')->paginate(8);
+                $data = DB::table('orders')->orderBy('id', 'desc')->paginate(10);
             }
             else
             {

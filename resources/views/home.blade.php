@@ -82,7 +82,7 @@
                                                 <div>
                                                     <div class="row">
                                                         <div class="col-2 mr-2">
-                                                            <form action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'prontoretiradaenvio']) }}" method="post">
+                                                            <form action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                                 @csrf
                                                                 @if($prep->status == 'Em preparo')
                                                                     <i class="fas fa-check-circle text-success pronto-retirar" data-toggle="modal" data-target="#exampleModal{{$prep->id}}" hidden title="Enviar entrega" style="font-size: 25px; cursor: pointer"></i>
@@ -127,7 +127,7 @@
 
                                                                         <div class="modal-body">
                                                                             <span class="font-weight-bold texto-mudar-status"></span>
-                                                                            <form action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'Cancelado']) }}" method="post">
+                                                                            <form action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                                             @csrf
 
                                                                         </div>
@@ -163,16 +163,19 @@
                                                         @if($prep->detached == '')
                                                             <b style="color: black">Itens: </b> <span style="color: black">{{ $prep->comboItem }},  {{ $prep->fries }}, {{ $prep->drinks }}</span><br><br>
                                                         @else
-                                                            <b style="color: black">Itens: </b> <span style="color: black">{{ $prep->detached }}</span><br><br>
+                                                            <b style="color: black">Itens: </b> <span style="color: black">{{ $prep->detached }}</span><br>
                                                         @endif
+
+                                                        <hr>
 
                                                         @if($prep->payingMethod == 'Dinheiro')
                                                             <b style="color: black">Valor total:</b> <span style="color: black"> {{ $prep->totalValue }}</span><br>
                                                             <b style="color: black">Troco para: </b> <span style="color: black">{{ $prep->payingValue }}</span><br>
                                                         @else
-                                                            <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $prep->payingMethod }}</span>
+                                                            <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $prep->payingMethod }}</span><br>
                                                         @endif
 
+                                                        <b style="color: black">Endereço:</b><span style="color: black">{{ $prep->address }}</span>
 
                                                     </div>
                                                     <div class="modal-footer">
@@ -213,6 +216,7 @@
                         <tr>
                             <th>Id do pedido</th>
                             <th>Status do pedido</th>
+                            <th>Valor</th>
                             <th>Tratativas</th>
                         </tr>
                         </thead>
@@ -222,11 +226,12 @@
                                 <tr>
                                     <td>#{{ $rd->id }}</td>
                                     <td>{{ $rd->status }}</td>
+                                    <td>{{ $rd->totalValue }}</td>
                                     <td>
                                         <div>
                                             <div class="row">
                                                 <div class="col-2 mr-2">
-                                                    <form action="{{ route('alterarStatus', ['id' => $rd->id, 'acao' => 'Pedido Entregue']) }}" method="post">
+                                                    <form action="{{ route('alterarStatus', ['id' => $rd->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                         @csrf
                                                         <i class="fas fa-user-check text-success finalizar-ok" data-toggle="modal" data-target="#exampleModal{{ $rd->id }}" title="Pedido entregue com sucesso." style="font-size: 25px; cursor: pointer"></i>
 
@@ -255,7 +260,7 @@
                                                 <div class="col-6">
                                                     <i class="far fa-times-circle text-danger ml-2 cancelarPedido" data-toggle="modal" data-target="#exampleModal{{ $rd->id }}cancelar" title="Cancelar pedido" style="font-size: 25px; cursor: pointer"></i>
 
-                                                    <form action="{{ route('alterarStatus', ['id' => $rd->id, 'acao' => 'Cancelado']) }}" method="post">
+                                                    <form action="{{ route('alterarStatus', ['id' => $rd->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                     @csrf
                                                     <!-- Modal -->
                                                         <div class="modal fade" id="exampleModal{{ $rd->id }}cancelar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -337,7 +342,7 @@
                                            <div>
                                                <div class="row">
                                                    <div class="col-2 mr-2">
-                                                       <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo']) }}" method="post">
+                                                       <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                            @csrf
                                                            <i class="fas fa-share text-primary enviarPreparo" data-toggle="modal" data-target="#exampleModal{{$reg->id}}" title="Enviar para preparo" style="font-size: 25px; cursor: pointer"></i>
 
@@ -366,7 +371,7 @@
                                                    </div>
                                                    <div class="col-6">
                                                        <i class="far fa-times-circle text-danger ml-2 cancelarPedido" data-toggle="modal" data-target="#exampleModal{{$reg->id}}cancelarr" title="Cancelar pedido" style="font-size: 25px; cursor: pointer"></i>
-                                                       <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado']) }}" method="post">
+                                                       <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                        @csrf
                                                        <!-- Modal -->
                                                            <div class="modal fade" id="exampleModal{{$reg->id}}cancelarr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -403,28 +408,31 @@
                                                    <div class="modal-body">
                                                        <p class="text-center" style="color: black; font-size: 18px;">Passe estas informações ao responsável pela entrega.</p>
 
-                                                            <b style="color: black">Pedido:</b> <span style="color: black">{{ $reg->id }}</span> <br>
+                                                            <b style="color: black">Pedido:</b> <span class="idPedido" style="color: black">{{ $reg->id }}</span> <br>
 
-                                                            <b style="color: black">Cliente:</b> <span style="color: black">{{ $reg->clientName }}</span> <br>
-                                                           {{--                                           Endereço: {{ $reg-> }} <br>--}}
+                                                            <b style="color: black">Cliente:</b> <span class="clientePedido" style="color: black">{{ $reg->clientName }}</span> <br>
 
                                                            @if($reg->detached == '')
-                                                               <b style="color: black">Itens: </b> <span style="color: black">{{ $reg->comboItem }},  {{ $reg->fries }}, {{ $reg->drinks }}</span><br><br>
+                                                               <b style="color: black">Itens: </b> <span class="itensPedido" style="color: black">{{ $reg->comboItem }},  {{ $reg->fries }}, {{ $reg->drinks }}.</span><br><br>
                                                            @else
-                                                               <b style="color: black">Itens: </b> <span style="color: black">{{ $reg->detached }}</span><br><br>
+                                                               <b style="color: black">Itens: </b> <span class="itensPedido" style="color: black">{{ $reg->detached }}.</span><br>
                                                            @endif
 
+                                                       <hr>
                                                            @if($reg->payingMethod == 'Dinheiro')
-                                                               <b style="color: black">Valor total:</b> <span style="color: black"> {{ $reg->totalValue }}</span><br>
-                                                               <b style="color: black">Troco para: </b> <span style="color: black">{{ $reg->payingValue }}</span><br>
+                                                               <b style="color: black">Valor total:</b> <span class="valorPedido" style="color: black"> {{ $reg->totalValue }}</span><br>
+                                                               <b style="color: black">Troco para: </b> <span class="trocoPedido" style="color: black">{{ $reg->payingValue }}</span><br>
                                                            @else
-                                                           <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $reg->payingMethod }}</span>
+                                                           <b style="color: black">Valor total:</b> <span class="valorPedido" style="color: black"> {{ $reg->totalValue }}</span><br>
+                                                           <b style="color: black">Pagamento em cartão:</b> <span class="pagamentoCartao" style="color: black">{{ $reg->payingMethod }}</span><br>
                                                            @endif
 
-
+                                                       <b style="color: black">Endereço:</b> <span class="enderecoPedido" style="color: black">{{ $reg->address }}</span>
                                                    </div>
                                                    <div class="modal-footer">
+                                                       <span class="mr-2 copiado" style="color: black">Copiado!</span>
                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
+                                                       <button type="button" class="btn btn-primary copiar">Copiar</button>
                                                    </div>
                                                </div>
                                            </div>

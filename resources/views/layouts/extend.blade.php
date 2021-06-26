@@ -149,29 +149,94 @@
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
+                    <?php
+                    $total = 0;
+                    $registrado = \Illuminate\Support\Facades\DB::select("SELECT COUNT(*) as retorno from orders WHERE status = 'Pedido registrado'");
+                    $registrado = $registrado[0]->retorno;
+
+                    $pronto = \Illuminate\Support\Facades\DB::select("SELECT COUNT(*) as pronto from orders WHERE status = 'Pronto'");
+                    $pronto = $pronto[0]->pronto;
+
+                    if ($registrado != 0){
+                        $total = 10;
+                    }
+
+                    if($pronto != 0){
+                        $total = 20;
+                    }
+
+                    if($pronto != 0 && $registrado != 0){
+                        $total = 30;
+                    }
+
+                    if($pronto == 0 && $registrado == 0){
+                        $total = 0;
+                    }
+
+
+                    ?>
+
+                    <li>
+                        <i class="fas fa-bell dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 27px; color: black">
+                            <span class="badge bg-primary text-white">
+                               @if($total == 10 or $total == 20)
+                                   1
+                               @elseif($total == 30)
+                                2
+                                @elseif($total == 0)
+                                   0
+                               @endif
+                            </span>
+                        </i>
+
+                        <div style="margin-right: 125px" class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="dropdownMenuLink">
+                            @if($total == 30 or $total == 10)
+                            <p style="cursor: pointer;
+                            @if($total == 30)
+                                margin-top: 10px;
+                            @else
+                                margin:auto;
+                            @endif
+                                " class="dropdown-item">
+                               <b>Existem pedidos registrados aguardando serem <span class="text-danger">preparados</span>.</b>
+                            </p>
+                            @endif
+                                @if($total == 30)
+                                    <hr>
+                                @endif
+                            @if($total == 30 or $total == 20)
+                            <p style="cursor: pointer;
+                            @if($total == 30)
+                                margin-top: 10px;
+                            @else
+                                margin:auto;
+                            @endif    " class="dropdown-item">
+                              <b>Existem pedidos prontos aguardando serem <span class="text-info">enviados</span>.</b>
+                            </p>
+                            @endif
+
+                            @if($total == 0)
+                                    <p style="cursor: pointer; margin:auto;" class="dropdown-item"><b><span class="text-success">Ok</span>, nenhum pedido para preparo ou envio.</b></p>
+                            @endif
+                        </div>
+                    </li>
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
 
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" style="color: black" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?php
                             date_default_timezone_set('America/Sao_Paulo');
                             $agora =getdate();
                             $hora = $agora["hours"];
                             $usuario = \Illuminate\Support\Facades\Auth::user()->name;
-                            $valores = \Illuminate\Support\Facades\DB::select("SELECT COUNT(*) as retorno from orders WHERE status = 'Pedido registrado'");
-                            $valores = $valores[0]->retorno;
                             ?>
 
-                                <i class="fas fa-bell mr-3">
-                                <span class="badge bg-secondary registereds">{{ $valores }}</span>
-                                </i>
-
                             @if($hora >= 5 && $hora < 12)
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small font-weight-bold" style="font-size: 15px">Bom dia, {{ $usuario }}</span>
+                                <span class="mr-2 d-none d-lg-inline small font-weight-bold" style="font-size: 15px; color: black">Bom dia, {{ $usuario }}</span>
                             @elseif($hora >= 12 && $hora < 18)
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small font-weight-bold" style="font-size: 15px"> Boa tarde, {{ $usuario }} &nbsp;</span>
+                                <span class="mr-2 d-none d-lg-inline small font-weight-bold" style="font-size: 15px; color: black"> Boa tarde, {{ $usuario }} &nbsp;</span>
                             @else
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small font-weight-bold" style="font-size: 15px">Boa noite, {{ $usuario }}</span>
+                                <span class="mr-2 d-none d-lg-inline small font-weight-bold" style="font-size: 15px; color: black">Boa noite, {{ $usuario }}</span>
                             @endif
                                 <i class=" mb-2 fas fa-sort-down"></i>
                         </a>

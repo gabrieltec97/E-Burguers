@@ -61,6 +61,7 @@ $(document).ready(() => {
                         data+= "<tr><td>"+ '#'+ (pedido.id) + "</td>";
                         data+= "<td>"+ (pedido.hour) + "</td>";
                         data+= "<td>"+ (pedido.status) + "</td></tr>";
+                        // data+= "<td>"+ '<button class="btn btn-danger float-right font-weight-bold cancelarPedido w-75 h-50 mr-4" data-toggle="modal" data-target="#modalCancelamento'+ (pedido.id) +'">Cancelar pedido</button>' +"</td></tr>";
                     }
 
                     $(".dados-tab").html(data);

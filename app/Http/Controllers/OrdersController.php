@@ -246,10 +246,35 @@ class OrdersController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function changeStatus($id, $acao)
+    public function changeStatus($id, $acao, $remetente, $idCliente)
     {
         $order = Orders::find($id);
 
+        //Cancelamento por parte do cliente.
+        if ($remetente == 'cliente'){
+
+            $order->status = $acao;
+            $order->save();
+
+            $verifyOrder = DB::table('orders')
+                ->where('idClient', '=', $idCliente)
+                ->where('status', '=', 'Pedido registrado')
+                ->orWhere('status', '=', 'Em preparo')
+                ->orWhere('status', '=', 'Pronto')
+                ->orWhere('status', '=', 'Em rota de entrega')
+                ->orWhere('status', '=', 'Pronto para ser retirado no restaurante')
+                ->get()->toArray();
+
+            if ($verifyOrder == null){
+                return redirect()->route('tipoPedido')->with('msg-cancel',
+                ' ');
+            }else{
+                return redirect()->back()->with('msg-cancel',
+                    ' ');
+            }
+        }
+
+        //Cancelamento por parte da administração.
         if($acao == 'prontoretiradaenvio'){
 
             if ($order->deliverWay == 'Retirada no restaurante'){
@@ -265,7 +290,7 @@ class OrdersController extends Controller
                 'Pedido pronto para ser entregue!');
 
 
-        }else if($acao == 'Cancelado'){
+        }else if($acao == 'Cancelado' && $remetente == 'atendente'){
 
             $order->status = $acao;
             $order->save();
@@ -280,6 +305,7 @@ class OrdersController extends Controller
 
             return redirect()->route('home')->with('msg',
                 'Pedido disponível para equipe da cozinha.');
+
         }else if($acao == 'Pedido Entregue'){
             $order->status = $acao;
             $order->save();
@@ -287,7 +313,6 @@ class OrdersController extends Controller
         return redirect()->back()->with('msg-venda',
                ' ');
         }
-
     }
 
     public function update(Request $request, $id, $acao)
