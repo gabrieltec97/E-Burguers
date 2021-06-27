@@ -412,7 +412,47 @@
     @elseif(session('msg-add'))
         <button hidden class="disparo-addCombo"></button>
     @else
-        @if(!isset($use) && !isset($couponName) && !isset($notExist))
+        @if(isset($exist[0]))
+            @if($exist[0]->deliverWay == 'Entrega em domicílio')
+                <script>
+                    function shoot(){
+                        $.toast({
+                            text: '<b>Você tem um pedido em andamento para entrega em domicílio, com isso não é possível escolher outra forma de retirada.</b>',
+                            heading: '<b>Atenção aqui!</b>',
+                            showHideTransition: 'slide',
+                            bgColor : '#38C172',
+                            position : 'top-right',
+                            hideAfter: 14000
+                        })
+                    }
+
+                    shoot();
+
+                    $(".forma-entrega").on("click", function (){
+                        shoot();
+                    })
+                </script>
+            @elseif($exist[0]->deliverWay == 'Retirada no restaurante')
+                <script>
+                    function shoot(){
+                        $.toast({
+                            text: '<b>Você tem um pedido em andamento para retirada no restaurante, com isso não é possível escolher outra forma de retirada.</b>',
+                            heading: '<b>Atenção aqui!</b>',
+                            showHideTransition: 'slide',
+                            bgColor : '#38C172',
+                            position : 'top-right',
+                            hideAfter: 14000
+                        })
+                    }
+
+                    shoot();
+
+                    $(".forma-entrega").on("click", function (){
+                        shoot();
+                    })
+                </script>
+            @endif
+        @elseif(!isset($use) && !isset($couponName) && !isset($notExist))
             <button hidden class="disparo-fim"></button>
         @endif
     @endif
