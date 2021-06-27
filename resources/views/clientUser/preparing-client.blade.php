@@ -30,7 +30,7 @@
                                Em preparo</li>
                            <li class="list-group-item font-weight-bold text-secondary et3"><i class="fas fa-motorcycle mr-2"></i>Saiu para entrega</li>
                            <li class="list-group-item font-weight-bold text-secondary et5"><i class="fas fa-check-circle mr-2"></i>Pronto para retirar no restaurante</li>
-                           <li class="list-group-item font-weight-bold text-secondary">
+                           <li class="list-group-item font-weight-bold text-secondary li-cancelamento">
                                <button class="btn btn-danger float-right font-weight-bold cancelarPedido" data-toggle="modal" data-target="#modalCancelamento">Cancelar pedido</button>
                            </li>
                        </ul>
@@ -88,9 +88,9 @@
                                 </td>
                                 </tbody>
                             </table>
-                                <hr>
+                                <hr class="hr-cancelamentos">
                                 <div class="d-flex justify-content-end">
-                                    <button class="btn btn-danger mb-2 mr-2" data-toggle="modal" data-target="#modalCancelamento">Cancelamento de pedidos</button>
+                                    <button class="btn btn-danger mb-2 mr-2 btn-cancelamentos" data-toggle="modal" data-target="#modalCancelamento">Cancelamento de pedidos</button>
                                 </div>
                             </div>
                        </div>

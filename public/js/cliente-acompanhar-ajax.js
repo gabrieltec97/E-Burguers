@@ -29,6 +29,13 @@ $(document).ready(() => {
                             $(".et1, .et2, .et3").css('background', '#d4f5d4');
                             $(".preparing").attr('hidden', 'true');
                             $(".et2").removeAttr('hidden', 'true');
+                            $(".btn-cancelamentos, .cancelarPedido, .li-cancelamento").attr('hidden', 'true');
+                            $(".hr-cancelamentos").attr('hidden', 'true');
+
+                            //Travando o clique do botão.
+                            $(".btn-cancelamentos, .cancelarPedido").on("click", function (e){
+                                e.preventDefault();
+                            })
                         }
                     }else {
                         $(".et5").removeAttr('hidden', 'true');
@@ -48,28 +55,59 @@ $(document).ready(() => {
                             $(".et1, .et2, .et5").css('background', '#d4f5d4');
                             $(".preparing").attr('hidden', 'true');
                             $(".et2").removeAttr('hidden', 'true');
+                            $(".btn-cancelamentos, .cancelarPedido, .li-cancelamento").attr('hidden', 'true');
+                            $(".hr-cancelamentos").attr('hidden', 'true');
+
+                            //Travando o clique do botão.
+                            $(".btn-cancelamentos, .cancelarPedido").on("click", function (e){
+                                e.preventDefault();
+                            })
+
+                            console.log('retira');
+                            console.log(dados[0].status);
                         }
                     }
                 }else if(dados.length > 1){
 
-                    let original = $(".dados-tab").text();
+                    if(dados[0].status == 'Pronto para ser retirado no restaurante'){
+                        $(".et1, .et2, .et5").css('background', '#d4f5d4');
+                        $(".preparing").attr('hidden', 'true');
+                        $(".et2").removeAttr('hidden', 'true');
+                        $(".btn-cancelamentos").attr('hidden', 'true');
+                        $(".hr-cancelamentos").attr('hidden', 'true');
 
-                    console.log(original)
+                        //Travando o clique do botão.
+                        $(".btn-cancelamentos").on("click", function (e){
+                            e.preventDefault();
+                        })
+                    }else if (dados[0].status == 'Em rota de entrega') {
+                        $(".et1, .et2, .et3").css('background', '#d4f5d4');
+                        $(".preparing").attr('hidden', 'true');
+                        $(".et2").removeAttr('hidden', 'true');
+                        $(".btn-cancelamentos").attr('hidden', 'true');
+                        $(".hr-cancelamentos").attr('hidden', 'true');
+
+                        //Travando o clique do botão.
+                        $(".btn-cancelamentos").on("click", function (e) {
+                            e.preventDefault();
+                        })
+                    }
+
+                    // let original = $(".dados-tab").text();
                     let data = '';
 
                     for (let pedido of dados){
                         data+= "<tr><td>"+ '#'+ (pedido.id) + "</td>";
                         data+= "<td>"+ (pedido.hour) + "</td>";
                         data+= "<td>"+ (pedido.status) + "</td></tr>";
-                        // data+= "<td>"+ '<button class="btn btn-danger float-right font-weight-bold cancelarPedido w-75 h-50 mr-4" data-toggle="modal" data-target="#modalCancelamento'+ (pedido.id) +'">Cancelar pedido</button>' +"</td></tr>";
                     }
 
                     $(".dados-tab").html(data);
                 }
 
-                if (dados.length == 0){
-                    location.reload();
-                }
+                // if (dados.length == 0){
+                //     location.reload();
+                // }
             },
             error: function(erro){console.log(erro)}})
 
