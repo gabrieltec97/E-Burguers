@@ -259,6 +259,8 @@
                                                 <select name="formaRetirada" class="form-control forma-entrega">
                                                     @if(isset($pendings))
                                                         <option value="{{ $pendings }}">{{ $pendings }}</option>
+                                                    @elseif(isset($exist[0]))
+                                                        <option value="{{ $exist[0]->deliverWay }}">{{ $exist[0]->deliverWay }}</option>
                                                     @else
                                                         <option value="Entrega em domicílio">Entrega em domicílio</option>
                                                         <option value="Retirada no restaurante">Retirada no restaurante</option>
@@ -304,6 +306,7 @@
 
                                             @endif
                                             @endif
+
 
                                                 @if(isset($separated))
                                                 @if($separated == 0)
@@ -357,6 +360,13 @@
                                             <div class="col-12 mt-3 d-flex justify-content-end" style="bottom: -20px">
                                                 @if(isset($pendings))
                                                     @if($pendings == 'Entrega em domicílio')
+                                                        <button class="btn btn-success font-weight-bold finalizar-pedido"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                                    @else
+                                                        <button class="btn btn-success font-weight-bold verifica-outro"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                                    @endif
+
+                                                @elseif(isset($exist[0]))
+                                                    @if($exist[0]->deliverWay == 'Entrega em domicílio')
                                                         <button class="btn btn-success font-weight-bold finalizar-pedido"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
                                                     @else
                                                         <button class="btn btn-success font-weight-bold verifica-outro"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>

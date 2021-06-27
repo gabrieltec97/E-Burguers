@@ -700,10 +700,18 @@ class TrayController extends Controller
     {
         $user = Auth::user();
         $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'image', 'comboItem', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+        $exist= DB::table('orders')
+            ->select('status', 'deliverWay')
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")
+            ->get()->toArray();
+
         $separated = DB::table('orders')
             ->where('status', '=', 'Pendente')
             ->count();
 
+        if ($separated == 0 && count($exist) == 1){
+            $separated = 1;
+        }
 
         //Capturando os itens adicionais.
         $aditionals = Extras::all()->toArray();
@@ -742,16 +750,16 @@ class TrayController extends Controller
             if (isset($pendings)){
 
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'separated', 'myOrder', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'exist', 'separated', 'myOrder', 'items', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'separated',  'customs', 'myOrder', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'exist', 'separated',  'customs', 'myOrder', 'items', 'sendAddress', 'addons'));
                 }
 
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated',  'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated',  'items', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated',  'customs', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated',  'customs', 'items', 'sendAddress', 'addons'));
                 }
             }
 
@@ -760,15 +768,15 @@ class TrayController extends Controller
 
             if (isset($pendings)){
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated', 'items', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated', 'items', 'pendings', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated', 'customs','items', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated', 'customs','items', 'pendings', 'addons'));
                 }
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated', 'items', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated', 'items', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated', 'customs', 'items', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated', 'customs', 'items', 'addons'));
                 }
             }
         }
@@ -778,15 +786,15 @@ class TrayController extends Controller
 
             if (isset($pendings)){
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated', 'sendAddress', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated', 'sendAddress', 'pendings', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated', 'customs','sendAddress', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated', 'customs','sendAddress', 'pendings', 'addons'));
                 }
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'separated', 'customs', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'exist', 'separated', 'customs', 'sendAddress', 'addons'));
                 }
             }
         }
