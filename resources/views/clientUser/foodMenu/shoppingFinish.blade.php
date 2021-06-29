@@ -308,7 +308,7 @@
 
 
 
-                                            @if(isset($exist[0]))
+                                            @if(isset($exist[0]) && !isset($pendings))
                                                 @if($exist[0]->deliverWay == 'Entrega em domicílio')
                                                 <div class="col-12 col-lg-6 mt-4 mt-lg-0 pagamento">
                                                     <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>

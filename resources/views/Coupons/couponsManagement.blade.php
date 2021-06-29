@@ -29,7 +29,7 @@
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 25px;">Cadastrar cupom</div>
                     <div class="card-body">
-                        <form action="{{ route('cupons.store') }}" method="post" class="form-group">
+                        <form action="{{ route('cupons.store') }}" method="post" class="form-group cupom-sub">
                             @csrf
                            <div class="row">
                                <div class="col-lg-6 col-12">

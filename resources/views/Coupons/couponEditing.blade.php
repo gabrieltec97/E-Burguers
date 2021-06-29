@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 25px;">Edição de cupom</div>
                     <div class="card-body">
-                        <form action="{{ route('cupons.update', $coupon->id) }}" method="post" class="form-group">
+                        <form action="{{ route('cupons.update', $coupon->id) }}" method="post" class="form-group cupom-sub">
                             @csrf
                             @method('PUT')
                             <div class="row">

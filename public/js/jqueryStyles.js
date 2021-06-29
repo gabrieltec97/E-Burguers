@@ -242,7 +242,7 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'not-allowed')
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('title', 'Verifique a data de expiração do cupom.')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").on("click", function (e){
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom, .botao-salvar").on("click", function (e){
                 e.preventDefault();
             })
         }else if($(this).val() == dateToday){
@@ -251,7 +251,7 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'not-allowed')
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('title', 'Verifique a data de expiração do cupom.')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").on("click", function (e){
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom, .botao-salvar").on("click", function (e){
                 e.preventDefault();
             })
         }else{
@@ -260,6 +260,9 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").removeAttr('disabled', 'true')
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").removeAttr('title', 'true')
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'pointer')
+            $(".cadatrar-cupom, .botao-salvar").on("click", function (e){
+                $(".cupom-sub").submit();
+            })
         }
     })
 
