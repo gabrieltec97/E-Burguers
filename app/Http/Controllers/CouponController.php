@@ -15,6 +15,7 @@ class CouponController extends Controller
      */
     public function index()
     {
+        date_default_timezone_set('America/Sao_Paulo');
         $couponsOld = DB::table('coupons')->get()->toArray();
         $date = date('Y'. '-' . 'm' . '-' . 'd');
 
@@ -65,10 +66,20 @@ class CouponController extends Controller
 
         $request->validate($rules, $messages);
 
+        date_default_timezone_set('America/Sao_Paulo');
         $date = date('Y'. '-' . 'm' . '-' . 'd');
 
         if ($request->expireDate == $date){
             return back()->with('msg-2', 'Cupom não cadastrado! A data de expiração deve ser diferente da data atual.');
+        }
+
+        $name = DB::table('coupons')
+            ->select('name')
+            ->where('name', '=', $request->couponName)
+            ->get()->toArray();
+
+        if (count($name) != 0){
+            return back()->with('msg-2', 'Cupom não cadastrado! Já existe um cupom cadastrado com este nome.');
         }
 
         $coupon = new Coupon();

@@ -153,9 +153,10 @@ $(".impComboSim").on('click', function () {
     $(".valComboPromo").css('cursor', 'initial')
 })
 
-    $(".valComboPromo").mask('00.00');
-    $(".valorRefeicao").mask('00.00');
-
+    //Inserção de máscara de preço na view de cadastro de anuncio.
+    $(".valorRefeicao, .valComboPromo").keyup(function (){
+        $(this).mask('000.00', {reverse: true});
+    })
 
 $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
 
@@ -226,24 +227,41 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
     })
 
 //Verificando expiração de cupom.
+    $(".cupom-expire").hide();
+    $(".cupom-expire2").hide();
 
-$(".cupom-expire").hide();
+    var dateToday = new Date();
+    dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
 
-    $(".data-exp-cupom").on('change', function (){
+    //Verificando data de novo cupom.
+    $(".data-exp-cupom, .data-exp").on("change", function (){
 
-        if ($(".diaAtual").val() == $(".data-exp-cupom").val()){
+        if ($(this).val() < dateToday){
+            $(".cupom-expire2").fadeIn('slow');
+            $(".cupom-expire").fadeOut();
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'not-allowed')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('title', 'Verifique a data de expiração do cupom.')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").on("click", function (e){
+                e.preventDefault();
+            })
+        }else if($(this).val() == dateToday){
+            $(".cupom-expire2").fadeOut();
             $(".cupom-expire").fadeIn('slow');
-            $(".cadatrar-cupom").attr('disabled', 'true')
-            $(".cadatrar-cupom").css('cursor', 'not-allowed')
-            $(".cadatrar-cupom").attr('title', 'Verifique a data de expiração do cupom.')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'not-allowed')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('title', 'Verifique a data de expiração do cupom.')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").on("click", function (e){
+                e.preventDefault();
+            })
         }else{
             $(".cupom-expire").fadeOut('slow');
-            $(".cadatrar-cupom").removeAttr('disabled', 'true')
-            $(".cadatrar-cupom").removeAttr('title', 'true')
-            $(".cadatrar-cupom").css('cursor', 'pointer')
+            $(".cupom-expire2").fadeOut('slow');
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").removeAttr('disabled', 'true')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").removeAttr('title', 'true')
+            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'pointer')
         }
     })
-
 
 //Verificação de cadastro de refeição.
 
@@ -831,7 +849,11 @@ $(".entregaCasa").on("click", function () {
 })
 
 //Inserção de máscara de valor a ser entregue:
-    $(".troco").mask('00.00');
+
+    $(".troco, .compras-acima").keyup(function (){
+        $(this).mask('000.00', {reverse: true});
+    })
+
 
 //Inserção de cupom para maiúscula.
     $(".cupomDesconto").keyup(function () {

@@ -303,10 +303,46 @@
                                                     <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
                                                     <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
                                                 </div>
-
                                             @endif
                                             @endif
 
+
+
+                                            @if(isset($exist[0]))
+                                                @if($exist[0]->deliverWay == 'Entrega em domicílio')
+                                                <div class="col-12 col-lg-6 mt-4 mt-lg-0 pagamento">
+                                                    <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
+                                                    <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
+                                                        <option value="Dinheiro">Dinheiro</option>
+                                                        <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
+                                                        <option value="Cartão de crédito (Visa)">Cartão de crédito (Visa)</option>
+                                                        <option value="Cartão de débito (Elo)">Cartão de débito (Elo)</option>
+                                                        <option value="Cartão de débito (Visa)">Cartão de débito (Visa)</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-lg-9 mt-4 mt-lg-4 val-entregue">
+                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
+                                                    <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
+                                                    <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
+                                                    <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
+                                                </div>
+
+                                                <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
+                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
+                                                    <br>
+                                                    <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
+                                                    <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
+                                                    <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
+                                                    <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
+                                                </div>
+
+                                                <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
+                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                    <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                </div>
+                                            @endif
+                                            @endif
 
                                                 @if(isset($separated))
                                                 @if($separated == 0)
@@ -324,7 +360,7 @@
 
                                                     <div class="col-12 col-lg-9 mt-4 mt-lg-4 val-entregue">
                                                         <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
-                                                        <input type="text" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
+                                                        <input type="number" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
                                                         <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                         <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
                                                     </div>

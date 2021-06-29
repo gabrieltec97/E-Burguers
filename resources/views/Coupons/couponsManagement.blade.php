@@ -52,6 +52,7 @@
                                        </div>
                                    @endif
                                    <label class="text-danger mt-2 font-weight-bold cupom-expire" style="font-size: 13px">Para usar este cupom hoje, coloque a expiração para amanhã ou mais.</label>
+                                   <label class="text-danger mt-2 font-weight-bold cupom-expire2" style="font-size: 13px">A data de expiração não pode ser menor ou igual a data atual.</label>
                                </div>
 
                                <div class="col-lg-12 mt-3 mt-lg-4 col-12">
@@ -80,7 +81,7 @@
 
                                <div class="col-lg-12 mt-4 col-12">
                                    <label class="text-muted font-weight-bold">Nas compras acima de R$:</label>
-                                   <input type="text" name="disccountRule" class="form-control compras-acima {{ ($errors->has('disccountRule') ? 'is-invalid' : '') }}" value="{{ old('disccountRule') }}" required>
+                                   <input type="text" name="disccountRule" autocomplete="off" class="form-control compras-acima {{ ($errors->has('disccountRule') ? 'is-invalid' : '') }}" value="{{ old('disccountRule') }}" required>
                                    @if($errors->has('disccountRule'))
                                        <div class="invalid-feedback">
                                            <span class="font-weight-bold"> {{ $errors->first('disccountRule') }}</span>

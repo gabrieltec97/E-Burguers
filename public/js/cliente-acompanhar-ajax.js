@@ -105,9 +105,9 @@ $(document).ready(() => {
                     $(".dados-tab").html(data);
                 }
 
-                // if (dados.length == 0){
-                //     location.reload();
-                // }
+                if (dados.length == 0){
+                    location.reload();
+                }
             },
             error: function(erro){console.log(erro)}})
 

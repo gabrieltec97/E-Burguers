@@ -709,7 +709,7 @@ class TrayController extends Controller
             ->where('status', '=', 'Pendente')
             ->count();
 
-        if ($separated == 0 && count($exist) == 1){
+        if ($separated == 0 && count($exist) != 0){
             $separated = 1;
         }
 
