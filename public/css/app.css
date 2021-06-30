@@ -11084,6 +11084,12 @@ a:hover{
     font-size: 15px;
 }
 
+.pedido-img{
+    width: 205px;
+    height: 145px;
+    border-radius: 3px;
+}
+
 .valor-carrinho{
     font-size: 12px;
 }
@@ -11103,20 +11109,10 @@ a:hover{
     }
 }
 
-.pedido-img{
-    width: 100px;
-    height: 80px;
-    margin-left: -20px;
-}
-
 .pedido-img-bebida{
     width: 90px;
     height: 80px;
     margin-left: -20px;
-}
-
-.teste{
-    font-size: 20px;
 }
 
 .remover{

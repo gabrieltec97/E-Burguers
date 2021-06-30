@@ -26,6 +26,37 @@ class TrayController extends Controller
         $tray = $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'comboItem', 'portion', 'drinks')->get()->toArray();
         $addons = Extras::all()->toArray();
 
+        if ($tray[0]['comboItem'] != ''){
+            $imgHamburguer = DB::table('adverts')
+                ->select('picture')
+                ->where('name', '=', $tray[0]['comboItem'])
+                ->get()->toArray();
+
+            $tray[0]['imgHamburguer'] = $imgHamburguer[0]->picture;
+        }
+
+        if ($tray[0]['portion'] != ''){
+            $imgPortion = DB::table('adverts')
+                ->select('picture')
+                ->where('name', '=', $tray[0]['portion'])
+                ->get()->toArray();
+
+            $tray[0]['imgPortion'] = $imgPortion[0]->picture;
+        }
+
+        if ($tray[0]['drinks'] != ''){
+
+            $drink = explode("|", $tray[0]['drinks']);
+            $drink = $drink[0];
+
+            $imgDrink = DB::table('adverts')
+                ->select('picture')
+                ->where('name', '=', $drink)
+                ->get()->toArray();
+
+            $tray[0]['imgDrink'] = $imgDrink[0]->picture;
+        }
+
         //Recuperando itens que não são hamburguer
         $noExtras = DB::table('adverts')->select('name')
             ->where('foodType', '!=', 'hamburguer')
@@ -47,6 +78,17 @@ class TrayController extends Controller
             foreach ($extras as $key => $value){
                 array_push($items, $value->Item);
             }
+
+            foreach ($extras as $et){
+                $imagem = DB::table('adverts')
+                    ->select('picture')
+                   ->where('name', '=', $et->Item)
+                   ->get()->toArray();
+
+               foreach ($imagem as $im){
+                   $et->img = $im->picture;
+               }
+            }
         }
 
         if (isset($tray[0])){
@@ -54,6 +96,17 @@ class TrayController extends Controller
                 ->where('idOrder', '=', $tray[0]['id'])
                 ->select()
                 ->get()->toArray();
+
+            foreach ($pureItems as $pureItem => $val){
+               $img = DB::table('adverts')
+                   ->select('picture')
+                   ->where('name', '=', $val->itemName)
+                   ->get()->toArray();
+
+               foreach ($img as $i){
+                   $val->img = $i->picture;
+               }
+            }
 
             //Verificando se a bandeja possui itens.
             if(isset($pureItems) && isset($tray[0]['id'])){
@@ -313,7 +366,7 @@ class TrayController extends Controller
 
         $item->delete();
 
-        return redirect()->route('minhaBandeja.index')->with('msg-2', ' ');
+        return redirect()->back()->with('msg-2', ' ');
 
     }
 

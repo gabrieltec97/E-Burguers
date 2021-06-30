@@ -82,9 +82,18 @@
                                                         <form action="{{ route('minhaBandeja.destroy', $food = $tray[0]['comboItem']) }}" method="post">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
-                                                            <span class="text-muted font-weight-bold teste">
-                                                          {{ $tray[0]['comboItem'] }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-6">
+                                                                        <img src="{{ asset($tray[0]['imgHamburguer']) }}" class="pedido-img" style="border-radius: 3px">
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-4 mt-2 text-center mt-sm-5">
+                                                                        <span class="font-weight-bold " style="font-size: 19px">
+                                                                        {{$tray[0]['comboItem']}}</span><button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </form>
                                                         </span>
                                                     </div>
@@ -112,9 +121,18 @@
                                                         <form action="{{ route('minhaBandeja.destroy', $food = $tray[0]['portion']) }}" method="post">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
-                                                            <span class="text-muted font-weight-bold teste">
-                                                          {{ $tray[0]['portion'] }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-6">
+                                                                        <img src="{{ asset($tray[0]['imgPortion']) }}" class="pedido-img" style="border-radius: 3px">
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-4 mt-2 text-center mt-sm-5">
+                                                                        <span class="font-weight-bold " style="font-size: 19px">
+                                                                        {{$tray[0]['portion']}}</span><button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </form>
                                                         </span>
                                                     </div>
@@ -143,9 +161,19 @@
                                                         <form action="{{ route('minhaBandeja.destroy', $food = $tray[0]['drinks']) }}" method="post">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
-                                                            <span class="text-muted font-weight-bold teste">
-                                                          {{ $tray[0]['drinks'] }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-6">
+                                                                        <img src="{{ asset($tray[0]['imgDrink']) }}" class="pedido-img" style="border-radius: 3px">
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-4 mt-2 text-center mt-sm-5">
+                                                                        <span class="font-weight-bold " style="font-size: 19px">
+                                                                        {{ $tray[0]['drinks'] }}</span><button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                         </form>
                                                         </span>
                                                     </div>
@@ -184,23 +212,23 @@
                                                                     <form action="{{ route('removerItem', $value->id)}}" method="post">
                                                                         <div class="container-fluid">
                                                                             <div class="row">
-
-                                                                                    <div class="col-6">
-                                                                                        @csrf
-                                                                                        <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
-                                                                                        <span class="text-muted font-weight-bold teste">
-                                                                                        {{ $value->itemName }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
-                                                                                    </div>
+                                                                                @csrf
+                                                                                <div class="col-12 col-md-8">
+                                                                                    <img src="{{ asset($value->img) }}" class="img-fluid" style="border-radius: 3px">
+                                                                                </div>
+                                                                                <div class="col-12 col-md-4 mt-2 text-center mt-sm-5">
+                                                                                    <span class="font-weight-bold" style="font-size: 30px; margin-top: 30px">{{ $value->itemName }}</span>
+                                                                                    <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger" style="font-size: 20px"></i></button>
+                                                                                </div>
                                                                     </form>
-                                                                                <div class="col-6 mt-4 mb-1">
+                                                                                <div class="col-12 mt-4 mb-1">
                                                                                         @if($value->foodType == 'Hamburguer')
                                                                                             @if(isset($addons))
                                                                                                 <form action="{{ route('addExtraItem', $value->id) }}" method="post">
                                                                                                     @csrf
                                                                                                     @foreach($addons as $pos => $data)
-
-                                                                                                        <input class="ml-1 form-check-input" type="checkbox" name="ingredients[]" value="{{ $data['namePrice'] }}">
-                                                                                                        <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $data['namePrice']  }}</label>
+                                                                                                        <input class="form-check-input" type="checkbox" name="ingredients[]" value="{{ $data['namePrice'] }}">
+                                                                                                        <label class="form-check-label font-weight-bold">{{  $data['namePrice']  }}</label>
                                                                                                         <br>
                                                                                                 @endforeach
 
@@ -209,7 +237,7 @@
                                                                                 </div>
 
                                                                     <div class="col-12 d-flex justify-content-center">
-                                                                        <button type="submit" class="btn btn-success font-weight-bold mt-5 w-75" title="Salvar alterações">Salvar</button>
+                                                                        <button type="submit" class="btn btn-success font-weight-bold w-75" title="Salvar alterações">Salvar</button>
                                                                         </form>
                                                                     </div>
                                                                             </div>
@@ -232,12 +260,13 @@
                                                             <form action="{{ route('removerPersonalizado', $valor->id) }}" method="post">
                                                                 @csrf
                                                                 <div class="container-fluid">
-                                                                    <div class="row d-flex justify-content-center">
-                                                                        <div class="col-6">
-                                                                            <img src="{{ asset('logo/hamburguer.jpg') }}" class="pedido-img">
-                                                                            <span class="text-muted font-weight-bold teste">
-                                                          {{ $valor->Item }}  <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
-
+                                                                    <div class="row">
+                                                                        <div class="col-12 col-md-8">
+                                                                            <img src="{{ asset($valor->img) }}" class="img-fluid" style="border-radius: 3px">
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4 mt-2 text-center mt-sm-5">
+                                                                            <span class="font-weight-bold" style="font-size: 30px; margin-top: 30px">{{ $valor->Item }}</span>
+                                                                            <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger" style="font-size: 20px"></i></button>
                                                                         </div>
                                                             </form>
 {{--                                                            @if(isset($valor->nameExtra))--}}
@@ -253,7 +282,7 @@
 {{--                                                            @endif--}}
 
                                                             @if(isset($addons))
-                                                                <div class="col-6 mt-4">
+                                                                <div class="col-12 mt-4">
                                                                 @foreach($addons as $addon)
 
                                                                        <form action="{{ route('editarPersonalizado', $valor->id) }}" method="post">
@@ -265,8 +294,8 @@
                                                                            @endif
                                                                        @endforeach
                                                                        >
-                                                                           <label class="text-muted ml-4 form-check-label font-weight-bold">{{  $addon['name']  }}</label>
-                                                                           <br>
+                                                                           <label class=" ml-4 form-check-label font-weight-bold">{{  $addon['name']  }}</label>
+
                                                                 @endforeach
                                                                 </div>
                                                             @endif
