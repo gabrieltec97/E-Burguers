@@ -26,35 +26,37 @@ class TrayController extends Controller
         $tray = $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'comboItem', 'portion', 'drinks')->get()->toArray();
         $addons = Extras::all()->toArray();
 
-        if ($tray[0]['comboItem'] != ''){
-            $imgHamburguer = DB::table('adverts')
-                ->select('picture')
-                ->where('name', '=', $tray[0]['comboItem'])
-                ->get()->toArray();
+        if (isset($tray[0])){
+            if ($tray[0]['comboItem'] != ''){
+                $imgHamburguer = DB::table('adverts')
+                    ->select('picture')
+                    ->where('name', '=', $tray[0]['comboItem'])
+                    ->get()->toArray();
 
-            $tray[0]['imgHamburguer'] = $imgHamburguer[0]->picture;
-        }
+                $tray[0]['imgHamburguer'] = $imgHamburguer[0]->picture;
+            }
 
-        if ($tray[0]['portion'] != ''){
-            $imgPortion = DB::table('adverts')
-                ->select('picture')
-                ->where('name', '=', $tray[0]['portion'])
-                ->get()->toArray();
+            if ($tray[0]['portion'] != ''){
+                $imgPortion = DB::table('adverts')
+                    ->select('picture')
+                    ->where('name', '=', $tray[0]['portion'])
+                    ->get()->toArray();
 
-            $tray[0]['imgPortion'] = $imgPortion[0]->picture;
-        }
+                $tray[0]['imgPortion'] = $imgPortion[0]->picture;
+            }
 
-        if ($tray[0]['drinks'] != ''){
+            if ($tray[0]['drinks'] != ''){
 
-            $drink = explode("|", $tray[0]['drinks']);
-            $drink = $drink[0];
+                $drink = explode("|", $tray[0]['drinks']);
+                $drink = $drink[0];
 
-            $imgDrink = DB::table('adverts')
-                ->select('picture')
-                ->where('name', '=', $drink)
-                ->get()->toArray();
+                $imgDrink = DB::table('adverts')
+                    ->select('picture')
+                    ->where('name', '=', $drink)
+                    ->get()->toArray();
 
-            $tray[0]['imgDrink'] = $imgDrink[0]->picture;
+                $tray[0]['imgDrink'] = $imgDrink[0]->picture;
+            }
         }
 
         //Recuperando itens que não são hamburguer
@@ -652,13 +654,14 @@ class TrayController extends Controller
                 }
 
                 $order->save();
+
+                if ($order->portion == '' or $order->drinks == ''){
+                    return redirect(route('minhaBandeja.index'));
+                }else{
+                    return redirect(route('fimCompra'));
+                }
             }
 
-            if ($order->portion == '' or $order->drinks == ''){
-                return redirect(route('minhaBandeja.index'));
-            }else{
-                return redirect(route('fimCompra'));
-            }
         }
 
         return view('clientUser.foodMenu.fries', compact('foods'));
