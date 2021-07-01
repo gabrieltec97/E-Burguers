@@ -595,15 +595,40 @@ class TrayController extends Controller
             ->where('foodType', '=', 'acompanhamento')
             ->where('combo', '=', 'Sim')
             ->get();
+
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
         if(isset($request['ingredients'])){
             $requirements = implode(', ', $request['ingredients']);
         }
 
+        //Valor da entrega.
+        $deliverValue = 3;
+
         if ($verifyOrder == null){
 
             $order = new Tray();
+            $order->idClient = $user;
+            $order->orderType = "Combo";
+            $order->day = date('d/m/Y');
+            $order->hour = date('H:i');
+            $order->image = $hamburguer->picture;
+            $order->hamburguer = $hamburguer->name . ': '. $requirements;
+            $order->comboItem = $hamburguer->name;
+
+            if (isset($request->extras)){
+                $order->extras = $addItems;
+                $order->totalValue = $hamburguer->comboValue + $valorNovo + $deliverValue;
+            }else{
+                $order->totalValue = $hamburguer->comboValue + $deliverValue;
+            }
+
+            $order->valueWithoutDisccount = $hamburguer->comboValue + $deliverValue;
+            $order->save();
+
+        }else{
+
+            $order = Auth::user()->userOrderTray()->get()->first();
             $order->idClient = $user;
             $order->orderType = "Combo";
             $order->day = date('d/m/Y');
@@ -621,7 +646,6 @@ class TrayController extends Controller
 
             $order->valueWithoutDisccount = $hamburguer->comboValue;
             $order->save();
-
         }
 
         if(isset($verifyOrder)){
@@ -689,15 +713,17 @@ class TrayController extends Controller
         $valueOrder = doubleval($myOrder['totalValue']) + doubleval($secondFood->comboValue);
         $foods = DB::table('adverts')->where('foodType', '=', 'bebida')->get();
 
+        //Inserindo item na bandeja.
         if ($myOrder['portion'] == ''){
-
             $order = Tray::find($idOrder);
             $order->portion = $secondFood->name;
             $order->totalValue = $valueOrder;
             $order->valueWithoutDisccount = $valueOrder;
             $order->save();
-
+        }else{
+            return redirect()->route('minhaBandeja.index')->with('error-2', ' ');
         }
+
 
         if ($myOrder['drinks'] == '' or $myOrder['hamburguer'] == ''){
             return redirect(route('minhaBandeja.index'));
@@ -742,7 +768,8 @@ class TrayController extends Controller
             $order->totalValue = $valueOrder;
             $order->valueWithoutDisccount = $valueOrder;
             $order->save();
-
+        }else{
+            return redirect()->route('minhaBandeja.index')->with('error', ' ');
         }
 
         if($myOrder['hamburguer'] == '' or $myOrder['portion'] == ''){

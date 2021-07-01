@@ -2,6 +2,8 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/ajax-atualizar.js') }}"></script>
 
 @section('title')
     Meu pedido
@@ -324,6 +326,33 @@
     @if(isset($edit) == true)
         <button hidden class="disparo-ham"></button>
     @endif
+
+    @if(session('error'))
+        <script>
+            $.toast({
+                text: '<b>Ocorreu um erro ao alterar sua bebida. Mas você pode alterar por aqui, basta clicar no "X" e escolher qual desejar :)</b>',
+                heading: '<b>Erro!</b>',
+                showHideTransition: 'slide',
+                bgColor : 'red',
+                position : 'top-right',
+                hideAfter: 15000
+            })
+        </script>
+    @endif
+
+    @if(session('error-2'))
+        <script>
+            $.toast({
+                text: '<b>Ocorreu um erro ao alterar sua porção. Mas você pode alterar por aqui, basta clicar no "X" e escolher qual desejar :)</b>',
+                heading: '<b>Erro!</b>',
+                showHideTransition: 'slide',
+                bgColor : 'red',
+                position : 'top-right',
+                hideAfter: 17000
+            })
+        </script>
+    @endif
+
 
     @if(session('msg'))
         <button hidden class="disparo-rem"></button>
