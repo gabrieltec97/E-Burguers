@@ -189,4 +189,11 @@
     </script>
 @endif
 
+@if(session('duplicated'))
+
+@endif
+
+
+
+
 @endsection

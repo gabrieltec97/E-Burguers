@@ -68,14 +68,14 @@
                                                                     <hr class="mt-4">
 
                                                                     <div class="col-12">
-                                                                        @foreach($extras as $ext)
-                                                                            @foreach($ext as $e)
+                                                                        @if($food->extras != null)
+                                                                            @foreach($food->extras as $e)
                                                                                 <div>
                                                                                     <input class="ml-1 form-check-input" type="checkbox" id="{{ $e }}" name="extras[]" value="{{ $e }}">
                                                                                     <label for="{{ $e }}" class="ml-4 form-check-label font-weight-bold">{{ $e }}</label>
                                                                                 </div>
                                                                             @endforeach
-                                                                        @endforeach
+                                                                        @endif
                                                                     </div>
 
                                                                 </div>

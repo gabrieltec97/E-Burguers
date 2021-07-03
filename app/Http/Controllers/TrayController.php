@@ -540,12 +540,23 @@ class TrayController extends Controller
             ->where('combo', '=', 'Sim')
             ->get();
 
-        $extras = DB::table('extras')
-            ->select('namePrice')
-            ->get()->toArray();
+        foreach ($foods as $food){
+            $foodFormat = explode(',', $food->extras);
+            $one = array();
+            foreach ($foodFormat as $t){
+                $extra = DB::table('extras')
+                    ->select('namePrice')
+                    ->where('name', '=', $t)
+                    ->get()->toArray();
 
+                foreach ($extra as $ext){
+                    array_push($one, $ext->namePrice);
+                    $food->extras = $one;
+                }
+            }
+        }
 
-        return view('clientUser.foodMenu.hamburguer', compact('foods', 'extras'));
+        return view('clientUser.foodMenu.hamburguer', compact('foods'));
     }
 
     public function fries(Request $request, $id)

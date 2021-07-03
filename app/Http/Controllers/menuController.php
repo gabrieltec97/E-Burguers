@@ -19,15 +19,27 @@ class menuController extends Controller
     {
         $foods = Adverts::all();
         $tray = Auth::user()->userOrderTray()->select('id')->get();
-        $extras = DB::table('extras')
-            ->select('namePrice')
-            ->get()->toArray();
 
+        foreach ($foods as $food){
+            $foodFormat = explode(',', $food->extras);
+            $one = array();
+            foreach ($foodFormat as $t){
+                $extra = DB::table('extras')
+                    ->select('namePrice')
+                    ->where('name', '=', $t)
+                    ->get()->toArray();
+
+                foreach ($extra as $ext){
+                    array_push($one, $ext->namePrice);
+                    $food->extras = $one;
+                }
+            }
+        }
 
         if(isset($tray[0]->id)){
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray', 'extras'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray'));
         }else{
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'extras'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert'));
         }
     }
 

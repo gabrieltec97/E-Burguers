@@ -78,6 +78,11 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         $order = Auth::user()->userOrderTray()->get()->toArray();
+
+        if ($order == null){
+            return redirect()->route('preparo.index')->with('duplicated', ' ');
+        }
+
         $client = DB::table('users')->select('name', 'surname')->where('id', '=', $order[0]['idClient'])->get();
 
         //Terminando de adicionar os itens à bandeja.
@@ -99,30 +104,6 @@ class OrdersController extends Controller
 
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
-
-//
-//          if ($extras != null){
-//
-//              $tray = Tray::find($id);
-//              $tray->deliverWay = $request->formaRetirada;
-//              $tray->comments = $tray->comments . '' . $comments;
-//              $tray->payingMethod = $request->formaPagamento;
-//              $tray->address = $request->localEntrega;
-//              $tray->payingValue = $request->valEntregue;
-//              $tray->clientComments = $request->obs;
-//              $tray->save();
-//
-//          }else{
-//
-//              $tray = Tray::find($id);
-//              $tray->deliverWay = $request->formaRetirada;
-//              $tray->payingMethod = $request->formaPagamento;
-//              $tray->address = $request->localEntrega;
-//              $tray->payingValue = $request->valEntregue;
-//              $tray->clientComments = $request->obs;
-//              $tray->save();
-//
-//          }
 
         //Cadastrando novo pedido.
         $updOrder = Auth::user()->userOrderTray()->get()->toArray();
@@ -151,10 +132,6 @@ class OrdersController extends Controller
         }
 
         $itemTwo = implode('', $itemTwo);
-
-        if ($itemOne == null){
-            echo 'void';
-        }
 
         $newOrder = new Orders();
         $newOrder->idClient = $updOrder[0]['idClient'];
