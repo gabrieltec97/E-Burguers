@@ -613,8 +613,17 @@ class TrayController extends Controller
             $requirements = implode(', ', $request['ingredients']);
         }
 
+        $pending = DB::table('orders')
+            ->where('idClient', '=', $user)
+            ->where('status', '=', 'Pendente')
+            ->get();
+
         //Valor da entrega.
-        $deliverValue = 3;
+        if (count($pending) != 0){
+            $deliverValue = 0;
+        }else{
+            $deliverValue = 3;
+        }
 
         if ($verifyOrder == null){
 

@@ -231,12 +231,18 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
     $(".cupom-expire2").hide();
 
     var dateToday = new Date();
-    dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
+
+    if (dateToday.getDate() < 10){
+        dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + '0'+ dateToday.getDate();
+    }else{
+        dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
+    }
 
     //Verificando data de novo cupom.
     $(".data-exp-cupom, .data-exp").on("change", function (){
 
-        if ($(this).val() < dateToday){
+        var teste = $(".data-exp-cupom").val();
+        if(parseInt(teste.replace(/-/g,""),10) < parseInt(dateToday.replace(/-/g,""),10)){
             $(".cupom-expire2").fadeIn('slow');
             $(".cupom-expire").fadeOut();
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
@@ -245,7 +251,7 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom, .botao-salvar").on("click", function (e){
                 e.preventDefault();
             })
-        }else if($(this).val() == dateToday){
+        }else if (parseInt(teste.replace(/-/g,""),10) == parseInt(dateToday.replace(/-/g,""),10)){
             $(".cupom-expire2").fadeOut();
             $(".cupom-expire").fadeIn('slow');
             $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')

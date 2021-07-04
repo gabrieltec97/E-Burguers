@@ -1,4 +1,5 @@
 @extends('layouts.extend')
+<script src="{{ asset('js/jquery.js') }}"></script>
 
 @section('title')
     Gerenciamento de cupons
