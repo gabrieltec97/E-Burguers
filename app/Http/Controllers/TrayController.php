@@ -625,6 +625,17 @@ class TrayController extends Controller
             $deliverValue = 3;
         }
 
+        //Evitando erro de cliente voltar a página até hamburguer quando tiver com outros itens na bandeja.
+        $verifyHamburguer = DB::table('trays')
+            ->select('hamburguer')
+            ->where('idClient', '=', $user)
+            ->get()->toArray();
+
+        $verifyFollowing = DB::table('trays')
+            ->select('portion', 'drinks')
+            ->where('idClient', '=', $user)
+            ->get()->toArray();
+
         if ($verifyOrder == null){
 
             $order = new Tray();
@@ -1054,7 +1065,7 @@ class TrayController extends Controller
             $formatExpire = $expire[0]->expireDate;
             $couponId = $couponOld[0]->id;
 
-            if ($formatExpire == $date){
+            if ($formatExpire <= $date){
                 $delete = Coupon::find($couponId);
 
                 $delete->destroy($couponId);

@@ -15,28 +15,37 @@ class PreparingController extends Controller
         $idUser = Auth::user()->id;
         $order = DB::table('orders')->select('id','status', 'deliverWay', 'payingValue', 'totalValue', 'hour')->where('idClient', '=', $idUser)->where('status', '!=', 'Pedido Entregue')->where('status', '!=', 'Cancelado')->get()->toArray();
 
-        if (session('duplicated')){
-            if (isset($order[0])){
-                $orderStatus = $order[0]->status;
-                $orderDeliver = $order[0]->deliverWay;
+        if (isset($order[0])){
+            if ($order[0]->status != 'Pendente'){
+                if (session('duplicated')){
+                    if (isset($order[0])){
+                        $orderStatus = $order[0]->status;
+                        $orderDeliver = $order[0]->deliverWay;
 
-                return view('clientUser.preparing-client', compact('order', 'orderStatus', 'orderDeliver', 'idUser'))->with('duplicated', ' ');
-            }
-            else {
-                $void = 'void';
-                return view('clientUser.preparing-client', compact('void'))->with('duplicated', ' ');
-            }
-        }else {
-            if (isset($order[0])) {
-                $orderStatus = $order[0]->status;
-                $orderDeliver = $order[0]->deliverWay;
+                        return view('clientUser.preparing-client', compact('order', 'orderStatus', 'orderDeliver', 'idUser'))->with('duplicated', ' ');
+                    }
+                    else {
+                        $void = 'void';
+                        return view('clientUser.preparing-client', compact('void'))->with('duplicated', ' ');
+                    }
+                }else {
+                    if (isset($order[0])) {
+                        $orderStatus = $order[0]->status;
+                        $orderDeliver = $order[0]->deliverWay;
 
-                return view('clientUser.preparing-client', compact('order', 'orderStatus', 'orderDeliver', 'idUser'));
-            } else {
-                $void = 'void';
-                return view('clientUser.preparing-client', compact('void'));
+                        return view('clientUser.preparing-client', compact('order', 'orderStatus', 'orderDeliver', 'idUser'));
+                    } else {
+                        $void = 'void';
+                        return view('clientUser.preparing-client', compact('void'));
+                    }
+                }
+            }else{
+                return view('clientUser.preparing-client');
             }
+        }else{
+            return view('clientUser.preparing-client');
         }
+
     }
 
     public function clientOrder()
