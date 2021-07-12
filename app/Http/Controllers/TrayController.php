@@ -627,14 +627,39 @@ class TrayController extends Controller
 
         //Evitando erro de cliente voltar a página até hamburguer quando tiver com outros itens na bandeja.
         $verifyHamburguer = DB::table('trays')
-            ->select('hamburguer')
+            ->select('comboItem', 'extras')
             ->where('idClient', '=', $user)
             ->get()->toArray();
 
-        $verifyFollowing = DB::table('trays')
-            ->select('portion', 'drinks')
-            ->where('idClient', '=', $user)
-            ->get()->toArray();
+        if (isset($verifyHamburguer[0])){
+
+            //Encontrando o hamburguer e extras para fazer abatimento de preço.
+            if ($verifyHamburguer[0]->comboItem != null){
+                $myHamburguer = DB::table('adverts')
+                    ->select('comboValue')
+                    ->where('name', '=', $verifyHamburguer[0]->comboItem)
+                    ->get()->toArray();
+
+                $myHamburguer = $myHamburguer[0]->comboValue;
+            }
+
+            if ($verifyHamburguer[0]->extras != null){
+
+                $myExtras = explode(',', $verifyHamburguer[0]->extras);
+                $extrasVal = 0;
+
+                foreach ($myExtras as $ext){
+                    $extrasValue = DB::table('extras')
+                        ->select('price')
+                        ->where('name', '=', ltrim($ext))
+                        ->get()->toArray();
+
+                    $extrasVal += $extrasValue[0]->price;
+                }
+
+                $myHamburguer += $extrasVal;
+            }
+        }
 
         if ($verifyOrder == null){
 
@@ -668,11 +693,38 @@ class TrayController extends Controller
             $order->hamburguer = $hamburguer->name . ': '. $requirements;
             $order->comboItem = $hamburguer->name;
 
-            if (isset($request->extras)){
-                $order->extras = $addItems;
-                $order->totalValue = $hamburguer->comboValue + $valorNovo;
+            $verifyFollowing = DB::table('trays')
+                ->select('portion', 'drinks')
+                ->where('idClient', '=', $user)
+                ->get()->toArray();
+
+
+            //Verificando se há algum acompanhamento caso o cliente volte até hamburguer.
+            if ($verifyFollowing != ''){
+                $totalValue = DB::table('trays')
+                    ->select('totalValue')
+                    ->where('idClient', '=', $user)
+                    ->get()->toArray();
+
+                $totalValue = $totalValue[0]->totalValue;
+                $totalValue = doubleval($totalValue);
+                $myHamburguer = doubleval($myHamburguer);
+                $totalValue = $totalValue - $myHamburguer;
+
+                if (isset($request->extras)){
+                    $order->extras = $addItems;
+                    $order->totalValue = $hamburguer->comboValue + $valorNovo + $totalValue;
+                }else{
+                    $order->totalValue = $hamburguer->comboValue + $totalValue;
+                }
+
             }else{
-                $order->totalValue = $hamburguer->comboValue;
+                if (isset($request->extras)){
+                    $order->extras = $addItems;
+                    $order->totalValue = $hamburguer->comboValue + $valorNovo;
+                }else{
+                    $order->totalValue = $hamburguer->comboValue;
+                }
             }
 
             $order->valueWithoutDisccount = $hamburguer->comboValue;
@@ -709,17 +761,31 @@ class TrayController extends Controller
                 }
 
                 $order->save();
-
-                if ($order->portion == '' or $order->drinks == ''){
-                    return redirect(route('minhaBandeja.index'));
-                }else{
-                    return redirect(route('fimCompra'));
-                }
             }
 
         }
 
-        return view('clientUser.foodMenu.fries', compact('foods'));
+        //Redirecionamento caso o cliente retroceda até 2x no combo.
+        if (isset($verifyFollowing)){
+          if ($verifyFollowing[0]->portion == null){
+              return view('clientUser.foodMenu.fries', compact('foods'));
+
+          }elseif ($verifyFollowing[0]->drinks == null){
+              return redirect()->route('minhaBandeja.index');
+
+          }else{
+              return redirect()->route('fimCompra');
+          }
+
+        }else{
+            if ($order->portion == ''){
+                return view('clientUser.foodMenu.fries', compact('foods'));
+            }elseif ($order->drinks == ''){
+                return redirect()->route('minhaBandeja.index');
+            }else{
+                return redirect()->route('fimCompra');
+            }
+        }
     }
 
     public function editPortion()
