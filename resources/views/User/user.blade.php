@@ -44,16 +44,6 @@
                                     <input type="text" class="form-control campo" value="{{ $myUser[0]->occupation }}"  readonly>
                                 </div>
 
-                                <form action="#" class="form-group">
-                                    <div class="col-12 mt-4 col-md-12">
-                                        <label class="text-muted font-weight-bold">Minha foto (Opcional)</label> <br>
-                                        <input type="file" name="userPhoto">
-                                    </div>
-
-                                    <div class="col-12 mt-4">
-                                        <button type="submit" class="btn btn-primary">Salvar Alteração</button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>

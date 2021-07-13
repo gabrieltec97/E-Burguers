@@ -154,7 +154,7 @@ $(".impComboSim").on('click', function () {
 })
 
     //Inserção de máscara de preço na view de cadastro de anuncio.
-    $(".valorRefeicao, .valComboPromo").keyup(function (){
+    $(".valorRefeicao, .valComboPromo, .valComboPromo-edit").keyup(function (){
         $(this).mask('000.00', {reverse: true});
     })
 
@@ -241,7 +241,7 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
     //Verificando data de novo cupom.
     $(".data-exp-cupom, .data-exp").on("change", function (){
 
-        var teste = $(".data-exp-cupom").val();
+        var teste = $(".data-exp-cupom, .data-exp").val();
         if(parseInt(teste.replace(/-/g,""),10) < parseInt(dateToday.replace(/-/g,""),10)){
             $(".cupom-expire2").fadeIn('slow');
             $(".cupom-expire").fadeOut();
@@ -504,6 +504,7 @@ $(".btn-cadastrar-refeicao").on("click", function () {
         if($(this).val() == 'Não'){
             $(".valComboPromo-edit").val('Esta refeição não participará do combo.');
             $(".valComboPromo-edit").attr('readonly', 'true');
+            $(".valComboPromo-edit").attr('title', 'Esta refeição não participará do combo.');
             $(".valComboPromo-edit").css('cursor', 'not-allowed');
             $(".verificaPreco").hide();
         }
@@ -512,6 +513,7 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     $(".impComboSim").on('click', function () {
         $(".valComboPromo-edit").val('');
         $(".valComboPromo-edit").removeAttr('readonly');
+        $(".valComboPromo-edit").attr('title', 'Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional.');
         $(".valComboPromo-edit").css('cursor', 'initial')
     })
 
@@ -1081,6 +1083,7 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
             $(".edit-item-add").css('cursor', 'pointer');
         }
     });
+
 
 //Copiando informações de entrega.
 // $(".copiado").hide();

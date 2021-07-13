@@ -32,12 +32,15 @@
                                     <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Valor:</span><span class="text-primary"> {{ $meal->value }}</span></label>
                                     <br>
                                     @if($meal->foodType != 'Bebida')
-                                        <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Ingredientes:</span><span class="text-primary"> {{$meal->ingredients}} </span></label>
-                                        <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Adicionais:</span><span class="text-primary"> {{$meal->extras}} </span></label>
+                                        @if($meal->ingredients != null)
+                                            <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Ingredientes:</span><span class="text-primary"> {{$meal->ingredients}} </span></label>
+                                        @endif
+                                        @if($meal->extras != null)
+                                            <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Adicionais:</span><span class="text-primary"> {{$meal->extras}} </span></label>
+                                        @endif
                                     @else
                                         <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Sabores:</span><span class="text-primary"> {{$meal->tastes}} </span></label>
                                     @endif
-                                    <br>
                                     <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Participa do combo:</span><span class="text-primary"> {{ $meal->combo }} </span></label>
                                     <br>
                                     <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Valor no combo:</span><span class="text-primary"> {{ $meal->comboValue }} </span></label>

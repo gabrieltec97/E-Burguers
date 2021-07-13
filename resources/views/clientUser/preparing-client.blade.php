@@ -190,9 +190,10 @@
 @endif
 
 @if(session('duplicated'))
-
+    <script>
+        console.log('duplicdo');
+    </script>
 @endif
-
 
 
 

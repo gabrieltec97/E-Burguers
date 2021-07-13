@@ -18,7 +18,9 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user()->email;
-        $myUser = DB::table('employees')->where('email', '=', $user)->get()->toArray();
+        $myUser = DB::table('employees')
+            ->where('email', '=', $user)
+            ->get()->toArray();
 
         return view('User.user', compact('myUser'));
     }

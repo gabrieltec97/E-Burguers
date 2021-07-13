@@ -34,7 +34,7 @@
                             <form action="#" class="form-group">
                                 @csrf
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Digite o nome do funcionário" name="clientName">
+                                    <input type="text" class="form-control" placeholder="Digite o nome do funcionário">
 
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" style="font-size: 18px"><i class="fas fa-search font-weight-bold"></i></span>

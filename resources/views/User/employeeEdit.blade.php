@@ -89,7 +89,7 @@
 
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Perfil de usuário</label>
-                                        <input type="text" value="{{ $data->userType }}" class="form-control profileFuncionario {{ ($errors->has('empProfile') ? 'is-invalid' : '') }}" name="empProfile" required>
+                                        <input type="text" value="{{ $user->profile }}" class="form-control profileFuncionario {{ ($errors->has('empProfile') ? 'is-invalid' : '') }}" name="empProfile" required>
 
                                         @if($errors->has('empProfile'))
                                             <div class="invalid-feedback">

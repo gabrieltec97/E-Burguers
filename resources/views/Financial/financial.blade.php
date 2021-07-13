@@ -345,7 +345,7 @@ $anoAtual = strftime('%Y');
                                         @endif
                                     </b></label>
                                 <br>
-                                <label class="text-danger dadosReferentes font-weight-bold"></label>
+                                <label class="text-danger dadosReferentes"></label>
                             </div>
                         </div>
 

@@ -100,7 +100,7 @@
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="{{ route('refeicoes.index') }}">
-                <i class="fas fa-ad"></i>
+                <i class="fas fa-tasks"></i>
                 <span class="font-weight-bold">Gerenciamento de refeições</span></a>
         </li>
 

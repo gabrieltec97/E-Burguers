@@ -228,8 +228,11 @@ class menuController extends Controller
         $advert->description = $request->mealDescription;
         $advert->comboValue = $request->promoValue;
 
-        $addExtra = implode(',', $request->extras);
-        $advert->extras = $addExtra;
+        if ($request->extras != ''){
+            $addExtra = implode(',', $request->extras);
+            $advert->extras = $addExtra;
+        }
+
 
         $advert->save();
 

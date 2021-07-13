@@ -48,7 +48,11 @@
 
                                     <div class="col-12 mt-3 col-md-6">
                                         <label class="text-muted font-weight-bold">Valor no combo</label>
+                                        @if($meal->comboValue != 'Esta refeição não participará do combo.')
                                         <input type="text" value="{{$meal->comboValue}}" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional." name="promoValue" required>
+                                        @else
+                                            <input type="text" value="{{$meal->comboValue}}" readonly style="cursor: not-allowed;" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Esta refeição não participará do combo." name="promoValue" required>
+                                        @endif
                                         <label class="text-danger verificaPreco mt-2 font-weight-bold" style="font-size: 13.7px">O valor promocional não pode ser maior ou igual ao valor
                                             normal.</label>
                                         @if($errors->has('promoValue'))
@@ -107,23 +111,25 @@
                                         </div>
                                     @endif
 
-                                    <div class="col-4 mt-3 itr">
-                                        <label class="font-weight-bold mb-3">Itens que poderão ser adicionados.</label>
-                                        <br>
-                                        @if(isset($count))
-                                            @foreach($count as $c => $v)
-                                                @if($v == 2)
-                                                    <input type="checkbox" class="form-check-input ml-1 cameFromDB" id="{{ $c }}" value="{{ $c }}" checked name="extras[]">
-                                                    <label class="form-check-label ml-4" for="{{ $c }}">{{ $c }}</label><br>
-                                                @else
-                                                    <input type="checkbox" class="form-check-input ml-1 atual" id="{{ $c }}" value="{{ $c }}" name="extras[]">
-                                                    <label class="form-check-label ml-4" for="{{ $c }}">{{ $c }}</label><br>
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            <label class="font-weight-bold text-danger mb-3">Você deverá primeiro cadastrar os itens adicionais antes de cadastrar uma refeição</label>
-                                        @endif
-                                    </div>
+                                    @if($meal->foodType == 'Hamburguer')
+                                        <div class="col-4 mt-3 itr">
+                                            <label class="font-weight-bold mb-3">Itens que poderão ser adicionados.</label>
+                                            <br>
+                                            @if(isset($count))
+                                                @foreach($count as $c => $v)
+                                                    @if($v == 2)
+                                                        <input type="checkbox" class="form-check-input ml-1 cameFromDB" id="{{ $c }}" value="{{ $c }}" checked name="extras[]">
+                                                        <label class="form-check-label ml-4" for="{{ $c }}">{{ $c }}</label><br>
+                                                    @else
+                                                        <input type="checkbox" class="form-check-input ml-1 atual" id="{{ $c }}" value="{{ $c }}" name="extras[]">
+                                                        <label class="form-check-label ml-4" for="{{ $c }}">{{ $c }}</label><br>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <label class="font-weight-bold text-danger mb-3">Você deverá primeiro cadastrar os itens adicionais antes de cadastrar uma refeição</label>
+                                            @endif
+                                        </div>
+                                    @endif
 
 
                                     <div class="col-12 mt-3">
@@ -145,55 +151,13 @@
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                           <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title font-weight-bold" id="TituloModalCentralizado">Quase lá!</h5>
+                                                <h5 class="modal-title font-weight-bold" style="color: black" id="TituloModalCentralizado">Quase lá!</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-{{--                                                <p class="font-weight-bold text-muted text-center a-mudancas"></p>--}}
-
-{{--                                                <img src="{{ asset('logo/cara.svg') }}" class="imagem-alteracao" style="width: 100px; margin-left: 40%; height: 100px" hidden>--}}
-
-{{--                                               <div class="row">--}}
-{{--                                                   <div class="col-6 div-nome-ant" hidden>--}}
-{{--                                                       <p class="text-muted font-weight-bold">Nome anterior: <span class="text-success">{{ $meal->name }}</span></p>--}}
-{{--                                                       <p class="text-muted font-weight-bold div-novo-nome-2" hidden>Novo nome: <span class="nome-refeicao2-edit text-danger"></span></p>--}}
-{{--                                                   </div>--}}
-
-{{--                                                   <div class="col-6 div-valor-ant" hidden>--}}
-{{--                                                       <p class="text-muted font-weight-bold ">Valor anterior: <span class="text-success">{{ $meal->value }}</span></p>--}}
-{{--                                                       <p class="text-muted font-weight-bold div-novo-valor-2" hidden>Novo valor: <span class="valor-refeicao2-edit text-danger"></span></p>--}}
-{{--                                                   </div>--}}
-
-{{--                                                   <div class="col-6 div-partCombo-ant">--}}
-{{--                                                       <p class="text-muted font-weight-bold partCombo" hidden>Participa do combo</p>--}}
-{{--                                                       <p class="text-muted font-weight-bold">Valor anterior: <span class="text-success">{{ $meal->combo }}</span></p>--}}
-{{--                                                       <p class="text-muted font-weight-bold div-novo-partCombo-2" hidden>Novo valor: <span class="partCombo-refeicao2-edit text-danger"></span></p>--}}
-{{--                                                   </div>--}}
-
-{{--                                                   <div class="col-6 div-valorPromo-ant">--}}
-{{--                                                       <p class="text-muted font-weight-bold">Valor promocional anterior: <span class="text-success">{{ $meal->comboValue }}</span></p>--}}
-{{--                                                       <p class="text-muted font-weight-bold div-novo-valorPromo-2" hidden>Novo valor promocional: <span class="valorPromo-refeicao2-edit text-danger"></span></p>--}}
-{{--                                                   </div>--}}
-
-{{--                                                   <div class="col-12 div-ingrediente-ant">--}}
-{{--                                                       <p class="text-muted font-weight-bold">Ingredientes Anteriormente: <span class="text-success">{{ $meal->ingredients }}</span></p>--}}
-{{--                                                       <p class="text-muted font-weight-bold div-novo-ingrediente-2" hidden>Ingredientes Agora: <span class="ingrediente-refeicao2-edit text-danger"></span></p>--}}
-{{--                                                   </div>--}}
-
-{{--                                                   <div class="col-12 div-sabor-ant">--}}
-{{--                                                       <p class="text-muted font-weight-bold">Sabores anteriormente: <span class="text-success">{{ $meal->tastes }}</span></p>--}}
-{{--                                                       <p class="text-muted font-weight-bold div-novo-sabor-2" hidden>Sabores agora: <span class="sabores-refeicao2-edit text-danger"></span></p>--}}
-{{--                                                   </div>--}}
-
-{{--                                                   <div class="col-12 div-descricao-ant">--}}
-{{--                                                       <p class="text-muted font-weight-bold">Descrição anterior: <span class="text-success">{{ $meal->description }}</span></p>--}}
-{{--                                                       <p class="text-muted font-weight-bold div-novo-descricao-2" hidden>Novadescricao descrição: <span class="descricao-refeicao2-edit text-danger"></span></p>--}}
-{{--                                                   </div>--}}
-{{--                                               </div>--}}
-
-                                                    <p class="text-danger">Tem certeza que deseja salvar as alterações? Revise-as antes de salvar.</p>
+                                                <p style="color: black">Tem certeza que deseja salvar as alterações? Revise-as antes de salvar.</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar à edição</button>
