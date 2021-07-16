@@ -19,6 +19,25 @@ class menuController extends Controller
     {
         $foods = Adverts::all();
         $tray = Auth::user()->userOrderTray()->select('id')->get();
+        $val = Auth::user()->userOrderTray()->select('totalValue')->get()->toArray();
+
+        if (isset($tray[0]->id)){
+            $items = DB::table('item_without_extras')
+                ->select('itemName')
+                ->where('idOrder', '=', $tray[0]->id)
+                ->get()->toArray();
+
+            $query = DB::table('auxiliar_detacheds')
+                ->select('item', 'nameExtra')
+                ->where('idOrder', '=', $tray[0]->id)
+                ->get()->toArray();
+
+            $itemWExtras = array();
+
+            foreach ($query as $it){
+                array_push($itemWExtras, $it->item . ' + ' . $it->nameExtra);
+            }
+        }
 
         foreach ($foods as $food){
             $foodFormat = explode(',', $food->extras);
@@ -36,8 +55,9 @@ class menuController extends Controller
             }
         }
 
+
         if(isset($tray[0]->id)){
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray', 'items', 'val', 'itemWExtras'));
         }else{
             return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert'));
         }

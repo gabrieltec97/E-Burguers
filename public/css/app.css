@@ -2108,6 +2108,10 @@ pre code {
     -webkit-overflow-scrolling: touch;
   }
 
+    .fixo{
+        display: none;
+    }
+
   .table-responsive-md > .table-bordered {
     border: 0;
   }
@@ -11245,5 +11249,6 @@ a:hover{
     font-size: 19px;
 }
 
-
-/*teste*/
+.fixo{
+    position: fixed;
+}

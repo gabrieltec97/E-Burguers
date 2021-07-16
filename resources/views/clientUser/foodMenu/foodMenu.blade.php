@@ -15,13 +15,13 @@
                 <hr>
             </div>
 
-            <div class="col-12">
+            @if(isset($tray))
+                <div class="col-12 d-flex justify-content-center">
+                    <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Ir para pagamento</a>
+                </div>
+            @endif
+            <div class="col-12 col-md-9">
                 <div class="container-fluid">
-                    @if(isset($tray))
-                        <div class="col-12 d-flex justify-content-center">
-                            <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Ir para pagamento</a>
-                        </div>
-                    @endif
                     <div class="row">
                         @foreach($foods as $food)
                             <div class="col-12 col-md-4 mt-5 mt-lg-3 col-lg-3">
@@ -94,7 +94,7 @@
                                         <div class="card cardapio-card mb-4">
                                             <img class="card-img-top img-card" src="{{ asset($food->picture) }}" alt="Card image cap">
                                             <div class="card-body">
-                                                <h5 class="card-title font-weight-bold"> {{ $food->id }} {{ $food->name }}</h5>
+                                                <h5 class="card-title font-weight-bold">{{ $food->name }}</h5>
                                                 @if($food->foodType == 'Bebida')
                                                     @if($food->tastes != '')
                                                         <select name="sabor" class="mb-3" title="Selecione um sabor" style="width: 100%;cursor: pointer; ">
@@ -116,6 +116,33 @@
                         @endforeach
                     </div>
                 </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card fixo">
+                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> Seu pedido está assim</div>
+
+                    <div class="card-body">
+                        <ol>
+                            @if(isset($items))
+                                @foreach($items as $item)
+                                    <li>{{$item->itemName}}</li>
+                                @endforeach
+                            @endif
+
+                            @if(isset($itemWExtras))
+                                    @foreach($itemWExtras as $item2)
+                                        <li><span class="text-success">{{$item2}}</span></li>
+                                    @endforeach
+                            @endif
+                        </ol>
+
+                        @if(isset($val))
+                            <span class="float-right">Valor atual: <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
+                        @else
+                            bandeja vazia, escolhe aí..
+                        @endif
+                    </div>
             </div>
         </div>
     </div>
