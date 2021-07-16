@@ -51,11 +51,8 @@ class PreparingController extends Controller
     public function clientOrder()
     {
         $idUser = Auth::user()->id;
-        $dados = DB::table('orders')->select('id', 'hour', 'status', 'deliverWay')->where('status', '=', 'Pedido registrado')
-            ->orWhere('status', '=', 'Em preparo')
-            ->orWhere('status', '=', 'Pronto')
-            ->orWhere('status', '=', 'Em rota de entrega')
-            ->orWhere('status', '=', 'Pronto para ser retirado no restaurante')
+        $dados = DB::table('orders')->select('id', 'hour', 'status', 'deliverWay')
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")
             ->where('idClient', '=', $idUser)->get()->toArray();
 
         return $dados;

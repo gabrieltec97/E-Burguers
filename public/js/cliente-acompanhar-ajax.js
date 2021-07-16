@@ -9,8 +9,9 @@ $(document).ready(() => {
             dataType: 'json',
             success: function(dados){
 
+            console.log(dados)
+
                 if (dados.length == 1) {
-                    console.log(dados[0].status)
                     $(".ul-pedidos").removeAttr('hidden', 'true');
                     $(".verifica-pedido").attr('hidden', 'true');
 
@@ -62,9 +63,6 @@ $(document).ready(() => {
                             $(".btn-cancelamentos, .cancelarPedido").on("click", function (e){
                                 e.preventDefault();
                             })
-
-                            console.log('retira');
-                            console.log(dados[0].status);
                         }
                     }
                 }else if(dados.length > 1){

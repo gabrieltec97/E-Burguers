@@ -883,6 +883,7 @@ class TrayController extends Controller
         $exist= DB::table('orders')
             ->select('status', 'deliverWay')
             ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")
+            ->where('idClient', '=', Auth::user()->id)
             ->get()->toArray();
 
         $separated = DB::table('orders')
