@@ -18,8 +18,8 @@
         @endif
 
             @if(session('msg-2'))
-                <div class="alert alert-danger alerta-sucesso-user alert-dismissible fade show" role="alert">
-                    <span class="font-weight-bold text-muted">{{ session('msg-2') }}</span>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span>{{ session('msg-2') }}</span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -76,12 +76,12 @@
                 <span class="font-weight-bold">Histórico de pedidos</span></a>
         </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('clientes.index') }}">
-                <i class="fas fa-user"></i>
-                <span class="font-weight-bold">Clientes</span></a>
-        </li>
+{{--        <!-- Nav Item - Charts -->--}}
+{{--        <li class="nav-item">--}}
+{{--            <a class="nav-link" href="{{ route('clientes.index') }}">--}}
+{{--                <i class="fas fa-user"></i>--}}
+{{--                <span class="font-weight-bold">Clientes</span></a>--}}
+{{--        </li>--}}
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">

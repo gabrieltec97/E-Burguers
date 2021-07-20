@@ -21,7 +21,7 @@ class CouponController extends Controller
 
         foreach ($couponsOld as $c){
 
-            if ($c->expireDate == $date){
+            if ($c->expireDate <= $date){
                 $delete = Coupon::find($c->id);
                 $delete->destroy($c->id);
             }
@@ -50,12 +50,13 @@ class CouponController extends Controller
             'couponName' => 'required|min:5|max:14',
             'expireDate' => 'required|date',
             'disccount' => 'required',
-            'disccountRule' => 'required|max:5'
+            'disccountRule' => 'required|min:3|max:6'
         ];
 
         $messages = [
             'couponName.required' => 'Por favor, insira o nome do cupom',
             'couponName.min' => 'O nome do cupom deve conter no mínimo 5 caracteres',
+            'disccountRule.min' => 'O valor do cupom deve conter no mínimo 3 caracteres',
             'couponName.max' => 'O nome do cupom não pode ter mais de 14 caracteres',
             'expireDate.required' => 'Por favor, insira a data de expiração',
             'expireDate.date' => 'Data inválida! Insira uma data correta',
@@ -65,6 +66,16 @@ class CouponController extends Controller
         ];
 
         $request->validate($rules, $messages);
+
+        $coupons = DB::table('coupons')
+            ->select('name')
+            ->get()->toArray();
+
+        foreach ($coupons as $c){
+            if ($request->couponName == $c->name){
+                return back()->withInput()->with('msg-2', 'Cupom não cadastrado! Já existe um cupom registrado com este nome, consulte a lista de cupons ativos.');
+            }
+        }
 
         date_default_timezone_set('America/Sao_Paulo');
         $date = date('Y'. '-' . 'm' . '-' . 'd');

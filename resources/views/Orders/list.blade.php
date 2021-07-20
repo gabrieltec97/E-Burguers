@@ -77,4 +77,10 @@
             });
         });
     </script>
+
+    <script>
+        $(function () {
+            $(".botao-recolher-menu").click();
+        })
+    </script>
 @endsection

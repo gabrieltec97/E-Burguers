@@ -32,20 +32,6 @@
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Refeições cadastradas</div>
                     <div class="card-body">
-                        <div>
-                            <form action="#" class="form-group">
-                                @csrf
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Digite o nome da refeição" name="orderNumber">
-
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" style="font-size: 18px; cursor: pointer"><i class="fas fa-search font-weight-bold"></i></span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-
 
                         <div class="col-12 mb-2 d-flex justify-content-end">
                             <div class="dropdown">

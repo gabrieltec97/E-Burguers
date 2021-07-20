@@ -30,17 +30,11 @@
 
                     <div class="card-body first-table">
 
-                        <div>
-                            <form action="#" class="form-group">
-                                @csrf
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Digite o nome do funcionário">
-
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" style="font-size: 18px"><i class="fas fa-search font-weight-bold"></i></span>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="mb-1 d-flex justify-content-end">
+                            <a href="{{ route('usuario.create') }}" class="cadastrar-link">
+                                <i class="fas fa-user-plus"></i>
+                                <label class="ml-1 cadastrar-link">Cadastrar funcionário</label>
+                            </a>
                         </div>
 
                         <table class="table table-bordered table-hover table-responsive-lg">
@@ -63,12 +57,6 @@
 
                             </tbody>
                         </table>
-                        <div class="mt-4 d-flex justify-content-end">
-                            <a href="{{ route('usuario.create') }}" class="cadastrar-link">
-                                <i class="fas fa-user-plus"></i>
-                                <label class="ml-1 cadastrar-link">Cadastrar funcionário</label>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>

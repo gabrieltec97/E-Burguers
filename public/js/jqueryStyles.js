@@ -1086,20 +1086,23 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
 
 
 //Copiando informações de entrega.
-// $(".copiado").hide();
-//
-// $(".copiar").on("click", function (){
-//
-//     var idPedido = $(".idPedido").text();
-//     var clientePedido = $(".clientePedido").text();
-//     var itensPedido = $(".itensPedido").text();
-//     var valorPedido = $(".valorPedido").text();
-//
-//     if ($(".pagamentoCartao").text() != ''){
-//         var pagamento = 'Pagamento em cartão: ' + $(".pagamentoCartao").text()
-//     }else{
-//         var pagamento = 'Troco para: ' + $(".trocoPedido").text();
-//     }
+$(".copiado").hide();
+
+$(".copiar").on("click", function () {
+
+    var idPedido = $(".idPedido").text();
+
+    console.log(idPedido);
+    var clientePedido = $(".clientePedido").text();
+    var itensPedido = $(".itensPedido").text();
+    var valorPedido = $(".valorPedido").text();
+
+    // if ($(".pagamentoCartao").text() != '') {
+    //     var pagamento = 'Pagamento em cartão: ' + $(".pagamentoCartao").text()
+    // } else {
+    //     var pagamento = 'Troco para: ' + $(".trocoPedido").text();
+    // }
+})
 //
 //     var enderecoPedido = $(".enderecoPedido").text();
 //

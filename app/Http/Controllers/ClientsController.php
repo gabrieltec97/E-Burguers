@@ -13,7 +13,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        return view('Clients.clients');
+//        return view('Clients.clients');
     }
 
     public function myData()
