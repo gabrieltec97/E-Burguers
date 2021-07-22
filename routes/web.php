@@ -108,7 +108,11 @@ Route::get('/confirmarPendente/{id}', 'OrdersController@confirmPending')->name('
 Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido')->middleware('auth')->middleware('auth')->middleware('auth');
 
 //Rotas do ACL
-Route::resource('/roles', 'RoleController');
+Route::resource('/roles', 'RoleController')->middleware('auth');;
+
+Route::resource('/permissions', 'PermissionController')->middleware('auth');;
+
+Route::get('/permissionsList', 'PermissionController@permissions')->name('permissions')->middleware('auth');
 
 Auth::routes();
 
