@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card">
-                    <div class="card-header bg-info font-weight-bold" style="font-size: 25px; color: white">Lista de permissões</div>
+                    <div class="card-header bg-info font-weight-bold" style="font-size: 25px; color: white">Nova permissão</div>
                     <div class="card-body">
                         <div class="container-fluid">
                             <div class="row">

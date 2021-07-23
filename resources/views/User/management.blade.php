@@ -43,6 +43,7 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Cargo</th>
                                 <th scope="col">Perfil de usuário</th>
+                                <th scope="col">Perfis</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,6 +52,7 @@
                                     <td class="font-weight-bold"><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->name }} {{ $employee->surname }}</a></td>
                                     <td class="font-weight-bold"><a href="{{ route('usuario.show', $employee->id) }}" style="text-decoration:none; color:rgba(0,0,0,0.73);">{{ $employee->occupation }}</a></td>
                                     <td class="font-weight-bold"><a href="{{ route('usuario.show', $employee->id) }}" style="text-decoration:none; color:rgba(0,0,0,0.73);">{{ $employee->profile }}</a></td>
+                                    <td class="font-weight-bold"><a href="{{ route('userRoles', ['user' => $employee->id]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Perfis</a></td>
                                 </tr>
                             @endforeach
 

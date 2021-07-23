@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -14,9 +15,48 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::all()->toArray();
 
         return view('auth.roles.index', compact('roles'));
+    }
+
+    public function permissions($role)
+    {
+       $role = Role::where('id', $role)->first();
+       $permissions = Permission::all();
+
+       foreach ($permissions as $permission){
+           if ($role->hasPermissionTo($permission->name)){
+                $permission->can = true;
+           }else{
+               $permission->can = false;
+           }
+       }
+
+       return view('roles.permissions', [
+           'role' => $role,
+           'permissions' => $permissions
+       ]);
+    }
+
+    public function permissionsSync(Request $request, $role)
+    {
+        $permissionsRequest = $request->except(['_token', '_method']);
+
+        foreach ($permissionsRequest as $key => $value){
+            $permissions[] = Permission::where('id', $key)->first();
+        }
+
+        $role = Role::where('id', $role)->first();
+
+        if (!empty($permissions)){
+
+            $role->syncPermissions($permissions);
+        }else{
+            $role->syncPermissions(null);
+        }
+
+        return redirect()->route('rolePermissions', ['role' => $role->id]);
     }
 
     /**
@@ -37,7 +77,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $profile = new Role();
+        $profile->name = $request->profile;
+        $profile->save();
+
+        return redirect()->back()->with('msg', 'Funcionalidade cadastrada com sucesso!');
     }
 
     /**
@@ -71,7 +115,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::find($id);
+        $role->name = $request->profile;
+        $role->save();
+
+        return redirect()->back()->with('msg', 'Perfil editado com sucesso!');
     }
 
     /**
@@ -82,6 +130,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::find($id);
+        $role->destroy($id);
+
+        return redirect()->back()->with('msg-2', 'Perfil deletado com sucesso!');
     }
 }

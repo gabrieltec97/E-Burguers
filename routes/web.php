@@ -105,12 +105,21 @@ Route::get('/deletarPendente/{id}', 'OrdersController@deletePending')->name('del
 
 Route::get('/confirmarPendente/{id}', 'OrdersController@confirmPending')->name('confirmaPendente')->middleware('auth');
 
-Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido')->middleware('auth')->middleware('auth')->middleware('auth');
+Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido')->middleware('auth')->middleware('auth');
 
 //Rotas do ACL
-Route::resource('/roles', 'RoleController')->middleware('auth');;
+Route::resource('/roles', 'RoleController')->middleware('auth');
 
-Route::resource('/permissions', 'PermissionController')->middleware('auth');;
+Route::resource('/permissions', 'PermissionController')->middleware('auth');
+
+Route::get('user/{user}/roles', 'UserController@roles')->name('userRoles')->middleware('auth');
+
+Route::put('user/{user}/roles/sync', 'UserController@rolesSync')->name('userRolesSync')->middleware('auth');
+
+//Rotas de sincronização entre tipo de usuário e permissões.
+Route::get('role/{role}/permissions', 'RoleController@permissions')->name('rolePermissions')->middleware('auth');
+
+Route::put('role/{role}/permissions/sync', 'RoleController@permissionsSync')->name('rolePermissionsSync')->middleware('auth');
 
 Route::get('/permissionsList', 'PermissionController@permissions')->name('permissions')->middleware('auth');
 
