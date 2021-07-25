@@ -34,6 +34,14 @@ class HomeController extends Controller
         return view('home', compact('registered', 'prepare', 'ready', 'prepareCount', 'total', 'totalReady'));
     }
 
+    public function hybridHome()
+    {
+        $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->paginate(10);
+        $count = count($registered);
+
+        return view('hybridHome', compact('registered', 'count'));
+    }
+
     public function getData()
     {
         $data = DB::table('orders')->select('id', 'hour', 'status')->where('status', '=', 'Pedido registrado')->get()->toArray();

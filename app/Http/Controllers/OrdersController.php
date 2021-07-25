@@ -263,7 +263,7 @@ class OrdersController extends Controller
             }
 
 
-            return redirect()->route('home')->with('msg',
+            return redirect()->back()->with('msg',
                 'Pedido pronto para ser entregue!');
 
 
@@ -272,7 +272,7 @@ class OrdersController extends Controller
             $order->status = $acao;
             $order->save();
 
-            return redirect()->route('home')->with('msg-2',
+            return redirect()->back()->with('msg-2',
                 'Pedido cancelado com sucesso!');
 
         }else if($acao == 'Em preparo' or $acao == 'Pronto'){
@@ -280,7 +280,7 @@ class OrdersController extends Controller
             $order->status = $acao;
             $order->save();
 
-            return redirect()->route('home')->with('msg',
+            return redirect()->back()->with('msg',
                 'Pedido disponível para equipe da cozinha.');
 
         }else if($acao == 'Pedido Entregue'){

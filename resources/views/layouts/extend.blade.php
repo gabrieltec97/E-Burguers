@@ -57,6 +57,13 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('hybridHome') }}">
+                <i class="fas fa-tv"></i>
+                <span class="font-weight-bold">Gerenciamento de pedidos</span></a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-hamburger"></i>
                 <span class="font-weight-bold">Pedidos em andamento</span></a>
@@ -94,7 +101,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('gerenciamento') }}">
                 <i class="fas fa-users-cog"></i>
-                <span class="font-weight-bold">Gerenciamento de funcionários</span></a>
+                <span class="font-weight-bold">Gerenciamento de usuários</span></a>
         </li>
 
         <!-- Nav Item - Charts -->

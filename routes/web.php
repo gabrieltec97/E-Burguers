@@ -127,6 +127,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
+Route::get('/gerenciamentoPedidos', 'HomeController@hybridHome')->name('hybridHome')->middleware('auth');
+
 Route::get('/dados', 'HomeController@getData')->name('dados')->middleware('auth');
 
 //Rotas Ajax
