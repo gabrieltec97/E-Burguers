@@ -1,6 +1,5 @@
 @extends('layouts.extend-client')
 <script src="{{ asset('js/jquery.js') }}"></script>
-<script src="{{ asset('js/ajax-atualizar.js') }}"></script>
 
 @section('title')
     Como deseja pedir?

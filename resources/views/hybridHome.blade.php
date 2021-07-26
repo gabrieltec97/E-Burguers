@@ -1,6 +1,10 @@
 @extends('layouts.extend')
 <script src="{{ asset('js/jquery.js') }}"></script>
-<script src="{{ asset('js/ajax-atualizar.js') }}"></script>
+<script src="{{ asset('js/ajaxHibrido.js') }}"></script>
+
+@section('title')
+    Pedidos em andamento
+@endsection
 
 @section('content')
     <div class="container-fluid">
@@ -28,19 +32,6 @@
                     </script>
                 @endif
 
-            @if(session('msg-venda'))
-                <script>
-                    $.toast({
-                        text: '<b style="font-size: 14px;">O pedido foi entregue com sucesso. Parabéns a todos pelo empenho!</b>',
-                        heading: '<b style="font-size: 17px">Muito bem!</b>',
-                        showHideTransition: 'slide',
-                        bgColor : '#38C172',
-                        position : 'top-right',
-                        hideAfter: 9000
-                    })
-                </script>
-            @endif
-
             @if(session('msg-2'))
                 <div class="alert alert-danger sumir-feedback alert-dismissible fade show" role="alert">
                     <strong>{{ session('msg-2') }}</strong>
@@ -55,7 +46,7 @@
             <div class="col-12 mt-4 mt-lg-0">
                 <div class="card">
                     <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(238,8,8,1) 24%, rgba(248,249,252,1) 76%);">
-                        <span style="color: white;" class="font-weight-bold">Pedidos em andamento</span> <span class="badge bg-secondary">{{$count}}</span></div>
+                        <span style="color: white;" class="font-weight-bold">Pedidos em andamento</span> <span class="badge bg-secondary">{{count($count)}}</span></div>
 
                     <div class="card-body">
                         <table class="table table-bordered table-hover table-responsive-lg">
@@ -315,6 +306,13 @@
     </div>
     </div>
 
+    <select class="countHybrid" hidden>
+        <option value="{{ count($count) }}"></option>
+    </select>
+
+    <audio id="newPrepare">
+        <source src="{{ asset('audio/kitchen.mp3') }}" type="audio/mp3">
+    </audio>
 
     <script>
         function muda(id){

@@ -37,7 +37,7 @@ class HomeController extends Controller
     public function hybridHome()
     {
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->paginate(10);
-        $count = count($registered);
+        $count = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
 
         return view('hybridHome', compact('registered', 'count'));
     }
@@ -47,6 +47,15 @@ class HomeController extends Controller
         $data = DB::table('orders')->select('id', 'hour', 'status')->where('status', '=', 'Pedido registrado')->get()->toArray();
 
         return $data;
+    }
+
+    public function hybrid()
+    {
+        $hybridData = DB::table('orders')->select('id', 'hour', 'status')
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")
+            ->get()->toArray();
+
+        return $hybridData;
     }
 
     public function getPrepare()

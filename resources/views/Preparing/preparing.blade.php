@@ -100,8 +100,8 @@
                             </tbody>
                         </table>
 
-                        <div class="col-6 offset-4 offset-xl-5">
-                            <span>{{ $orders->links() }}</span>
+                        <div class="col-12">
+                            <span style="">{{ $orders->links() }}</span>
                         </div>
                     </div>
                 </div>

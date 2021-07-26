@@ -131,6 +131,8 @@ Route::get('/gerenciamentoPedidos', 'HomeController@hybridHome')->name('hybridHo
 
 Route::get('/dados', 'HomeController@getData')->name('dados')->middleware('auth');
 
+Route::get('/hybridTaking', 'HomeController@hybrid')->name('hybridTaking')->middleware('auth');
+
 //Rotas Ajax
 
 Route::get('/ajaxpreparo', 'HomeController@getPrepare')->name('prepajax');

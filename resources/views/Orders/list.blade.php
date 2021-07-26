@@ -2,7 +2,6 @@
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/jqueryStyles.js') }}"></script>
 
-
 @section('title')
     Histórico de pedidos
 @endsection
