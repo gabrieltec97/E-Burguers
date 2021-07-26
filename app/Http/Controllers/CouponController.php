@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Coupon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CouponController extends Controller
 {
@@ -15,6 +18,10 @@ class CouponController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()->hasPermissionTo('Cupons')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         date_default_timezone_set('America/Sao_Paulo');
         $couponsOld = DB::table('coupons')->get()->toArray();
         $date = date('Y'. '-' . 'm' . '-' . 'd');
@@ -45,6 +52,9 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->hasPermissionTo('Cupons')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
 
         $rules = [
             'couponName' => 'required|min:5|max:14',
@@ -113,6 +123,10 @@ class CouponController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::user()->hasPermissionTo('Cupons')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $coupon = Coupon::find($id);
         return view ('Coupons.couponEditing', compact('coupon'));
     }
@@ -126,6 +140,10 @@ class CouponController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->hasPermissionTo('Cupons')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $rules = [
             'couponName' => 'required|min:5|max:14',
             'expireDate' => 'required|date',
@@ -167,6 +185,10 @@ class CouponController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::user()->hasPermissionTo('Cupons')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $coupon = Coupon::find($id);
 
         $coupon->destroy($id);

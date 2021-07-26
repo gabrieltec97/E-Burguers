@@ -112,6 +112,7 @@ Route::resource('/roles', 'RoleController')->middleware('auth');
 
 Route::resource('/permissions', 'PermissionController')->middleware('auth');
 
+//Rotas de sincronização entre usuário e tipo de usuário.
 Route::get('user/{user}/roles', 'UserController@roles')->name('userRoles')->middleware('auth');
 
 Route::put('user/{user}/roles/sync', 'UserController@rolesSync')->name('userRolesSync')->middleware('auth');
@@ -145,5 +146,4 @@ Route::get('/buscaPedidos', 'LiveSearch@action')->name('buscaPedidos');
 
 Route::get('/pedidoCliente', 'PreparingController@clientOrder')->name('pedidoCliente');
 
-Route::get('/teste', 'PreparingController@teste')->name('teste');
 

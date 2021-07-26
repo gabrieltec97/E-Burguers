@@ -7,7 +7,9 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Spatie\Permission\Models\Role;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
 {
@@ -28,6 +30,10 @@ class UserController extends Controller
 
     public function management()
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $employees = User::all();
 
         return view('User.management', compact('employees'));
@@ -83,6 +89,10 @@ class UserController extends Controller
 
     public function create()
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         return view('User.newEmployee');
     }
 
@@ -94,6 +104,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $rules = [
             'empName' => 'required|min:3',
             'empSurname' => 'required|min:3',
@@ -164,6 +179,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $user = Employee::find($id)->toArray();
 
         return view('User.userData', compact('user'));
@@ -177,6 +196,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $user = Employee::find($id);
         $data = User::find($id);
 
@@ -192,6 +215,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $rules = [
             'empName' => 'required|min:3',
             'empSurname' => 'required|min:5',
@@ -253,6 +280,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $employee = Employee::find($id);
         $userEmail = DB::table('users')->where('email', '=', $employee->email)->get()->toArray();
 

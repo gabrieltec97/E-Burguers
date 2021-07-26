@@ -6,12 +6,19 @@ namespace App\Http\Controllers;
 use App\Adverts;
 use App\Charts\Grafico;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class FinancialController extends Controller
 {
     public function index(Request $req)
     {
+        if(!Auth::user()->hasPermissionTo('Informações Financeiras')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
@@ -382,6 +389,9 @@ class FinancialController extends Controller
 
     public function dashboard()
     {
+        if(!Auth::user()->hasPermissionTo('Dashboard')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
 
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');

@@ -38,8 +38,8 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-icon rotate-n-15">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center">
+            <div class="sidebar-brand-icon rotate-n-75">
                 <i class="fas fa-laugh-wink"></i>
             </div>
             <div class="sidebar-brand-text mx-3">Atendimento</div>
@@ -49,39 +49,49 @@
         <hr class="sidebar-divider">
 
         <!-- Nav Item - Charts -->
+        @can('Dashboard')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('dashboard') }}">
                 <i class="fas fa-tachometer-alt"></i>
                 <span class="font-weight-bold">Dashboard</span></a>
         </li>
+        @endcan
 
         <!-- Nav Item - Charts -->
+        @can('Pedidos (Híbrido)')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('hybridHome') }}">
                 <i class="fas fa-tv"></i>
                 <span class="font-weight-bold">Gerenciamento de pedidos</span></a>
         </li>
+        @endcan
 
         <!-- Nav Item - Charts -->
+        @can('Pedidos (Comum)')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-hamburger"></i>
                 <span class="font-weight-bold">Pedidos em andamento</span></a>
         </li>
+        @endcan
 
         <!-- Nav Item - Charts -->
+        @can('Em Preparo')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('emPreparo') }}">
                 <i class="fas fa-bread-slice"></i>
                 <span class="font-weight-bold">Para preparo</span></a>
         </li>
+        @endcan
 
         <!-- Nav Item - Charts -->
+        @can('Histórico de Pedidos')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('historicoPedidos') }}">
                 <i class="fas fa-history"></i>
                 <span class="font-weight-bold">Histórico de pedidos</span></a>
         </li>
+        @endcan
 
 {{--        <!-- Nav Item - Charts -->--}}
 {{--        <li class="nav-item">--}}
@@ -91,32 +101,40 @@
 {{--        </li>--}}
 
         <!-- Nav Item - Charts -->
+        @can('Cupons')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('cupons.index') }}">
                 <i class="fas fa-ticket-alt"></i>
                 <span class="font-weight-bold">Cupons</span></a>
         </li>
+        @endcan
 
         <!-- Nav Item - Charts -->
+        @can('Gerenciamento de Usuários')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('gerenciamento') }}">
                 <i class="fas fa-users-cog"></i>
                 <span class="font-weight-bold">Gerenciamento de usuários</span></a>
         </li>
+        @endcan
 
         <!-- Nav Item - Charts -->
+        @can('Gerenciamento de Refeições')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('refeicoes.index') }}">
                 <i class="fas fa-tasks"></i>
                 <span class="font-weight-bold">Gerenciamento de refeições</span></a>
         </li>
+        @endcan
 
         <!-- Nav Item - Charts -->
+        @can('Informações Financeiras')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('financeiro') }}">
                 <i class="fas fa-chart-bar"></i>
                 <span class="font-weight-bold">Informações Financeiras</span></a>
         </li>
+        @endcan
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">

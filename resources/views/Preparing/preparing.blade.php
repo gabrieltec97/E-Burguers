@@ -1,4 +1,4 @@
-@extends('layouts.extend')
+@extends('layouts.extend-employees')
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/ajaxCozinha.js') }}"></script>
 

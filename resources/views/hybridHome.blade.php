@@ -71,7 +71,7 @@
                                                 <button class="btn btn-primary" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações a serem repassadas ao entregador."><i class="fas fa-info-circle mr-1"></i> Informações de entrega</button>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td colspan="2">
 
                                             <select name="teste" class="menuHibrido form-control" id="{{ $reg->id }}" onchange="muda({{ $reg->id }})">
                                                 <option value=""selected disabled>Alterar Status</option>

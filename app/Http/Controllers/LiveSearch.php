@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LiveSearch extends Controller
 {
     function index()
     {
+        if(!Auth::user()->hasPermissionTo('Histórico de Pedidos')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $today = date('d/m/Y');
         $query = DB::table('orders')->where('day', '=', $today)->get()->toArray();
         $count = count($query);

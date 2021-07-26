@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\Console\Input\Input;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class menuController extends Controller
 {
@@ -65,6 +67,10 @@ class menuController extends Controller
 
     public function index()
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $meals = Adverts::all();
         return view('adverts.advertsManagement', compact('meals'));
     }
@@ -76,6 +82,10 @@ class menuController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $items = Extras::all();
 
         if (count($items) != 0){
@@ -93,6 +103,9 @@ class menuController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
 
         $rules = [
             'mealValue' => 'required',
@@ -182,6 +195,10 @@ class menuController extends Controller
      */
     public function show($id)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $meal = Adverts::find($id);
 
         return view('adverts.advShow', compact('meal'));
@@ -195,6 +212,10 @@ class menuController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $meal = Adverts::find($id);
         $extras = Extras::all();
         $options = array();
@@ -223,6 +244,10 @@ class menuController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $rules = [
             'mealName' => 'required|min:4|max:35',
             'mealValue' => 'required|min:5|max:5',
@@ -278,6 +303,10 @@ class menuController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $advert = Adverts::find($id);
 
         $advert->destroy($id);

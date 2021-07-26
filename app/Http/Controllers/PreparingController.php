@@ -6,6 +6,8 @@ use App\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PreparingController extends Controller
 {
@@ -61,6 +63,10 @@ class PreparingController extends Controller
 
     public function toPrepare()
     {
+        if(!Auth::user()->hasPermissionTo('Em Preparo')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $orders = DB::table('orders')->where('status', '=', 'Em preparo')->simplePaginate(6);
 
         return view('Preparing.preparing', compact('orders'));
@@ -113,6 +119,10 @@ class PreparingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->hasPermissionTo('Em Preparo')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
         $order = Orders::find($id);
         $order->status = "Pronto";
         $order->save();
