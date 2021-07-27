@@ -25,19 +25,19 @@ class menuController extends Controller
 
         if (isset($tray[0]->id)){
             $items = DB::table('item_without_extras')
-                ->select('itemName')
+                ->select('itemName', 'id')
                 ->where('idOrder', '=', $tray[0]->id)
                 ->get()->toArray();
 
             $query = DB::table('auxiliar_detacheds')
-                ->select('item', 'nameExtra')
+                ->select('item', 'nameExtra', 'id')
                 ->where('idOrder', '=', $tray[0]->id)
                 ->get()->toArray();
 
             $itemWExtras = array();
 
             foreach ($query as $it){
-                array_push($itemWExtras, $it->item . ' + ' . $it->nameExtra);
+                array_push($itemWExtras, ['name' => $it->item . ' + ' . $it->nameExtra, 'id' => $it->id]);
             }
         }
 

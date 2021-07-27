@@ -695,20 +695,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".disparo-addCombo").click();
 
-//Toast de item adicionado de pedido avulso.
-
-    $(".disparo-avulso-add").on("click", function (){
-        $.toast({
-            text: '<b>Item adicionado ao pedido!</b>',
-            heading: '<b>Legal!</b>',
-            showHideTransition: 'slide',
-            bgColor : '#38C172',
-            position : 'top-right',
-            hideAfter: 5000
-        })
-    });
-
-    $(".disparo-avulso-add").click();
 
 //Toast de item removido do pedido avulso.
 

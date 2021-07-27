@@ -207,6 +207,10 @@
                                 <p style="cursor: pointer; margin-bottom: -3px" class="dropdown-item">
                                     <b><span class="text-danger">Atenção! </span>Existem comentários dos clientes nos pedidos.</b>
                                 </p>
+                            @else
+                                <p style="cursor: pointer; margin-bottom: -3px" class="dropdown-item">
+                                    <b><span class="text-success">Beleza! </span>Sem notificações no momento.</b>
+                                </p>
                             @endif
                         </div>
                     </li>

@@ -1,7 +1,5 @@
 @extends('layouts.extend-client')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-
+<script src="{{ asset('js/jquery.js') }}"></script>
 
 @section('title')
     Cardápio
@@ -65,7 +63,9 @@
                                                                         @endforeach
                                                                     </div>
 
-                                                                    <hr class="mt-4">
+                                                                    <div class="col-12">
+                                                                        <hr class="mt-4">
+                                                                    </div>
 
                                                                     <div class="col-12">
                                                                         @if($food->extras != null)
@@ -126,13 +126,20 @@
                         <ol>
                             @if(isset($items))
                                 @foreach($items as $item)
-                                    <li>{{$item->itemName}}</li>
+                                    <form action="{{ route('removerItem', ['id' => $item->id])}}" method="post">
+                                        @csrf
+                                    <li>{{$item->itemName}} <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
+
+                                    </form>
                                 @endforeach
                             @endif
 
                             @if(isset($itemWExtras))
                                     @foreach($itemWExtras as $item2)
-                                        <li><span class="text-success">{{$item2}}</span></li>
+                                        <form action="{{ route('removerPersonalizado', $item2['id']) }}" method="post">
+                                            @csrf
+                                        <li><span class="text-success">{{$item2['name']}}<button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></span></li>
+                                        </form>
                                     @endforeach
                             @endif
                         </ol>
@@ -149,7 +156,30 @@
 
     @if(isset($insert))
         @if($insert == 'added')
-        <button hidden class="disparo-avulso-add"></button>
-    @endif
+
+        @if(session('msg'))
+         <script>
+            $.toast({
+                text: '<b>Item removido do pedido!</b>',
+                heading: '<b>Poxa!</b>',
+                showHideTransition: 'slide',
+                bgColor : 'red',
+                position : 'top-right',
+                hideAfter: 5000
+            })
+         </script>
+    @else
+    <script>
+        $.toast({
+            text: '<b>Item adicionado ao pedido!</b>',
+            heading: '<b>Legal!</b>',
+            showHideTransition: 'slide',
+            bgColor : '#38C172',
+            position : 'top-right',
+            hideAfter: 5000
+        })
+    </script>
+        @endif
+        @endif
     @endif
 @endsection

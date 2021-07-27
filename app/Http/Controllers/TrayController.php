@@ -387,7 +387,7 @@ class TrayController extends Controller
         }
         $personalized->delete();
 
-        return redirect()->route('minhaBandeja.index')->with('msg', ' ');
+        return redirect()->back()->with('msg', ' ');
     }
 
     public function editPersonalized(Request $req, $id)
@@ -1105,7 +1105,7 @@ class TrayController extends Controller
 //            return redirect(route('minhaBandeja.index'))->with('msg', '.');
 //        }
 
-        return redirect(route('minhaBandeja.index'))->with('msg', '.');
+        return redirect()->back()->with('msg', '.');
     }
 
     public function couponApply(Request $request)
