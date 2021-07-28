@@ -30,6 +30,7 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">A preparar</th>
                                 <th scope="col">Detalhes</th>
+                                <th scope="col">Adicionais</th>
                                 <th scope="col">Tratativa</th>
                             </tr>
                             </thead>
@@ -60,6 +61,14 @@
                                               {{ $order->clientComments }}
                                           @else
                                               <span>Sem comentários adicionados.</span>
+                                          @endif
+                                      </td>
+
+                                      <td>
+                                          @if($order->extras != null)
+                                              <p class="text-success font-weight-bold">{{ $order->extras }}</p>
+                                          @else
+                                            <p class="text-danger font-weight-bold">Não</p>
                                           @endif
                                       </td>
 

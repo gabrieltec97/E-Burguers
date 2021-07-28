@@ -61,39 +61,11 @@
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">
-                                        <label class="text-muted font-weight-bold">Cargo</label>
-                                        <select class="form-control cargoFuncionario {{ ($errors->has('empOccupation') ? 'is-invalid' : '') }}" name="empOccupation" required>
-                                            <option {{ ($user->occupation == 'Administrador')?'selected':'' }} value="Administrador">Administrador</option>
-                                            <option {{ ($user->occupation == 'Atendente')?'selected':'' }} value="Atendente">Atendente</option>
-                                            <option {{ ($user->occupation == 'Cozinheiro')?'selected':'' }} value="Cozinheiro">Cozinheiro</option>
-                                            <option {{ ($user->occupation == 'Garçom')?'selected':'' }} value="Garçom">Garçom</option>
-                                            <option {{ ($user->occupation == 'Limpeza')?'selected':'' }} value="Limpeza">Limpeza</option>
-                                            <option {{ ($user->occupation == 'Outro')?'selected':'' }} value="Outro">Outro</option>
-                                        </select>
-                                        @if($errors->has('empOccupation'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('empOccupation') }}</span>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Horário de serviço</label>
                                         <input type="text" class="form-control horarioFuncionario {{ ($errors->has('empWorkingTime') ? 'is-invalid' : '') }}" name="empWorkingTime" value="{{ $user->workingTime }}" required>
                                         @if($errors->has('empWorkingTime'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empWorkingTime') }}</span>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-12 mt-3 col-md-4">
-                                        <label class="text-muted font-weight-bold">Perfil de usuário</label>
-                                        <input type="text" value="{{ $user->profile }}" class="form-control profileFuncionario {{ ($errors->has('empProfile') ? 'is-invalid' : '') }}" name="empProfile" required>
-
-                                        @if($errors->has('empProfile'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('empProfile') }}</span>
                                             </div>
                                         @endif
                                     </div>

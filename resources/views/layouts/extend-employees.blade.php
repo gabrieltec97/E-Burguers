@@ -179,7 +179,9 @@
                     <?php
                     $total = 0;
                     $comment = \Illuminate\Support\Facades\DB::select("SELECT clientComments from orders WHERE status = 'Em preparo'");
+                    $extras = \Illuminate\Support\Facades\DB::select("SELECT extras from orders WHERE status = 'Em preparo'");
                     $verifica = 0;
+                    $verificaExtra = 0;
                     foreach ($comment as $c){
                         $teste= strlen($c->clientComments);
 
@@ -189,13 +191,25 @@
                             $verifica += 1;
                         }
                     }
+
+                    foreach ($extras as $e){
+                        $extra= strlen($e->extras);
+
+                        if ($extra == 0){
+                            $verificaExtra = 0;
+                        }else{
+                            $verificaExtra += 1;
+                        }
+                    }
                     ?>
 
                     <li>
                         <i class="fas fa-bell dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 27px; color: black">
                             <span class="badge bg-primary text-white">
-                               @if($verifica != 0)
-                                    1
+                               @if($verifica != 0 && $verificaExtra != 0)
+                                    2
+                                @elseif($verifica != 0 && $verificaExtra == 0 or $verifica == 0 && $verificaExtra != 0)
+                                   1
                                 @else
                                    0
                                @endif
@@ -203,9 +217,22 @@
                         </i>
 
                         <div style="margin-right: 125px" class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="dropdownMenuLink">
-                            @if($verifica != 0)
+                            @if($verifica != 0 && $verificaExtra == 0)
                                 <p style="cursor: pointer; margin-bottom: -3px" class="dropdown-item">
                                     <b><span class="text-danger">Atenção! </span>Existem comentários dos clientes nos pedidos.</b>
+                                </p>
+                            @elseif($verificaExtra !=0 && $verifica == 0)
+                                    <p style="cursor: pointer; margin-bottom: -3px" class="dropdown-item">
+                                        <b><span class="text-danger">Ei atenção aqui! </span> Existem itens <span class="text-primary">adicionais</span> nos pedidos.</b>
+                                    </p>
+                            @elseif($verificaExtra != 0 && $verifica != 0)
+                                <p style="cursor: pointer; margin-bottom: -10px" class="dropdown-item">
+                                    <b><span class="text-primary">Atenção! </span>Existem comentários dos clientes nos pedidos.</b>
+                                </p>
+
+                                <hr>
+                                <p style="cursor: pointer; margin-bottom: -2px; margin-top: -10px" class="dropdown-item">
+                                    <b><span class="text-danger">Ei, atenção aqui! </span> Existem itens <span class="text-primary">adicionais</span> nos pedidos.</b>
                                 </p>
                             @else
                                 <p style="cursor: pointer; margin-bottom: -3px" class="dropdown-item">

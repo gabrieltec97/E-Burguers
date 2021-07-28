@@ -21,17 +21,11 @@
 
                                     <div class="col-12 col-lg-6">
                                         <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Nome:</span><span class="text-primary"> {{ $user['name'] }} {{ $user['surname'] }}</span></label><br>
-                                        <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Cargo:</span><span class="text-primary"> {{ $user['occupation'] }}</span></label>
-                                        <br>
-                                        <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Perfil de usuário:</span><span class="text-primary"> {{ $user['profile'] }}</span></label>
-                                        <br>
                                         <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Endereço:</span><span class="text-primary"> {{ $user['address'] }}</span></label>
                                         <br>
                                         <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Telefone:</span><span class="text-primary"> {{ $user['phone'] }}</span></label>
                                         <br>
                                         <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Telefone fixo:</span><span class="text-primary"> {{ ($user['fixedPhone'] != '') ? $user['fixedPhone']: 'Não informado' }}</span></label>
-                                        <br>
-                                        <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Perfil de usuário:</span><span class="text-primary"> {{ $user['profile'] }}</span></label>
                                         <br>
                                         <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">E-mail:</span><span class="text-primary"> {{ ($user['email'] == '')?'Não informado': $user['email'] }}</span></label>
                                         <br>

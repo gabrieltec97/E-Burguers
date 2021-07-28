@@ -166,6 +166,9 @@ class OrdersController extends Controller
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->address = $updOrder[0]['address'];
         $newOrder->payingMethod = $updOrder[0]['payingMethod'];
+        if($itemTwo != null){
+            $newOrder->extras = 'Sim';
+        }
         $newOrder->payingValue = $updOrder[0]['payingValue'];
 
         if (isset($request->pedir)) {
@@ -176,9 +179,18 @@ class OrdersController extends Controller
         $newOrder->save();
 
 
-        //Limpando a bandeja
+        //Limpando a bandeja e tabelas de itens
         $clearTray = Tray::find($updOrder[0]['id']);
         $clearTray->delete();
+
+        DB::table('auxiliar_detacheds')
+            ->where('idOrder', '=', $updOrder[0]['id'])
+            ->delete();
+
+        DB::table('item_without_extras')
+            ->where('idOrder', '=', $updOrder[0]['id'])
+            ->delete();
+
 
         if (isset($request->pedir)){
             return redirect()->route('tipoPedido')->with('msg', 'teste');

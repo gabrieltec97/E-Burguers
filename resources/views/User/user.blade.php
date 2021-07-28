@@ -39,11 +39,6 @@
                                     <input type="text" class="form-control campo" value="{{ $myUser[0]->email }}"  readonly>
                                 </div>
 
-                                <div class="col-12 mt-3 col-md-4">
-                                    <label class="text-muted font-weight-bold">Cargo</label>
-                                    <input type="text" class="form-control campo" value="{{ $myUser[0]->occupation }}"  readonly>
-                                </div>
-
                             </div>
                         </div>
                     </div>

@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user()->email;
-        $myUser = DB::table('employees')
+        $myUser = DB::table('users')
             ->where('email', '=', $user)
             ->get()->toArray();
 
@@ -104,7 +104,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
@@ -114,9 +113,7 @@ class UserController extends Controller
             'empSurname' => 'required|min:3',
             'empPhone' => 'required|min:10',
             'empAddress' => 'required|min:10',
-            'empOccupation' => 'required',
-            'empWorkingTime' => 'required',
-//            'empProfile' => 'required'
+            'empWorkingTime' => 'required'
 
         ];
 
@@ -128,45 +125,24 @@ class UserController extends Controller
             'empPhone.required' => 'Insira o número de telefone do funcionário.',
             'empPhone.min' => 'Você inseriu um formato inválido de telefone do funcionário',
             'empAddress.max' => 'Você inseriu um endereço muito curto, caso esteja correto, preencha com xxxx',
-            'empOccupation.required' => 'Por favor, insira o cargo do funcionário',
             'empWorkingTime.required' => 'Por favor, insira o horário de trabalho do funcionário',
-//            'empProfile.required' => 'Por favor, insira o perfil de usuário do funcionário'
         ];
 
         $request->validate($rules, $messages);
 
 
-        $employee = new Employee();
+        $user = new User();
 
-        $employee->name = $request->empName;
-        $employee->surname = $request->empSurname;
-        $employee->phone = $request->empPhone;
-        $employee->fixedPhone = $request->empFixedPhone;
-        $employee->address = $request->empAddress;
-        $employee->occupation = $request->empOccupation;
-        $employee->profile = $request->empOccupation;
-        $employee->workingTime = $request->empWorkingTime;
-        $employee->email = $request->empEmail;
+        $user->name = $request->empName;
+        $user->surname = $request->empSurname;
+        $user->phone = $request->empPhone;
+        $user->fixedPhone = $request->empFixedPhone;
+        $user->address = $request->empAddress;
+        $user->workingTime = $request->empWorkingTime;
+        $user->email = $request->empEmail;
+        $user->password = bcrypt($request->empPassword);
 
-        if (isset($request->userPhoto)){
-            $employee->photo = $request->userPhoto;
-        }
-
-        $employee->save();
-
-        if($request->empOccupation != "Outro"){
-
-            $user = new User();
-
-            $user->name = $request->empName;
-            $user->surname = $request->empSurname;
-            $user->address = $request->empAddress;
-            $user->email = $request->empEmail;
-            $user->userType = $request->empOccupation;
-            $user->password = bcrypt($request->empPassword);
-
-            $user->save();
-        }
+        $user->save();
 
         return redirect(route('gerenciamento'))->with('msg', 'Usuário cadastrado com sucesso!');
     }
@@ -183,7 +159,7 @@ class UserController extends Controller
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
-        $user = Employee::find($id)->toArray();
+        $user = User::find($id)->toArray();
 
         return view('User.userData', compact('user'));
     }
@@ -200,10 +176,9 @@ class UserController extends Controller
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
-        $user = Employee::find($id);
-        $data = User::find($id);
+        $user = User::find($id);
 
-        return view('User.employeeEdit', compact('user', 'data'));
+        return view('User.employeeEdit', compact('user'));
     }
 
     /**
@@ -224,9 +199,7 @@ class UserController extends Controller
             'empSurname' => 'required|min:5',
             'empAddress' => 'required|min:5',
             'empPhone' => 'required|min:10',
-            'empOccupation' => 'required',
             'empWorkingTime' => 'required|min:12',
-            'empProfile' => 'required'
         ];
 
         $messages = [
@@ -238,15 +211,13 @@ class UserController extends Controller
             'empAddress.required' => 'Por favor, insira o endereço do funcionário.',
             'empPhone.required' => 'Por favor, insira o número de contato.',
             'empPhone.min' => 'Por favor, insira um número válido.',
-            'empOccupation.required' => 'Por favor, insira a ocupação do funcionário.',
-            'empProfile.required' => 'Por favor, insira o perfil de usuário.',
             'empWorkingTime.required' => 'Por favor, insira o horário de trabalho do funcionário.',
             'empWorkingTime.min' => 'Por favor, insira um horário de trabalho correto.'
         ];
 
         $request->validate($rules, $messages);
 
-        $user = Employee::find($id);
+        $user = User::find($id);
         $passChange = DB::table('users')->where('email', '=', $user->email)->get()->toArray();
 
         if( $passChange != null){
@@ -258,10 +229,7 @@ class UserController extends Controller
         $user->phone = $request->empPhone;
         $user->fixedPhone = $request->empFixedPhone;
         $user->address = $request->empAddress;
-        $user->occupation = $request->empOccupation;
-        $user->profile = $request->empProfile;
         $user->workingTime = $request->empWorkingTime;
-
         $user->save();
 
         if($request->empSenha != ''){
@@ -269,7 +237,7 @@ class UserController extends Controller
             $userPassword->save();
         }
 
-        return redirect(route('gerenciamento'))->with('msg', 'Dados alterados com sucesso!');
+        return redirect()->route('gerenciamento')->with('msg', 'Dados alterados com sucesso!');
     }
 
     /**

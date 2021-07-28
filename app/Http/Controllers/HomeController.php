@@ -28,7 +28,17 @@ class HomeController extends Controller
     public function index()
     {
         if(!Auth::user()->hasPermissionTo('Pedidos (Comum)')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+
+            $role = Auth::user()->toArray();
+            $role = $role['roles'][0]['name'];
+
+            if ($role == 'Atendente Híbrido'){
+                return redirect()->route('hybridHome');
+            }elseif('Cozinheiro'){
+                return redirect()->route('emPreparo');
+            }else{
+                throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            }
         }
 
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->paginate(10);

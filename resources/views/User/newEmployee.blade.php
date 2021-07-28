@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 col-sm-12">
+            <div class="col-lg-12 col-sm-12 mb-4">
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Novo funcionário</div>
 
@@ -38,7 +38,7 @@
 
                                     <div class="col-12 mt-3 mt-md-0 col-md-4">
                                         <label class="text-muted font-weight-bold">Telefone</label>
-                                        <input type="text" class="form-control user-Phone {{ ($errors->has('empPhone') ? 'is-invalid' : '') }}" name="empPhone" value="{{ old('empPhone') }}" required>
+                                        <input type="text" placeholder="(xx) xxxxx-xxxx" class="form-control user-Phone {{ ($errors->has('empPhone') ? 'is-invalid' : '') }}" name="empPhone" value="{{ old('empPhone') }}" required>
                                         @if($errors->has('empPhone'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empPhone') }}</span>
@@ -48,7 +48,7 @@
 
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Telefone fixo (Opcional)</label>
-                                        <input type="text" class="form-control userFixedPhone" name="empFixedPhone">
+                                        <input type="text" placeholder="(xx) xxxx-xxxx" class="form-control userFixedPhone" name="empFixedPhone">
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">
@@ -62,40 +62,11 @@
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">
-                                        <label class="text-muted font-weight-bold">Cargo</label>
-                                        <select class="form-control select-occ {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="empOccupation" required>
-                                            <option value="" selected hidden>Selecione</option>
-                                            <option value="Administrador" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Administrador</option>
-                                            <option value="Atendente" {{ old('empOccupation') == 'Atendente' ? 'selected' : '' }}>Atendente</option>
-                                            <option value="Cozinheiro" {{ old('empOccupation') == 'Cozinheiro' ? 'selected' : '' }}>Cozinheiro</option>
-                                            <option value="Garçom" {{ old('empOccupation') == 'Garçom' ? 'selected' : '' }}>Garçom</option>
-                                            <option value="Limpeza" {{ old('empOccupation') == 'Limpeza' ? 'selected' : '' }}>Limpeza</option>
-                                            <option value="Outro" {{ old('empOccupation') == 'Outro' ? 'selected' : '' }}>Outro</option>
-                                        </select>
-                                         @if($errors->has('empOccupation'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('empOccupation') }}</span>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Horário de serviço</label>
-                                        <input type="text" class="form-control empHour {{ ($errors->has('empWorkingTime') ? 'is-invalid' : '') }}" name="empWorkingTime" value="{{ old('empWorkingTime') }}" required>
+                                        <input type="text" placeholder="xx:xx - xx:xx" class="form-control empHour {{ ($errors->has('empWorkingTime') ? 'is-invalid' : '') }}" name="empWorkingTime" value="{{ old('empWorkingTime') }}" required>
                                          @if($errors->has('empWorkingTime'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empWorkingTime') }}</span>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-12 mt-3 col-md-4">
-                                        <label class="text-muted font-weight-bold">Perfil de usuário</label>
-                                        <input type="text" class="form-control select-cargo {{ ($errors->has('empProfile') ? 'is-invalid' : '') }}" name="empProfile" disabled>
-
-                                         @if($errors->has('empProfile'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('empProfile') }}</span>
                                             </div>
                                         @endif
                                     </div>
