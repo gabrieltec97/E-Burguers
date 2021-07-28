@@ -357,39 +357,19 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     $(".profileFuncionario").attr('readonly', 'true');
     $(".profileFuncionario").css('cursor', 'not-allowed');
 
-    $(".cargoFuncionario").change(function () {
 
-        if($('.cargoFuncionario :selected').text() == 'Outro' || $('.cargoFuncionario :selected').text() == 'Limpeza' || $('.cargoFuncionario :selected').text() == 'Garçom'){
-
-            $('.profileFuncionario').val('Outro (Sem login)');
-
-        } else if ($('.cargoFuncionario :selected').text() == 'Administrador'){
-
-            $('.profileFuncionario').val('Administrador');
-            $(".disparador").click();
-
-        }else if($('.cargoFuncionario :selected').text() == 'Atendente'){
-
-            $('.profileFuncionario').val('Atendente');
-
-        }else if($('.cargoFuncionario :selected').text() == 'Cozinheiro'){
-
-            $('.profileFuncionario').val('Cozinheiro');
-        }
-    })
 
     const nomeFunc = $(".nome-funcionario").val();
     const sobrenomeFunc = $(".sobrenome-funcionario").val();
     const telFunc = $(".telFuncionario").val();
     const fixoFunc =  $(".fixoFuncionario").val();
     const enderecoFunc =  $(".enderecoFuncionario").val();
-    const cargoFunc =  $(".cargoFuncionario").val();
     const horarioFunc =  $(".horarioFuncionario").val();
     const profileFunc =  $(".profileFuncionario").val();
 
     $(".salvar-alteracoes-func").on("click", function () {
 
-        if(nomeFunc == $(".nome-funcionario").val() && sobrenomeFunc == $(".sobrenome-funcionario").val() && telFunc == $(".telFuncionario").val() && fixoFunc == $(".fixoFuncionario").val() && enderecoFunc == $(".enderecoFuncionario").val() && cargoFunc == $(".cargoFuncionario").val() && horarioFunc == $(".horarioFuncionario").val() && profileFunc == $(".profileFuncionario").val() && $(".senhaFuncionario").val() == ''){
+        if(nomeFunc == $(".nome-funcionario").val() && sobrenomeFunc == $(".sobrenome-funcionario").val() && telFunc == $(".telFuncionario").val() && fixoFunc == $(".fixoFuncionario").val() && enderecoFunc == $(".enderecoFuncionario").val() && horarioFunc == $(".horarioFuncionario").val() && profileFunc == $(".profileFuncionario").val() && $(".senhaFuncionario").val() == ''){
 
             $(".func-mudancas").text("Você não efetuou nenhuma alteração.");
             $(".func-mudancas").css('text-align', 'center');
@@ -446,14 +426,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
         }else{
             $(".div-endereco-func").attr('hidden', 'true');
-        }
-
-        if(cargoFunc != $(".cargoFuncionario").val()){
-            $(".div-cargo-func").removeAttr('hidden', 'true');
-            $(".novo-cargo").text($(".cargoFuncionario").val());
-
-        }else{
-            $(".div-cargo-func").attr('hidden', 'true');
         }
 
         if(horarioFunc != $(".horarioFuncionario").val()){

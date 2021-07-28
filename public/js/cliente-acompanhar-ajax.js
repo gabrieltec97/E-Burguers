@@ -2,6 +2,26 @@ $(document).ready(() => {
 
     $(".ul-pedidos").attr('hidden', 'true');
 
+    function mostrarNotificacao(){
+        const notificacao = new Notification("Hey, temos uma atualização do seu pedido.", {
+            body: 'Começamos a preparar agora, ok?'
+        });
+    }
+
+    function mostrarNotificacao2(){
+        const notificacao = new Notification("Tudo certo! Seu pedido está pronto.", {
+            body: 'Você escolheu retirada no restaurante, pode vir buscar conosco :)'
+        });
+    }
+
+    function mostrarNotificacao3(){
+        const notificacao = new Notification("Tudo certo! Seu pedido está pronto.", {
+            body: 'Estamos enviando seu pedido até você, bom apetite!'
+        });
+    }
+
+    var send = 'nao';
+
     setInterval(function(){
 
         $.ajax({type: 'GET',
@@ -9,9 +29,10 @@ $(document).ready(() => {
             dataType: 'json',
             success: function(dados){
 
-            console.log(dados)
-
                 if (dados.length == 1) {
+
+                    var status = dados[0].status;
+
                     $(".ul-pedidos").removeAttr('hidden', 'true');
                     $(".verifica-pedido").attr('hidden', 'true');
 
@@ -26,6 +47,20 @@ $(document).ready(() => {
                             $(".et2").attr('hidden', 'true');
                             $(".preparing").removeAttr('hidden', 'true');
                             $(".preparing").css('background', '#d4f5d4');
+
+                            if (send == 'nao'){
+                                if (Notification.permission === "granted"){
+                                    mostrarNotificacao();
+                                }else if(Notification.permission !== 'denied'){
+                                    Notification.requestPermission().then(permission => {
+                                        if (permission === "granted"){
+                                            mostrarNotificacao();
+                                        }
+                                    })
+                                }
+                                send = 'sim';
+                            }
+
                         } else if (dados[0].status == 'Em rota de entrega') {
                             $(".et1, .et2, .et3").css('background', '#d4f5d4');
                             $(".preparing").attr('hidden', 'true');
@@ -37,6 +72,20 @@ $(document).ready(() => {
                             $(".btn-cancelamentos, .cancelarPedido").on("click", function (e){
                                 e.preventDefault();
                             })
+
+                            if (send == 'sim'){
+                                if (Notification.permission === "granted"){
+                                    mostrarNotificacao3();
+                                }else if(Notification.permission !== 'denied'){
+                                    Notification.requestPermission().then(permission => {
+                                        if (permission === "granted"){
+                                            mostrarNotificacao3();
+                                        }
+                                    })
+                                }
+                                send = 'sim2';
+                            }
+
                         }
                     }else {
                         $(".et5").removeAttr('hidden', 'true');
@@ -51,6 +100,20 @@ $(document).ready(() => {
                             $(".et2").attr('hidden', 'true');
                             $(".preparing").removeAttr('hidden', 'true');
                             $(".preparing").css('background', '#d4f5d4');
+
+                            if (send == 'nao'){
+                                if (Notification.permission === "granted"){
+                                    mostrarNotificacao();
+                                }else if(Notification.permission !== 'denied'){
+                                    Notification.requestPermission().then(permission => {
+                                        if (permission === "granted"){
+                                            mostrarNotificacao();
+                                        }
+                                    })
+                                }
+                                send = 'sim';
+                            }
+
                         }
                         else if(dados[0].status == 'Pronto para ser retirado no restaurante'){
                             $(".et1, .et2, .et5").css('background', '#d4f5d4');
@@ -63,6 +126,19 @@ $(document).ready(() => {
                             $(".btn-cancelamentos, .cancelarPedido").on("click", function (e){
                                 e.preventDefault();
                             })
+
+                            if (send == 'sim'){
+                                if (Notification.permission === "granted"){
+                                    mostrarNotificacao2();
+                                }else if(Notification.permission !== 'denied'){
+                                    Notification.requestPermission().then(permission => {
+                                        if (permission === "granted"){
+                                            mostrarNotificacao2();
+                                        }
+                                    })
+                                }
+                                send = 'sim2';
+                            }
                         }
                     }
                 }else if(dados.length > 1){
@@ -111,5 +187,7 @@ $(document).ready(() => {
 
 
     },10000);
+
+
 
 })

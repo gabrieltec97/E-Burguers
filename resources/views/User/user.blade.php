@@ -52,9 +52,8 @@
                         <i class="fas fa-exclamation-triangle mt-1"></i>&nbsp; Aviso
                     </div>
                     <div class="card-body">
-                        <p class="text-muted font-weight-bold mb-4">Por questões de segurança, você pode alterar
-                        apenas a sua foto de perfil. Caso queira alterar seus dados cadastrais, entre em contato
-                        com o administrador do sistema.</p>
+                        <p class="font-weight-bold mb-4" style="color: rgba(0,0,0,0.87)">Por questões de segurança, você não poderá alterar
+                            seus dados cadastrais. Caso queira fazer alterações, entre em contato com o administrador do sistema.</p>
                         <p class="d-flex justify-content-end mb-0"><a href="#" class="btn btn-primary sair">Compreendi</a></p>
                     </div>
                 </div>
