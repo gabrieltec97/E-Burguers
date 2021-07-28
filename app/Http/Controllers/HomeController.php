@@ -73,7 +73,7 @@ class HomeController extends Controller
     public function hybrid()
     {
         $hybridData = DB::table('orders')->select('id', 'hour', 'status')
-            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
             ->get()->toArray();
 
         return $hybridData;

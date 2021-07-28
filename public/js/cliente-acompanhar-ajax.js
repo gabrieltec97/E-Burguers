@@ -16,11 +16,18 @@ $(document).ready(() => {
 
     function mostrarNotificacao3(){
         const notificacao = new Notification("Tudo certo! Seu pedido está pronto.", {
-            body: 'Estamos enviando seu pedido até você, bom apetite!'
+            body: 'Estamos enviando-o até você, bom apetite!'
+        });
+    }
+
+    function mostrarNotificacao4(){
+        const notificacao = new Notification("Nova notificação.", {
+            body: 'Ei! O status do seu pedido foi atualizado, dá uma olhada!'
         });
     }
 
     var send = 'nao';
+    var send2 = 'nao'
 
     setInterval(function(){
 
@@ -143,6 +150,70 @@ $(document).ready(() => {
                     }
                 }else if(dados.length > 1){
 
+                    //Envio de notificações
+                    dados.forEach((value, key) =>{
+                        if (value.status == 'Em preparo' || value == 'Pronto'){
+                            var verifica = true;
+                        }
+
+                        if (verifica == true){
+                            if (send2 == 'nao'){
+                                if (Notification.permission === "granted"){
+                                    mostrarNotificacao4();
+                                }else if(Notification.permission !== 'denied'){
+                                    Notification.requestPermission().then(permission => {
+                                        if (permission === "granted"){
+                                            mostrarNotificacao4();
+                                        }
+                                    })
+                                }
+                                send2 = 'sim';
+                            }
+                        }
+                    })
+
+                    dados.forEach((value, key) =>{
+                        if (value.status == 'Pronto para ser retirado no restaurante'){
+                            var verifica = true;
+                        }
+
+                        if (verifica == true){
+                            if (send2 == 'sim'){
+                                if (Notification.permission === "granted"){
+                                    mostrarNotificacao2();
+                                }else if(Notification.permission !== 'denied'){
+                                    Notification.requestPermission().then(permission => {
+                                        if (permission === "granted"){
+                                            mostrarNotificacao2();
+                                        }
+                                    })
+                                }
+                                send2 = 'não';
+                            }
+                        }
+                    })
+
+                    dados.forEach((value, key) =>{
+                        if (value.status == 'Em rota de entrega'){
+                            var verifica = true;
+                        }
+
+                        if (verifica == true){
+                            if (send2 == 'sim'){
+                                if (Notification.permission === "granted"){
+                                    mostrarNotificacao3();
+                                }else if(Notification.permission !== 'denied'){
+                                    Notification.requestPermission().then(permission => {
+                                        if (permission === "granted"){
+                                            mostrarNotificacao3();
+                                        }
+                                    })
+                                }
+                                send2 = 'não';
+                            }
+                        }
+                    })
+
                     if(dados[0].status == 'Pronto para ser retirado no restaurante'){
                         $(".et1, .et2, .et5").css('background', '#d4f5d4');
                         $(".preparing").attr('hidden', 'true');
@@ -167,7 +238,6 @@ $(document).ready(() => {
                         })
                     }
 
-                    // let original = $(".dados-tab").text();
                     let data = '';
 
                     for (let pedido of dados){
@@ -187,7 +257,4 @@ $(document).ready(() => {
 
 
     },10000);
-
-
-
 })
