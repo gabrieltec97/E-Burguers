@@ -85,6 +85,8 @@ Route::post('/removerCupom/{couponName}', 'TrayController@couponRemove')->name('
 //Rotas de alteração de status dos pedidos.
 Route::post('/alterarStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@changeStatus')->name('alterarStatus')->middleware('auth');
 
+Route::post('/clinteAlteraStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@clientChangesStatus')->name('clienteAlteraStatus')->middleware('auth');
+
 
 //Rotas de gerenciamento.
 Route::get('/emPreparo', 'PreparingController@toPrepare')->name('emPreparo')->middleware('auth')->middleware('auth');
@@ -126,6 +128,7 @@ Route::get('/permissionsList', 'PermissionController@permissions')->name('permis
 
 Auth::routes();
 
+//Rotas PHP para o Ajax
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::get('/gerenciamentoPedidos', 'HomeController@hybridHome')->name('hybridHome')->middleware('auth');

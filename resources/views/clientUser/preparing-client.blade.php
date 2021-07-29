@@ -138,7 +138,7 @@
                     @if(count($order) == 1)
                     <p class="font-weight-bold">O pedido {{$order[0]->id}} será cancelado e não poderá ser alterado novamente. Deseja prosseguir?</p>
 
-                    <form action="{{ route('alterarStatus', ['id' => $order[0]->id, 'acao' => 'Cancelado', 'remetente' => 'cliente', 'idCliente' => $idUser]) }}" method="post">
+                    <form action="{{ route('clienteAlteraStatus', ['id' => $order[0]->id, 'acao' => 'Cancelado', 'remetente' => 'cliente', 'idCliente' => $idUser]) }}" method="post">
                     @csrf
                 </div>
                 <div class="modal-footer">
@@ -158,7 +158,7 @@
                                     </div>
 
                                     <div class="col-6 d-flex justify-content-end my-2">
-                                        <form action="{{ route('alterarStatus', ['id' => $ord->id, 'acao' => 'Cancelado', 'remetente' => 'cliente', 'idCliente' => $idUser]) }}" method="post">
+                                        <form action="{{ route('clienteAlteraStatus', ['id' => $ord->id, 'acao' => 'Cancelado', 'remetente' => 'cliente', 'idCliente' => $idUser]) }}" method="post">
                                             @csrf
                                         <button type="submit" class="btn btn-danger">Cancelar</button> <br>
                                         </form>
