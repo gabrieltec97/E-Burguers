@@ -391,6 +391,7 @@ class OrdersController extends Controller
         foreach ($items as $item){
             $evaluate = DB::table('orders')
                 ->where('detached', 'like', '%'. $item->name . '%')
+                ->where('idClient', '=', Auth::user()->id)
                 ->get()->toArray();
 
             if (count($evaluate) != ''){
