@@ -30,15 +30,22 @@ class HomeController extends Controller
         if(!Auth::user()->hasPermissionTo('Pedidos (Comum)')){
 
             $role = Auth::user()->toArray();
-            $role = $role['roles'][0]['name'];
 
-            if ($role == 'Atendente Híbrido'){
-                return redirect()->route('hybridHome');
-            }elseif('Cozinheiro'){
-                return redirect()->route('emPreparo');
+            if (isset($role['roles'][0])){
+                $role = $role['roles'][0]['name'];
+
+                if ($role == 'Atendente Híbrido'){
+                    return redirect()->route('hybridHome');
+                }elseif('Cozinheiro'){
+                    return redirect()->route('emPreparo');
+                }else{
+                    throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+                }
             }else{
-                throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+                throw new UnauthorizedException('403', 'Sua conta não possui um perfil de usuário. Contate o administrador para que seja configurado um perfil em sua conta.');
             }
+
+
         }
 
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->paginate(10);

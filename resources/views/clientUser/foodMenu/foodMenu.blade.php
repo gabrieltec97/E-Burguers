@@ -5,6 +5,10 @@
     Cardápio
 @endsection
 
+<?php
+
+?>
+
 @section('content')
     <div class="container-fluid mt-5">
         <div class="row">
@@ -22,13 +26,19 @@
                 <div class="container-fluid">
                     <div class="row">
                         @foreach($foods as $food)
-                            <div class="col-12 col-md-4 mt-5 mt-lg-3 col-lg-3">
+                            <div class="col-12 col-md-4 mt-5 mt-lg-3 col-lg-4">
                                 <form action="{{ route('adicionarItem', $food->id) }}">
                                     @if($food->foodType == 'Hamburguer')
                                         <div class="card cardapio-card">
                                             <img class="card-img-top img-card" src="{{ asset($food->picture) }}">
                                             <div class="card-body">
                                                 <h5 class="card-title font-weight-bold">{{ $food->name }}</h5>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star-half text-warning"></i>
+
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span></p>
@@ -62,6 +72,12 @@
                                                                             </div>
                                                                         @endforeach
                                                                     </div>
+
+                                                                    @if($food->ratingAmount == 1)
+                                                                        <p>{{ $food->ratingAmount }} avaliação</p>
+                                                                    @elseif($food->ratingAmount > 1)
+                                                                        <p>{{ $food->ratingAmount }} avaliação</p>
+                                                                    @endif
 
                                                                     @if($food->extras != null)
                                                                     <div class="col-12">

@@ -425,6 +425,12 @@ class OrdersController extends Controller
             $item->ratingAmount += 1;
         }
 
+        if ($item->finalGrade != null){
+            $item->finalGrade = $item->ratingGrade / $item->ratingAmount;
+        }else{
+            $item->finalGrade = $request->radio1;
+        }
+
         $item->save();
 
         $user = \App\User::find(Auth::user()->id);
@@ -437,22 +443,6 @@ class OrdersController extends Controller
         $user->save();
 
         return redirect()->back()->with('msg', ' ');
-    }
-
-    public function update(Request $request, $id, $acao)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
 

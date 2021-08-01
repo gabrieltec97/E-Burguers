@@ -11077,7 +11077,7 @@ a:hover{
 
 .cardapio-card{
     background-color: #F8FAFC;
-    height: 510px;
+    height: 710px;
 }
 
 .area-carrinho{
@@ -11138,13 +11138,13 @@ a:hover{
 
 @media  (max-width: 1000px) {
     .cardapio-card{
-        height: 520px;
+        height: 720px;
     }
 }
 
 @media  (max-width: 900px) {
     .cardapio-card{
-        height: 530px;
+        height: 700px;
     }
 
     .img-card{
@@ -11180,7 +11180,7 @@ a:hover{
     /*}*/
 
     .cardapio-card{
-        height: 490px;
+        height: 530px;
     }
 
     .card-prep-emp{

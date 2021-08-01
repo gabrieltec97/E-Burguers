@@ -27,6 +27,7 @@ class CreateAdvertsTable extends Migration
             $table->string('picture')->nullable();
             $table->string('ratingGrade')->nullable();
             $table->string('ratingAmount')->nullable();
+            $table->string('finalGrade')->nullable();
             $table->timestamps();
         });
     }
