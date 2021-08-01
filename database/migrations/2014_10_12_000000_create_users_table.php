@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('workingTime');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('itemsRated')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

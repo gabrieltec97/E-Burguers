@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Adverts;
 use App\Orders;
 use App\Tray;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -377,6 +379,64 @@ class OrdersController extends Controller
         return redirect()->back()->with('msg-venda',
                ' ');
         }
+    }
+
+    public function evaluate()
+    {
+        $items = Adverts::all()->where('foodType', '<>', 'Bebida');
+        $eval = \App\User::find(Auth::user()->id);
+        $eval = explode(',', $eval->itemsRated);
+        $itensToEvaluate = array();
+
+        foreach ($items as $item){
+            $evaluate = DB::table('orders')
+                ->where('detached', 'like', '%'. $item->name . '%')
+                ->get()->toArray();
+
+            if (count($evaluate) != ''){
+                array_push($itensToEvaluate, [$item->id, $item->name, $item->picture]);
+            }
+        }
+
+        foreach ($eval as $ev){
+            foreach ($itensToEvaluate as $i => $value){
+                if ($ev == $value[0]){
+                    unset($itensToEvaluate[$i]);
+                }
+            }
+        }
+
+        return view('Assessments.ItemsEvaluate', compact('itensToEvaluate'));
+    }
+
+    public function sendRating(Request $request, $id)
+    {
+        $item = Adverts::find($id);
+
+        if ($item->ratingGrade == null){
+            $item->ratingGrade = $request->radio1;
+        }else{
+            $item->ratingGrade += $request->radio1;
+        }
+
+        if ($item->ratingAmount == null){
+            $item->ratingAmount = 1;
+        }else{
+            $item->ratingAmount += 1;
+        }
+
+        $item->save();
+
+        $user = \App\User::find(Auth::user()->id);
+        if ($user->itemsRated == null){
+            $user->itemsRated = $id;
+        }else{
+            $user->itemsRated = $user->itemsRated . ',' . $id;
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('msg', ' ');
     }
 
     public function update(Request $request, $id, $acao)

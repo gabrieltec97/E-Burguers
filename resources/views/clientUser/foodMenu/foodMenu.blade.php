@@ -63,9 +63,11 @@
                                                                         @endforeach
                                                                     </div>
 
+                                                                    @if($food->extras != null)
                                                                     <div class="col-12">
                                                                         <hr class="mt-4">
                                                                     </div>
+                                                                    @endif
 
                                                                     <div class="col-12">
                                                                         @if($food->extras != null)

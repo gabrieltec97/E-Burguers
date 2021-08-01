@@ -57,7 +57,6 @@ class menuController extends Controller
             }
         }
 
-
         if(isset($tray[0]->id)){
             return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray', 'items', 'val', 'itemWExtras'));
         }else{
@@ -139,51 +138,50 @@ class menuController extends Controller
             }
         }
 
+        $advert = new Adverts();
 
-//        $advert = new Adverts();
-//
-//        $advert->name = $request->mealName;
-//        $advert->value = $request->mealValue;
-//        $advert->ingredients = $request->ingredients;
-//        $advert->foodType = $request->tipoRef;
-//        $advert->tastes = $request->sabores;
-//
-//        if (isset($request->extras)){
-//            $extras = implode(',', $request->extras);
-//            $advert->extras = $extras;
-//        }
-//
-//
-//        if(isset($_POST['combo'])){
-//            $advert->combo = $_POST['combo'];
-//        }
-//
-//        $advert->description = $request->mealDescription;
-//        $advert->comboValue = $request->promoValue;
-//
-//
-//        if($request->hasFile('advPhoto')){
-//           $image = $request->file('advPhoto');
-//           $extension = $image->getClientOriginalExtension();
-//
-//           if ($extension != 'png' && $extension != 'jpg' && $extension != 'jpeg' && $extension != 'gif'){
-//              return back()->with('msg', 'Não foi possível fazer o upload da imagem. Por favor, insira uma imagem no formato png ou jpg.
-//              Você inseriu um arquivo no formato .'.$extension);
-//           }
-//        }
-//
-//        if($request->hasFile('advPhoto')){
-//            $number = rand(1, 2000000);
-//            File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
-//            $advert->picture = 'imagens/img'.$number.'.'.$extension;
-//        }else{
-//            $advert->picture = 'logo/hamburguer.jpg';
-//        }
-//
-//        $advert->save();
-//
-//      return redirect(route('refeicoes.index'))->with('msg-2', 'A refeição foi cadastrada com sucesso e já está disponível no');
-//
+        $advert->name = $request->mealName;
+        $advert->value = $request->mealValue;
+        $advert->ingredients = $request->ingredients;
+        $advert->foodType = $request->tipoRef;
+        $advert->tastes = $request->sabores;
+
+        if (isset($request->extras)){
+            $extras = implode(',', $request->extras);
+            $advert->extras = $extras;
+        }
+
+
+        if(isset($_POST['combo'])){
+            $advert->combo = $_POST['combo'];
+        }
+
+        $advert->description = $request->mealDescription;
+        $advert->comboValue = $request->promoValue;
+
+
+        if($request->hasFile('advPhoto')){
+           $image = $request->file('advPhoto');
+           $extension = $image->getClientOriginalExtension();
+
+           if ($extension != 'png' && $extension != 'jpg' && $extension != 'jpeg' && $extension != 'gif'){
+              return back()->with('msg', 'Não foi possível fazer o upload da imagem. Por favor, insira uma imagem no formato png ou jpg.
+              Você inseriu um arquivo no formato .'.$extension);
+           }
+        }
+
+        if($request->hasFile('advPhoto')){
+            $number = rand(1, 2000000);
+            File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
+            $advert->picture = 'imagens/img'.$number.'.'.$extension;
+        }else{
+            $advert->picture = 'logo/hamburguer.jpg';
+        }
+
+        $advert->save();
+
+      return redirect(route('refeicoes.index'))->with('msg-2', 'A refeição foi cadastrada com sucesso e já está disponível no');
+
 
     }
 

@@ -107,7 +107,12 @@ Route::get('/deletarPendente/{id}', 'OrdersController@deletePending')->name('del
 
 Route::get('/confirmarPendente/{id}', 'OrdersController@confirmPending')->name('confirmaPendente')->middleware('auth');
 
-Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido')->middleware('auth')->middleware('auth');
+Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido')->middleware('auth');
+
+//Rotas de avaliação
+Route::get('/avaliacoes', 'OrdersController@evaluate')->name('avaliacoes')->middleware('auth');
+
+Route::get('/avaliar/{id}', 'OrdersController@sendRating')->name('avaliar')->middleware('auth');
 
 //Rotas do ACL
 Route::resource('/roles', 'RoleController')->middleware('auth');
