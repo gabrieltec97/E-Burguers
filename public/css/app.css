@@ -11254,14 +11254,14 @@ a:hover{
 }
 
 /*Avaliações*/
-body {
-    background: #ebefff;
-}
+/*body {*/
+/*    background: #ebefff;*/
+/*}*/
 
 .wrap {
     width: 250px;
     height: 50px;
-    background: #fff;
+    /*background: #fff;*/
     position: absolute;
     top: 50%;
     left: 50%;
@@ -11274,7 +11274,7 @@ body {
     cursor: pointer;
 }
 .star {
-    color: #91a6ff !important;
+    color: yellow !important;
 }
 .rate {
     height: 50px;
@@ -11325,7 +11325,7 @@ body {
     position: absolute;
     width: 35px;
     height: 35px;
-    background: #91a6ff;
+    background: red;
     border-radius: 5px;
     top: -50px;
     left: 2px;
@@ -11337,7 +11337,7 @@ body {
     font-weight: 900;
     content: "\f0dd";
     display: inline-block;
-    color: #91a6ff;
+    color: red;
     z-index: 1;
     position: absolute;
     left: 9px;
@@ -11357,9 +11357,3 @@ body {
 .rate:hover .face {
     opacity: 1;
 }
-
-/* Not sure if I like this or not. */
-/* Makes the emoji stay displayed */
-/* input[type="radio"]:checked + .face {
-	opacity: 1 !important;
-} */

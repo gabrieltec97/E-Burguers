@@ -5,11 +5,53 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mt-5">
+    <div class="container w-75 mt-5">
        <div class="row mt-5">
 
            @if(count($itensToEvaluate) == 0)
-               sem itens para avaliar
+               <div class="col-12">
+                   <h2 class="text-center mt-5 mb-5">Faça uma avaliação sobre nós</h2>
+               </div>
+
+               <div class="col-12 mb-5">
+                   <div class="wrap">
+                       <div class="stars">
+                           <label class="rate">
+                               <input type="radio" name="radio1" id="star1" value="1">
+                               <div class="face"></div>
+                               <i class="far fa-star star one-star"></i>
+                           </label>
+                           <label class="rate">
+                               <input type="radio" name="radio1" id="star2" value="2">
+                               <div class="face"></div>
+                               <i class="far fa-star star two-star"></i>
+                           </label>
+                           <label class="rate">
+                               <input type="radio" name="radio1" id="star3" value="3">
+                               <div class="face"></div>
+                               <i class="far fa-star star three-star"></i>
+                           </label>
+                           <label class="rate">
+                               <input type="radio" name="radio1" id="star4" value="4">
+                               <div class="face"></div>
+                               <i class="far fa-star star four-star"></i>
+                           </label>
+                           <label class="rate">
+                               <input type="radio" name="radio1" id="star5" value="5">
+                               <div class="face"></div>
+                               <i class="far fa-star star five-star"></i>
+                           </label>
+                       </div>
+                   </div>
+               </div>
+
+               <div class="col-12 mb-3">
+                   <textarea name="opiniao" style="resize: none;" placeholder="Diga em que podemos melhorar :)" class="form-control" cols="30" rows="10"></textarea>
+               </div>
+
+               <div class="col-12 mt-4">
+                   <button class="btn btn-success float-right">Enviar avaliação</button>
+               </div>
            @endif
 
            @foreach($itensToEvaluate as $item)

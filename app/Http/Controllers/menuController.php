@@ -23,14 +23,6 @@ class menuController extends Controller
         $tray = Auth::user()->userOrderTray()->select('id')->get();
         $val = Auth::user()->userOrderTray()->select('totalValue')->get()->toArray();
 
-        $avaliacoes = [
-            4 => '<i class="fas fa-star text-warning"></i>
-                                                <i class="fas fa-star text-warning"></i>
-                                                <i class="fas fa-star text-warning"></i>
-                                                <i class="fas fa-star text-warning"></i>
-                                                <i class="fas fa-star-half text-warning"></i>'
-        ];
-
         if (isset($tray[0]->id)){
             $items = DB::table('item_without_extras')
                 ->select('itemName', 'id')
@@ -66,9 +58,9 @@ class menuController extends Controller
         }
 
         if(isset($tray[0]->id)){
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'avaliacoes', 'insert', 'tray', 'items', 'val', 'itemWExtras'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray', 'items', 'val', 'itemWExtras'));
         }else{
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'avaliacoes', 'insert'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert'));
         }
     }
 

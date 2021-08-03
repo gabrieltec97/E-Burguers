@@ -50,6 +50,8 @@
                                     <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Criado em:</span><span class="text-primary"> {{ $meal->created_at }}</span></label>
                                     <br>
                                     <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Última modificação:</span><span class="text-primary"> {{ $meal->updated_at }} </span></label>
+                                    <br>
+                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Nota de avaliação:</span><span class="text-primary"> {{ round($meal->finalGrade, 1) }}</span></label>
 
                                     <a href="{{ route('refeicoes.edit', $meal->id) }}" class="btn btn-primary mt-5 float-right"><i class="fas fa-edit mr-2"></i>Editar dados cadastrais</a>
                                 </div>
