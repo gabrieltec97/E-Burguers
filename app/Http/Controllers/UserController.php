@@ -30,9 +30,9 @@ class UserController extends Controller
 
     public function management()
     {
-        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
-        }
+//        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+//            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+//        }
 
         $employees = User::all();
 

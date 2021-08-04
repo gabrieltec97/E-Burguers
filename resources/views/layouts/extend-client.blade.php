@@ -48,6 +48,9 @@
             <li class="nav-item">
                 <a href="{{ route('pedidosPendentes') }}" class="nav-item nav-link menu-items">Pedidos pendentes</a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('avaliacoes') }}" class="nav-item nav-link menu-items">Avaliações</a>
+            </li>
         </ul>
 
         <span class="navbar-text area-carrinho">

@@ -41,22 +41,20 @@
                             <thead>
                             <tr>
                                 <th scope="col">Nome</th>
-                                <th scope="col">Cargo</th>
-                                <th scope="col">Perfil de usuário</th>
-                                <th scope="col">Perfis</th>
+                                <th scope="col">Telefone</th>
+                                <th scope="col">Horário de serviço</th>
+                                <th scope="col">Perfis de usuário</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($employees as $employee)
                                 <tr>
                                     <td class="font-weight-bold"><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->name }} {{ $employee->surname }}</a></td>
-                                    <td class="font-weight-bold"><a href="{{ route('usuario.show', $employee->id) }}" style="text-decoration:none; color:rgba(0,0,0,0.73);">{{ $employee->occupation }}</a></td>
-                                    <td class="font-weight-bold"><a href="{{ route('usuario.show', $employee->id) }}" style="text-decoration:none; color:rgba(0,0,0,0.73);">{{ $employee->profile }}</a></td>
-                                    <td class="font-weight-bold"><a href="{{ route('userRoles', ['user' => $employee->id]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Perfis</a></td>
+                                    <td class="font-weight-bold"><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->phone }} </a></td>
+                                    <td class="font-weight-bold"><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->workingTime }} </a></td>
+                                    <td class="font-weight-bold"><a href="{{ route('userRoles', ['user' => $employee->id]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Configurar perfil</a></td>
                                 </tr>
                             @endforeach
-
-
                             </tbody>
                         </table>
                     </div>

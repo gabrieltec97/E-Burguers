@@ -127,6 +127,15 @@
         </li>
         @endcan
 
+    <!-- Nav Item - Charts -->
+        @can('Gerenciamento de Refeições')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('avaliacoesClientes') }}">
+                    <i class="far fa-thumbs-up"></i>
+                    <span class="font-weight-bold">Avaliações</span></a>
+            </li>
+        @endcan
+
         <!-- Nav Item - Charts -->
         @can('Informações Financeiras')
         <li class="nav-item">

@@ -110,9 +110,11 @@ Route::get('/confirmarPendente/{id}', 'OrdersController@confirmPending')->name('
 Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido')->middleware('auth');
 
 //Rotas de avaliação
-Route::get('/avaliacoes', 'OrdersController@evaluate')->name('avaliacoes')->middleware('auth');
+Route::get('/avaliacoes', 'RatingController@evaluate')->name('avaliacoes')->middleware('auth');
 
-Route::get('/avaliar/{id}', 'OrdersController@sendRating')->name('avaliar')->middleware('auth');
+Route::get('/avaliar/{id}', 'RatingController@sendRating')->name('avaliar')->middleware('auth');
+
+Route::get('/avaliacoesClientes', 'RatingController@index')->name('avaliacoesClientes')->middleware('auth');
 
 //Rotas do ACL
 Route::resource('/roles', 'RoleController')->middleware('auth');
