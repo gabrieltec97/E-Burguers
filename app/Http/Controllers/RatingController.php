@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Adverts;
+use App\Rating;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +18,21 @@ class RatingController extends Controller
      */
     public function index()
     {
-        //
+        $rating = Rating::all()->toArray();
+        $grade = 0;
+
+        foreach ($rating as $r){
+            $grade += $r['ratingGrade'];
+        }
+
+        $grade = $grade / count($rating);
+
+        $data = [
+          'count' => count($rating),
+          'grade' => $grade
+        ];
+
+        return view ('Assessments.assessments', compact('rating', 'data'));
     }
 
     public function evaluate()
@@ -45,7 +61,13 @@ class RatingController extends Controller
             }
         }
 
-        return view('Assessments.ItemsEvaluate', compact('itensToEvaluate'));
+        $rated = DB::table('ratings')
+            ->where('idUser', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        $rated = count($rated);
+
+        return view('Assessments.ItemsEvaluate', compact('itensToEvaluate', 'rated'));
     }
 
     public function sendRating(Request $request, $id)
@@ -88,6 +110,30 @@ class RatingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function rate(Request $request)
+    {
+        $rated = DB::table('ratings')
+            ->where('idUser', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        if (count($rated) == 0){
+            $rate = new Rating();
+            $rate->idUser = Auth::user()->id;
+            $rate->ratingGrade = $request->radio1;
+            $rate->comments = $request->opiniao;
+            $rate->ratingAmount = '';
+            $rate->totalGrade = '';
+
+            $rate->save();
+        }else{
+            DB::table('ratings')
+                ->where('idUser', '=', Auth::user()->id)
+                ->update(['ratingGrade' => $request->radio1, 'comments' => $request->opiniao]);
+        }
+
+        return redirect()->back()->with('msg', ' ');
+    }
     public function create()
     {
         //

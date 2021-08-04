@@ -1,7 +1,7 @@
 @extends('layouts.extend-client')
 <script src="{{ asset('js/jquery.js') }}"></script>
 @section('title')
-    Meus dados cadastrais
+    Sua opinião sobre nós
 @endsection
 
 @section('content')
@@ -9,49 +9,125 @@
        <div class="row mt-5">
 
            @if(count($itensToEvaluate) == 0)
-               <div class="col-12">
-                   <h2 class="text-center mt-5 mb-5">Faça uma avaliação sobre nós</h2>
-               </div>
+               @if($rated == 0)
+                   <div class="col-12">
+                       <h2 class="text-center mt-5 mb-5">Faça uma avaliação sobre nós</h2>
+                   </div>
 
-               <div class="col-12 mb-5">
-                   <div class="wrap">
-                       <div class="stars">
-                           <label class="rate">
-                               <input type="radio" name="radio1" id="star1" value="1">
-                               <div class="face"></div>
-                               <i class="far fa-star star one-star"></i>
-                           </label>
-                           <label class="rate">
-                               <input type="radio" name="radio1" id="star2" value="2">
-                               <div class="face"></div>
-                               <i class="far fa-star star two-star"></i>
-                           </label>
-                           <label class="rate">
-                               <input type="radio" name="radio1" id="star3" value="3">
-                               <div class="face"></div>
-                               <i class="far fa-star star three-star"></i>
-                           </label>
-                           <label class="rate">
-                               <input type="radio" name="radio1" id="star4" value="4">
-                               <div class="face"></div>
-                               <i class="far fa-star star four-star"></i>
-                           </label>
-                           <label class="rate">
-                               <input type="radio" name="radio1" id="star5" value="5">
-                               <div class="face"></div>
-                               <i class="far fa-star star five-star"></i>
-                           </label>
+                   <div class="col-12 mb-5">
+                       <form action="{{ route('enviarAvaliacao') }}" method="get">
+                           @csrf
+                           <div class="wrap">
+                               <div class="stars">
+                                   <label class="rate">
+                                       <input type="radio" name="radio1" id="star1" value="1">
+                                       <div class="face"></div>
+                                       <i class="far fa-star star one-star"></i>
+                                   </label>
+                                   <label class="rate">
+                                       <input type="radio" name="radio1" id="star2" value="2">
+                                       <div class="face"></div>
+                                       <i class="far fa-star star two-star"></i>
+                                   </label>
+                                   <label class="rate">
+                                       <input type="radio" name="radio1" id="star3" value="3">
+                                       <div class="face"></div>
+                                       <i class="far fa-star star three-star"></i>
+                                   </label>
+                                   <label class="rate">
+                                       <input type="radio" name="radio1" id="star4" value="4">
+                                       <div class="face"></div>
+                                       <i class="far fa-star star four-star"></i>
+                                   </label>
+                                   <label class="rate">
+                                       <input type="radio" name="radio1" required id="star5" value="5">
+                                       <div class="face"></div>
+                                       <i class="far fa-star star five-star"></i>
+                                   </label>
+                               </div>
+                           </div>
+                   </div>
+
+                   <div class="col-12 mb-3">
+                       <textarea name="opiniao" style="resize: none;" placeholder="Diga em que podemos melhorar :)" class="form-control" cols="30" rows="10" required></textarea>
+                   </div>
+
+                   <div class="col-12 mt-4">
+                       <button class="btn btn-success float-right">Enviar avaliação</button>
+                   </div>
+                   </form>
+
+               @else
+                   Obrigado pela sua avaliação!
+
+                   <button class="btn btn-primary" data-toggle="modal" data-target="#modalAvaliar">Avaliar novamente</button>
+
+                   <!-- Modal -->
+                   <div class="modal fade" id="modalAvaliar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                       <div class="modal-dialog" role="document">
+                           <div class="modal-content">
+                               <div class="modal-header">
+                                   <h5 class="modal-title" id="exampleModalLabel">Nova avaliação</h5>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                   </button>
+                               </div>
+                               <div class="modal-body">
+                                   <div class="container-fluid">
+                                       <div class="row">
+                                           <div class="col-12">
+                                               <h2 class="text-center mb-4">Faça uma avaliação sobre nós</h2>
+                                           </div>
+
+                                           <div class="col-12 mb-4">
+                                               <form action="{{ route('enviarAvaliacao') }}" method="get">
+                                                   @csrf
+                                                   <div class="wrap">
+                                                       <div class="stars">
+                                                           <label class="rate">
+                                                               <input type="radio" name="radio1" id="star1" value="1">
+                                                               <div class="face"></div>
+                                                               <i class="far fa-star star one-star"></i>
+                                                           </label>
+                                                           <label class="rate">
+                                                               <input type="radio" name="radio1" id="star2" value="2">
+                                                               <div class="face"></div>
+                                                               <i class="far fa-star star two-star"></i>
+                                                           </label>
+                                                           <label class="rate">
+                                                               <input type="radio" name="radio1" id="star3" value="3">
+                                                               <div class="face"></div>
+                                                               <i class="far fa-star star three-star"></i>
+                                                           </label>
+                                                           <label class="rate">
+                                                               <input type="radio" name="radio1" id="star4" value="4">
+                                                               <div class="face"></div>
+                                                               <i class="far fa-star star four-star"></i>
+                                                           </label>
+                                                           <label class="rate">
+                                                               <input type="radio" name="radio1" required id="star5" value="5">
+                                                               <div class="face"></div>
+                                                               <i class="far fa-star star five-star"></i>
+                                                           </label>
+                                                       </div>
+                                                   </div>
+                                           </div>
+
+                                           <div class="col-12 mb-3">
+                                               <textarea name="opiniao" style="resize: none;" placeholder="Diga-nos o que mudou desde a ultima avaliação :)" class="form-control" cols="30" rows="10" required></textarea>
+                                           </div>
+
+                                           <div class="col-12 mt-4">
+                                               <button class="btn btn-success float-right">Enviar avaliação</button>
+                                           </div>
+                                           </form>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
                        </div>
                    </div>
-               </div>
-
-               <div class="col-12 mb-3">
-                   <textarea name="opiniao" style="resize: none;" placeholder="Diga em que podemos melhorar :)" class="form-control" cols="30" rows="10"></textarea>
-               </div>
-
-               <div class="col-12 mt-4">
-                   <button class="btn btn-success float-right">Enviar avaliação</button>
-               </div>
+           @endif
            @endif
 
            @foreach($itensToEvaluate as $item)
@@ -149,8 +225,6 @@
 
         });
     </script>
-
-
 
     @if(session('msg'))
         <script>

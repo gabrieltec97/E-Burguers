@@ -116,6 +116,9 @@ Route::get('/avaliar/{id}', 'RatingController@sendRating')->name('avaliar')->mid
 
 Route::get('/avaliacoesClientes', 'RatingController@index')->name('avaliacoesClientes')->middleware('auth');
 
+Route::get('/enviarAvaliacao', 'RatingController@rate')->name('enviarAvaliacao')->middleware('auth');
+
+
 //Rotas do ACL
 Route::resource('/roles', 'RoleController')->middleware('auth');
 
