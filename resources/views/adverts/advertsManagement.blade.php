@@ -32,17 +32,23 @@
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Refeições cadastradas</div>
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="travarAvaliacoes" data-toggle="modal" data-target="#modalTrava" style="margin-top: 13px" id="travarAval" name="travarAval">
+                                <label for="travarAval"> Habilitar avaliações</label><br>
+                            </div>
 
-                        <div class="col-12 mb-2 d-flex justify-content-end">
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" title="Aqui você poderá fazer cadastros" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-plus"></i>
-                                    Novo
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    <li><button class="dropdown-item" type="button"><i class="fas fa-hamburger text-primary mr-2"></i><a class="font-weight-bold" href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none;">Nova refeição</a></button></li>
-                                    <li><button class="dropdown-item" type="button"><i class="fas fa-plus-square text-success mr-2"></i><a class="font-weight-bold text-success" href="{{ route('itensAdicionais.index') }}" title="Itens em que o cliente paga a mais para adicionar no sanduíche." style="font-size: 15px; text-decoration: none;">Novo item adicional</a></button></li>
-                                </ul>
+                            <div class="col-6 mb-2 d-flex justify-content-end">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" title="Aqui você poderá fazer cadastros" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-plus"></i>
+                                        Novo
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        <li><button class="dropdown-item" type="button"><i class="fas fa-hamburger text-primary mr-2"></i><a class="font-weight-bold" href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none;">Nova refeição</a></button></li>
+                                        <li><button class="dropdown-item" type="button"><i class="fas fa-plus-square text-success mr-2"></i><a class="font-weight-bold text-success" href="{{ route('itensAdicionais.index') }}" title="Itens em que o cliente paga a mais para adicionar no sanduíche." style="font-size: 15px; text-decoration: none;">Novo item adicional</a></button></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
@@ -72,6 +78,32 @@
             </div>
 
 
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTrava" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Atenção!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#">
+                        <p>
+                            Deseja ocultar as avaliações? As avaliações dos clientes não aparecerão mais ao lado de cada item
+                            do cardápio.
+                        </p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Voltar</button>
+                    <button type="button" class="btn btn-primary">Sim</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

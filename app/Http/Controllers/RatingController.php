@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class RatingController extends Controller
 {
@@ -18,6 +20,11 @@ class RatingController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()->hasPermissionTo('Avaliações')){
+//            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->back();
+        }
+
         $rating = Rating::all()->toArray();
         $grade = 0;
 
@@ -29,7 +36,7 @@ class RatingController extends Controller
 
         $data = [
           'count' => count($rating),
-          'grade' => $grade
+          'grade' => round($grade, 1)
         ];
 
         return view ('Assessments.assessments', compact('rating', 'data'));
@@ -65,7 +72,14 @@ class RatingController extends Controller
             ->where('idUser', '=', Auth::user()->id)
             ->get()->toArray();
 
-        $rated = count($rated);
+        $orders = DB::table('orders')
+            ->where('idClient', '=', Auth::user()->id)
+            ->get();
+
+        $rated = [
+            'rated' => count($rated),
+            'ordered' => count($orders)
+        ];
 
         return view('Assessments.ItemsEvaluate', compact('itensToEvaluate', 'rated'));
     }

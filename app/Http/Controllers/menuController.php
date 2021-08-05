@@ -16,6 +16,15 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class menuController extends Controller
 {
+    public function index()
+    {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
+        $meals = Adverts::all();
+        return view('adverts.advertsManagement', compact('meals'));
+    }
 
     public function foodMenu($insert)
     {
@@ -64,14 +73,9 @@ class menuController extends Controller
         }
     }
 
-    public function index()
+    public function ratingLock(Request $request)
     {
-        if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
-        }
 
-        $meals = Adverts::all();
-        return view('adverts.advertsManagement', compact('meals'));
     }
 
     /**

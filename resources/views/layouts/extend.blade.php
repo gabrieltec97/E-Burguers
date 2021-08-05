@@ -128,7 +128,7 @@
         @endcan
 
     <!-- Nav Item - Charts -->
-        @can('Gerenciamento de Refeições')
+        @can('Avaliações')
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('avaliacoesClientes') }}">
                     <i class="far fa-thumbs-up"></i>

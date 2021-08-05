@@ -42,7 +42,13 @@
         </div>
 
         <div class="col-12 mt-3 mt-lg-0 col-lg-4">
-            <div class="card border-left-info shadow h-100 py-2 card-dash3">
+            @if($data['grade'] >= 4)
+            <div class="card border-left-success shadow h-100 py-2 card-dash3">
+            @elseif($data['grade'] >= 3 && $data['grade'] < 4)
+            <div class="card border-left-warning shadow h-100 py-2 card-dash3">
+            @elseif($data['grade'] < 3)
+            <div class="card border-left-danger shadow h-100 py-2 card-dash3">
+            @endif
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">

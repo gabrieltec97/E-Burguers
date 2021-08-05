@@ -1042,7 +1042,6 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
         }
     });
 
-
 //Copiando informações de entrega.
 $(".copiado").hide();
 
