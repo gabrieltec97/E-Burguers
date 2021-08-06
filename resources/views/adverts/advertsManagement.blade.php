@@ -14,7 +14,7 @@
             <div class="col-12 mb-5">
                 @if(session('msg-2'))
                     <div class="alert alert-success alerta-sucesso-ref alert-dismissible fade show" role="alert">
-                        <span class="font-weight-bold">Legal!</span> {{ session('msg-2') }} <a class="text-primary font-weight-bold" href="{{ route('cardapio') }}">cardápio!</a>
+                        <span class="font-weight-bold">Tudo certo!</span> {{ session('msg-2') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -23,7 +23,7 @@
 
                     @if(session('msg'))
                         <div class="alert alert-danger alerta-sucesso-user alert-dismissible fade show" role="alert">
-                            <span class="text-muted font-weight-bold">{{ session('msg') }}</span>
+                            <span class="font-weight-bold">Feito! </span>{{ session('msg') }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <input type="checkbox" class="travarAvaliacoes" data-toggle="modal" data-target="#modalTrava" style="margin-top: 13px" id="travarAval" name="travarAval">
+                                <input type="checkbox" class="travarAvaliacoes" data-toggle="modal" data-target="#modalTrava" style="margin-top: 13px" id="travarAval" name="travarAval" {{ $rate == "Sim" ? 'checked' : '' }}>
                                 <label for="travarAval"> Habilitar avaliações</label><br>
                             </div>
 
@@ -92,17 +92,23 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#">
+                    <form action="{{ route('travaAvaliacoes', $rate) }}" method="get">
+                        @csrf
                         <p>
+                            @if($rate == "Sim")
                             Deseja ocultar as avaliações? As avaliações dos clientes não aparecerão mais ao lado de cada item
                             do cardápio.
+                            @else
+                                Deseja mostrar as avaliações? As avaliações dos clientes aparecerão ao lado de cada item
+                                do cardápio.
+                            @endif
                         </p>
-                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal">Voltar</button>
-                    <button type="button" class="btn btn-primary">Sim</button>
+                    <button type="submit" class="btn btn-primary">Sim</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

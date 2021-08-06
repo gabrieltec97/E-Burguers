@@ -136,8 +136,6 @@ class RatingController extends Controller
             $rate->idUser = Auth::user()->id;
             $rate->ratingGrade = $request->radio1;
             $rate->comments = $request->opiniao;
-            $rate->ratingAmount = '';
-            $rate->totalGrade = '';
 
             $rate->save();
         }else{

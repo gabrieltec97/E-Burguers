@@ -22,8 +22,21 @@ class menuController extends Controller
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
+        $lock = DB::table('lock_rating')
+            ->get()->toArray();
+
+        if (count($lock) == 0){
+            DB::table('lock_rating')
+                ->insert(
+                    ['lock' => "Sim"]);
+
+            $rate = "Sim";
+        }else{
+            $rate = $lock[0]->lock;
+        }
+
         $meals = Adverts::all();
-        return view('adverts.advertsManagement', compact('meals'));
+        return view('adverts.advertsManagement', compact('meals', 'rate'));
     }
 
     public function foodMenu($insert)
@@ -66,16 +79,42 @@ class menuController extends Controller
             }
         }
 
-        if(isset($tray[0]->id)){
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'tray', 'items', 'val', 'itemWExtras'));
+        $rate = DB::table('lock_rating')
+            ->get();
+
+        if (isset($rate[0])){
+            $rate = $rate[0]->lock;
         }else{
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert'));
+            $rate = "Não";
+        }
+
+        if(isset($tray[0]->id)){
+
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'rate', 'tray', 'items', 'val', 'itemWExtras'));
+        }else{
+
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'rate', 'insert', 'rate'));
         }
     }
 
-    public function ratingLock(Request $request)
+    public function ratingLock($rate)
     {
+        if ($rate == "Sim"){
+            DB::table('lock_rating')
+                ->update([
+                    'lock' => 'Não'
+                ]);
 
+            return redirect()->back()->with('msg', 'As avaliações não aparecerão para os clientes!');
+        }else{
+            echo 'altere';
+            DB::table('lock_rating')
+                ->update([
+                    'lock' => 'Sim'
+                ]);
+
+            return redirect()->back()->with('msg-2', 'As avaliações aparecerão para os clientes!');
+        }
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRatingsTable extends Migration
+class CreateLockRatingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateRatingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('lock_rating', function (Blueprint $table) {
             $table->id();
-            $table->string('idUser');
-            $table->string('ratingGrade');
-            $table->string('comments')->nullable();
+            $table->string('lock');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateRatingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('lock_rating');
     }
 }
