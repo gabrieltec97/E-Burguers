@@ -570,68 +570,64 @@ class FinancialController extends Controller
         }
 
         $adverts = Adverts::all();
-        $query = array();
-        $count = array();
+        $sale = array();
         $total = 0;
-
-        foreach ($adverts as $adverte){
-            $combo = DB::table('orders')
-                ->where('hamburguer', 'like', '%'.$adverte->name.'%')
-                ->orWhere('fries', 'like', '%'.$adverte->name.'%')
-                ->orWhere('drinks', 'like', '%'.$adverte->name.'%')
-                ->where('status', '<>', 'Cancelado')
-                ->count();
-
-            array_push($count, [$adverte->name,  $combo]);
-
-        }
-
-
-        foreach ($adverts as $advert) {
-
-            $detached = DB::table('orders')
-                ->select(DB::raw("detached,
-                CHAR_LENGTH(detached) - CHAR_LENGTH(REPLACE(LOWER(detached), '". strtolower($advert->name)."'
-                , SPACE(LENGTH('". strtolower($advert->name)."')-1)))
-                AS total"))
+        foreach ($adverts as $advert){
+            $query = DB::table('orders')
+                ->selectRaw("hamburguer,
+                    fries,
+                    drinks,
+	                detached,
+                    CHAR_LENGTH(detached) - CHAR_LENGTH(REPLACE(LOWER(detached), '". strtolower($advert->name)."',
+                    SPACE(LENGTH('". strtolower($advert->name)."')-1)))
+                        AS total ,
+                         CHAR_LENGTH(hamburguer) - CHAR_LENGTH(REPLACE(LOWER(hamburguer), '". strtolower($advert->name)."',
+                          SPACE(LENGTH('". strtolower($advert->name)."')-1)))
+                        AS total2,
+                         CHAR_LENGTH(fries) - CHAR_LENGTH(REPLACE(LOWER(fries), '". strtolower($advert->name)."',
+                         SPACE(LENGTH('". strtolower($advert->name)."')-1)))
+                        AS total3,
+                         CHAR_LENGTH(drinks) - CHAR_LENGTH(REPLACE(LOWER(drinks), '". strtolower($advert->name)."',
+                         SPACE(LENGTH('". strtolower($advert->name)."')-1)))
+                        AS total4")
                 ->whereRaw("detached like '%". strtolower($advert->name)."%'" )
+                ->orWhereRaw("hamburguer like '%". strtolower($advert->name)."%'" )
+                ->orWhereRaw("fries like '%". strtolower($advert->name)."%'" )
+                ->orWhereRaw("drinks like '%". strtolower($advert->name)."%'" )
+                ->where(['month' => $thisMonth])
                 ->get()->toArray();
 
-            foreach ($detached as $dt){
-                if ($dt->total != 0){
-                    $total += $dt->total;
-                }
+            foreach ($query as $q){
+                $total += $q->total + $q->total2 + $q->total3 +$q->total4;
             }
 
-            foreach ($count as $c){
-                if ($c[0] == $advert->name){
-                    array_push($count, [$advert->name, $c[1] + $total]);
-                }
-            }
+            array_push($sale, [$advert->name, $total]);
 
             $total = 0;
         }
 
-        array_multisort(array_column($count,'1'),SORT_DESC, $count);
+        //Verifica quantos foram vendidos de cada item.
+        $eachItem = $sale;
 
-        $sale = array();
-        array_push($sale, $count[0], $count[1], $count[2], $count[3]);
+        array_multisort(array_column($sale,'1'),SORT_DESC, $sale);
 
         $chart2 = new Grafico();
 
         $chart2->labels([$sale[0][0], $sale[1][0], $sale[2][0], $sale[3][0]]);
         $chart2->dataset('Total de vendas este ano', 'doughnut' , [$sale[0][1],$sale[1][1],$sale[2][1], $sale[3][1]])->options([
-        'backgroundColor'=> [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-    ],
+            'backgroundColor' => [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ],
         ]);
 
-        if (isset($sale[0])){
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
-        }else{
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
-        }
+        print_r($eachItem);
+
+//        if (isset($sale[0])){
+//            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
+//        }else{
+//            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+//        }
     }
 }
