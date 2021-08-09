@@ -167,7 +167,13 @@ class OrdersController extends Controller
         $newOrder->monthDay =  date("d");
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->address = $updOrder[0]['address'];
-        $newOrder->payingMethod = $updOrder[0]['payingMethod'];
+
+        if($updOrder[0]['deliverWay'] == "Retirada no restaurante"){
+            $newOrder->payingMethod = 'Pagamento no restaurante';
+        }else{
+            $newOrder->payingMethod = $updOrder[0]['payingMethod'];
+        }
+
         if($itemTwo != null){
             $newOrder->extras = 'Sim';
         }

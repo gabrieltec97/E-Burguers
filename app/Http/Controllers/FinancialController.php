@@ -510,15 +510,6 @@ class FinancialController extends Controller
             ]);
         }
 
-        $chart2 = new Grafico();
-
-        $chart2->labels(['Combo', 'Avulso', 'Sobremesa']);
-        $chart2->dataset('Total de vendas este ano', 'doughnut' , [100,200,300])->options([
-            'backgroundColor' => '#ccf5ff',
-//            'borderColor' => '#008fb3',
-//            'lineTension' => 0.5
-        ]);
-
 
         //Recuperando os itens mais vendidos.
         $detached = [];
@@ -578,31 +569,67 @@ class FinancialController extends Controller
             }
         }
 
+        $adverts = Adverts::all();
+        $query = array();
+        $count = array();
+        $total = 0;
 
-//        $novo = [];
-//
-//        foreach ($detached as $chave => $valor){
-//
-//            if (isset($novo[$valor['item']])){
-//                $novo[$valor['item']] += $valor['quantidade'];
-//            }else{
-//                $novo[$valor['item']] = $valor['quantidade'];
-//            }
-//        }
-//
-//        $detached = [];
-//
-//        foreach ($novo as $key2 =>$value2){
-//            $detached[] = ['item' =>$key2, 'quantidade' => $value2];
-//        }
+        foreach ($adverts as $adverte){
+            $combo = DB::table('orders')
+                ->where('hamburguer', 'like', '%'.$adverte->name.'%')
+                ->orWhere('fries', 'like', '%'.$adverte->name.'%')
+                ->orWhere('drinks', 'like', '%'.$adverte->name.'%')
+                ->where('status', '<>', 'Cancelado')
+                ->count();
 
-        array_multisort(array_column($detached,'quantidade'),SORT_DESC, $detached);
+            array_push($count, [$adverte->name,  $combo]);
 
-        $mostSale = array_chunk($detached, 4);
-        if (isset($mostSale[0])){
-            $FinalSale = $mostSale[0];
+        }
 
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'FinalSale'));
+
+        foreach ($adverts as $advert) {
+
+            $detached = DB::table('orders')
+                ->select(DB::raw("detached,
+                CHAR_LENGTH(detached) - CHAR_LENGTH(REPLACE(LOWER(detached), '". strtolower($advert->name)."'
+                , SPACE(LENGTH('". strtolower($advert->name)."')-1)))
+                AS total"))
+                ->whereRaw("detached like '%". strtolower($advert->name)."%'" )
+                ->get()->toArray();
+
+            foreach ($detached as $dt){
+                if ($dt->total != 0){
+                    $total += $dt->total;
+                }
+            }
+
+            foreach ($count as $c){
+                if ($c[0] == $advert->name){
+                    array_push($count, [$advert->name, $c[1] + $total]);
+                }
+            }
+
+            $total = 0;
+        }
+
+        array_multisort(array_column($count,'1'),SORT_DESC, $count);
+
+        $sale = array();
+        array_push($sale, $count[0], $count[1], $count[2], $count[3]);
+
+        $chart2 = new Grafico();
+
+        $chart2->labels([$sale[0][0], $sale[1][0], $sale[2][0], $sale[3][0]]);
+        $chart2->dataset('Total de vendas este ano', 'doughnut' , [$sale[0][1],$sale[1][1],$sale[2][1], $sale[3][1]])->options([
+        'backgroundColor'=> [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+    ],
+        ]);
+
+        if (isset($sale[0])){
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
         }else{
             return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
         }

@@ -99,32 +99,12 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">
-                        <h5 class="m-0 font-weight-bold text-white">Itens de combo mais vendidos</h5>
+                        <h5 class="m-0 font-weight-bold text-white">Itens mais vendidos</h5>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-pie pt-4 pb-2">
-                            <canvas id="myPieChart"></canvas>
-                        </div>
-                        <div class="mt-4 text-center small">
-                            @if(isset($FinalSale))
-                                @if($FinalSale != '')
-                                    <span class="mr-2">
-                                            <i class="fas fa-circle text-danger"></i>{{ $FinalSale[0]['item'] }}
-                                        </span>
-                                    <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i>{{ $FinalSale[1]['item'] }}
-                                        </span>
-                                    <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i>{{ $FinalSale[2]['item'] }}
-                                        </span>
-                                @if(isset($FinalSale[3]['item']))
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i>{{ $FinalSale[3]['item'] }}
-                                        </span>
-                                @endif
-                                @endif
-                                @endif
+                        <div class="chart-pie pb-2">
+                            {!! $chart2->container() !!}
                         </div>
                     </div>
                 </div>

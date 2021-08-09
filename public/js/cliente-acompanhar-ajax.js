@@ -26,8 +26,14 @@ $(document).ready(() => {
         });
     }
 
+    function mostrarNotificacao5(){
+        const notificacao = new Notification("Nova notificação.", {
+            body: 'Ei! O status do seu pedido foi atualizado, dá uma olhada!'
+        });
+    }
+
     var send = 'nao';
-    var send2 = 'nao'
+    var send2 = 'nao';
 
     setInterval(function(){
 
@@ -148,6 +154,7 @@ $(document).ready(() => {
                             }
                         }
                     }
+
                 }else if(dados.length > 1){
 
                     //Envio de notificações
