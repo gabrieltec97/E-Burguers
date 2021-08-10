@@ -34,8 +34,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <input type="checkbox" class="travarAvaliacoes" data-toggle="modal" data-target="#modalTrava" style="margin-top: 13px" id="travarAval" name="travarAval" {{ $rate == "Sim" ? 'checked' : '' }}>
-                                <label for="travarAval"> Habilitar avaliações</label><br>
+                                <input type="checkbox" class="form-check-input ml-1 travarAvaliacoes" data-toggle="modal" data-target="#modalTrava" id="travarAval" name="travarAval" {{ $rate == "Sim" ? 'checked' : '' }}>
+                                <label for="travarAval" class="ml-4"> Habilitar avaliações</label><br>
                             </div>
 
                             <div class="col-6 mb-2 d-flex justify-content-end">

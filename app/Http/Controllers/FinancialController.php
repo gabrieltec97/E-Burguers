@@ -570,6 +570,7 @@ class FinancialController extends Controller
         }
 
         $adverts = Adverts::all();
+        $items = Adverts::paginate(8);
         $sale = array();
         $total = 0;
         foreach ($adverts as $advert){
@@ -599,11 +600,16 @@ class FinancialController extends Controller
                 $total += $q->total + $q->total2 + $q->total3 +$q->total4;
             }
 
+            foreach ($items as $item => $v){
+                if ($v->name == $advert->name){
+                    $v->total = $total;
+                }
+        }
+
             array_push($sale, [$advert->name, $total, $advert->id]);
 
             $total = 0;
         }
-
         //Verifica quantos foram vendidos de cada item.
 
         array_multisort(array_column($sale,'1'),SORT_DESC, $sale);
@@ -620,9 +626,9 @@ class FinancialController extends Controller
         ]);
 
         if (isset($sale[0])){
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale', 'items'));
         }else{
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'items'));
         }
     }
 }

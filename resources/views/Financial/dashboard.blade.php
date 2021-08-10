@@ -1,4 +1,5 @@
 @extends('layouts.extend')
+<script src="{{ asset('js/jquery.js') }}"></script>
 
 @section('title')
     Dados financeiros
@@ -111,8 +112,8 @@
             </div>
 
             <div class="col-12 mb-5">
-                    <div class="card shadow">
-                        <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">
+                    <div class="card shadow" style="height: 580px">
+                        <div class="card-header font-weight-bold text-muted items" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">
                             <h4 class="m-0 font-weight-bold text-white">Itens vendidos</h4></div>
 
                         <div class="card-body financial-table">
@@ -126,17 +127,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                    @foreach($sale as $s)
+                                    @foreach($items as $item => $value)
                                     <tr>
-                                        <th style="color: black; cursor: pointer;" title="{{ $s[1] }} Itens vendidos" scope="row">{{ $s[2] }}</th>
-                                        <td style="color: black; cursor: pointer;" title="{{ $s[1] }} Itens vendidos">{{ $s[0] }}</td>
-                                        <td style="color: black; cursor: pointer;" title="{{ $s[1] }} Itens vendidos">{{ $s[1] }}</td>
+                                        <th style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos" scope="row">{{ $value->id }}</th>
+                                        <td style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos">{{ $value->name }}</td>
+                                        <td style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos">{{ $value->total > 2 ? $value->total . ' vendas' : $value->total . ' venda'}} </td>
                                     </tr>
                                     @endforeach
 
                                 </tbody>
                             </table>
+
+                            <div class="d-flex justify-content-center mt-2">
+                                {{ $items->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -145,6 +149,15 @@
         </div>
     </div>
 
+    <script>
+        var url = document.URL;
+
+        if (url.includes('page')){
+            $('html, body').animate({
+                scrollTop: $(".items").offset().top
+            }, 1500);
+        }
+    </script>
 
    @if(isset($FinalSale))
        @if($FinalSale != '')
