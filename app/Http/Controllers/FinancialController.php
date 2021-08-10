@@ -594,7 +594,6 @@ class FinancialController extends Controller
                 ->orWhereRaw("hamburguer like '%". strtolower($advert->name)."%'" )
                 ->orWhereRaw("fries like '%". strtolower($advert->name)."%'" )
                 ->orWhereRaw("drinks like '%". strtolower($advert->name)."%'" )
-                ->where(['month' => $thisMonth])
                 ->get()->toArray();
 
             foreach ($query as $q){
@@ -622,12 +621,10 @@ class FinancialController extends Controller
             ],
         ]);
 
-        print_r($eachItem);
-
-//        if (isset($sale[0])){
-//            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
-//        }else{
-//            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
-//        }
+        if (isset($sale[0])){
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
+        }else{
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+        }
     }
 }
