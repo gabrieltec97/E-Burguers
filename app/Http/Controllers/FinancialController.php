@@ -590,23 +590,21 @@ class FinancialController extends Controller
                          CHAR_LENGTH(drinks) - CHAR_LENGTH(REPLACE(LOWER(drinks), '". strtolower($advert->name)."',
                          SPACE(LENGTH('". strtolower($advert->name)."')-1)))
                         AS total4")
-                ->whereRaw("detached like '%". strtolower($advert->name)."%'" )
-                ->orWhereRaw("hamburguer like '%". strtolower($advert->name)."%'" )
-                ->orWhereRaw("fries like '%". strtolower($advert->name)."%'" )
-                ->orWhereRaw("drinks like '%". strtolower($advert->name)."%'" )
+                ->where('month', '=', $thisMonth)
+                ->where('year', '=', $thisYear)
+                ->where('status', '=', 'Pedido Entregue')
                 ->get()->toArray();
 
             foreach ($query as $q){
                 $total += $q->total + $q->total2 + $q->total3 +$q->total4;
             }
 
-            array_push($sale, [$advert->name, $total]);
+            array_push($sale, [$advert->name, $total, $advert->id]);
 
             $total = 0;
         }
 
         //Verifica quantos foram vendidos de cada item.
-        $eachItem = $sale;
 
         array_multisort(array_column($sale,'1'),SORT_DESC, $sale);
 
