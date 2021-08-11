@@ -146,64 +146,37 @@ class RatingController extends Controller
 
         return redirect()->back()->with('msg', ' ');
     }
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function sendNotification()
     {
-        //
-    }
+        $items = DB::table('adverts')
+            ->select('picture', 'name', 'id')
+            ->where('foodType', '<>', 'Bebida')
+            ->get()->toArray();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $eval = Auth::user();
+        $eval = explode(',', $eval->itemsRated);
+        $rate = array();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        foreach ($items as $item){
+            $evaluate = DB::table('orders')
+                ->where('detached', 'like', '%'. $item->name . '%')
+                ->where('idClient', '=', Auth::user()->id)
+                ->get()->toArray();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            if (count($evaluate) != ''){
+                array_push($rate, [$item->id, $item->name, $item->picture]);
+            }
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        foreach ($eval as $ev){
+            foreach ($rate as $i => $value){
+                if ($ev == $value[0]){
+                    unset($rate[$i]);
+                }
+            }
+        }
+
+        return $rate;
     }
 }
