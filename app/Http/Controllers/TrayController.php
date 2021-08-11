@@ -556,7 +556,16 @@ class TrayController extends Controller
             }
         }
 
-        return view('clientUser.foodMenu.hamburguer', compact('foods'));
+        $rate = DB::table('lock_rating')
+            ->get();
+
+        if (isset($rate[0])){
+            $rate = $rate[0]->lock;
+        }else{
+            $rate = "Não";
+        }
+
+        return view('clientUser.foodMenu.hamburguer', compact('foods', 'rate'));
     }
 
     public function fries(Request $request, $id)
@@ -762,13 +771,15 @@ class TrayController extends Controller
 
                 $order->save();
             }
-
         }
+
+        $rate = DB::table('lock_rating')
+            ->get();
 
         //Redirecionamento caso o cliente retroceda até 2x no combo.
         if (isset($verifyFollowing)){
           if ($verifyFollowing[0]->portion == null){
-              return view('clientUser.foodMenu.fries', compact('foods'));
+              return view('clientUser.foodMenu.fries', compact('foods', 'rate'));
 
           }elseif ($verifyFollowing[0]->drinks == null){
               return redirect()->route('minhaBandeja.index');
@@ -779,7 +790,7 @@ class TrayController extends Controller
 
         }else{
             if ($order->portion == ''){
-                return view('clientUser.foodMenu.fries', compact('foods'));
+                return view('clientUser.foodMenu.fries', compact('foods', 'rate'));
             }elseif ($order->drinks == ''){
                 return redirect()->route('minhaBandeja.index');
             }else{
@@ -798,7 +809,10 @@ class TrayController extends Controller
         //Variável que indica que é uma view de edição
         $edit = true;
 
-        return view('clientUser.foodMenu.fries', compact('foods', 'edit'));
+        $rate = DB::table('lock_rating')
+            ->get();
+
+        return view('clientUser.foodMenu.fries', compact('foods', 'edit', 'rate'));
     }
 
     public function drinks ($idFood)
