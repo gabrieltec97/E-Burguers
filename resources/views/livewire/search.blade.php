@@ -32,7 +32,7 @@
             </tbody>
         </table>
 
-    <div>
-        {{ $orders->links() }}
+    <div class="d-flex justify-content-center">
+        {{ $orders->links('livewire.pagination') }}
     </div>
 </div>

@@ -117,30 +117,7 @@
                             <h4 class="m-0 font-weight-bold text-white">Itens vendidos</h4></div>
 
                         <div class="card-body financial-table">
-
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th style="color: black;" scope="col">#id</th>
-                                    <th style="color: black;" scope="col">Item</th>
-                                    <th style="color: black;" scope="col">Quantidade vendida este mês</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($items as $item => $value)
-                                    <tr>
-                                        <th style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos" scope="row">{{ $value->id }}</th>
-                                        <td style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos">{{ $value->name }}</td>
-                                        <td style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos">{{ $value->total > 2 ? $value->total . ' vendas' : $value->total . ' venda'}} </td>
-                                    </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-
-                            <div class="d-flex justify-content-center mt-2">
-                                {{ $items->links() }}
-                            </div>
+                            @livewire('dashboard')
                         </div>
                     </div>
                 </div>
@@ -148,32 +125,4 @@
         </div>
         </div>
     </div>
-
-    <script>
-        var url = document.URL;
-
-        if (url.includes('page')){
-            $('html, body').animate({
-                scrollTop: $(".items").offset().top
-            }, 1500);
-        }
-    </script>
-
-   @if(isset($FinalSale))
-       @if($FinalSale != '')
-           <button class="lbl1" hidden value="{{ $FinalSale[0]['item'] }}"></button>
-           <button class="lbl2" hidden value="{{ $FinalSale[1]['item'] }}"></button>
-           <button class="lbl3" hidden value="{{ $FinalSale[2]['item'] }}"></button>
-       @if(isset($FinalSale[3]['item']))
-           <button class="lbl4" hidden value="{{ $FinalSale[3]['item'] }}"></button>
-       @endif
-
-           <button class="valor1" hidden value="{{ $FinalSale[0]['quantidade'] }}"></button>
-           <button class="valor2" hidden value="{{ $FinalSale[1]['quantidade'] }}"></button>
-           <button class="valor3" hidden value="{{ $FinalSale[2]['quantidade'] }}"></button>
-       @if(isset($FinalSale[3]['item']))
-           <button class="valor4" hidden value="{{ $FinalSale[3]['quantidade'] }}"></button>
-       @endif
-       @endif
-@endif
 @endsection
