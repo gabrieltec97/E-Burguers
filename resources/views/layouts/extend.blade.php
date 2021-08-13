@@ -26,7 +26,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-
+    @livewireStyles
 </head>
 
 <body id="page-top">
@@ -319,6 +319,7 @@
     <i class="fas fa-angle-up" style="margin-top: 13px"></i>
 </a>
 
+@livewireScripts
 </body>
 
 <!-- Bootstrap core JavaScript-->
