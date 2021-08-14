@@ -146,37 +146,64 @@ class RatingController extends Controller
 
         return redirect()->back()->with('msg', ' ');
     }
-
-    public function sendNotification()
+    public function create()
     {
-        $items = DB::table('adverts')
-            ->select('picture', 'name', 'id')
-            ->where('foodType', '<>', 'Bebida')
-            ->get()->toArray();
+        //
+    }
 
-        $eval = Auth::user();
-        $eval = explode(',', $eval->itemsRated);
-        $rate = array();
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-        foreach ($items as $item){
-            $evaluate = DB::table('orders')
-                ->where('detached', 'like', '%'. $item->name . '%')
-                ->where('idClient', '=', Auth::user()->id)
-                ->get()->toArray();
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-            if (count($evaluate) != ''){
-                array_push($rate, [$item->id, $item->name, $item->picture]);
-            }
-        }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
-        foreach ($eval as $ev){
-            foreach ($rate as $i => $value){
-                if ($ev == $value[0]){
-                    unset($rate[$i]);
-                }
-            }
-        }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
 
-        return $rate;
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

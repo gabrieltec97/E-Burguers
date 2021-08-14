@@ -3,10 +3,6 @@
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/cliente-acompanhar-ajax.js') }}"></script>
 
-@if(!isset($order))
-    <script src="{{ asset('js/sendNotification.js') }}"></script>
-@endif
-
 @section('title')
     Em preparo
 @endsection
@@ -14,7 +10,6 @@
 @section('content')
 <div class="container-fluid mt-5">
    <div class="row">
-
        @if(isset($order))
         @if(count($order) == 1)
                <div class="col-12 col-md-6 mt-md-5 mt-lg-0 col-lg-5">

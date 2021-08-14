@@ -131,7 +131,7 @@
                                     <tr>
                                         <th style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos" scope="row">{{ $value->id }}</th>
                                         <td style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos">{{ $value->name }}</td>
-                                        <td style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos">{{ $value->total > 2 ? $value->total . ' vendas' : $value->total . ' venda'}} </td>
+                                        <td style="color: black; cursor: pointer;" title="{{ $value->total }} Itens vendidos">{{ $value->total == 1 ? $value->total . ' venda' : $value->total . ' vendas'}} </td>
                                     </tr>
                                     @endforeach
 
