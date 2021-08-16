@@ -27,16 +27,6 @@
                     @livewire('detached-tray')
                 </div>
             </div>
-
-            <div class="col-3">
-                <div class="card fixo">
-                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> Seu pedido está assim</div>
-
-                    <div class="card-body">
-                        @livewire('live-detached-tray')
-                    </div>
-            </div>
-        </div>
     </div>
 
     @if(isset($insert))

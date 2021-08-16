@@ -2,7 +2,7 @@
     <div class="row">
     @foreach($foods as $food)
         <div class="col-12 col-md-4 mt-5 mt-lg-3 col-lg-4">
-            <form action="{{ route('adicionarItem', $food->id) }}">
+            <form method="get" wire:submit.prevent="insertItem({{ $food->id }})">
                 @if($food->foodType == 'Hamburguer')
                     <div class="card cardapio-card">
                         <img class="card-img-top img-card" src="{{ asset($food->picture) }}">
@@ -220,5 +220,44 @@
             </form>
         </div>
     @endforeach
+
+        <div class="col-3">
+            <div class="card fixo">
+                <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> Seu pedido está assim</div>
+
+                <div class="card-body">
+                    <ol>
+                        @if(isset($items))
+                            @foreach($items as $item)
+                                <form method="get" wire:submit.prevent="removeItem({{ $item->id }})">
+                                    @csrf
+                                    <li>{{$item->itemName}} <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
+
+                                </form>
+                            @endforeach
+                        @endif
+
+                        @if(isset($itemWExtras))
+                            @foreach($itemWExtras as $item2)
+                                <form action="{{ route('removerPersonalizado', $item2['id']) }}" method="post">
+                                    @csrf
+                                    <li><span class="text-success">{{$item2['name']}}<button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></span></li>
+                                </form>
+                            @endforeach
+                        @endif
+                    </ol>
+
+                    @if(isset($val))
+                        @if($val[0]['totalValue'] != 0)
+                            <span class="float-right">Valor atual: <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
+                        @else
+                            bandeja vazia, escolhe aí..
+                        @endif
+                    @else
+                        bandeja vazia, escolhe aí..
+                    @endif
+                </div>
+            </div>
+        </div>
 </div>
 </div>
