@@ -14,7 +14,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12 col-lg-7">
-                                    <img src="{{ asset('logo/burger-5284886_1280.jpg') }}" class="mt-2 img-ped" style="margin-left: -10px; border-radius: 5px">
+                                    <img src="{{ asset('logo/burger-5284886_1280.jpg') }}" class="mt-2 img-ped" style="margin-left: -10px; border-radius: 5px" width="150px"; height="150px">
                                 </div>
 
                                 <div class="col-12 mt-4 col-lg-5 mt-lg-0">
