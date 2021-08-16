@@ -31,6 +31,10 @@ class LiveDetachedTray extends Component
             }
         }
 
-        return view('livewire.live-detached-tray', compact('items', 'val'));
+        if (isset($items)){
+            return view('livewire.live-detached-tray', compact('items', 'val'));
+        }else{
+            return view('livewire.live-detached-tray');
+        }
     }
 }
