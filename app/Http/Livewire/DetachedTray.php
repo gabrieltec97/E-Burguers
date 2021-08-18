@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Adverts;
+use App\AuxiliarDetached;
 use App\ItemWithoutExtras;
 use App\Tray;
 use Illuminate\Database\Eloquent\Model;
@@ -34,25 +35,11 @@ class DetachedTray extends Component
             $itemWExtras = array();
 
             foreach ($query as $it) {
-                array_push($itemWExtras, ['name' => $it->item . ' + ' . $it->nameExtra, 'id' => $it->id]);
-            }
-        }
-
-        if (isset($tray[0]->id)) {
-            $items = DB::table('item_without_extras')
-                ->select('itemName', 'id')
-                ->where('idOrder', '=', $tray[0]->id)
-                ->get()->toArray();
-
-            $query = DB::table('auxiliar_detacheds')
-                ->select('item', 'nameExtra', 'id')
-                ->where('idOrder', '=', $tray[0]->id)
-                ->get()->toArray();
-
-            $itemWExtras = array();
-
-            foreach ($query as $it) {
-                array_push($itemWExtras, ['name' => $it->item . ' + ' . $it->nameExtra, 'id' => $it->id]);
+                if ($it->nameExtra != ''){
+                    array_push($itemWExtras, ['name' => $it->item . ' + ' . $it->nameExtra, 'id' => $it->id]);
+                }else{
+                    array_push($itemWExtras, ['name' => $it->item, 'id' => $it->id]);
+                }
             }
         }
 
@@ -82,11 +69,13 @@ class DetachedTray extends Component
         }
 
         if (isset($items)) {
-            return view('livewire.detached-tray', compact('foods', 'rate', 'items', 'val'));
+            return view('livewire.detached-tray', compact('foods', 'rate', 'query', 'val', 'itemWExtras'));
         } else {
             return view('livewire.detached-tray', compact('foods', 'rate'));
         }
     }
+
+    public $extras = [];
 
     public function insertItem(Request $request, $item)
     {
@@ -102,7 +91,7 @@ class DetachedTray extends Component
 
         if ($verifyOrder == null) {
 
-            if (isset ($request->extras)) {
+            if (isset($this->extras)) {
 
                 $order = new Tray();
                 $order->idClient = $user;
@@ -114,7 +103,7 @@ class DetachedTray extends Component
                 $extras = [];
                 $valorNovo = 0;
 
-                foreach ($request->extras as $ex) {
+                foreach ($this->extras as $ex) {
                     $extra = DB::table('extras')
                         ->select('name')
                         ->where('namePrice', '=', $ex)
@@ -126,7 +115,7 @@ class DetachedTray extends Component
                 }
 
                 //Somando os valores dos itens adicionais
-                foreach ($request->extras as $exts) {
+                foreach ($this->extras as $exts) {
                     $vals = DB::table('extras')
                         ->select('price')
                         ->where('namePrice', '=', $exts)
@@ -203,12 +192,12 @@ class DetachedTray extends Component
 
             $order = Tray::find($verifyOrder->id);
 
-            if (isset ($request->extras)) {
+            if (isset($this->extras)) {
                 //Buscando acompanhamento.
                 $extras = [];
                 $valorNovo = 0;
 
-                foreach ($request->extras as $ex) {
+                foreach ($this->extras as $ex) {
                     $extra = DB::table('extras')
                         ->select('name')
                         ->where('namePrice', '=', $ex)
@@ -220,7 +209,7 @@ class DetachedTray extends Component
                 }
 
                 //Somando os valores dos itens adicionais
-                foreach ($request->extras as $exts) {
+                foreach ($this->extras as $exts) {
                     $vals = DB::table('extras')
                         ->select('price')
                         ->where('namePrice', '=', $exts)
@@ -246,6 +235,20 @@ class DetachedTray extends Component
                 $order->totalValue = $order->totalValue + $item->value + $valorNovo;
                 $order->save();
 
+//                if (isset($requirements)) {
+//                    $insertExtras = $item->name . ": " . $requirements;
+//                }else{
+//                    $insertExtras = null;
+//                }
+//                AuxiliarDetached::create([
+//                    'item' =>  $item->name,
+//                    'idOrder' => $order->id,
+//                    'foodType' => $item->foodType,
+//                    'extras' => $insertExtras,
+//                    'nameExtra' => $addItems,
+//                    'valueWithExtras' => $item->value + $valorNovo,
+//
+//                ]);
                 $auxItems = new AuxiliarDetached();
                 $auxItems->item = $item->name;
                 $auxItems->idOrder = $order->id;
@@ -290,20 +293,20 @@ class DetachedTray extends Component
     public function removeItem($remove)
     {
         $order = Auth::user()->userOrderTray()->get()->first()->toArray();
-        $item = DB::table('item_without_extras')
-            ->select()
+        $item = DB::table('auxiliar_detacheds')
+            ->select('valueWithExtras')
             ->where('id', '=', $remove)
             ->get()->toArray();
 
         //Abatendo o preço na tabela de pedido.
-        $updateOrder = $order['totalValue'] - $item[0]->value;
+        $updateOrder = $order['totalValue'] - $item[0]->valueWithExtras;
 
         DB::table('trays')
             ->where('id', '=', $order['id'])
             ->update(['totalValue' => $updateOrder]);
 
-        //Deletando o item da tabela de itens sem extras.
-        DB::table('item_without_extras')
+        //Deletando o item da tabela de itens.
+        DB::table('auxiliar_detacheds')
             ->where('id', '=', $remove)
             ->delete();
 

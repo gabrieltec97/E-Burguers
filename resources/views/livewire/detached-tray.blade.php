@@ -69,13 +69,13 @@
                             <p class="card-text"> {{ $food->description }}
                                 <br><br>
                                 <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span></p>
-                            <a class="btn btn-primary adicionar-bandeja text-white" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</a>
+                            <a class="btn btn-primary text-white" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</a>
                             <button type="submit" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
 
                         </div>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="multiCollapseExample{{$food->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal fade" id="multiCollapseExample{{$food->id}}" wire:ignore tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -118,7 +118,7 @@
                                                     @if($food->extras != null)
                                                         @foreach($food->extras as $e)
                                                             <div>
-                                                                <input class="ml-1 form-check-input" type="checkbox" id="{{ $e }}" name="extras[]" value="{{ $e }}">
+                                                                <input class="ml-1 form-check-input aditionals" type="checkbox" id="{{ $e }}" wire:model="extras" value="{{ $e }}">
                                                                 <label for="{{ $e }}" class="ml-4 form-check-label font-weight-bold">{{ $e }}</label>
                                                             </div>
                                                         @endforeach
@@ -129,7 +129,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger mt-1" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-danger mt-1 cancela-personalizar" data-dismiss="modal">Cancelar</button>
                                         <button type="submit" style="margin-top: 2px;" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
                                     </div>
                                 </div>
@@ -227,21 +227,11 @@
 
                 <div class="card-body">
                     <ol>
-                        @if(isset($items))
-                            @foreach($items as $item)
+                        @if(isset($query))
+                            @foreach($query as $item)
                                 <form method="get" wire:submit.prevent="removeItem({{ $item->id }})">
                                     @csrf
-                                    <li>{{$item->itemName}} <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
-
-                                </form>
-                            @endforeach
-                        @endif
-
-                        @if(isset($itemWExtras))
-                            @foreach($itemWExtras as $item2)
-                                <form action="{{ route('removerPersonalizado', $item2['id']) }}" method="post">
-                                    @csrf
-                                    <li><span class="text-success">{{$item2['name']}}<button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></span></li>
+                                    <li>{{$item->item}} <span class="text-success">{{ $item->nameExtra != '' ? '+ ' . $item->nameExtra:  ''}}</span> <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
                                 </form>
                             @endforeach
                         @endif

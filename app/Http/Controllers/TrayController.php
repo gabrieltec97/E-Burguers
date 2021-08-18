@@ -894,6 +894,11 @@ class TrayController extends Controller
     {
         $user = Auth::user();
         $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'image', 'comboItem', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+
+        if ($myOrder['totalValue'] == 0){
+            return redirect()->route('tipoPedido');
+        }
+
         $exist= DB::table('orders')
             ->select('status', 'deliverWay')
             ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")

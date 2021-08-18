@@ -1042,6 +1042,16 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
         }
     });
 
+//Configurações ao adicionar item à bandeja.
+$(".adicionar-bandeja").on('click', function (){
+    $(this).html('<div class="spinner-border text-white" role="status"></div>');
+
+    setTimeout(function (){
+        $(".aditionals").removeAttr('checked');
+        $(".cancela-personalizar").click();
+    }, 1000)
+})
+
 //Copiando informações de entrega.
 $(".copiado").hide();
 

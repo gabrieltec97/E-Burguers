@@ -41,9 +41,7 @@ class menuController extends Controller
 
     public function foodMenu($insert)
     {
-        $foods = Adverts::all();
-//        $tray = Auth::user()->userOrderTray()->select('id')->get();
-//        $val = Auth::user()->userOrderTray()->select('totalValue')->get()->toArray();
+        $val = Auth::user()->userOrderTray()->select('totalValue')->get()->toArray();
 ////
 //        if (isset($tray[0]->id)){
 //            $items = DB::table('item_without_extras')
@@ -88,7 +86,11 @@ class menuController extends Controller
 //            $rate = "Não";
 //        }
 
-        return view('clientUser.foodMenu.foodMenu', compact('insert'));
+
+        if ($val == null){
+            $val = 0;
+        }
+        return view('clientUser.foodMenu.foodMenu', compact('insert', 'val'));
 //        if(isset($tray[0]->id)){
 //
 //            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'rate', 'tray', 'items', 'val', 'itemWExtras'));
