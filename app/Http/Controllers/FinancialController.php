@@ -570,6 +570,7 @@ class FinancialController extends Controller
         }
 
         $adverts = Adverts::all();
+        $items = Adverts::paginate(8);
         $sale = array();
         $total = 0;
         foreach ($adverts as $advert){
@@ -599,9 +600,11 @@ class FinancialController extends Controller
                 $total += $q->total + $q->total2 + $q->total3 +$q->total4;
             }
 
-            DB::table('adverts')
-                ->where('name', '=', $advert->name)
-                ->update(['totalSale' => $total]);
+            foreach ($items as $item => $v){
+                if ($v->name == $advert->name){
+                    $v->total = $total;
+                }
+        }
 
             array_push($sale, [$advert->name, $total, $advert->id]);
 
@@ -623,9 +626,9 @@ class FinancialController extends Controller
         ]);
 
         if (isset($sale[0])){
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale', 'items'));
         }else{
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'items'));
         }
     }
 }

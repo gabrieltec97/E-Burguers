@@ -1,9 +1,7 @@
 <div>
-    <div>
-        <div class="form-group">
-            <input wire:model="search" class="form-control mb-3" type="text" placeholder="Digite sua pesquisa.">
-        </div>
+    <input type="text" wire:model="search">
 
+<<<<<<< HEAD
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -35,4 +33,7 @@
             {{ $orders->links('livewire.pagination') }}
         </div>
 </div>
+=======
+    hello, {{$search}}
+>>>>>>> parent of 7b47a69 (livewire funcionando exceto xampp)
 </div>
