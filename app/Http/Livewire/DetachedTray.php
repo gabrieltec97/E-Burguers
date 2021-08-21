@@ -186,7 +186,7 @@ class DetachedTray extends Component
                 $itemWithoutExtras->save();
             }
 
-            return redirect(route('cardapio', $insert = 'added'));
+//            return redirect(route('cardapio', $insert = 'added'));
 
         } else {
 
@@ -285,8 +285,6 @@ class DetachedTray extends Component
             }
 
             $order->save();
-
-            session()->flash('message', 'Post successfully updated.');
         }
     }
 

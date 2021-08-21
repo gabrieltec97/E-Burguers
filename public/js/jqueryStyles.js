@@ -1049,8 +1049,46 @@ $(".adicionar-bandeja").on('click', function (){
     setTimeout(function (){
         $(".aditionals").removeAttr('checked');
         $(".cancela-personalizar").click();
-    }, 1000)
-})
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Item adicionado ao pedido.'
+        })
+    }, 700)
+});
+
+    $(".remove-item").on('click', function (){
+        setTimeout(function (){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 10000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: 'Item removido do pedido.'
+            })
+        }, 800)
+    });
 
 //Copiando informações de entrega.
 $(".copiado").hide();
@@ -1059,7 +1097,6 @@ $(".copiar").on("click", function () {
 
     var idPedido = $(".idPedido").text();
 
-    console.log(idPedido);
     var clientePedido = $(".clientePedido").text();
     var itensPedido = $(".itensPedido").text();
     var valorPedido = $(".valorPedido").text();

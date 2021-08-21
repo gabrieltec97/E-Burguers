@@ -1,6 +1,6 @@
 @extends('layouts.extend-client')
 <script src="{{ asset('js/jquery.js') }}"></script>
-
+<script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 @section('title')
     Cardápio
 @endsection
@@ -28,33 +28,4 @@
                 </div>
             </div>
     </div>
-
-    @if(isset($insert))
-        @if($insert == 'added')
-
-        @if(session('msg'))
-         <script>
-            $.toast({
-                text: '<b>Item removido do pedido!</b>',
-                heading: '<b>Poxa!</b>',
-                showHideTransition: 'slide',
-                bgColor : 'red',
-                position : 'top-right',
-                hideAfter: 5000
-            })
-         </script>
-    @else
-    <script>
-        $.toast({
-            text: '<b>Item adicionado ao pedido!</b>',
-            heading: '<b>Legal!</b>',
-            showHideTransition: 'slide',
-            bgColor : '#38C172',
-            position : 'top-right',
-            hideAfter: 5000
-        })
-    </script>
-        @endif
-        @endif
-    @endif
 @endsection

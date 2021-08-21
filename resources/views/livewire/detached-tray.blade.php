@@ -231,7 +231,7 @@
                             @foreach($query as $item)
                                 <form method="get" wire:submit.prevent="removeItem({{ $item->id }})">
                                     @csrf
-                                    <li>{{$item->item}} <span class="text-success">{{ $item->nameExtra != '' ? '+ ' . $item->nameExtra:  ''}}</span> <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
+                                    <li class="remove-item">{{$item->item}} <span class="text-success">{{ $item->nameExtra != '' ? '+ ' . $item->nameExtra:  ''}}</span> <button type="submit" class="fas fa-times text-danger remove-item ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
                                 </form>
                             @endforeach
                         @endif
