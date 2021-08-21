@@ -2,6 +2,7 @@
     <input type="text" wire:model="search">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -33,6 +34,9 @@
             {{ $orders->links('livewire.pagination') }}
         </div>
 </div>
+=======
+    hello, {{$search}}
+>>>>>>> parent of 7b47a69 (livewire funcionando exceto xampp)
 =======
     hello, {{$search}}
 >>>>>>> parent of 7b47a69 (livewire funcionando exceto xampp)
