@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Scripts -->
-
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
     <title>@yield('title')</title>
 
     <!-- Fonts -->

@@ -290,27 +290,44 @@
 
         @if(session('msg'))
          <script>
-            $.toast({
-                text: '<b>Item removido do pedido!</b>',
-                heading: '<b>Poxa!</b>',
-                showHideTransition: 'slide',
-                bgColor : 'red',
-                position : 'top-right',
-                hideAfter: 5000
-            })
+             const Toast = Swal.mixin({
+                 toast: true,
+                 position: 'top-end',
+                 showConfirmButton: false,
+                 timer: 4000,
+                 timerProgressBar: true,
+                 didOpen: (toast) => {
+                     toast.addEventListener('mouseenter', Swal.stopTimer)
+                     toast.addEventListener('mouseleave', Swal.resumeTimer)
+                 }
+             })
+
+             Toast.fire({
+                 icon: 'error',
+                 title: 'Item removido do pedido!'
+             })
          </script>
     @else
     <script>
-        $.toast({
-            text: '<b>Item adicionado ao pedido!</b>',
-            heading: '<b>Legal!</b>',
-            showHideTransition: 'slide',
-            bgColor : '#38C172',
-            position : 'top-right',
-            hideAfter: 5000
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Item adicionado ao pedido!'
         })
     </script>
         @endif
         @endif
     @endif
+
 @endsection
