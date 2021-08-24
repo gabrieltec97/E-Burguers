@@ -21,13 +21,15 @@
 
                 @if(session('msg-venda'))
                     <script>
-                        $.toast({
-                            text: '<b style="font-size: 14px;">O pedido foi entregue com sucesso. Parabéns a todos pelo empenho!</b>',
-                            heading: '<b style="font-size: 17px">Muito bem!</b>',
-                            showHideTransition: 'slide',
-                            bgColor : '#38C172',
-                            position : 'top-right',
-                            hideAfter: 9000
+                        Swal.fire({
+                            title: 'Muito beeeem!',
+                            text: 'O pedido foi entregue, parabéns à todos pelo empenho!',
+                            imageUrl: 'https://localhost/E-Pedidos/public/logo/congrats.gif',
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: 'Parabéns pelo empenho!',
+                            showConfirmButton: false,
+                            timer: 6000
                         })
                     </script>
                 @endif
@@ -175,7 +177,7 @@
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <p>O pedido {{ $reg->id }} para foi entregue?</p>
-                                                                    <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                                    <form id="finishedOrder" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                                     @csrf
 
                                                                 </div>
@@ -206,7 +208,7 @@
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <p>Tem certeza que deseja mandar o pedido {{ $reg->id }} para preparo?</p>
-                                                                    <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                                    <form id="formPrepare" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                                     @csrf
 
                                                                 </div>
@@ -234,7 +236,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>Tem certeza que deseja cancelar o pedido {{ $reg->id }}?</p>
-                                                        <form action="{{route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                        <form id="formCancel" action="{{route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                         @csrf
 
 
@@ -260,7 +262,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>Deseja alterar o status do pedido {{ $reg->id }} para "Em rota de envio"?</p>
-                                                        <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                        <form id="readyOrder" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                         @csrf
 
 
@@ -319,13 +321,103 @@
             var acao = $("#" +id).val();
 
             if (acao == 'Cancelar'){
-                $('#modalCancela' + id).modal();
+
+                Swal.fire({
+                    title: 'Deseja cancelar o pedido ' + id + ' ?',
+                    icon: 'warning',
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    html:
+                    '<button type="button" class="btn btn-danger mt-2 cancelar-pedido">Cancelar Pedido</button>' +
+                    '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
+                })
+
+                $(".fechar").on('click', function (){
+                    Swal.close()
+                })
+
+                $(".cancelar-pedido").on('click', function (){
+                    $("#formCancel").submit();
+                })
+
             }else if (acao == 'EmPreparo'){
-                $('#modalChange' + id).modal();
+
+                Swal.fire({
+                    title: 'Deseja enviar o pedido ' + id + ' para preparo?',
+                    icon: 'warning',
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    html:
+                        '<button type="button" class="btn btn-success mt-2 sendPrepare">Enviar para preparo</button>' +
+                        '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
+                })
+
+                $(".fechar").on('click', function (){
+                    Swal.close()
+                })
+
+                $(".sendPrepare").on('click', function (){
+                    $("#formPrepare").submit();
+                })
+
             }else if (acao == 'Retirar' || acao == 'Rota'){
-                $('#modalTake' + id).modal();
+
+                if (acao == 'Retirar'){
+                    Swal.fire({
+                        title: 'Deseja informar que o pedido ' + id + ' está pronto para retirada?',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        html:
+                            '<button type="button" class="btn btn-success mt-2 sendOrder">Pedido pronto</button>' +
+                            '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
+                    })
+
+                    $(".fechar").on('click', function (){
+                        Swal.close()
+                    })
+
+                    $(".sendOrder").on('click', function (){
+                        $("#readyOrder").submit();
+                    })
+                }else if (acao == 'Rota'){
+                    Swal.fire({
+                        title: 'Deseja informar que o pedido ' + id + ' saiu para entrega?',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        html:
+                            '<button type="button" class="btn btn-success mt-2 sendOrder">Enviar pedido</button>' +
+                            '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
+                    })
+
+                    $(".fechar").on('click', function (){
+                        Swal.close()
+                    })
+
+                    $(".sendOrder").on('click', function (){
+                        $("#readyOrder").submit();
+                    })
+                }
             }else if (acao == 'Entregue'){
-                $('#modalSended' + id).modal();
+
+                Swal.fire({
+                    title: 'O pedido ' + id + ' foi entregue?',
+                    icon: 'warning',
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    html:
+                        '<button type="button" class="btn btn-success mt-2 finished">Sim</button>' +
+                        '<button type="button" class="btn btn-danger mt-2 ml-4 fechar">Não</button>'
+                })
+
+                $(".fechar").on('click', function (){
+                    Swal.close()
+                })
+
+                $(".finished").on('click', function (){
+                    $("#finishedOrder").submit();
+                })
             }
         }
     </script>

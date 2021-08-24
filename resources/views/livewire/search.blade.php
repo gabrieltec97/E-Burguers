@@ -19,12 +19,12 @@
             @foreach($orders as $order)
                 @if($order != '')
                     <tr>
-                        <td>{{ $order->id }}</td>
-                        <td>{{ $order->day }}</td>
-                        <td>{{ $order->clientName }}</td>
-                        <td>{{ $order->deliverWay }}</td>
-                        <td>{{ $order->payingMethod }}</td>
-                        <td>{{ $order->status }}</td>
+                        <td><a style="text-decoration: none; color: black;" href="{{ route('pedidos.show', $order->id) }}">{{ $order->id }}</a></td>
+                        <td><a style="text-decoration: none; color: black;" href="{{ route('pedidos.show', $order->id) }}">{{ $order->day }}</a></td>
+                        <td><a style="text-decoration: none; color: black;" href="{{ route('pedidos.show', $order->id) }}">{{ $order->clientName }}</a></td>
+                        <td><a style="text-decoration: none; color: black;" href="{{ route('pedidos.show', $order->id) }}">{{ $order->deliverWay }}</a></td>
+                        <td><a style="text-decoration: none; color: black;" href="{{ route('pedidos.show', $order->id) }}">{{ $order->payingMethod }}</a></td>
+                        <td><a style="text-decoration: none; color: black;" href="{{ route('pedidos.show', $order->id) }}">{{ $order->status }}</a></td>
                     </tr>
                 @endif
             @endforeach

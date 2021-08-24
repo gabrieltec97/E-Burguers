@@ -220,7 +220,6 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-
         $order = Orders::find($id);
 
         return view('Orders.order', compact('order'));
