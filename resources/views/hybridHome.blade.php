@@ -29,7 +29,8 @@
                             imageHeight: 200,
                             imageAlt: 'Parabéns pelo empenho!',
                             showConfirmButton: false,
-                            timer: 6000
+                            timer: 6000,
+                            timerProgressBar: true
                         })
                     </script>
                 @endif
@@ -89,37 +90,6 @@
                                         </td>
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="modalChange{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <p>Tem certeza que deseja mandar o pedido {{ $reg->id }} para preparo?</p>
-                                                                    <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                                    @csrf
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
-                                                        <button type="submit" class="btn btn-primary">Enviar para preparo</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Modal -->
                                         <div class="modal fade" id="modalSend{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -162,121 +132,28 @@
                                             </div>
                                         </div>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modalSended{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <p>O pedido {{ $reg->id }} para foi entregue?</p>
-                                                                    <form id="finishedOrder" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                                    @csrf
+                                        <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                            @csrf
+                                        </form>
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Voltar</button>
-                                                        <button type="submit" class="btn btn-primary">Sim</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <form id="finishedOrder" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                            @csrf
+                                        </form>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modalChange{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <p>Tem certeza que deseja mandar o pedido {{ $reg->id }} para preparo?</p>
-                                                                    <form id="formPrepare" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                                    @csrf
+                                        <form id="formPrepare" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                            @csrf
+                                        </form>
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
-                                                        <button type="submit" class="btn btn-primary">Enviar para preparo</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <form id="formCancel" action="{{route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                            @csrf
+                                        </form>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modalCancela{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Tem certeza que deseja cancelar o pedido {{ $reg->id }}?</p>
-                                                        <form id="formCancel" action="{{route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                        @csrf
-
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
-                                                        <button type="submit" class="btn btn-danger">Cancelar Pedido</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modalTake{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Deseja alterar o status do pedido {{ $reg->id }} para "Em rota de envio"?</p>
-                                                        <form id="readyOrder" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                        @csrf
-
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
-                                                        <button type="submit" class="btn btn-danger">Enviar Pedido</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <form id="readyOrder" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                            @csrf
+                                        </form>
                                     </tr>
-                                    </form>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -337,6 +214,7 @@
                 })
 
                 $(".cancelar-pedido").on('click', function (){
+                    $(this).html('<div class="spinner-border text-light" role="status"></div>');
                     $("#formCancel").submit();
                 })
 
@@ -357,6 +235,7 @@
                 })
 
                 $(".sendPrepare").on('click', function (){
+                    $(this).html('<div class="spinner-border text-light" role="status"></div>');
                     $("#formPrepare").submit();
                 })
 
@@ -378,6 +257,7 @@
                     })
 
                     $(".sendOrder").on('click', function (){
+                        $(this).html('<div class="spinner-border text-light" role="status"></div>');
                         $("#readyOrder").submit();
                     })
                 }else if (acao == 'Rota'){
@@ -396,6 +276,7 @@
                     })
 
                     $(".sendOrder").on('click', function (){
+                        $(this).html('<div class="spinner-border text-light" role="status"></div>');
                         $("#readyOrder").submit();
                     })
                 }
@@ -416,6 +297,7 @@
                 })
 
                 $(".finished").on('click', function (){
+                    $(this).html('<div class="spinner-border text-light" role="status"></div>');
                     $("#finishedOrder").submit();
                 })
             }
