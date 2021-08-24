@@ -1042,6 +1042,12 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
         }
     });
 
+//Spinner de item sendo adicionado.
+$(".adicionar-bandeja").on('click', function (){
+  $(this).html('<div class="spinner-border text-light" role="status"></div>');
+});
+
+
 //Copiando informações de entrega.
 $(".copiado").hide();
 

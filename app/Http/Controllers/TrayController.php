@@ -240,7 +240,7 @@ class TrayController extends Controller
                 $itemWithoutExtras->save();
             }
 
-            return redirect(route('cardapio', $insert = 'added'));
+            return redirect()->route('cardapio', $insert = 'added')->with('scroll', $request->addTray);
 
         }else{
 
@@ -316,7 +316,12 @@ class TrayController extends Controller
                     $itemWithoutExtras->item = $item->name;
                 }
 
-                $itemWithoutExtras->itemName = $item->name;
+                if($request->sabor == ''){
+                    $itemWithoutExtras->itemName = $item->name;
+                }else{
+                    $itemWithoutExtras->itemName = $item->name . ' sabor: ' . $request->sabor;
+                }
+
                 $itemWithoutExtras->value = $item->value;
                 $itemWithoutExtras->save();
 
@@ -326,7 +331,7 @@ class TrayController extends Controller
 
             $order->save();
 
-            return redirect(route('cardapio', $insert = 'added'));
+            return redirect()->route('cardapio', $insert = 'added')->with('scroll', $request->addTray);
         }
     }
 
@@ -893,7 +898,23 @@ class TrayController extends Controller
     public function reviewAndFinish()
     {
         $user = Auth::user();
-        $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'image', 'comboItem', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+
+        //Verificando se há bandeja, se não, redirecionando para página de novo pedido.
+        $verify = $user->userOrderTray()->get();
+        if (count($verify) != 0){
+            $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'image', 'comboItem', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+        }else{
+            return redirect()->route('tipoPedido');
+        }
+
+        if ($myOrder != null){
+            if ($myOrder['totalValue'] == 0){
+                return redirect()->route('tipoPedido');
+            }
+        }else{
+            return redirect()->route('tipoPedido');
+        }
+
         $exist= DB::table('orders')
             ->select('status', 'deliverWay')
             ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")

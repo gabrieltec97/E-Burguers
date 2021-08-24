@@ -27,7 +27,7 @@
 
                                                 @if($food->foodType == 'Bebida')
                                                     @if($food->tastes != '')
-                                                        <select name="sabor" class="mb-3" title="Selecione um sabor" style="width: 100%;cursor: pointer; ">
+                                                        <select name="sabor" class="mb-3 form-control" title="Selecione um sabor" style="width: 100%;cursor: pointer; ">
                                                             @foreach(explode(',', $food->tastes) as $taste)
                                                                 <option value="{{ $taste }}">{{ $taste }}</option>
                                                             @endforeach

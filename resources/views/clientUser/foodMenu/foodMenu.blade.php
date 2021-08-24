@@ -18,15 +18,17 @@
             </div>
 
             @if(isset($tray))
+                @if(isset($val) && $val[0]['totalValue'] > 0)
                 <div class="col-12 d-flex justify-content-center">
                     <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Ir para pagamento</a>
                 </div>
+                @endif
             @endif
             <div class="col-12 col-md-9">
                 <div class="container-fluid">
                     <div class="row">
                         @foreach($foods as $food)
-                            <div class="col-12 col-md-4 mt-5 mt-lg-3 col-lg-4">
+                            <div class="col-12 col-md-4 mt-5 mt-lg-3 col-lg-4" id="addTray{{ $food->id }}">
                                 <form action="{{ route('adicionarItem', $food->id) }}">
                                     @if($food->foodType == 'Hamburguer')
                                         <div class="card cardapio-card">
@@ -94,8 +96,8 @@
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span></p>
-                                                <a class="btn btn-primary adicionar-bandeja text-white" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</a>
-                                                <button type="submit" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
+                                                <button type="button" value="{{ session('scroll') }}" class="btn btn-primary text-white personalizar-session" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</button>
+                                                <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
 
                                             </div>
 
@@ -120,7 +122,7 @@
                                                                         @foreach(explode(',', $food->ingredients) as $ing)
                                                                             <div>
                                                                                 <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $ing }}" checked>
-                                                                                <span class="text-muted ml-4 form-check-label font-weight-bold">{{ $ing }}</span>
+                                                                                <label for="{{ $ing }}" class="text-muted ml-4 form-check-label font-weight-bold">{{ $ing }}</label>
                                                                             </div>
                                                                         @endforeach
                                                                     </div>
@@ -155,7 +157,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-danger mt-1" data-dismiss="modal">Cancelar</button>
-                                                            <button type="submit" style="margin-top: 2px;" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
+                                                            <button type="submit" style="margin-top: 2px;" class="btn btn-success adicionar-bandeja text-white" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -163,7 +165,7 @@
                                         </div>
                                     @else
                                     <article>
-                                        <div class="card cardapio-card mb-4">
+                                        <div class="card cardapio-card mb-4" id="addTray{{ $food->id }}">
                                             <img class="card-img-top img-card" src="{{ asset($food->picture) }}" alt="Card image cap">
                                             <div class="card-body">
                                                 <h5 class="card-title font-weight-bold">{{ $food->name }}</h5>
@@ -228,7 +230,7 @@
                                                 @endif
                                                 @if($food->foodType == 'Bebida')
                                                     @if($food->tastes != '')
-                                                        <select name="sabor" class="mb-3" title="Selecione um sabor" style="width: 100%;cursor: pointer; ">
+                                                        <select name="sabor" class="mb-3 form-control" title="Selecione um sabor" style="width: 100%;cursor: pointer; ">
                                                             @foreach(explode(',', $food->tastes) as $taste)
                                                                 <option value="{{ $taste }}">{{ $taste }}</option>
                                                             @endforeach
@@ -237,7 +239,7 @@
                                                 @endif
                                                 <p class="card-text"> {{ $food->description }}</p>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span><br>
-                                                <button type="submit" class="btn btn-success adicionar-bandeja">Adicionar à bandeja</button>
+                                                <button type="submit" class="btn btn-success adicionar-bandeja" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
                                             </div>
                                         </div>
                                     </article>
@@ -275,7 +277,7 @@
                             @endif
                         </ol>
 
-                        @if(isset($val))
+                        @if(isset($val) && $val[0]['totalValue'] > 0)
                             <span class="float-right">Valor atual: <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
                         @else
                             bandeja vazia, escolhe aí..
@@ -294,7 +296,7 @@
                  toast: true,
                  position: 'top-end',
                  showConfirmButton: false,
-                 timer: 4000,
+                 timer: 5000,
                  timerProgressBar: true,
                  didOpen: (toast) => {
                      toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -313,7 +315,7 @@
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 4000,
+            timer: 5000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -330,4 +332,16 @@
         @endif
     @endif
 
+
+    @if(session('scroll'))
+       <script>
+           var scrollar = $(".personalizar-session").val();
+
+           setTimeout(function (){
+               $('html, body').animate({
+                   scrollTop: $("#"+ scrollar).offset().top
+               }, 800);
+           }, 250)
+       </script>
+    @endif
 @endsection
