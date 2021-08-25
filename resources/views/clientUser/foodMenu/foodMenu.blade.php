@@ -278,7 +278,14 @@
                         </ol>
 
                         @if(isset($val) && $val[0]['totalValue'] > 0)
-                            <span class="float-right">Valor atual: <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
+                            <hr>
+                            <div>
+                                <span class="float-right">Valor atual: <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
+                            </div>
+
+                            <div class="mt-3">
+                                <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Pagamento</a>
+                            </div>
                         @else
                             bandeja vazia, escolhe aí..
                         @endif

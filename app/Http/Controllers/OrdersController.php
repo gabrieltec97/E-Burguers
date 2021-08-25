@@ -345,7 +345,7 @@ class OrdersController extends Controller
             }
         }
 
-        //Cancelamento por parte da administração.
+
         if($acao == 'prontoretiradaenvio'){
 
             if ($order->deliverWay == 'Retirada no restaurante'){
@@ -357,7 +357,7 @@ class OrdersController extends Controller
             }
 
 
-            return redirect()->back()->with('msg',
+            return redirect()->back()->with('msg-prep',
                 'Pedido pronto para ser entregue!');
 
 
@@ -382,7 +382,7 @@ class OrdersController extends Controller
             $order->save();
 
         return redirect()->back()->with('msg-venda',
-               ' ');
+               'a ');
         }
     }
 }

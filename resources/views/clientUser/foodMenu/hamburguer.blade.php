@@ -85,7 +85,7 @@
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->comboValue }}</span></p>
-                                                <a class="btn btn-primary adicionar-bandeja text-white" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</a>
+                                                <a class="btn btn-primary text-white" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</a>
                                                 <button type="submit" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
 
                                             </div>

@@ -671,7 +671,9 @@ class TrayController extends Controller
                     $extrasVal += $extrasValue[0]->price;
                 }
 
-                $myHamburguer += $extrasVal;
+                if (isset($myHamburguer)){
+                    $myHamburguer += $extrasVal;
+                }
             }
         }
 
@@ -689,11 +691,11 @@ class TrayController extends Controller
             if (isset($request->extras)){
                 $order->extras = $addItems;
                 $order->totalValue = $hamburguer->comboValue + $valorNovo + $deliverValue;
+                $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $deliverValue;
             }else{
                 $order->totalValue = $hamburguer->comboValue + $deliverValue;
             }
 
-            $order->valueWithoutDisccount = $hamburguer->comboValue + $deliverValue;
             $order->save();
 
         }else{
@@ -722,14 +724,23 @@ class TrayController extends Controller
 
                 $totalValue = $totalValue[0]->totalValue;
                 $totalValue = doubleval($totalValue);
-                $myHamburguer = doubleval($myHamburguer);
-                $totalValue = $totalValue - $myHamburguer;
+
+                //Abatimento de preço caso o cliente volte.
+                if (isset($myHamburguer)){
+                    $myHamburguer = doubleval($myHamburguer);
+                    $totalValue = $totalValue - $myHamburguer;
+                }elseif(isset($extrasVal)){
+                    $totalValue = $totalValue - $extrasVal;
+                }
 
                 if (isset($request->extras)){
                     $order->extras = $addItems;
                     $order->totalValue = $hamburguer->comboValue + $valorNovo + $totalValue;
+                    $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $totalValue;
                 }else{
+                    $order->extras = null;
                     $order->totalValue = $hamburguer->comboValue + $totalValue;
+                    $order->valueWithoutDisccount = $hamburguer->comboValue + $totalValue;
                 }
 
             }else{
@@ -741,7 +752,6 @@ class TrayController extends Controller
                 }
             }
 
-            $order->valueWithoutDisccount = $hamburguer->comboValue;
             $order->save();
         }
 
@@ -1431,6 +1441,10 @@ class TrayController extends Controller
             }
         }
 
+//        echo $price + $extraPrices;
+//
+//        die();
+
         //Atualizando o valor atual do combo.
         if (isset($extraPrices)){
             $updatedPrice = doubleval($currentPrice) - doubleval($price) - doubleval($extraPrices);
@@ -1438,7 +1452,12 @@ class TrayController extends Controller
             $updatedPrice = doubleval($currentPrice) - doubleval($price);
         }
 
+//        echo $updatedPrice;
+
+
+
         $resetPrice = Tray::find($orderId);
+        $resetPrice->extras = null;
         $resetPrice->totalValue = $updatedPrice;
         $resetPrice->valueWithoutDisccount = $updatedPrice;
         $resetPrice->save();

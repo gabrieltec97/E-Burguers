@@ -11,13 +11,32 @@
 
         <div class="col-12">
             @if(session('msg'))
-                <div class="alert alert-success sumir-feedback alert-dismissible fade show" role="alert">
-                    <strong>Tudo certo!</strong> {{ session('msg') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <script>
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'O pedido foi enviado para preparo!',
+                        position: 'top-end',
+                        toast: true,
+                        showConfirmButton: false,
+                        timer: 5000,
+                        timerProgressBar: true
+                    })
+                </script>
             @endif
+
+                @if(session('msg-prep'))
+                    <script>
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Item pronto para retirada/envio!',
+                            position: 'top-end',
+                            toast: true,
+                            showConfirmButton: false,
+                            timer: 5000,
+                            timerProgressBar: true
+                        })
+                    </script>
+                @endif
 
                 @if(session('msg-venda'))
                     <script>
@@ -36,12 +55,17 @@
                 @endif
 
             @if(session('msg-2'))
-                <div class="alert alert-danger sumir-feedback alert-dismissible fade show" role="alert">
-                    <strong>{{ session('msg-2') }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Pedido cancelado com sucesso!',
+                            position: 'top-end',
+                            toast: true,
+                            showConfirmButton: false,
+                            timer: 5000,
+                            timerProgressBar: true
+                        })
+                    </script>
             @endif
 
         <div class="row">
@@ -136,24 +160,22 @@
                                             @csrf
                                         </form>
 
-                                        <form id="finishedOrder" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                        <form id="finishedOrder{{ $reg->id }}" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                             @csrf
                                         </form>
 
-                                        <form id="formPrepare" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                        <form id="formPrepare{{ $reg->id }}" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                             @csrf
                                         </form>
 
-                                        <form id="formCancel" action="{{route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                        <form id="formCancel{{ $reg->id }}" action="{{route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                             @csrf
                                         </form>
 
-                                        <form id="readyOrder" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                        <form id="readyOrder{{ $reg->id }}" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                             @csrf
                                         </form>
-                                    </tr>
-                            </tbody>
-                        </table>
+
                     </div>
                 </div>
 
@@ -201,7 +223,7 @@
 
                 Swal.fire({
                     title: 'Deseja cancelar o pedido ' + id + ' ?',
-                    icon: 'warning',
+                    icon: 'question',
                     showCancelButton: false,
                     showConfirmButton: false,
                     html:
@@ -215,14 +237,14 @@
 
                 $(".cancelar-pedido").on('click', function (){
                     $(this).html('<div class="spinner-border text-light" role="status"></div>');
-                    $("#formCancel").submit();
+                    $("#formCancel" + id).submit();
                 })
 
             }else if (acao == 'EmPreparo'){
 
                 Swal.fire({
                     title: 'Deseja enviar o pedido ' + id + ' para preparo?',
-                    icon: 'warning',
+                    icon: 'question',
                     showCancelButton: false,
                     showConfirmButton: false,
                     html:
@@ -236,7 +258,7 @@
 
                 $(".sendPrepare").on('click', function (){
                     $(this).html('<div class="spinner-border text-light" role="status"></div>');
-                    $("#formPrepare").submit();
+                    $("#formPrepare" + id).submit();
                 })
 
             }else if (acao == 'Retirar' || acao == 'Rota'){
@@ -244,7 +266,7 @@
                 if (acao == 'Retirar'){
                     Swal.fire({
                         title: 'Deseja informar que o pedido ' + id + ' está pronto para retirada?',
-                        icon: 'warning',
+                        icon: 'question',
                         showCancelButton: false,
                         showConfirmButton: false,
                         html:
@@ -258,12 +280,12 @@
 
                     $(".sendOrder").on('click', function (){
                         $(this).html('<div class="spinner-border text-light" role="status"></div>');
-                        $("#readyOrder").submit();
+                        $("#readyOrder"+ id).submit();
                     })
                 }else if (acao == 'Rota'){
                     Swal.fire({
                         title: 'Deseja informar que o pedido ' + id + ' saiu para entrega?',
-                        icon: 'warning',
+                        icon: 'question',
                         showCancelButton: false,
                         showConfirmButton: false,
                         html:
@@ -277,14 +299,14 @@
 
                     $(".sendOrder").on('click', function (){
                         $(this).html('<div class="spinner-border text-light" role="status"></div>');
-                        $("#readyOrder").submit();
+                        $("#readyOrder"+ id).submit();
                     })
                 }
             }else if (acao == 'Entregue'){
 
                 Swal.fire({
                     title: 'O pedido ' + id + ' foi entregue?',
-                    icon: 'warning',
+                    icon: 'question',
                     showCancelButton: false,
                     showConfirmButton: false,
                     html:
@@ -298,7 +320,7 @@
 
                 $(".finished").on('click', function (){
                     $(this).html('<div class="spinner-border text-light" role="status"></div>');
-                    $("#finishedOrder").submit();
+                    $("#finishedOrder"+ id).submit();
                 })
             }
         }
