@@ -575,6 +575,7 @@ class TrayController extends Controller
 
     public function fries(Request $request, $id)
     {
+
         if (isset ($request->extras)){
             //Buscando acompanhamento.
             $extras = [];
@@ -604,7 +605,6 @@ class TrayController extends Controller
             }
 
             //Ajustando o array que recebe os itens adicionais
-
             $add = [];
 
             foreach ($extras as $ext => $val){
@@ -693,6 +693,7 @@ class TrayController extends Controller
                 $order->totalValue = $hamburguer->comboValue + $valorNovo + $deliverValue;
                 $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $deliverValue;
             }else{
+                $order->extras = null;
                 $order->totalValue = $hamburguer->comboValue + $deliverValue;
             }
 
@@ -748,6 +749,7 @@ class TrayController extends Controller
                     $order->extras = $addItems;
                     $order->totalValue = $hamburguer->comboValue + $valorNovo;
                 }else{
+                    $order->extras = null;
                     $order->totalValue = $hamburguer->comboValue;
                 }
             }
@@ -764,6 +766,8 @@ class TrayController extends Controller
 
                 if (isset($request->extras)){
                     $order->extras = $addItems;
+                }else{
+                    $order->extras = null;
                 }
 
                 if($verifyOrder->totalValue != ''){
@@ -1422,28 +1426,29 @@ class TrayController extends Controller
         //Encontrando alimento para abatimento de preço.
         $formatFood = explode('|', $food);
         $formatFood = $formatFood[0];
-        $foodToResetPrice = DB::table('adverts')->select('comboValue')->where('name', '=', $formatFood)->get()->toArray();
-        $price = $foodToResetPrice[0]->comboValue;
+        $price = DB::table('adverts')->select('comboValue', 'foodType')->where('name', '=', $formatFood)->get()->toArray();
+        $foodType = $price[0]->foodType;
+        $price= $price[0]->comboValue;
         $currentPrice = $tray[0]['totalValue'];
 
+
         //Encontrando extras para abatimento de preço.
-        $extras = $user->userOrderTray()->select('extras')->get()->toArray();
-        $extras = $extras[0]['extras'];
-        $extras = explode(',', $extras);
+        if ($foodType == "hamburguer"){
 
-        if ($extras[0] != ''){
+            $extras = $user->userOrderTray()->select('extras')->get()->toArray();
+            $extras = $extras[0]['extras'];
+            $extras = explode(',', $extras);
 
-        //Recuperando o preço de cada adicional.
-        $extraPrices = 0;
-        foreach ($extras as $extra){
-            $test = DB::table('extras')->select('price')->where('name', '=', ltrim($extra))->get()->toArray();
-            $extraPrices += doubleval($test[0]->price);
+            if ($extras[0] != ''){
+
+                //Recuperando o preço de cada adicional.
+                $extraPrices = 0;
+                foreach ($extras as $extra){
+                    $test = DB::table('extras')->select('price')->where('name', '=', ltrim($extra))->get()->toArray();
+                    $extraPrices += doubleval($test[0]->price);
+                }
             }
         }
-
-//        echo $price + $extraPrices;
-//
-//        die();
 
         //Atualizando o valor atual do combo.
         if (isset($extraPrices)){
@@ -1452,12 +1457,10 @@ class TrayController extends Controller
             $updatedPrice = doubleval($currentPrice) - doubleval($price);
         }
 
-//        echo $updatedPrice;
-
-
-
         $resetPrice = Tray::find($orderId);
-        $resetPrice->extras = null;
+        if ($foodType == "hamburguer"){
+            $resetPrice->extras = null;
+        }
         $resetPrice->totalValue = $updatedPrice;
         $resetPrice->valueWithoutDisccount = $updatedPrice;
         $resetPrice->save();
