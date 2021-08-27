@@ -9,6 +9,7 @@
     <!-- Scripts -->
 
     <title>@yield('title')</title>
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

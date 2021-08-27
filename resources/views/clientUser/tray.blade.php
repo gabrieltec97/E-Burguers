@@ -37,9 +37,7 @@
                         $count += 1;
                     }
                 }
-
                 ?>
-
 
                 @if($count != 0)
                 <h1 class="titulo-cardapio text-center my-3">Hmm... Até o momento seu pedido está assim</h1>

@@ -11,12 +11,20 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12">
                 @if(session('msg'))
-                    <div class="alert alert-success sumir-feedback alert-dismissible fade show" role="alert">
-                        <strong>Bom trabalho!</strong> {{ session('msg') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    <script>
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 7000,
+                            timerProgressBar: true,
+                        })
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Muito bem! Parabéns por preparar mais este pedido.'
+                        })
+                    </script>
                 @endif
                 <div class="card card-prep-emp mb-4">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: linear-gradient(90deg, rgba(230,85,85,1) 45%, rgba(231,224,73,1) 76%);">
@@ -73,32 +81,10 @@
                                       </td>
 
                                       <td>
-                                          <form action="{{ route('preparo.update', $order->id) }}" method="post">
+                                          <form id="readyKitchen{{ $order->id }}" action="{{ route('preparo.update', $order->id) }}" method="post">
                                               @csrf
                                               @method('PUT')
-                                              <i data-toggle="modal" data-target="#exampleModalCenter{{$order->id}}" class="fas fa-check-square text-success" style="font-size: 25px; cursor: pointer"></i>
-
-                                              <!-- Modal -->
-                                              <div class="modal fade" id="exampleModalCenter{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                  <div class="modal-dialog modal-dialog-centered" role="document">
-                                                      <div class="modal-content">
-                                                          <div class="modal-header">
-                                                              <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
-                                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                  <span aria-hidden="true">&times;</span>
-                                                              </button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                              <p class="font-weight-bold" style="color: #1b1e21">Certifique-se de que você preparou as refeições corretamente, pois este
-                                                                  pedido constará como pronto para o(a) atendente. Deseja confirmar?</p>
-                                                          </div>
-                                                          <div class="modal-footer">
-                                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                                                              <button type="submit" class="btn btn-primary">Confirmar</button>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
+                                              <i class="fas fa-check-square text-success" onclick="triggerModal({{ $order->id }})" style="font-size: 25px; cursor: pointer"></i>
                                           </form>
 
                                       </td>
@@ -125,4 +111,28 @@
     <select class="count2" hidden>
         <option value="{{ count($orders) }}"></option>
     </select>
+
+    <script>
+        function triggerModal(id){
+
+            Swal.fire({
+                title: 'Este pedido está pronto? Verifique se foi feito corretamente.',
+                icon: 'question',
+                showCancelButton: false,
+                showConfirmButton: false,
+                html:
+                    '<button type="button" class="btn btn-success mt-2 finished">Confirmar</button>' +
+                    '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
+            })
+
+            $(".fechar").on('click', function (){
+                Swal.close()
+            })
+
+            $(".finished").on('click', function (){
+                $(this).html('<div class="spinner-border text-light" role="status"></div>');
+                $("#readyKitchen"+ id).submit();
+            })
+        }
+    </script>
 @endsection
