@@ -245,28 +245,28 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
         if(parseInt(teste.replace(/-/g,""),10) < parseInt(dateToday.replace(/-/g,""),10)){
             $(".cupom-expire2").fadeIn('slow');
             $(".cupom-expire").fadeOut();
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'not-allowed')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('title', 'Verifique a data de expiração do cupom.')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom, .botao-salvar").on("click", function (e){
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'not-allowed')
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").attr('title', 'Verifique a data de expiração do cupom.')
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom, .botao-salvar").on("click", function (e){
                 e.preventDefault();
             })
         }else if (parseInt(teste.replace(/-/g,""),10) == parseInt(dateToday.replace(/-/g,""),10)){
             $(".cupom-expire2").fadeOut();
             $(".cupom-expire").fadeIn('slow');
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'not-allowed')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").attr('title', 'Verifique a data de expiração do cupom.')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom, .botao-salvar").on("click", function (e){
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").attr('disabled', 'true')
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'not-allowed')
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").attr('title', 'Verifique a data de expiração do cupom.')
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom, .botao-salvar").on("click", function (e){
                 e.preventDefault();
             })
         }else{
             $(".cupom-expire").fadeOut('slow');
             $(".cupom-expire2").fadeOut('slow');
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").removeAttr('disabled', 'true')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").removeAttr('title', 'true')
-            $(".cadatrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'pointer')
-            $(".cadatrar-cupom, .botao-salvar").on("click", function (e){
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").removeAttr('disabled', 'true')
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").removeAttr('title', 'true')
+            $(".cadastrar-cupom, .salvamento-alteracoes-cupom").css('cursor', 'pointer')
+            $(".cadastrar-cupom, .botao-salvar").on("click", function (e){
                 $(".cupom-sub").submit();
             })
         }
@@ -1046,7 +1046,6 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
 $(".adicionar-bandeja").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 });
-
 
 //Copiando informações de entrega.
 $(".copiado").hide();

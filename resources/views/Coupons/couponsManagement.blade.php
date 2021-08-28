@@ -9,21 +9,33 @@
 
     <div class="container">
         @if(session('msg'))
-            <div class="alert alert-success alerta-sucesso-user alert-dismissible fade show" role="alert">
-                <span class="font-weight-bold text-muted">{{ session('msg') }} </span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Tudo certo!',
+                    text: 'Cupom cadastrado com sucesso!',
+                })
+            </script>
         @endif
 
             @if(session('msg-2'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span>{{ session('msg-2') }}</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Cupom não cadastrado!',
+                        text: 'Já existe um cupom registrado com este nome, consulte a lista de cupons ativos.',
+                    })
+                </script>
+            @endif
+
+            @if(session('msg-3'))
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Feito!',
+                        text: 'Cupom deletado com sucesso!',
+                    })
+                </script>
             @endif
         <div class="row">
             <div class="col-lg-8 col-sm-12 mb-5">
@@ -91,7 +103,7 @@
                                </div>
 
                                <div class="col-12 mt-5 d-flex justify-content-end">
-                                   <button type="submit" class="btn btn-primary cadatrar-cupom">Cadastrar cupom</button>
+                                   <button type="submit" class="btn btn-primary cadastrar-cupom">Cadastrar cupom</button>
                                </div>
                            </div>
                         </form>

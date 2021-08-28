@@ -83,7 +83,7 @@ class CouponController extends Controller
 
         foreach ($coupons as $c){
             if ($request->couponName == $c->name){
-                return back()->withInput()->with('msg-2', 'Cupom não cadastrado! Já existe um cupom registrado com este nome, consulte a lista de cupons ativos.');
+                return back()->withInput()->with('msg-2', ' ');
             }
         }
 
@@ -193,6 +193,6 @@ class CouponController extends Controller
 
         $coupon->destroy($id);
 
-        return redirect(route('cupons.index'))->with('msg-2', 'Cupom deletado com sucesso!');
+        return redirect(route('cupons.index'))->with('msg-3', ' ');
     }
 }
