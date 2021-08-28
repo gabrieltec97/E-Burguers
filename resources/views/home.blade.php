@@ -13,34 +13,61 @@
         <div class="row">
             <div class="col-12">
                 @if(session('msg'))
-                    <div class="alert alert-success sumir-feedback alert-dismissible fade show" role="alert">
-                        <strong>Tudo certo!</strong> {{ session('msg') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'O pedido foi enviado para preparo!',
+                            position: 'top-end',
+                            toast: true,
+                            showConfirmButton: false,
+                            timer: 5000,
+                            timerProgressBar: true
+                        })
+                    </script>
                 @endif
 
                     @if(session('msg-venda'))
                         <script>
-                            $.toast({
-                                text: '<b style="font-size: 14px;">O pedido foi entregue com sucesso. Parabéns a todos pelo empenho!</b>',
-                                heading: '<b style="font-size: 17px">Muito bem!</b>',
-                                showHideTransition: 'slide',
-                                bgColor : '#38C172',
-                                position : 'top-right',
-                                hideAfter: 9000
+                            Swal.fire({
+                                title: 'Muito beeeem!',
+                                text: 'O pedido foi entregue, parabéns à todos pelo empenho!',
+                                imageUrl: 'https://localhost/E-Pedidos/public/logo/congrats.gif',
+                                imageWidth: 400,
+                                imageHeight: 200,
+                                imageAlt: 'Parabéns pelo empenho!',
+                                showConfirmButton: false,
+                                timer: 6000,
+                                timerProgressBar: true
+                            })
+                        </script>
+                    @endif
+
+                    @if(session('msg-prep'))
+                        <script>
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Item pronto para retirada/envio!',
+                                position: 'top-end',
+                                toast: true,
+                                showConfirmButton: false,
+                                timer: 5000,
+                                timerProgressBar: true
                             })
                         </script>
                     @endif
 
                 @if(session('msg-2'))
-                    <div class="alert alert-danger sumir-feedback alert-dismissible fade show" role="alert">
-                        <strong>{{ session('msg-2') }}</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                        <script>
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Pedido cancelado com sucesso!',
+                                position: 'top-end',
+                                toast: true,
+                                showConfirmButton: false,
+                                timer: 5000,
+                                timerProgressBar: true
+                            })
+                        </script>
                 @endif
 
             </div>
@@ -50,10 +77,10 @@
                 <button type="button" class="mudarStatus6" hidden data-toggle="modal" data-target="#exampleModal6"></button>
 
 
-                <div class="col-lg-6 col-sm-12 mt-3 mt-md-0">
+                <div class="col-lg-7 col-sm-12 mt-3 mt-md-0">
                     <div class="card card-preparo">
                         <div class="card-header font-weight-bold text-muted" style="font-size: 18px; background: linear-gradient(90deg, rgba(113,231,73,1) 24%, rgba(248,249,252,1) 76%);">
-                            <span class="text-white">Em preparo</span> <span class="badge bg-secondary text-white">{{ count($total) }}</span> </div>
+                            <span class="text-white">Em Andamento</span> <span class="badge bg-secondary text-white">{{ count($total) }}</span> </div>
 
                         <div class="card-body">
                             <table class="table table-bordered table-hover table-responsive-lg">
@@ -82,63 +109,51 @@
                                                 <div>
                                                     <div class="row">
                                                         <div class="col-2 mr-2">
-                                                            <form action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                                @csrf
-                                                                @if($prep->status == 'Em preparo')
-                                                                    <i class="fas fa-check-circle text-success pronto-retirar" data-toggle="modal" data-target="#exampleModal{{$prep->id}}" hidden title="Enviar entrega" style="font-size: 25px; cursor: pointer"></i>
-                                                                @else
-                                                                    <i class="fas fa-check-circle text-success pronto-retirar" data-toggle="modal" data-target="#exampleModal{{$prep->id}}" title="Enviar entrega" style="font-size: 25px; cursor: pointer"></i>
+                                                            @if($prep->status == 'Pronto')
+                                                                <form id="sendToClient{{$prep->id}}" action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                                    @csrf
+                                                                    @if($prep->deliverWay == 'Retirada no restaurante')
+                                                                        <i class="fas fa-check-circle text-success pronto-retirar" title="Pronto para entrega" style="font-size: 25px; cursor: pointer; margin-top: 1px" onclick="deliverToClient({{ $prep->id }})"></i>
+                                                                    @else
+                                                                        <img src="{{ asset('logo/delivery-man.png') }}" title="Enviar ao cliente" style="width: 25px; height: 25px; margin-left: 5px; cursor: pointer; margin-top: 1px" alt="Enviar ao cliente" onclick="deliverToClient({{ $prep->id }})">
+                                                                    @endif
+
+                                                                </form>
+                                                            @elseif($prep->status == 'Pedido registrado')
+                                                                <form id="sendKitchen{{ $prep->id }}" action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'Em preparo','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                                    @csrf
+                                                                    <img src="{{ asset('logo/panela.png') }}" title="Enviar para preparo" style="width: 25px; height: 25px; margin-left: 5px; cursor: pointer; margin-top: 1px" alt="" onclick="sendToPrepare({{ $prep->id }})">
+
+                                                                <!-- Modal -->
+                                                                    <div class="modal fade" id="exampleModalcw{{$prep->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <span class="font-weight-bold texto-mudar-status"></span>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
+                                                                                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
                                                             @endif
 
-                                                            <!-- Modal -->
-                                                                <div class="modal fade" id="exampleModal{{$prep->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <span class="font-weight-bold texto-mudar-status"></span>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
-                                                                                <button type="submit" class="btn btn-primary">Confirmar</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
                                                         </div>
                                                         <div class="col-6">
-                                                            <i class="far fa-times-circle text-danger ml-2 cancelarPedido"  data-toggle="modal" data-target="#exampleModal{{ $prep->id }}cancela" title="Cancelar pedido" style="font-size: 25px; cursor: pointer"></i>
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="exampleModal{{ $prep->id }}cancela" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
+                                                            <img src="{{ asset('logo/cancellation.png') }}" title="Cancelar pedido" style="width: 25px; height: 25px; margin-left: 10px; cursor: pointer; margin-top: 1px" alt="Cancelar pedido" onclick="cancelOrder({{ $prep->id }})">
 
-                                                                        <div class="modal-body">
-                                                                            <span class="font-weight-bold texto-mudar-status"></span>
-                                                                            <form action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                                            @csrf
-
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
-                                                                            <button type="submit" class="btn btn-primary confirma-mudanca">Confirmar</button>
-                                                                        </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <form id="cancelOrder{{ $prep->id }}" action="{{ route('alterarStatus', ['id' => $prep->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                            @csrf
+                                                            </form>
                                             </td>
                                         </tr>
 
@@ -196,16 +211,14 @@
                     </tbody>
                     </table>
 
-                    <div class="col-12 offset-1 offset-xl-2">
+                    <div class="col-12 d-flex justify-content-center">
                         <span>{{ $prepare->links() }}</span>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
-        <div class="col-lg-6 mt-4 mt-lg-0 col-sm-12">
+        <div class="col-lg-5 mt-4 mt-lg-0 col-sm-12">
             <div class="card">
                 <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(238,8,8,1) 24%, rgba(248,249,252,1) 76%);">
                     <span style="color: white;" class="font-weight-bold">Em rota de entrega</span> <span class="badge bg-secondary">{{count($totalReady)}}</span></div>
@@ -214,9 +227,8 @@
                     <table class="table table-bordered table-hover table-responsive-lg">
                         <thead>
                         <tr>
-                            <th>Id do pedido</th>
-                            <th>Status do pedido</th>
-                            <th>Valor</th>
+                            <th>Id</th>
+                            <th>Hora do pedido</th>
                             <th>Tratativas</th>
                         </tr>
                         </thead>
@@ -225,42 +237,20 @@
                             @foreach($ready as $rd)
                                 <tr>
                                     <td>#{{ $rd->id }}</td>
-                                    <td>{{ $rd->status }}</td>
-                                    <td>{{ $rd->totalValue }}</td>
+                                    <td>{{ $rd->hour }}</td>
                                     <td>
                                         <div>
                                             <div class="row">
                                                 <div class="col-2 mr-2">
-                                                    <form action="{{ route('alterarStatus', ['id' => $rd->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                    <form id="delivered{{ $rd->id }}" action="{{ route('alterarStatus', ['id' => $rd->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                         @csrf
-                                                        <i class="fas fa-user-check text-success finalizar-ok" data-toggle="modal" data-target="#exampleModal{{ $rd->id }}" title="Pedido entregue com sucesso." style="font-size: 25px; cursor: pointer"></i>
-
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModal{{ $rd->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <span class="font-weight-bold texto-mudar-status"></span>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
-                                                                        <button type="submit" class="btn btn-primary">Confirmar</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <img src="{{ asset('logo/comment.png') }}" title="Pedido entregue" style="width: 25px; height: 25px; margin-left: 5px; cursor: pointer; margin-top: 1px" alt="Pedido entregue" onclick="delivered({{ $rd->id }})">
                                                     </form>
                                                 </div>
                                                 <div class="col-6">
-                                                    <i class="far fa-times-circle text-danger ml-2 cancelarPedido" data-toggle="modal" data-target="#exampleModal{{ $rd->id }}cancelar" title="Cancelar pedido" style="font-size: 25px; cursor: pointer"></i>
+                                                    <img src="{{ asset('logo/cancellation.png') }}" title="Cancelar pedido" style="width: 25px; height: 25px; margin-left: 10px; cursor: pointer; margin-top: 1px" alt="Cancelar pedido" onclick="cancelOrder({{ $rd->id }})">
 
-                                                    <form action="{{ route('alterarStatus', ['id' => $rd->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                                    <form id="cancelOrder{{ $rd->id }}" action="{{ route('alterarStatus', ['id' => $rd->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                                     @csrf
                                                     <!-- Modal -->
                                                         <div class="modal fade" id="exampleModal{{ $rd->id }}cancelar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -296,7 +286,7 @@
 
                     </tbody>
                     </table>
-                    <div class="col-12 offset-1 offset-xl-2">
+                    <div class="col-12 d-flex justify-content-center">
                         <span>{{ $ready->links() }}</span>
                     </div>
             </div>
@@ -306,160 +296,10 @@
     </div>
 
 
-   <div class="container">
-       <div class="row">
-           <div class="col-lg-12 mt-4 col-sm-12">
-               <div class="card card-cadastrados mb-lg-5">
-                   <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(88,101,236,1) 26%, rgba(0,249,158,1) 68%);">
-                       <span class="text-white">Pedidos cadastrados</span> <span class="badge bg-secondary">{{count($registered)}}</span></div>
 
-                   <div class="card-body first-table">
-                       <table class="table table-bordered table-hover table-responsive-lg">
-                           <thead>
-                           <tr>
-                               <th scope="col">Id</th>
-                               <th scope="col">Hora de registro</th>
-                               <th scope="col">Status do pedido</th>
-                               <th scope="col">Informações</th>
-                               <th scope="col">Tratativas</th>
-                           </tr>
-                           </thead>
-                           <tbody>
-                           @if(count($registered) != 0)
-                               @foreach($registered as $reg)
-                                   <tr>
-                                       <td>#{{ $reg->id }}</td>
-                                       <td>{{ $reg->hour }}</td>
-                                       <td>{{ $reg->status }}</td>
-                                       <td>
-                                           @if($reg->deliverWay == 'Retirada no restaurante')
-                                               <b style="color: black">Item a ser retirado no restaurante.</b>
-                                           @else
-                                           <button class="btn btn-primary" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações a serem repassadas ao entregador."><i class="fas fa-info-circle mr-1"></i> Informações de entrega</button>
-                                           @endif
-                                       </td>
-                                       <td>
-                                           <div>
-                                               <div class="row">
-                                                   <div class="col-2 mr-2">
-                                                       <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Em preparo', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                           @csrf
-                                                           <i class="fas fa-share text-primary enviarPreparo" data-toggle="modal" data-target="#exampleModal{{$reg->id}}" title="Enviar para preparo" style="font-size: 25px; cursor: pointer"></i>
-
-                                                           <!-- Modal -->
-                                                           <div class="modal fade" id="exampleModal{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                               <div class="modal-dialog" role="document">
-                                                                   <div class="modal-content">
-                                                                       <div class="modal-header">
-                                                                           <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
-                                                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                               <span aria-hidden="true">&times;</span>
-                                                                           </button>
-                                                                       </div>
-                                                                       <div class="modal-body">
-                                                                           <span class="font-weight-bold texto-mudar-status"></span>
-                                                                           <span class="send"></span>
-                                                                       </div>
-                                                                       <div class="modal-footer">
-                                                                           <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
-                                                                           <button type="submit" class="btn btn-primary">Confirmar</button>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>
-                                                           </div>
-                                                       </form>
-                                                   </div>
-                                                   <div class="col-6">
-                                                       <i class="far fa-times-circle text-danger ml-2 cancelarPedido" data-toggle="modal" data-target="#exampleModal{{$reg->id}}cancelarr" title="Cancelar pedido" style="font-size: 25px; cursor: pointer"></i>
-                                                       <form action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                                       @csrf
-                                                       <!-- Modal -->
-                                                           <div class="modal fade" id="exampleModal{{$reg->id}}cancelarr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                               <div class="modal-dialog" role="document">
-                                                                   <div class="modal-content">
-                                                                       <div class="modal-header">
-                                                                           <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel"><i class="fas fa-exclamation-triangle mr-1"></i> Um momento..</h5>
-                                                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                               <span aria-hidden="true">&times;</span>
-                                                                           </button>
-                                                                       </div>
-                                                                       <div class="modal-body">
-                                                                           <span class="font-weight-bold texto-mudar-status"></span>
-                                                                       </div>
-                                                                       <div class="modal-footer">
-                                                                           <button type="button" class="btn btn-info cancela-mudanca" data-dismiss="modal">Voltar</button>
-                                                                           <button type="submit" class="btn btn-primary">Confirmar</button>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>
-                                                           </div>
-                                       </td>
-
-                                       <!-- Modal -->
-                                       <div class="modal fade" id="modalSend{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                           <div class="modal-dialog modal-dialog-centered" role="document">
-                                               <div class="modal-content">
-                                                   <div class="modal-header">
-                                                       <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
-                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                           <span aria-hidden="true">&times;</span>
-                                                       </button>
-                                                   </div>
-                                                   <div class="modal-body">
-                                                       <p class="text-center" style="color: black; font-size: 18px;">Passe estas informações ao responsável pela entrega.</p>
-
-                                                            <b style="color: black">Pedido:</b> <span class="idPedido" style="color: black">{{ $reg->id }}</span> <br>
-
-                                                            <b style="color: black">Cliente:</b> <span class="clientePedido" style="color: black">{{ $reg->clientName }}</span> <br>
-
-                                                           @if($reg->detached == '')
-                                                               <b style="color: black">Itens: </b> <span class="itensPedido" style="color: black">{{ $reg->comboItem }},  {{ $reg->fries }}, {{ $reg->drinks }}.</span><br><br>
-                                                           @else
-                                                               <b style="color: black">Itens: </b> <span class="itensPedido" style="color: black">{{ $reg->detached }}.</span><br>
-                                                           @endif
-
-                                                       <hr>
-                                                           @if($reg->payingMethod == 'Dinheiro')
-                                                               <b style="color: black">Valor total:</b> <span class="valorPedido" style="color: black"> {{ $reg->totalValue }}</span><br>
-                                                               <b style="color: black">Troco para: </b> <span class="trocoPedido" style="color: black">{{ $reg->payingValue }}</span><br>
-                                                           @else
-                                                           <b style="color: black">Valor total:</b> <span class="valorPedido" style="color: black"> {{ $reg->totalValue }}</span><br>
-                                                           <b style="color: black">Pagamento em cartão:</b> <span class="pagamentoCartao" style="color: black">{{ $reg->payingMethod }}</span><br>
-                                                           @endif
-
-                                                       <b style="color: black">Endereço:</b> <span class="enderecoPedido" style="color: black">{{ $reg->address }}</span>
-                                                   </div>
-                                                   <div class="modal-footer">
-                                                       <span class="mr-2 copiado" style="color: black">Copiado!</span>
-                                                       <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
-                                                       <button type="button" class="btn btn-primary copiar">Copiar</button>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </tr>
-                                   </form>
-                   </div>
-               </div>
-           </div>
-
-
-           @endforeach
-           @else
-               <tr>
-                   <td align="center" colspan="6">Sem registros encontrados.</td>
-               </tr>
-               @endif
-               </tbody>
-               </table>
-       </div>
-   </div>
-    </div>
     </div>
        </div>
    </div>
-
-{{--    <button id="mydialog3">1111</button>--}}
 
     <audio id="newOne">
         <source src="{{ asset('audio/newOne.mp3') }}" type="audio/mp3">
@@ -477,21 +317,91 @@
         <option value="{{ count($prepareCount) }}"></option>
     </select>
 
-<script>
+    <script>
+        function sendToPrepare(id){
+            Swal.fire({
+                title: 'Deseja enviar o pedido ' + id + ' para preparo?',
+                icon: 'question',
+                showCancelButton: false,
+                showConfirmButton: false,
+                html:
+                    '<button type="button" class="btn btn-success mt-2 sendPrepare">Enviar para preparo</button>' +
+                    '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
+            })
 
-    // $("#mydialog3").on("click", function(e){
-    //     e.preventDefault();
-    //
-    //     bs4pop.notice('<i class="fas fa-concierge-bell mr-2"></i><b>Novo pedido registrado.</b>', {
-    //         type: 'success',
-    //         position: 'topright',
-    //         appendType: 'append',
-    //         closeBtn: 'false',
-    //         className: ''
-    //     })
-    // })
+            $(".fechar").on('click', function (){
+                Swal.close()
+            })
 
-</script>
+            $(".sendPrepare").on('click', function (){
+                $(this).html('<div class="spinner-border text-light" role="status"></div>');
+                $("#sendKitchen" + id).submit();
+            })
+        }
+
+        function deliverToClient(id){
+            Swal.fire({
+                title: 'Deseja enviar o pedido ' + id + ' para o cliente?',
+                icon: 'question',
+                showCancelButton: false,
+                showConfirmButton: false,
+                html:
+                    '<button type="button" class="btn btn-success mt-2 sendPrepare">Enviar para entrega</button>' +
+                    '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
+            })
+
+            $(".fechar").on('click', function (){
+                Swal.close()
+            })
+
+            $(".sendPrepare").on('click', function (){
+                $(this).html('<div class="spinner-border text-light" role="status"></div>');
+                $("#sendToClient" + id).submit();
+            })
+        }
+
+        function cancelOrder(id){
+            Swal.fire({
+                title: 'Deseja cancelar o pedido ' + id + '?',
+                icon: 'question',
+                showCancelButton: false,
+                showConfirmButton: false,
+                html:
+                    '<button type="button" class="btn btn-danger mt-2 sendPrepare">Cancelar pedido</button>' +
+                    '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
+            })
+
+            $(".fechar").on('click', function (){
+                Swal.close()
+            })
+
+            $(".sendPrepare").on('click', function (){
+                $(this).html('<div class="spinner-border text-light" role="status"></div>');
+                $("#cancelOrder" + id).submit();
+            })
+        }
+
+        function delivered(id){
+            Swal.fire({
+                title: 'O pedido ' + id + ' foi entregue?',
+                icon: 'question',
+                showCancelButton: false,
+                showConfirmButton: false,
+                html:
+                    '<button type="button" class="btn btn-success mt-2 finished">Sim</button>' +
+                    '<button type="button" class="btn btn-danger mt-2 ml-4 fechar">Não</button>'
+            })
+
+            $(".fechar").on('click', function (){
+                Swal.close()
+            })
+
+            $(".finished").on('click', function (){
+                $(this).html('<div class="spinner-border text-light" role="status"></div>');
+                $("#delivered"+ id).submit();
+            })
+        }
+    </script>
 
 @endsection
 
