@@ -606,20 +606,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".disparo-ham").click();
 
-//Toast de finalização de pedido
-
-    $(".disparo-fim").on("click", function (){
-        $.toast({
-            text: '<b style="font-size: 14px">Vamos revisar para pedir tudo certinho, ok?</b>',
-            heading: '<b style="font-size: 17px">Quase lá!</b>',
-            showHideTransition: 'slide',
-            bgColor : '#38C172',
-            position : 'top-right',
-            hideAfter: 6000
-        })
-    });
-
-    $(".disparo-fim").click();
 
 //Toast de remoção de item.
 
@@ -1045,6 +1031,10 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
 //Spinner de item sendo adicionado.
 $(".adicionar-bandeja").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
+});
+
+$(".aplicar-cupom").on('click', function (){
+    $(this).html('<div class="spinner-border text-light" role="status"></div>');
 });
 
 //Copiando informações de entrega.

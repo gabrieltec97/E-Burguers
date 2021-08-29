@@ -18,29 +18,54 @@
                     <div class="row">
                         <div class="col-12 col-lg-4 mb-4 mb-lg-0">
                             @if(session('msg'))
-                                <div class="alert alert-danger alerta-sucesso-ref alert-dismissible fade show" role="alert">
-                                    <span class="font-weight-bold">Poxa!</span> {{ session('msg') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
+                                <script>
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 5000,
+                                        timerProgressBar: true,
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'error',
+                                        title: 'Poxa! Item removido do pedido.'
+                                    })
+                                </script>
                             @endif
                             @if(session('msg-success'))
-                                <div class="alert alert-success alerta-sucesso-user mt-2 alert-dismissible fade show" role="alert">
-                                    <span class="text-muted font-weight-bold">Cupom inserido com sucesso!</span>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
+                               <script>
+                                   const Toast = Swal.mixin({
+                                       toast: true,
+                                       position: 'top-end',
+                                       showConfirmButton: false,
+                                       timer: 5000,
+                                       timerProgressBar: true,
+                                   })
+
+                                   Toast.fire({
+                                       icon: 'success',
+                                       title: 'Cupom inserido com sucesso!'
+                                   })
+                               </script>
                             @endif
 
                             @if(session('msg-exp') or session('msg-use'))
-                                <div class="alert alert-danger alerta-sucesso-user mt-2 alert-dismissible fade show" role="alert">
-                                    <span class="text-muted font-weight-bold">{{ session('msg-exp') }} {{ session('msg-use') }} </span>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
+                                    <script>
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 8000,
+                                            timerProgressBar: true,
+                                        })
+
+                                        Toast.fire({
+                                            icon: 'error',
+                                            title: '{{ session('msg-exp') }} {{ session('msg-use') }}'
+
+                                        })
+                                    </script>
                             @endif
                             <div class="card">
                                 <div class="card-header bg-danger">
@@ -227,7 +252,7 @@
                                         </div>
 
                                         <div class="col-12 mt-4 d-flex justify-content-end">
-                                            <button type="submit"  class="btn btn-success font-weight-bold"
+                                            <button type="submit"  class="btn btn-success font-weight-bold aplicar-cupom"
                                                     @if(session('msg-success'))
                                                     hidden
                                                     @endif
@@ -491,5 +516,20 @@
         @elseif(!isset($use) && !isset($couponName) && !isset($notExist))
             <button hidden class="disparo-fim"></button>
         @endif
+    @endif
+
+    @if(session('msg-exp') or session('msg-use') or session('msg-success') or session('msg'))
+
+    @else
+        <script>
+            Swal.fire({
+                title: 'Quase lá!',
+                text: 'Revise seu pedido para que possa vir certinho, ok?',
+                imageUrl: 'https://localhost/E-Pedidos/public/logo/resee.svg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Revise seu pedido!',
+            })
+        </script>
     @endif
 @endsection
