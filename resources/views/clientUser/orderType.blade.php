@@ -50,28 +50,33 @@
 
     @if(session('msg'))
         <script>
-            $.toast({
-                text: '<b>Seu pedido foi feito e ESTÁ NA ABA PEDIDOS PENDENTES. Você pode escolher novos itens para seu novo pedido.</b>',
-                heading: '<b>Atenção aqui!</b>',
-                showHideTransition: 'slide',
-                bgColor : '38C172',
-                position : 'top-right',
-                hideAfter: 15000
+            Swal.fire({
+                icon: 'success',
+                title: 'Tudo certo!',
+                html: 'Seu pedido está na aba <b style="color: blue">pedidos pendentes</b> no menu acima. Fique à vontade para escolher novos itens para seu novo pedido, ok?',
+                timer: 20000,
+                timerProgressBar: true
             })
         </script>
     @endif
 
 
     @if(session('msg-cancel'))
+
         <script>
-            $.toast({
-                text: '<b>Seu pedido foi cancelado, mas fique à vontade para fazer um novo pedido, ok?</b>',
-                heading: '<b>Poxa!</b>',
-                showHideTransition: 'slide',
-                bgColor : 'red',
-                position : 'top-right',
-                hideAfter: 15000
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 12000,
+                timerProgressBar: true,
             })
+
+            Toast.fire({
+                icon: 'warning',
+                title: 'Seu pedido foi cancelado, mas fique à vontade para fazer novos pedidos, ok?'
+            })
+
         </script>
     @endif
 

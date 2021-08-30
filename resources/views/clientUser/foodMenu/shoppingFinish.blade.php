@@ -477,13 +477,13 @@
             @if($exist[0]->deliverWay == 'Entrega em domicílio')
                 <script>
                     function shoot(){
-                        $.toast({
-                            text: '<b>Você tem um pedido em andamento para entrega em domicílio, com isso não é possível escolher outra forma de retirada.</b>',
-                            heading: '<b>Atenção aqui!</b>',
-                            showHideTransition: 'slide',
-                            bgColor : '#38C172',
-                            position : 'top-right',
-                            hideAfter: 14000
+                        Swal.fire({
+                            title: 'Ei, atenção aqui!',
+                            html: 'Você tem um pedido em andamento para <b style="color: red">entrega em domicílio</b>, com isso não é possível escolher outra forma de retirada.',
+                            imageUrl: 'https://localhost/E-Pedidos/public/logo/resee.svg',
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: 'Revise seu pedido!',
                         })
                     }
 
@@ -496,13 +496,14 @@
             @elseif($exist[0]->deliverWay == 'Retirada no restaurante')
                 <script>
                     function shoot(){
-                        $.toast({
-                            text: '<b>Você tem um pedido em andamento para retirada no restaurante, com isso não é possível escolher outra forma de retirada.</b>',
-                            heading: '<b>Atenção aqui!</b>',
-                            showHideTransition: 'slide',
-                            bgColor : '#38C172',
-                            position : 'top-right',
-                            hideAfter: 14000
+
+                        Swal.fire({
+                            title: 'Ei, atenção aqui!',
+                            html: 'Você tem um pedido em andamento para <b style="color: red">retirada no restaurante</b>, com isso não é possível escolher outra forma de retirada, ok?',
+                            imageUrl: 'https://localhost/E-Pedidos/public/logo/resee.svg',
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: 'Revise seu pedido!',
                         })
                     }
 
@@ -518,7 +519,7 @@
         @endif
     @endif
 
-    @if(session('msg-exp') or session('msg-use') or session('msg-success') or session('msg'))
+    @if(session('msg-exp') or session('msg-use') or session('msg-success') or session('msg') or isset($exist[0]))
 
     @else
         <script>

@@ -699,34 +699,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".disparo-msg").click();
 
-//Toast de pedido cadastrado com sucesso e novo pedido poder ser feito.
-
-    $(".disparo-ok").on("click", function (){
-        $.toast({
-            text: '<b>Pedidos cadastrados! Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.</b>',
-            heading: '<b>Tudo certo!</b>',
-            showHideTransition: 'slide',
-            bgColor : '#38C172',
-            position : 'top-right',
-            hideAfter: 10000
-        })
-    });
-
-    $(".disparo-ok").click();
-
-    $(".disparo-ok-one").on("click", function (){
-        $.toast({
-            text: '<b>Pedido cadastrado! Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.</b>',
-            heading: '<b>Tudo certo!</b>',
-            showHideTransition: 'slide',
-            bgColor : '#38C172',
-            position : 'top-right',
-            hideAfter: 10000
-        })
-    });
-
-    $(".disparo-ok-one").click();
-
 //Tratativas de finalização de compra.
 $(".finalizar-pedido").attr('disabled', 'true');
 
@@ -1034,6 +1006,10 @@ $(".adicionar-bandeja").on('click', function (){
 });
 
 $(".aplicar-cupom").on('click', function (){
+    $(this).html('<div class="spinner-border text-light" role="status"></div>');
+});
+
+$(".cancelar-pedido").on('click', function (){
     $(this).html('<div class="spinner-border text-light" role="status"></div>');
 });
 

@@ -143,7 +143,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold">Cancelar pedido</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold cancelar-pedido">Cancelar pedido</button>
                 </div>
                 </form>
                 @elseif(count($order) > 1)
@@ -178,16 +178,23 @@
 
 @if(session('msg-cancel'))
     <script>
-        $.toast({
-            text: '<b>O pedido foi cancelado. Agora você pode acompanhar seus pedidos atuais por aqui.</b>',
-            heading: '<b>Poxa!</b>',
-            showHideTransition: 'slide',
-            bgColor : 'red',
-            position : 'top-right',
-            hideAfter: 15000
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 12000,
+            timerProgressBar: true,
         })
+
+        Toast.fire({
+            icon: 'warning',
+            title: 'Pedido cancelado. Acompanhe seus pedidos atuais nesta tela.'
+        })
+
     </script>
 @endif
+
+
 
 @if(session('duplicated'))
     <script>
@@ -195,4 +202,29 @@
     </script>
 @endif
 
+
+@if(session('msg-cancel'))
+@else
+    @if(count($order) == 1)
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Pedido cadastrado!',
+                text: 'Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.',
+                timer: 15000,
+                timerProgressBar: true
+            })
+        </script>
+    @else
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Pedidos cadastrados!',
+                text: 'Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.',
+                timer: 15000,
+                timerProgressBar: true
+            })
+        </script>
+    @endif
+@endif
 @endsection
