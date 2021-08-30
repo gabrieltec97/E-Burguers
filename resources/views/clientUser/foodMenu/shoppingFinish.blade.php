@@ -28,11 +28,28 @@
                                     })
 
                                     Toast.fire({
-                                        icon: 'error',
+                                        icon: 'warning',
                                         title: 'Poxa! Item removido do pedido.'
                                     })
                                 </script>
                             @endif
+                                @if(session('msg-rem-cup'))
+                                    <script>
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 10000,
+                                            timerProgressBar: true,
+                                        })
+
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: 'Item removido do pedido. O cupom também foi removido por não atender aos requisitos mínimos de uso.'
+                                        })
+                                    </script>
+                                @endif
+
                             @if(session('msg-success'))
                                <script>
                                    const Toast = Swal.mixin({
@@ -244,8 +261,8 @@
                                             </label>
                                             <input type="text" autocomplete="off" class="form-control cupomDesconto" name="cupomDesconto"
 
-                                                   @if(session('msg-success'))
-                                                       value="{{ session('msg-success') }}" style="cursor: not-allowed;" readonly
+                                                   @if(session('msg-success') or $myOrder['disccountUsed'] != null)
+                                                       value="{{ session('msg-success') }} {{ $myOrder['disccountUsed'] }}" style="cursor: not-allowed;" readonly
                                                         title="Cupom já aplicado"
                                                    @endif
                                                    placeholder="Insira um cupom (se tiver).">
@@ -253,18 +270,24 @@
 
                                         <div class="col-12 mt-4 d-flex justify-content-end">
                                             <button type="submit"  class="btn btn-success font-weight-bold aplicar-cupom"
-                                                    @if(session('msg-success'))
+                                                    @if(session('msg-success') or $myOrder['disccountUsed'] != null)
                                                     hidden
                                                     @endif
                                             >Aplicar cupom</button>
                                         </div>
                                     </form>
 
-                                    @if(session('msg-success'))
+                                    @if(session('msg-success') or $myOrder['disccountUsed'] != null)
+                                        @if($myOrder['disccountUsed'] != null)
+                                        <form action="{{ route('removerCupom', $myOrder['disccountUsed']) }}" method="post">
+                                        @elseif(session('msg-success') && $myOrder['disccountUsed'] != null)
+                                          <form action="{{ route('removerCupom', session('msg-success')) }}" method="post">
+                                        @else
                                         <form action="{{ route('removerCupom', session('msg-success')) }}" method="post">
+                                        @endif
                                             @csrf
                                             <div class="col-12 mt-1 d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-danger font-weight-bold" title="Remover item">Remover Cupom</button></li>
+                                                <button type="submit" class="btn btn-danger font-weight-bold" title="Remover cupom">Remover Cupom</button></li>
                                             </div>
                                         </form>
                                     @endif
@@ -519,7 +542,7 @@
         @endif
     @endif
 
-    @if(session('msg-exp') or session('msg-use') or session('msg-success') or session('msg') or isset($exist[0]))
+    @if(session('msg-exp') or session('msg-use') or session('msg-success') or session('msg-rem-cup') or session('msg') or isset($exist[0]))
 
     @else
         <script>

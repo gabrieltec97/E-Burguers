@@ -285,7 +285,11 @@ class TrayController extends Controller
                 $addItems = implode(', ', $add);
 
                 $order->extras = $addItems;
-                $order->valueWithoutDisccount = $order->totalValue + $item->value + $valorNovo;
+                if ($order->disccountUsed != null){
+                    $order->valueWithoutDisccount = $order->valueWithoutDisccount + $item->value + $valorNovo;
+                }else{
+                    $order->valueWithoutDisccount = $order->totalValue + $item->value + $valorNovo;
+                }
                 $order->totalValue = $order->totalValue + $item->value + $valorNovo;
                 $order->save();
 
@@ -326,7 +330,13 @@ class TrayController extends Controller
                 $itemWithoutExtras->save();
 
                 $order->totalValue = $updated->totalValue + $item->value;
-                $order->valueWithoutDisccount = $updated->totalValue + $item->value;
+
+                if ($order->disccountUsed != null){
+                    $order->valueWithoutDisccount = $updated->valueWithoutDisccount + $item->value;
+                }else{
+                    $order->valueWithoutDisccount = $updated->totalValue + $item->value;
+                }
+
             }
 
             $order->save();
@@ -441,6 +451,7 @@ class TrayController extends Controller
             $personalized->nameExtra = $ingredients;
             $personalized->valueWithExtras = $newValue;
             $editTray->totalValue = $editTray->totalValue - $updateValue;
+            $editTray->valueWithoutDisccount = $editTray->valueWithoutDisccount - $updateValue;
         }else{
 
             $oldExtras = explode(', ', $tray->nameExtra);
@@ -460,6 +471,7 @@ class TrayController extends Controller
             $personalized->nameExtra = null;
             $personalized->valueWithExtras = $value;
             $editTray->totalValue = $editTray->totalValue - $updateValue;
+            $editTray->valueWithoutDisccount = $editTray->valueWithoutDisccount - $updateValue;
         }
 
         $personalized->save();
@@ -916,7 +928,7 @@ class TrayController extends Controller
         //Verificando se há bandeja, se não, redirecionando para página de novo pedido.
         $verify = $user->userOrderTray()->get();
         if (count($verify) != 0){
-            $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'image', 'comboItem', 'portion', 'drinks', 'totalValue', 'extras')->get()->first()->toArray();
+            $myOrder= $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'image', 'comboItem', 'portion', 'drinks', 'totalValue', 'extras', 'disccountUsed')->get()->first()->toArray();
         }else{
             return redirect()->route('tipoPedido');
         }
@@ -1035,20 +1047,62 @@ class TrayController extends Controller
         $delete = AuxiliarDetached::find($id);
         $order = Tray::find($delete->idOrder);
 
-        $order->totalValue = $order->totalValue - $delete->valueWithExtras;
-        $order->save();
+        $totalValue = $order->valueWithoutDisccount - $delete->valueWithExtras;
+        $updateOrder = $order->totalValue - $delete->valueWithExtras;
 
-        DB::table('auxiliar_detacheds')
-            ->where('id', '=', $id)
-            ->delete();
+        //Verificando o uso de cupom e se bate com o preço atual.
+        if ($order['disccountUsed'] != null){
 
-        $orderDelete = Tray::find($delete->idOrder);
+            $rule = DB::table('coupons')
+                ->where('name', '=', $order['disccountUsed'])
+                ->get()->toArray();
 
-        if ($orderDelete->totalValue == 0){
-            $orderDelete->delete();
+            if ($totalValue < $rule[0]->disccountRule){
+
+                DB::table('auxiliar_detacheds')
+                    ->where('id', '=', $id)
+                    ->delete();
+
+                DB::table('trays')
+                    ->where('id', '=', $order['id'])
+                    ->update(['disccountUsed' => null, 'totalValue' => $totalValue, 'valueWithoutDisccount' => $totalValue]);
+
+                return redirect()->back()->with('msg-rem-cup', '.');
+
+            }else{
+                DB::table('auxiliar_detacheds')
+                    ->where('id', '=', $id)
+                    ->delete();
+
+                DB::table('trays')
+                    ->where('id', '=', $order['id'])
+                    ->update(['totalValue' => $updateOrder, 'valueWithoutDisccount' => $totalValue]);
+
+
+                $orderDelete = Tray::find($delete->idOrder);
+
+                if ($orderDelete->totalValue == 0){
+                    $orderDelete->delete();
+                }
+            }
+        }else{
+
+            DB::table('auxiliar_detacheds')
+                ->where('id', '=', $id)
+                ->delete();
+
+            DB::table('trays')
+                ->where('id', '=', $order['id'])
+                ->update(['totalValue' => $updateOrder, 'valueWithoutDisccount' => $totalValue]);
+
+            $orderDelete = Tray::find($delete->idOrder);
+
+            if ($orderDelete->totalValue == 0){
+                $orderDelete->delete();
+            }
         }
 
-        return redirect(route('minhaBandeja.index'))->with('msg', '.');
+        return redirect()->back()->with('msg', '.');
     }
 
     public function removeExtras(Request $req)
@@ -1133,15 +1187,48 @@ class TrayController extends Controller
 
         //Abatendo o preço na tabela de pedido.
         $updateOrder = $order['totalValue'] - $item[0]->value;
+        $totalValue = $order['valueWithoutDisccount'] - $item[0]->value;
 
-        DB::table('trays')
-            ->where('id', '=', $order['id'])
-            ->update(['totalValue' => $updateOrder]);
+        //Verificando o uso de cupom e se bate com o preço atual.
+        if ($order['disccountUsed'] != null){
 
-        //Deletando o item da tabela de itens sem extras.
-        DB::table('item_without_extras')
-            ->where('id', '=', $key)
-            ->delete();
+            $rule = DB::table('coupons')
+                ->where('name', '=', $order['disccountUsed'])
+                ->get()->toArray();
+
+            if ($updateOrder < $rule[0]->disccountRule){
+
+                DB::table('item_without_extras')
+                    ->where('id', '=', $key)
+                    ->delete();
+
+                DB::table('trays')
+                    ->where('id', '=', $order['id'])
+                    ->update(['disccountUsed' => null, 'totalValue' => $totalValue, 'valueWithoutDisccount' => $totalValue]);
+
+                return redirect()->back()->with('msg-rem-cup', '.');
+
+            }else{
+                DB::table('trays')
+                    ->where('id', '=', $order['id'])
+                    ->update(['totalValue' => $updateOrder, 'valueWithoutDisccount' => $totalValue]);
+
+                //Deletando o item da tabela de itens sem extras.
+                DB::table('item_without_extras')
+                    ->where('id', '=', $key)
+                    ->delete();
+            }
+        }else{
+
+            DB::table('trays')
+                ->where('id', '=', $order['id'])
+                ->update(['totalValue' => $updateOrder, 'valueWithoutDisccount' => $totalValue]);
+
+            //Deletando o item da tabela de itens sem extras.
+            DB::table('item_without_extras')
+                ->where('id', '=', $key)
+                ->delete();
+        }
 
 //        //Deletando coluna da tabela caso ela esteja vazia.
 //        $updTray = Auth::user()->userOrderTray()->get()->first()->toArray();
@@ -1204,187 +1291,187 @@ class TrayController extends Controller
 
             if (doubleval($myOrder['totalValue']) >= $coupon[0]->disccountRule) {
 
-                if ($coupon[0]->disccount == '10% de desconto' && $update->disccountUsed != 'Sim') {
+                if ($coupon[0]->disccount == '10% de desconto' && $update->disccountUsed == null) {
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.1);
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                }elseif ($coupon[0]->disccount == '5% de desconto' && $update->disccountUsed != 'Sim'){
+                }elseif ($coupon[0]->disccount == '5% de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.05);
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                }elseif ($coupon[0]->disccount == '15% de desconto' && $update->disccountUsed != 'Sim'){
+                }elseif ($coupon[0]->disccount == '15% de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.15);
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                } elseif ($coupon[0]->disccount == '20% de desconto' && $update->disccountUsed != 'Sim'){
+                } elseif ($coupon[0]->disccount == '20% de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.2);
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                } elseif ($coupon[0]->disccount == '30% de desconto' && $update->disccountUsed != 'Sim'){
+                } elseif ($coupon[0]->disccount == '30% de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.3);
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                } elseif ($coupon[0]->disccount == '50% de desconto' && $update->disccountUsed != 'Sim'){
+                } elseif ($coupon[0]->disccount == '50% de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.5);
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                } elseif ($coupon[0]->disccount == 'R$ 5 reais de desconto' && $update->disccountUsed != 'Sim'){
+                } elseif ($coupon[0]->disccount == 'R$ 5 reais de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - 5;
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                   //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                } elseif ($coupon[0]->disccount == 'R$ 7 reais de desconto' && $update->disccountUsed != 'Sim'){
+                } elseif ($coupon[0]->disccount == 'R$ 7 reais de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - 7;
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                } elseif ($coupon[0]->disccount == 'R$ 10 reais de desconto' && $update->disccountUsed != 'Sim'){
+                } elseif ($coupon[0]->disccount == 'R$ 10 reais de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - 10;
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
-                } elseif ($coupon[0]->disccount == 'R$ 15 reais de desconto' && $update->disccountUsed != 'Sim'){
+                } elseif ($coupon[0]->disccount == 'R$ 15 reais de desconto' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - 15;
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
                 }
 
                 //Adicionando cupom de frete grátis. (Veja com o cliente o valor de seu frete).
 
-                elseif ($coupon[0]->disccount == 'Frete Grátis' && $update->disccountUsed != 'Sim'){
+                elseif ($coupon[0]->disccount == 'Frete Grátis' && $update->disccountUsed == null){
 
                     $disccount = doubleval($myOrder['totalValue']) - 3;
                     $totalValue = number_format($disccount, 2, '.', '');
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = 'Sim';
+                    $update->disccountUsed = $coupon[0]->name;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
                     //Verificando se o cupom já está sendo utilizado.
-                }elseif($update->disccountUsed == 'Sim'){
+                }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
                 }
             } else{
-                $notExist = 'Este cupom só pode ser utilizado nos pedidos acima de R$' . $coupon[0]->disccountRule;
+                $notExist = 'Este cupom só pode ser utilizado nos pedidos acima de R$ ' . $coupon[0]->disccountRule;
 
                 return redirect()->back()->with('msg-exp', $notExist);
             }

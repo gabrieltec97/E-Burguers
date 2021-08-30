@@ -205,26 +205,28 @@
 
 @if(session('msg-cancel'))
 @else
-    @if(count($order) == 1)
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Pedido cadastrado!',
-                text: 'Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.',
-                timer: 15000,
-                timerProgressBar: true
-            })
-        </script>
-    @else
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Pedidos cadastrados!',
-                text: 'Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.',
-                timer: 15000,
-                timerProgressBar: true
-            })
-        </script>
+    @if(isset($order))
+        @if(count($order) == 1)
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pedido cadastrado!',
+                    text: 'Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.',
+                    timer: 15000,
+                    timerProgressBar: true
+                })
+            </script>
+        @else
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pedidos cadastrados!',
+                    text: 'Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.',
+                    timer: 15000,
+                    timerProgressBar: true
+                })
+            </script>
+        @endif
     @endif
-@endif
+    @endif
 @endsection
