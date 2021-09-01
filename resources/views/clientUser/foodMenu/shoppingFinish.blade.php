@@ -553,7 +553,7 @@
             Swal.fire({
                 title: 'Quase lá!',
                 text: 'Revise seu pedido para que possa vir certinho, ok?',
-                imageUrl: 'https://localhost/E-Pedidos/public/logo/resee.svg',
+                imageUrl: 'http://localhost/E-Pedidos/public/logo/resee.svg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'Revise seu pedido!',

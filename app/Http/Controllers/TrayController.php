@@ -1540,7 +1540,7 @@ class TrayController extends Controller
     {
         //Encontrando usuário e pedido.
         $user = Auth::user();
-        $tray = $user->userOrderTray()->select('totalValue', 'hamburguer', 'portion', 'drinks')->get()->toArray();
+        $tray = $user->userOrderTray()->select('totalValue', 'hamburguer', 'portion', 'drinks', 'valueWithoutDisccount')->get()->toArray();
         $order = $user->userOrderTray()->select('id')->get()->toArray();
         $orderId = $order[0]['id'];
 
@@ -1554,7 +1554,7 @@ class TrayController extends Controller
 
 
         //Encontrando extras para abatimento de preço.
-        if ($foodType == "hamburguer"){
+        if ($foodType == "Hamburguer"){
 
             $extras = $user->userOrderTray()->select('extras')->get()->toArray();
             $extras = $extras[0]['extras'];
@@ -1574,16 +1574,37 @@ class TrayController extends Controller
         //Atualizando o valor atual do combo.
         if (isset($extraPrices)){
             $updatedPrice = doubleval($currentPrice) - doubleval($price) - doubleval($extraPrices);
+            $updatedWithoutDisccount = doubleval($tray[0]['valueWithoutDisccount']) - doubleval($price) - doubleval($extraPrices);
         }else{
             $updatedPrice = doubleval($currentPrice) - doubleval($price);
+            $updatedWithoutDisccount = doubleval($tray[0]['valueWithoutDisccount']) - doubleval($price);
         }
 
+
         $resetPrice = Tray::find($orderId);
-        if ($foodType == "hamburguer"){
+
+        if($resetPrice->disccountUsed != null){
+
+            $coupon = DB::table('coupons')
+                ->where('name', '=', $resetPrice->disccountUsed)
+                ->get()->toArray();
+
+            if ($updatedPrice < $coupon[0]->disccountRule){
+
+                DB::table('trays')
+                    ->where('id', '=', $orderId)
+                    ->update(['disccountUsed' => null, 'totalValue' => $updatedWithoutDisccount, 'valueWithoutDisccount' => $updatedWithoutDisccount]);
+            }
+
+        }else{
+            $resetPrice->totalValue = $updatedPrice;
+            $resetPrice->valueWithoutDisccount = $tray[0]['valueWithoutDisccount'];
+        }
+
+        if ($foodType == "Hamburguer"){
             $resetPrice->extras = null;
         }
-        $resetPrice->totalValue = $updatedPrice;
-        $resetPrice->valueWithoutDisccount = $updatedPrice;
+
         $resetPrice->save();
 
         //Removendo alimento da tabela.
