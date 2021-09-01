@@ -35,6 +35,7 @@
                             @endif
                                 @if(session('msg-rem-cup'))
                                     <script>
+                                        console.log('r');
                                         const Toast = Swal.mixin({
                                             toast: true,
                                             position: 'top-end',

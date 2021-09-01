@@ -23,7 +23,7 @@ class TrayController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $tray = $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'comboItem', 'portion', 'drinks')->get()->toArray();
+        $tray = $user->userOrderTray()->select('id', 'orderType', 'hamburguer', 'comboItem', 'portion', 'drinks', 'image')->get()->toArray();
         $addons = Extras::all()->toArray();
 
         if (isset($tray[0])){
@@ -94,6 +94,7 @@ class TrayController extends Controller
         }
 
         if (isset($tray[0])){
+
             $pureItems = DB::table('item_without_extras')
                 ->where('idOrder', '=', $tray[0]['id'])
                 ->select()
@@ -102,13 +103,14 @@ class TrayController extends Controller
             foreach ($pureItems as $pureItem => $val){
                $img = DB::table('adverts')
                    ->select('picture')
-                   ->where('name', '=', $val->itemName)
+                       ->where('name', 'like', '%'. $val->itemName . '%')
                    ->get()->toArray();
 
                foreach ($img as $i){
                    $val->img = $i->picture;
                }
             }
+
 
             //Verificando se a bandeja possui itens.
             if(isset($pureItems) && isset($tray[0]['id'])){
@@ -233,7 +235,8 @@ class TrayController extends Controller
                 if($request->sabor == ''){
                     $itemWithoutExtras->itemName = $item->name;
                 }else{
-                    $itemWithoutExtras->itemName = $item->name . ' sabor: ' . $request->sabor;
+                    $itemWithoutExtras->itemName = $item->name;
+                    $itemWithoutExtras->item = $item->name . ' sabor: ' . $request->sabor;
                 }
 
                 $itemWithoutExtras->value = $item->value;
@@ -323,7 +326,8 @@ class TrayController extends Controller
                 if($request->sabor == ''){
                     $itemWithoutExtras->itemName = $item->name;
                 }else{
-                    $itemWithoutExtras->itemName = $item->name . ' sabor: ' . $request->sabor;
+                    $itemWithoutExtras->itemName = $item->name;
+                    $itemWithoutExtras->item = $item->name . ' sabor: ' . $request->sabor;
                 }
 
                 $itemWithoutExtras->value = $item->value;
@@ -476,6 +480,26 @@ class TrayController extends Controller
 
         $personalized->save();
         $editTray->save();
+
+        //Abatendo o preço na tabela de pedido.
+        $totalValue = $editTray->valueWithoutDisccount;
+
+        //Verificando o uso de cupom e se bate com o preço atual.
+        if ($editTray->disccountUsed != null){
+
+            $rule = DB::table('coupons')
+                ->where('name', '=', $editTray->disccountUsed)
+                ->get()->toArray();
+
+            if ($totalValue < $rule[0]->disccountRule){
+
+                DB::table('trays')
+                    ->where('id', '=',$editTray->id)
+                    ->update(['disccountUsed' => null, 'valueWithoutDisccount' => $totalValue, 'totalValue' => $totalValue]);
+
+                return redirect()->route('fimCompra')->with('msg-rem-cup', '.');
+            }
+        }
 
         return redirect()->route('fimCompra')->with('msg-2', ' ');
     }
@@ -1172,6 +1196,16 @@ class TrayController extends Controller
                     ->where('idOrder', '=', $verifyOrder->id)
                     ->delete();
             }
+
+            $items = DB::table('item_without_extras')->select('idOrder')
+                ->where('idOrder', '=', $verifyOrder->id)
+                ->get()->toArray();
+
+            if ($items != null) {
+                DB::table('item_without_extras')
+                    ->where('idOrder', '=', $verifyOrder->id)
+                    ->delete();
+            }
         }
 
         return view('clientUser.orderType');
@@ -1196,7 +1230,7 @@ class TrayController extends Controller
                 ->where('name', '=', $order['disccountUsed'])
                 ->get()->toArray();
 
-            if ($updateOrder < $rule[0]->disccountRule){
+            if ($totalValue < $rule[0]->disccountRule){
 
                 DB::table('item_without_extras')
                     ->where('id', '=', $key)
