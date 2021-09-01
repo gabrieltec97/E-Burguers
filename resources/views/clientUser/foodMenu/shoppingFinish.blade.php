@@ -263,8 +263,13 @@
                                             <input type="text" autocomplete="off" class="form-control cupomDesconto" name="cupomDesconto"
 
                                                    @if(session('msg-success') or $myOrder['disccountUsed'] != null)
-                                                       value="{{ session('msg-success') }} {{ $myOrder['disccountUsed'] }}" style="cursor: not-allowed;" readonly
-                                                        title="Cupom já aplicado"
+                                                       @if($myOrder['disccountUsed'] != null)
+                                                        value="{{ $myOrder['disccountUsed'] }}"
+                                                        style="cursor: not-allowed;" readonly title="Cupom já aplicado"
+                                                        @else
+                                                        value="{{ session('msg-success') }} "
+                                                        style="cursor: not-allowed;" readonly title="Cupom já aplicado"
+                                                        @endif
                                                    @endif
                                                    placeholder="Insira um cupom (se tiver).">
                                         </div>
@@ -281,9 +286,7 @@
                                     @if(session('msg-success') or $myOrder['disccountUsed'] != null)
                                         @if($myOrder['disccountUsed'] != null)
                                         <form action="{{ route('removerCupom', $myOrder['disccountUsed']) }}" method="post">
-                                        @elseif(session('msg-success') && $myOrder['disccountUsed'] != null)
-                                          <form action="{{ route('removerCupom', session('msg-success')) }}" method="post">
-                                        @else
+                                        @elseif(session('msg-success'))
                                         <form action="{{ route('removerCupom', session('msg-success')) }}" method="post">
                                         @endif
                                             @csrf
