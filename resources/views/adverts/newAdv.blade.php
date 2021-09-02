@@ -65,7 +65,7 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-12 mt-4 col-md-4">
+                                    <div class="col-12 mt-4 col-md-4 combPart">
                                         <label class="text-muted font-weight-bold">Participa do combo?</label><br>
                                         <input type="radio" class="impComboSim" {{ old('combo') == "Sim" ? 'checked' : ''}} title="Ao escolher esta opção, esta refeição participará de um combo promocional." name="combo" value="Sim">
                                         <label class="mr-3 font-weight-bold text-success" title="Ao escolher esta opção, esta refeição participará de um combo promocional.">Sim</label>

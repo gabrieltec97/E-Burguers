@@ -864,8 +864,8 @@ $(".forma-pagamento").on("change", function (){
 $(".tipoRef").on("change", function () {
 
     if ($(this).val() == 'Bebida'){
-        $(".igr").hide();
-        $(".itr").hide();
+        $(".igr").fadeOut('slow');
+        $(".itr").fadeOut('slow');
         $('.tastes').fadeIn('slow');
         $(".comb").addClass('col-md-8');
 
@@ -875,18 +875,32 @@ $(".tipoRef").on("change", function () {
         $(".igr").fadeIn('slow');
         $(".itr").fadeIn('slow');
         $(".comb").removeClass('col-md-8');
+        $(".comb").fadeIn('slow');
+        $(".combPart").fadeIn('slow');
 
-    }else if ($(this).val() == 'Sobremesa' || $(this).val() == 'Acompanhamento'){
+    }else if ($(this).val() == 'Acompanhamento'){
 
-        $(".igr").hide();
-        $(".itr").hide();
+        $(".igr").fadeOut('slow');
+        $(".itr").fadeOut('slow');
         $(".tastes").fadeOut('slow');
         $(".comb").addClass('col-md-8');
+        $(".comb").fadeIn('slow');
+        $(".combPart").fadeIn('slow');
+
+    }else if ($(this).val('Sobremesa')){
+
+        $(".igr").fadeOut('slow');
+        $(".itr").fadeOut('slow');
+        $(".tastes").fadeOut('slow');
+        $(".comb").fadeOut('slow');
+        $(".combPart").fadeOut('slow');
 
     }else{
         $(".igr").fadeIn('slow');
         $(".itr").fadeIn('slow');
         $(".comb").removeClass('col-md-8');
+        $(".comb").fadeIn('slow');
+        $(".combPart").fadeIn('slow');
     }
 
 })
