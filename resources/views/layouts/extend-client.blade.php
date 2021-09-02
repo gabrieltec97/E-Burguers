@@ -21,8 +21,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
-
-
+    @livewireStyles
 </head>
 <body>
 
@@ -148,5 +147,7 @@
 <script src="{{asset('js/jqueryStyles.js')}}"></script>
 <script src="{{asset('js/jquery.mask.js')}}"></script>
 <script src="{{asset('js/jquery-toast-plugin/src/jquery.toast.js')}}"></script>
+
+@livewireScripts
 </body>
 </html>

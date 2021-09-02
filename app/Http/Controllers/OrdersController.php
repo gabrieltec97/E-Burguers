@@ -26,11 +26,11 @@ class OrdersController extends Controller
 
     public function clientsOrders()
     {
-        $user =  $order = Auth::user()->id;
-        $orders = DB::table('orders')->where('idClient', '=', $user)->paginate(9);
-        $countOrders = DB::table('orders')->where('idClient', '=', $user)->get();
-
-        return view('clientUser.myOrders', compact('orders', 'countOrders'));
+//        $user =  $order = Auth::user()->id;
+//        $orders = DB::table('orders')->where('idClient', '=', $user)->paginate(9);
+//        $countOrders = DB::table('orders')->where('idClient', '=', $user)->get();
+//
+        return view('clientUser.myOrders');
     }
 
     public function pending()
