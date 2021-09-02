@@ -828,6 +828,24 @@ class TrayController extends Controller
             }
         }
 
+        //Evitando burlar o cupom de desconto.
+        $check = Auth::user()->userOrderTray()->get()->first();
+
+        if ($check->disccountUsed != null){
+
+            $rule = DB::table('coupons')
+                ->where('name', '=', $check->disccountUsed)
+                ->get()->toArray();
+
+            if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
+
+                DB::table('trays')
+                    ->where('id', '=', $check->id)
+                    ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount]);
+            }
+        }
+
+
         $rate = DB::table('lock_rating')
             ->get();
 
