@@ -528,8 +528,27 @@ class TrayController extends Controller
                 }
 
                 $verifyOrder->totalValue = $verifyOrder->totalValue + $price;
+                $verifyOrder->valueWithoutDisccount  = $verifyOrder->valueWithoutDisccount  + $price;
                 $verifyOrder->extras = implode(', ', $request->ingredients);
                 $verifyOrder->save();
+
+                $check = Auth::user()->userOrderTray()->get()->first();
+
+                if ($check->disccountUsed != null){
+
+                    $rule = DB::table('coupons')
+                        ->where('name', '=', $check->disccountUsed)
+                        ->get()->toArray();
+
+                    if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
+
+                        DB::table('trays')
+                            ->where('id', '=', $check->id)
+                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount]);
+
+                        return back()->with('msg-rem-cup', '.');
+                    }
+                }
 
                 return back()->with('msg-add', 'Item removido do sanduíche :(');
 
@@ -548,8 +567,27 @@ class TrayController extends Controller
                 }
 
                 $verifyOrder->totalValue = $verifyOrder->totalValue - $price;
+                $verifyOrder->valueWithoutDisccount = $verifyOrder->valueWithoutDisccount - $price;
                 $verifyOrder->extras = implode(', ', $request->ingredients);
                 $verifyOrder->save();
+
+                $check = Auth::user()->userOrderTray()->get()->first();
+
+                if ($check->disccountUsed != null){
+
+                    $rule = DB::table('coupons')
+                        ->where('name', '=', $check->disccountUsed)
+                        ->get()->toArray();
+
+                    if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
+
+                        DB::table('trays')
+                            ->where('id', '=', $check->id)
+                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount]);
+
+                        return back()->with('msg-rem-cup', '.');
+                    }
+                }
 
                 return back()->with('msg-rem', 'Item removido do sanduíche :(');
             }
@@ -565,13 +603,30 @@ class TrayController extends Controller
 
 
             $verifyOrder->totalValue = $verifyOrder->totalValue - $item[0]->price;
+            $verifyOrder->valueWithoutDisccount = $verifyOrder->valueWithoutDisccount - $item[0]->price;
             $verifyOrder->extras = null;
             $verifyOrder->save();
 
+            $check = Auth::user()->userOrderTray()->get()->first();
+
+            if ($check->disccountUsed != null){
+
+                $rule = DB::table('coupons')
+                    ->where('name', '=', $check->disccountUsed)
+                    ->get()->toArray();
+
+                if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
+
+                    DB::table('trays')
+                        ->where('id', '=', $check->id)
+                        ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount]);
+
+                    return back()->with('msg-rem-cup', '.');
+                }
+            }
+
             return back()->with('msg-rem', 'Item removido do sanduíche :(');
         }
-
-
     }
 
     public function orderComboHamburguer()
@@ -762,7 +817,7 @@ class TrayController extends Controller
                 $noDisccount = $totalValue[0]->valueWithoutDisccount;
                 $totalValue = $totalValue[0]->totalValue;
                 $totalValue = doubleval($totalValue);
-                
+
                 //Abatimento de preço caso o cliente volte.
                 if (isset($myHamburguer)){
                     $myHamburguer = doubleval($myHamburguer);
@@ -1606,7 +1661,6 @@ class TrayController extends Controller
             $updatedWithoutDisccount = doubleval($tray[0]['valueWithoutDisccount']) - doubleval($price);
         }
 
-
         $resetPrice = Tray::find($orderId);
 
         if($resetPrice->disccountUsed != null){
@@ -1624,7 +1678,7 @@ class TrayController extends Controller
 
         }else{
             $resetPrice->totalValue = $updatedPrice;
-            $resetPrice->valueWithoutDisccount = $tray[0]['valueWithoutDisccount'];
+            $resetPrice->valueWithoutDisccount = $updatedWithoutDisccount;
         }
 
         if ($foodType == "Hamburguer"){
