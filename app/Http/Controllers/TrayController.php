@@ -755,30 +755,34 @@ class TrayController extends Controller
             //Verificando se há algum acompanhamento caso o cliente volte até hamburguer.
             if ($verifyFollowing != ''){
                 $totalValue = DB::table('trays')
-                    ->select('totalValue')
+                    ->select('totalValue', 'valueWithoutDisccount')
                     ->where('idClient', '=', $user)
                     ->get()->toArray();
 
+                $noDisccount = $totalValue[0]->valueWithoutDisccount;
                 $totalValue = $totalValue[0]->totalValue;
                 $totalValue = doubleval($totalValue);
-
+                
                 //Abatimento de preço caso o cliente volte.
                 if (isset($myHamburguer)){
                     $myHamburguer = doubleval($myHamburguer);
                     $totalValue = $totalValue - $myHamburguer;
+                    $noDisccount = $order->valueWithoutDisccount - $myHamburguer;
                 }elseif(isset($extrasVal)){
                     $totalValue = $totalValue - $extrasVal;
+                    $noDisccount = $order->valueWithoutDisccount - $extrasVal;
                 }
 
                 if (isset($request->extras)){
                     $order->extras = $addItems;
                     $order->totalValue = $hamburguer->comboValue + $valorNovo + $totalValue;
-                    $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $totalValue;
+                    $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $noDisccount;
                 }else{
                     $order->extras = null;
                     $order->totalValue = $hamburguer->comboValue + $totalValue;
-                    $order->valueWithoutDisccount = $hamburguer->comboValue + $totalValue;
+                    $order->valueWithoutDisccount = $hamburguer->comboValue + $noDisccount;
                 }
+
 
             }else{
                 if (isset($request->extras)){
@@ -808,8 +812,8 @@ class TrayController extends Controller
 
                 if($verifyOrder->totalValue != ''){
                     if (isset($request->extras)){
-                        $order->totalValue = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue + $valorNovo;
-                        $order->valueWithoutDisccount = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue + $valorNovo;
+                        $order->totalValue = $verifyOrder->totalValue + $hamburguer->comboValue + $valorNovo;
+                        $order->valueWithoutDisccount = $verifyOrder->totalValue + $hamburguer->comboValue + $valorNovo;
                     }else{
                         $order->totalValue = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
                         $order->valueWithoutDisccount = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
@@ -831,6 +835,10 @@ class TrayController extends Controller
         //Evitando burlar o cupom de desconto.
         $check = Auth::user()->userOrderTray()->get()->first();
 
+//        echo $check->valueWithoutDisccount;
+//
+//        die();
+
         if ($check->disccountUsed != null){
 
             $rule = DB::table('coupons')
@@ -841,7 +849,7 @@ class TrayController extends Controller
 
                 DB::table('trays')
                     ->where('id', '=', $check->id)
-                    ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount]);
+                    ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount]);
             }
         }
 
