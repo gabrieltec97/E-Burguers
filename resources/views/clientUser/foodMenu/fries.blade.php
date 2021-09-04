@@ -99,6 +99,19 @@
     </div>
 
     @if(isset($edit) == false)
-        <button hidden class="disparo-ham"></button>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Item adicionado ao pedido!'
+            })
+        </script>
     @endif
 @endsection

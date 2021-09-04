@@ -66,6 +66,10 @@
                         </div>
                     </form>
                 </div>
+
+                <div>
+                    <a href="{{ route('tipoPedido') }}" class="btn btn-primary">Pedir sem login</a>
+                </div>
             </div>
         </div>
     </div>

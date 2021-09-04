@@ -73,6 +73,46 @@
                                 @if(isset($tray[0]))
                                     @if($tray[0]['orderType'] == "Combo")
 
+                                            @if(isset($tray[0]['drinks']))
+
+                                                <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <form action="{{ route('minhaBandeja.destroy', $food = $tray[0]['drinks']) }}" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <div class="container-fluid">
+                                                                    <div class="row">
+                                                                        <div class="col-12 col-md-6">
+                                                                            <img src="{{ asset($tray[0]['imgDrink']) }}" class="pedido-img" style="border-radius: 3px">
+                                                                        </div>
+
+                                                                        <div class="col-12 col-md-4 mt-2 text-center mt-sm-5">
+                                                                        <span class="font-weight-bold " style="font-size: 19px">
+                                                                        {{ $tray[0]['drinks'] }}</span><button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            @else
+                                                <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
+                                                    <div class="card mx-4">
+                                                        <div class="card-body">
+                                                            <a href="{{ route('editarBebida') }}" class="text-primary font-weight-bold" style="text-decoration: none;"><i class="mr-2 fas fa-plus-circle text-primary" style="font-size: 50px; opacity: 0.8"></i>
+                                                                <span class="formata-bandeja">Escolha uma bebida</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+
                                         @if(isset($tray[0]['hamburguer']))
 
                                             <div class="col-12 col-lg-6 mt-lg-1 my-lg-0 mt-3">
@@ -150,46 +190,6 @@
                                                 </div>
                                             </div>
 
-                                        @endif
-
-                                        @if(isset($tray[0]['drinks']))
-
-                                            <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <form action="{{ route('minhaBandeja.destroy', $food = $tray[0]['drinks']) }}" method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div class="col-12 col-md-6">
-                                                                        <img src="{{ asset($tray[0]['imgDrink']) }}" class="pedido-img" style="border-radius: 3px">
-                                                                    </div>
-
-                                                                    <div class="col-12 col-md-4 mt-2 text-center mt-sm-5">
-                                                                        <span class="font-weight-bold " style="font-size: 19px">
-                                                                        {{ $tray[0]['drinks'] }}</span><button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </form>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        @else
-                                            <div class="col-12 col-lg-6 mt-lg-4 my-lg-0 mt-3">
-                                                <div class="card mx-4">
-                                                    <div class="card-body">
-                                                        <a href="{{ route('editarBebida') }}" class="text-primary font-weight-bold" style="text-decoration: none;"><i class="mr-2 fas fa-plus-circle text-primary" style="font-size: 50px; opacity: 0.8"></i>
-                                                            <span class="formata-bandeja">Escolha uma bebida</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         @endif
 
                                     @elseif($tray[0]['orderType'] == 'Avulso')
@@ -326,36 +326,56 @@
 
     @if(session('error'))
         <script>
-            $.toast({
-                text: '<b>Ocorreu um erro ao alterar sua bebida. Mas você pode alterar por aqui, basta clicar no "X" e escolher qual desejar :)</b>',
-                heading: '<b>Erro!</b>',
-                showHideTransition: 'slide',
-                bgColor : 'red',
-                position : 'top-right',
-                hideAfter: 15000
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Ocorreu um erro ao alterar sua bebida. Mas você pode alterar por aqui, basta clicar no "X" e escolher qual desejar :)',
             })
         </script>
     @endif
 
     @if(session('error-2'))
         <script>
-            $.toast({
-                text: '<b>Ocorreu um erro ao alterar sua porção. Mas você pode alterar por aqui, basta clicar no "X" e escolher qual desejar :)</b>',
-                heading: '<b>Erro!</b>',
-                showHideTransition: 'slide',
-                bgColor : 'red',
-                position : 'top-right',
-                hideAfter: 17000
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Ocorreu um erro ao alterar sua porção. Mas você pode alterar por aqui, basta clicar no "X" e escolher qual desejar :)',
+            })
+        </script>
+    @endif
+
+    @if(session('msg-esc'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Item adicionado ao pedido. Agora escolha uma bebida!'
             })
         </script>
     @endif
 
 
     @if(session('msg'))
-        <button hidden class="disparo-rem"></button>
-    @endif
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+            })
 
-    @if(session('msg-2'))
-        <button hidden class="disparo-edits"></button>
+            Toast.fire({
+                icon: 'warning',
+                title: 'Poxa! Item removido do pedido.'
+            })
+        </script>
     @endif
 @endsection

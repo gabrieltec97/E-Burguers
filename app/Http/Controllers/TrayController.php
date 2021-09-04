@@ -550,7 +550,7 @@ class TrayController extends Controller
                     }
                 }
 
-                return back()->with('msg-add', 'Item removido do sanduíche :(');
+                return back();
 
             }else{
 
@@ -589,7 +589,7 @@ class TrayController extends Controller
                     }
                 }
 
-                return back()->with('msg-rem', 'Item removido do sanduíche :(');
+                return back();
             }
 
         } else{
@@ -625,7 +625,7 @@ class TrayController extends Controller
                 }
             }
 
-            return back()->with('msg-rem', 'Item removido do sanduíche :(');
+            return back();
         }
     }
 
@@ -890,10 +890,6 @@ class TrayController extends Controller
         //Evitando burlar o cupom de desconto.
         $check = Auth::user()->userOrderTray()->get()->first();
 
-//        echo $check->valueWithoutDisccount;
-//
-//        die();
-
         if ($check->disccountUsed != null){
 
             $rule = DB::table('coupons')
@@ -928,7 +924,7 @@ class TrayController extends Controller
             if ($order->portion == ''){
                 return view('clientUser.foodMenu.fries', compact('foods', 'rate'));
             }elseif ($order->drinks == ''){
-                return redirect()->route('minhaBandeja.index');
+                return redirect()->route('minhaBandeja.index')->with('msg-esc', '');
             }else{
                 return redirect()->route('fimCompra');
             }
@@ -973,7 +969,7 @@ class TrayController extends Controller
 
 
         if ($myOrder['drinks'] == '' or $myOrder['hamburguer'] == ''){
-            return redirect(route('minhaBandeja.index'));
+            return redirect()->route('minhaBandeja.index')->with('msg-esc', 'a');
         }else{
             return redirect(route('fimCompra'));
         }
@@ -1262,32 +1258,36 @@ class TrayController extends Controller
     public function orderType()
     {
         //Verificando se o usuário possui um combo ou um item na bandeja, se tiver, delete-o.
-        $verifyOrder = Auth::user()->userOrderTray()->get()->first();
+        if (Auth::user() != ''){
 
-        if($verifyOrder != ''){
-            $order = Tray::find($verifyOrder->id);
-            $order->delete();
+            $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
-            $addons = DB::table('auxiliar_detacheds')->select('idOrder')
-            ->where('idOrder', '=', $verifyOrder->id)
-            ->get()->toArray();
+            if($verifyOrder != ''){
+                $order = Tray::find($verifyOrder->id);
+                $order->delete();
 
-            if ($addons != null) {
-                DB::table('auxiliar_detacheds')
+                $addons = DB::table('auxiliar_detacheds')->select('idOrder')
                     ->where('idOrder', '=', $verifyOrder->id)
-                    ->delete();
-            }
+                    ->get()->toArray();
 
-            $items = DB::table('item_without_extras')->select('idOrder')
-                ->where('idOrder', '=', $verifyOrder->id)
-                ->get()->toArray();
+                if ($addons != null) {
+                    DB::table('auxiliar_detacheds')
+                        ->where('idOrder', '=', $verifyOrder->id)
+                        ->delete();
+                }
 
-            if ($items != null) {
-                DB::table('item_without_extras')
+                $items = DB::table('item_without_extras')->select('idOrder')
                     ->where('idOrder', '=', $verifyOrder->id)
-                    ->delete();
+                    ->get()->toArray();
+
+                if ($items != null) {
+                    DB::table('item_without_extras')
+                        ->where('idOrder', '=', $verifyOrder->id)
+                        ->delete();
+                }
             }
         }
+
 
         return view('clientUser.orderType');
     }

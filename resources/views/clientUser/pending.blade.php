@@ -140,6 +140,18 @@
             @endif
 
         @if(session('msg-rem'))
-            <button hidden class="disparo-removePendente"></button>
+           <script>
+               const Toast = Swal.mixin({
+                   toast: true,
+                   position: 'top-end',
+                   showConfirmButton: false,
+                   timer: 5000,
+                   timerProgressBar: true,
+               })
+                Toast.fire({
+                   icon: 'warning',
+                   title: 'Poxa! O pedido foi removido, mas você pode fazer outros, tá?'
+               })
+           </script>
         @endif
 @endsection

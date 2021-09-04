@@ -55,46 +55,51 @@
         <span class="navbar-text area-carrinho">
         <?php
 
-            $user = \Illuminate\Support\Facades\Auth::user();
-            $tray = $user->userOrderTray()->select('hamburguer', 'portion', 'drinks')->get()->toArray();
-            $freeTray = $user->userOrderTray()->select('id','detached')->get()->toArray();
-            $count = 0;
+            if (\Illuminate\Support\Facades\Auth::user() != ''){
 
-            if (isset($tray[0])){
-                $items = \Illuminate\Support\Facades\DB::table('item_without_extras')
-                    ->select('id')
-                    ->where('idOrder', '=', $freeTray[0]['id'])
-                    ->get()
-                    ->toArray();
+                $user = \Illuminate\Support\Facades\Auth::user();
+                $tray = $user->userOrderTray()->select('hamburguer', 'portion', 'drinks')->get()->toArray();
+                $freeTray = $user->userOrderTray()->select('id','detached')->get()->toArray();
+                $count = 0;
 
-                $count += count($items);
+                if (isset($tray[0])){
+                    $items = \Illuminate\Support\Facades\DB::table('item_without_extras')
+                        ->select('id')
+                        ->where('idOrder', '=', $freeTray[0]['id'])
+                        ->get()
+                        ->toArray();
 
-                $itemsWithExtras = \Illuminate\Support\Facades\DB::table('auxiliar_detacheds')
-                    ->select('id')
-                    ->where('idOrder', '=', $freeTray[0]['id'])
-                    ->get()
-                    ->toArray();
+                    $count += count($items);
 
-                $count += count($itemsWithExtras);
+                    $itemsWithExtras = \Illuminate\Support\Facades\DB::table('auxiliar_detacheds')
+                        ->select('id')
+                        ->where('idOrder', '=', $freeTray[0]['id'])
+                        ->get()
+                        ->toArray();
+
+                    $count += count($itemsWithExtras);
+                }
+
+                if(isset($tray[0])){
+                    if($tray[0]['hamburguer'] != ''){
+                        $count = 1;
+                    }
+
+                    if($tray[0]['drinks'] != ''){
+                        $count += 1;
+                    }
+
+                    if($tray[0]['portion'] != ''){
+                        $count += 1;
+                    }
+                }
             }
 
-            if(isset($tray[0])){
-                if($tray[0]['hamburguer'] != ''){
-                    $count = 1;
-                }
 
-                if($tray[0]['drinks'] != ''){
-                    $count += 1;
-                }
-
-                if($tray[0]['portion'] != ''){
-                    $count += 1;
-                }
-            }
 
          ?>
                 <a href="{{ route('minhaBandeja.index') }}"><i class="fas fa-shopping-cart carrinho text-white">
-                <span class="badge badge-secondary"><span class="text-white valor-carrinho"><?= $count ?></span></span></i></a>
+                <span class="badge badge-secondary"><span class="text-white valor-carrinho">{{ isset($count) ? $count : ''  }}</span></span></i></a>
         </span>
 
         <div class="navbar-text nav-saudacao">
@@ -104,15 +109,19 @@
                     date_default_timezone_set('America/Sao_Paulo');
                     $agora =getdate();
                     $hora = $agora["hours"];
-                    $usuario = \Illuminate\Support\Facades\Auth::user()->name;
+
+                    if (\Illuminate\Support\Facades\Auth::user() != ''){
+                        $usuario = \Illuminate\Support\Facades\Auth::user()->name;
+                    }
+
                     ?>
 
                     @if($hora >= 5 && $hora < 12)
-                        <span class="font-weight-bold saudacao">Bom dia, {{ $usuario }}</span>
+                        <span class="font-weight-bold saudacao">Bom dia, {{ isset($usuario) ? $usuario : 'cliente' }}</span>
                     @elseif($hora >= 12 && $hora < 18)
-                        <span class="font-weight-bold saudacao" style="font-size: 17px"> Boa tarde, {{ $usuario }} &nbsp;</span>
+                        <span class="font-weight-bold saudacao" style="font-size: 17px"> Boa tarde, {{ isset($usuario) ? $usuario : 'cliente' }} &nbsp;</span>
                     @else
-                        <span class="font-weight-bold saudacao">Boa noite, {{ $usuario }}</span>
+                        <span class="font-weight-bold saudacao">Boa noite, {{ isset($usuario) ? $usuario : 'cliente' }}</span>
                     @endif
                 </a>
                 </a>
@@ -133,7 +142,7 @@
     </div>
     <span class="navbar-text area-carrinho-hide-big">
         <a href="{{ route('minhaBandeja.index') }}"><i class="fas fa-shopping-cart carrinho text-white">
-        <span class="badge badge-secondary"><span class="text-white valor-carrinho"><?= $count ?></span></span></i></a>
+        <span class="badge badge-secondary"><span class="text-white valor-carrinho">{{ isset($count) ? $count : ''  }}</span></span></i></a>
     </span>
 </nav>
 

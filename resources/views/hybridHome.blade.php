@@ -92,15 +92,11 @@
                                         <td>#{{ $reg->id }}</td>
                                         <td>{{ $reg->status }}</td>
                                         <td>
-                                            @if($reg->deliverWay == 'Retirada no restaurante')
-                                                <b style="color: black">Item a ser retirado no restaurante.</b>
-                                            @else
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações a serem repassadas ao entregador."><i class="fas fa-info-circle mr-1"></i> Informações de entrega</button>
-                                            @endif
+                                             <button class="btn btn-primary" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações a serem repassadas ao entregador."><i class="fas fa-info-circle mr-1"></i> Informações de entrega</button>
                                         </td>
                                         <td colspan="2">
 
-                                            <select name="teste" class="menuHibrido form-control" id="{{ $reg->id }}" onchange="muda({{ $reg->id }})">
+                                            <select name="teste" class="menuHibrido form-control" style="cursor:pointer;" id="{{ $reg->id }}" onchange="muda({{ $reg->id }})">
                                                 <option value=""selected disabled>Alterar Status</option>
                                                 <option value="Cancelar">Cancelar</option>
                                                 <option value="EmPreparo">Em Preparo</option>
@@ -145,9 +141,14 @@
                                                         @else
                                                             <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $reg->payingMethod }}</span><br>
                                                         @endif
-
+                                                        @if($reg->payingMethod != 'Dinheiro')
+                                                            <b style="color: black">Valor total:</b> <span style="color: black"> {{ $reg->totalValue }}</span><br>
+                                                        @endif
+                                                        @if($reg->deliverWay == 'Retirada no restaurante')
+                                                            <b style="color: red">Retirada no restaurante</b>
+                                                        @else
                                                         <b style="color: black">Endereço:</b><span style="color: black">{{ $reg->address }}</span>
-
+                                                        @endif
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>

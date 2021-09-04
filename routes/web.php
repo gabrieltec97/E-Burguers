@@ -34,8 +34,7 @@ Route::resource('/minhaBandeja', 'TrayController')->middleware('auth');
 Route::resource('/itensAdicionais', 'ExtrasController')->middleware('auth');
 
 //Rotas de pedido.
-
-Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido')->middleware('auth');
+Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido');
 
 //Rotas de combo
 

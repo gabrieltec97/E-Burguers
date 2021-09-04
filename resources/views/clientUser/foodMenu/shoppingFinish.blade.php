@@ -495,11 +495,7 @@
         </div>
     </div>
 
-    @if(session('msg-rem'))
-        <button hidden class="disparo-removeCombo"></button>
-    @elseif(session('msg-add'))
-        <button hidden class="disparo-addCombo"></button>
-    @else
+
         @if(isset($exist[0]))
             @if($exist[0]->deliverWay == 'Entrega em domicílio')
                 <script>
@@ -541,10 +537,7 @@
                     })
                 </script>
             @endif
-        @elseif(!isset($use) && !isset($couponName) && !isset($notExist))
-            <button hidden class="disparo-fim"></button>
         @endif
-    @endif
 
     @if(session('msg-exp') or session('msg-use') or session('msg-success') or session('msg-rem-cup') or session('msg') or isset($exist[0]))
 
