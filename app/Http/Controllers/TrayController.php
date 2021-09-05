@@ -1258,36 +1258,32 @@ class TrayController extends Controller
     public function orderType()
     {
         //Verificando se o usuário possui um combo ou um item na bandeja, se tiver, delete-o.
-        if (Auth::user() != ''){
+        $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
-            $verifyOrder = Auth::user()->userOrderTray()->get()->first();
+        if($verifyOrder != ''){
+            $order = Tray::find($verifyOrder->id);
+            $order->delete();
 
-            if($verifyOrder != ''){
-                $order = Tray::find($verifyOrder->id);
-                $order->delete();
+            $addons = DB::table('auxiliar_detacheds')->select('idOrder')
+                ->where('idOrder', '=', $verifyOrder->id)
+                ->get()->toArray();
 
-                $addons = DB::table('auxiliar_detacheds')->select('idOrder')
+            if ($addons != null) {
+                DB::table('auxiliar_detacheds')
                     ->where('idOrder', '=', $verifyOrder->id)
-                    ->get()->toArray();
+                    ->delete();
+            }
 
-                if ($addons != null) {
-                    DB::table('auxiliar_detacheds')
-                        ->where('idOrder', '=', $verifyOrder->id)
-                        ->delete();
-                }
+            $items = DB::table('item_without_extras')->select('idOrder')
+                ->where('idOrder', '=', $verifyOrder->id)
+                ->get()->toArray();
 
-                $items = DB::table('item_without_extras')->select('idOrder')
+            if ($items != null) {
+                DB::table('item_without_extras')
                     ->where('idOrder', '=', $verifyOrder->id)
-                    ->get()->toArray();
-
-                if ($items != null) {
-                    DB::table('item_without_extras')
-                        ->where('idOrder', '=', $verifyOrder->id)
-                        ->delete();
-                }
+                    ->delete();
             }
         }
-
 
         return view('clientUser.orderType');
     }
