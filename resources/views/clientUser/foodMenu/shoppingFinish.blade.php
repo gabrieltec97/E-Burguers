@@ -303,7 +303,7 @@
                         <div class="col-12 col-lg-8 mb-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <form action="{{ route('pedidos.store') }}" method="post" class="form-group">
+                                    <form id="cadastrarPedido" action="{{ route('pedidos.store') }}" method="post" class="form-group">
                                         @csrf
                                         <div class="row">
                                             <div class="col-12 col-lg-6 mt-4 mt-lg-0 div-forma-retirada">
@@ -480,7 +480,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-danger font-weight-bold mais-pedidos">Sim, ir ao cardápio</button>
-                                                        <button type="submit" class="btn btn-primary font-weight-bold">Não, pode trazer meu pedido</button>
+                                                        <button type="submit" class="btn btn-primary font-weight-bold cadastrar-pedido-agora">Não, pode trazer meu pedido</button>
                                                     </div>
                                                 </div>
                                             </div>

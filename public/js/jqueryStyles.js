@@ -590,8 +590,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     //     }
     // })
 
-//Tratativas de finalização de compra.
-$(".finalizar-pedido").attr('disabled', 'true');
 
 $(".forma-entrega").on("change", function () {
     var retirada = $(".forma-entrega").val();
@@ -630,9 +628,9 @@ $(".forma-pagamento").on("change", function () {
         $(".val-entregue").fadeIn('slow');
         $(".troco").attr('required', 'true');
 
-        if (troco2 == ''){
-            $(".finalizar-pedido").attr('disabled', 'true');
-        }
+        // if (troco2 == ''){
+        //     $(".finalizar-pedido").attr('disabled', 'true');
+        // }
     }
 });
 
@@ -711,16 +709,60 @@ var valorPedido = parseFloat($(".total-val").text());
 var clienteTroco = $(".troco").val()
 $(".verifica-val-troco").hide();
 
+$(".finalizar-pedido").on("click", function (){
+
+    if ($(".forma-pagamento").val() == 'Dinheiro' && $(".forma-entrega").val() == 'Entrega em domicílio'){
+        if ($(".troco").val() == ''){
+
+            $(".finalizar-pedido").attr('title', 'Você inseriu um valor de troco inferior ao valor do pedido.');
+            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+            Swal.fire({
+                icon: 'warning',
+                text: 'Verifique a forma de pagamento e insira o valor do troco (caso seja no dinheiro).',
+            })
+        }else if($(".troco").val() < valorPedido){
+
+            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+            Swal.fire({
+                icon: 'warning',
+                text: 'Você inseriu um valor inválido para troco.',
+            })
+        }
+    }else{
+        $(".finalizar-pedido").removeAttr('title', 'true');
+        $(".finalizar-pedido").attr('data-toggle', 'modal');
+    }
+})
 
 $(".troco").on("keyup", function (){
     clienteTroco = parseInt($(".troco").val());
 
     if (isNaN(clienteTroco) || valorPedido > clienteTroco){
         $(".verifica-val-troco").fadeIn('slow');
-        $(".finalizar-pedido").attr('disabled', 'true');
+        $(".finalizar-pedido").attr('title', 'Você inseriu um valor de troco inferior ao valor do pedido.');
+
+        $(".mais-pedidos").on('click', function (e){
+           e.preventDefault();
+        });
+
+        $(".cadastrar-pedido-agora").on('click', function (e){
+            e.preventDefault();
+        });
+
     }else{
         $(".verifica-val-troco").fadeOut('slow');
-        $(".finalizar-pedido").removeAttr('disabled', 'true');
+        $(".finalizar-pedido").removeAttr('title', 'true');
+        $(".finalizar-pedido").attr('data-toggle', 'modal');
+
+        $(".mais-pedidos").on('click', function (){
+            $('#cadastrarPedido').submit();
+        });
+
+        $(".cadastrar-pedido-agora").on('click', function (){
+            $('#cadastrarPedido').submit();
+        });
     }
 })
 

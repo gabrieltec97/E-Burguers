@@ -107,6 +107,10 @@ class OrdersController extends Controller
 
         //Cadastrando novo pedido.
         $updOrder = Auth::user()->userOrderTray()->get()->toArray();
+
+        if ($request->formaPagamento == 'Dinheiro' && $request->valEntregue < $updOrder[0]['totalValue'] && $request->formaRetirada != 'Retirada no restaurante'){
+            return redirect()->back();
+        }
         $itemsNoExtras = DB::table('item_without_extras')
             ->select()
             ->where('idOrder', '=', $updOrder[0]['id'])
