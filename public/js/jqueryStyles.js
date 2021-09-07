@@ -154,7 +154,7 @@ $(".impComboSim").on('click', function () {
 })
 
     //Inserção de máscara de preço na view de cadastro de anuncio.
-    $(".valorRefeicao, .valComboPromo, .valComboPromo-edit").keyup(function (){
+    $(".valorRefeicao, .valComboPromo, .valComboPromo-edit, .taxaEntrega").keyup(function (){
         $(this).mask('000.00', {reverse: true});
     })
 
@@ -948,8 +948,12 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
     });
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos").on('click', function (){
+$(".adicionar-bandeja, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
+
+  setTimeout(function (){
+      $('.cadastrar-taxa').text('Cadastrar')
+  }, 3000)
 });
 
 });
