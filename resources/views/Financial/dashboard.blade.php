@@ -105,7 +105,9 @@
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="chart-pie pb-2">
-                            {!! $chart2->container() !!}
+                            @if(isset($chart2))
+                                {!! $chart2->container() !!}
+                            @endif
                         </div>
                     </div>
                 </div>

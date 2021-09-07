@@ -948,16 +948,8 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
     });
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja").on('click', function (){
+$(".adicionar-bandeja, .aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
-});
-
-$(".aplicar-cupom").on('click', function (){
-    $(this).html('<div class="spinner-border text-light" role="status"></div>');
-});
-
-$(".cancelar-pedido").on('click', function (){
-    $(this).html('<div class="spinner-border text-light" role="status"></div>');
 });
 
 });

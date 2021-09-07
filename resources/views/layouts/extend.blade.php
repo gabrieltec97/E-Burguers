@@ -276,9 +276,14 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="{{ route('usuario.index') }}">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 font-weight-bold text-gray-400"></i>
-                                <span class="font-weight-bold text-secondary">Meus dados</span>
+                                <i class="fas fa-list fa-sm fa-fw mr-2 font-weight-bold"></i>
+                                <span class="font-weight-bold">Meus dados</span>
                             </a>
+                            <a class="dropdown-item mt-2" href="{{ route('area-de-entrega.index') }}">
+                                <i class="fas fa-shipping-fast mr-2 "></i>
+                                <span class="font-weight-bold">Locais de entrega</span>
+                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
@@ -287,9 +292,9 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
-                            <i class="fas fa-sign-out-alt font-weight-bold mr-2 text-gray-400"></i>
+                            <i class="fas fa-sign-out-alt font-weight-bold mr-2"></i>
 
-                            <span class="font-weight-bold font-weight-bold text-secondary">Sair</span></a>
+                            <span class="font-weight-bold font-weight-bold">Sair</span></a>
                         </div>
                     </li>
                 </ul>
@@ -349,7 +354,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
     {!! $chart->script() !!}
 
-    {!! $chart2->script() !!}
+    @if(isset($chart2))
+        {!! $chart2->script() !!}
+    @endif
 @endif
 
 </html>

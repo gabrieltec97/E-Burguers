@@ -311,7 +311,7 @@ class FinancialController extends Controller
         $chart2 = new Grafico();
 
         $chart2->labels(['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']);
-        $chart2->dataset('Valor arrecadado', 'bar' , [$countSale[0]['valor'],$countSale[1]['valor'],$countSale[2]['valor'],$countSale[3]['valor'],$countSale[4]['valor'],$countSale[5]['valor'],$countSale[6]['valor'],$countSale[7]['valor'],$countSale[8]['valor'],$countSale[9]['valor'],$countSale[10]['valor'],round($countSale[11]['valor'])])->options([
+        $chart2->dataset('Valor arrecadado', 'bar' , [round($countSale[0]['valor'], 2),round($countSale[1]['valor'], 2),round($countSale[2]['valor'], 2),round($countSale[3]['valor'], 2),round($countSale[4]['valor'], 2),round($countSale[5]['valor'], 2),round($countSale[6]['valor'], 2),round($countSale[7]['valor'], 2),round($countSale[8]['valor'], 2),round($countSale[9]['valor'], 2),round($countSale[10]['valor'], 2),round($countSale[11]['valor'], 2)])->options([
             'backgroundColor' => '#ccf5ff',
             'borderColor' => '#008fb3',
             'lineTension' => 0.5
@@ -611,21 +611,23 @@ class FinancialController extends Controller
 
         array_multisort(array_column($sale,'1'),SORT_DESC, $sale);
 
-        $chart2 = new Grafico();
+        if (isset($sale[0])){
+            $chart2 = new Grafico();
 
-        $chart2->labels([$sale[0][0], $sale[1][0], $sale[2][0], $sale[3][0]]);
-        $chart2->dataset('Total de vendas este ano', 'doughnut' , [$sale[0][1],$sale[1][1],$sale[2][1], $sale[3][1]])->options([
-            'backgroundColor' => [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
-            ],
-        ]);
+            $chart2->labels([$sale[0][0], $sale[1][0], $sale[2][0], $sale[3][0]]);
+            $chart2->dataset('Total de vendas este ano', 'doughnut' , [$sale[0][1],$sale[1][1],$sale[2][1], $sale[3][1]])->options([
+                'backgroundColor' => [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
+            ]);
+        }
 
         if (isset($sale[0])){
             return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
         }else{
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+            return view('Financial.dashboard', compact('chart',  'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
         }
     }
 }

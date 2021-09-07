@@ -32,7 +32,9 @@ class RatingController extends Controller
             $grade += $r['ratingGrade'];
         }
 
-        $grade = $grade / count($rating);
+        if ($rating != null){
+            $grade = $grade / count($rating);
+        }
 
         $data = [
           'count' => count($rating),

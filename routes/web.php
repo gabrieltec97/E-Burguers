@@ -33,6 +33,8 @@ Route::resource('/minhaBandeja', 'TrayController')->middleware('auth');
 
 Route::resource('/itensAdicionais', 'ExtrasController')->middleware('auth');
 
+Route::resource('/area-de-entrega', 'deliverController')->middleware('auth');
+
 //Rotas de pedido.
 Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido')->middleware('auth');
 
