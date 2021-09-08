@@ -432,6 +432,21 @@
                                                         <input type="text" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
                                                     </div>
 
+                                                    <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
+                                                        <select class="form-control entregaDiff" name="diffDistrict" required>
+                                                            <option value="" selected hidden>Selecione</option>
+                                                            @foreach($places as $place)
+                                                                <option value="{{ $place->name }}">{{ $place->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Ponto de referência</label>
+                                                        <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
+                                                    </div>
+
                                                 @endif
                                             @endif
 

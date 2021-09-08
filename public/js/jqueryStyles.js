@@ -646,6 +646,8 @@ $(".troco").on("click", function () {
     }, 8000)
 });
 
+$(".bairro-entrega").hide();
+
 //Verificação de entrega
 $(".end-entrega").attr('readonly', 'true');
 $(".end-entrega").css('cursor', 'not-allowed');
@@ -654,27 +656,31 @@ var local = $(".end-entrega").val();
 
 $(".entregaFora").on("click", function () {
     $(".end-entrega").removeAttr('readonly', 'true');
+    $(".bairro-entrega").fadeIn('slow');
+    $(".bairro-entrega").attr('required', true);
     $(".end-entrega").css('cursor', 'inherit');
     $(".end-entrega").val('');
-})
+});
 
 $(".entregaCasa").on("click", function () {
     $(".end-entrega").attr('readonly', 'true');
+    $(".bairro-entrega").fadeOut('slow');
+    $(".bairro-entrega").removeAttr('required', true);
     $(".end-entrega").css('cursor', 'not-allowed');
     $(".end-entrega").val(local);
-})
+});
 
 //Inserção de máscara de valor a ser entregue:
 
     $(".troco, .compras-acima").keyup(function (){
         $(this).mask('000.00', {reverse: true});
-    })
+    });
 
 
 //Inserção de cupom para maiúscula.
     $(".cupomDesconto").keyup(function () {
         $(this).val($(this).val().toUpperCase());
-    })
+    });
 
 //Alteração do campo de andamento de pedido.
 var status = $(".status").val();
@@ -702,7 +708,7 @@ $(".finalizar-ok").on("click", function () {
 //Sumir feedback de pedido home.
     setTimeout(function () {
         $(".sumir-feedback").fadeOut('slow');
-    },8000)
+    },8000);
 
 //Verificação de valor de troco.
 var valorPedido = parseFloat($(".total-val").text());
@@ -738,6 +744,7 @@ $(".finalizar-pedido").on("click", function (){
 
 $(".troco").on("keyup", function (){
     clienteTroco = parseInt($(".troco").val());
+    valorPedido = parseFloat($(".total-val").text())
 
     if (isNaN(clienteTroco) || valorPedido > clienteTroco){
         $(".verifica-val-troco").fadeIn('slow');

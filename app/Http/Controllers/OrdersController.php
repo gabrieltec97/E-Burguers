@@ -83,7 +83,7 @@ class OrdersController extends Controller
             return redirect()->route('preparo.index')->with('duplicated', ' ');
         }
 
-        $client = DB::table('users')->select('name', 'surname', 'district')->where('id', '=', $order[0]['idClient'])->get();
+        $client = DB::table('users')->select('name', 'surname', 'district', 'address')->where('id', '=', $order[0]['idClient'])->get();
         $districtPrice = DB::table('delivers')
             ->where('name', '=', $client[0]->district)
             ->get()->toArray();
@@ -96,13 +96,29 @@ class OrdersController extends Controller
         $tray = Tray::find($id);
         $tray->deliverWay = $request->formaRetirada;
         $tray->payingMethod = $request->formaPagamento;
-        $tray->address = $request->localEntrega;
+        if ($request->entrega == 'Entregaemcasa'){
+            $tray->address = $client[0]->address;
+        }else{
+            if ($request->pontoRef != ''){
+                $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+            }else{
+                $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict;
+            }
+        }
         $tray->payingValue = $request->valEntregue;
         $tray->clientComments = $request->obs;
 
         //Verificando o valor do frete.
         if ($request->formaRetirada == 'Retirada no restaurante'){
             $tray->totalValue = $tray->totalValue - $districtPrice;
+        }else{
+            if ($request->entrega == 'localEntregaFora'){
+                $local = DB::table('delivers')
+                    ->where('name', '=', $request->diffDistrict)
+                    ->get()->toArray();
+
+                $tray->totalValue = $tray->totalValue - $districtPrice + $local[0]->price;
+            }
         }
 
         if ($tray->hamburguer != null && $tray->extras != null){
