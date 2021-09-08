@@ -31,6 +31,7 @@ class CreateTraysTable extends Migration
             $table->string('address')->nullable();
             $table->string('payingMethod')->nullable();
             $table->string('payingValue')->nullable();
+            $table->string('deliverFee')->nullable();
             $table->string('disccountUsed')->nullable();
             $table->longText('extras')->nullable();
             $table->string('valueWithoutDisccount')->nullable();

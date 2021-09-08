@@ -83,7 +83,12 @@ class OrdersController extends Controller
             return redirect()->route('preparo.index')->with('duplicated', ' ');
         }
 
-        $client = DB::table('users')->select('name', 'surname')->where('id', '=', $order[0]['idClient'])->get();
+        $client = DB::table('users')->select('name', 'surname', 'district')->where('id', '=', $order[0]['idClient'])->get();
+        $districtPrice = DB::table('delivers')
+            ->where('name', '=', $client[0]->district)
+            ->get()->toArray();
+
+        $districtPrice = $districtPrice[0]->price;
 
         //Terminando de adicionar os itens à bandeja.
         $id = $order[0]['id'];
@@ -94,6 +99,11 @@ class OrdersController extends Controller
         $tray->address = $request->localEntrega;
         $tray->payingValue = $request->valEntregue;
         $tray->clientComments = $request->obs;
+
+        //Verificando o valor do frete.
+        if ($request->formaRetirada == 'Retirada no restaurante'){
+            $tray->totalValue = $tray->totalValue - $districtPrice;
+        }
 
         if ($tray->hamburguer != null && $tray->extras != null){
 

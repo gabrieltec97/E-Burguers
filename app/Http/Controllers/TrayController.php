@@ -1036,6 +1036,31 @@ class TrayController extends Controller
     public function reviewAndFinish()
     {
         $user = Auth::user();
+        $checkCurrent = $user->userOrderTray()->get()->toArray();
+
+        //Inserindo taxa de entrega para avulso.
+        if ($checkCurrent == null){
+            return redirect()->route('tipoPedido');
+
+        }elseif($checkCurrent[0]['orderType'] == 'Avulso'){
+            $client = DB::table('users')->select('name', 'surname', 'district')->where('id', '=', Auth::user()->id)->get();
+
+            $districtPrice = DB::table('delivers')
+                ->where('name', '=', $client[0]->district)
+                ->get()->toArray();
+
+            $districtPrice = $districtPrice[0]->price;
+
+            $insertTaxe = Tray::find($checkCurrent[0]['id']);
+
+            if ($insertTaxe->deliverFee == null){
+                $insertTaxe->totalValue = $insertTaxe->totalValue + $districtPrice;
+                $insertTaxe->valueWithoutDisccount = $insertTaxe->valueWithoutDisccount + $districtPrice;
+                $insertTaxe->deliverFee = 'Sim';
+                $insertTaxe->save();
+            }
+        }
+
 
         //Verificando se há bandeja, se não, redirecionando para página de novo pedido.
         $verify = $user->userOrderTray()->get();
