@@ -15,9 +15,7 @@ class deliverController extends Controller
      */
     public function index()
     {
-        $places = deliver::all();
-
-        return view('Deliver.deliverManagement', compact('places'));
+        return view('Deliver.deliverManagement');
     }
 
     /**
