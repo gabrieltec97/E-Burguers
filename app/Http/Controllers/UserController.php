@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\deliver;
 use App\Employee;
 use App\User;
 use Illuminate\Http\Request;
@@ -93,7 +94,9 @@ class UserController extends Controller
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
-        return view('User.newEmployee');
+        $places = deliver::all();
+
+        return view('User.newEmployee', compact('places'));
     }
 
     /**
@@ -113,7 +116,8 @@ class UserController extends Controller
             'empSurname' => 'required|min:3',
             'empPhone' => 'required|min:10',
             'empAddress' => 'required|min:10',
-            'empWorkingTime' => 'required'
+            'empWorkingTime' => 'required',
+            'district' => 'required'
 
         ];
 
@@ -126,6 +130,7 @@ class UserController extends Controller
             'empPhone.min' => 'Você inseriu um formato inválido de telefone do funcionário',
             'empAddress.max' => 'Você inseriu um endereço muito curto, caso esteja correto, preencha com xxxx',
             'empWorkingTime.required' => 'Por favor, insira o horário de trabalho do funcionário',
+            'district.required' => 'Por favor, selecione o bairro a ser entregue.'
         ];
 
         $request->validate($rules, $messages);
@@ -138,6 +143,7 @@ class UserController extends Controller
         $user->phone = $request->empPhone;
         $user->fixedPhone = $request->empFixedPhone;
         $user->address = $request->empAddress;
+        $user->district = $request->district;
         $user->workingTime = $request->empWorkingTime;
         $user->email = $request->empEmail;
         $user->password = bcrypt($request->empPassword);

@@ -38,8 +38,7 @@ Route::resource('/locaisDeEntrega', 'deliverController')->middleware('auth');
 //Rotas de pedido.
 Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido')->middleware('auth');
 
-//Rotas de combo
-
+//Rotas de combo.
 Route::get('/hamburguer', 'TrayController@orderComboHamburguer')->name('comboHamburguer')->middleware('auth');
 
 Route::get('/acompanhamento/{id}', 'TrayController@fries')->name('acompanhamento')->middleware('auth');
@@ -53,7 +52,6 @@ Route::get('/finalizarCompra', 'TrayController@reviewAndFinish')->name('fimCompr
 Route::post('/removerAdicional', 'TrayController@removeExtras')->name('removeadd')->middleware('auth');
 
 //Rotas de edição do combo.
-
 Route::get('/editarComboAcompanhamento', 'TrayController@editPortion')->name('editarPorcao')->middleware('auth');
 
 Route::get('/editarComboBebida', 'TrayController@editDrink')->name('editarBebida')->middleware('auth');
@@ -61,7 +59,6 @@ Route::get('/editarComboBebida', 'TrayController@editDrink')->name('editarBebida
 Route::get('/editarComboExtras/{id?}', 'TrayController@editComboExtras')->name('editarComboExtras')->middleware('auth');
 
 //Rotas de pedido avulso.
-
 Route::get('/cardapio/{insert?}', 'menuController@foodMenu')->name('cardapio')->middleware('auth');
 
 Route::get('/adicionarItem/{id}', 'TrayController@freeOrder')->name('adicionarItem')->middleware('auth');
@@ -77,17 +74,14 @@ Route::post('/removeCustomizado/{id}', 'TrayController@removeCustom')->name('rem
 Route::post('/adicionaExtraComum/{id}', 'TrayController@addExtraItem')->name('addExtraItem')->middleware('auth');
 
 //Rota de aplicação de cupom.
-
 Route::post('/aplicarCupom', 'TrayController@couponApply')->name('aplicarCupom')->middleware('auth');
 
 Route::post('/removerCupom/{couponName}', 'TrayController@couponRemove')->name('removerCupom')->middleware('auth');
-
 
 //Rotas de alteração de status dos pedidos.
 Route::post('/alterarStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@changeStatus')->name('alterarStatus')->middleware('auth');
 
 Route::post('/clinteAlteraStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@clientChangesStatus')->name('clienteAlteraStatus')->middleware('auth');
-
 
 //Rotas de gerenciamento.
 Route::get('/emPreparo', 'PreparingController@toPrepare')->name('emPreparo')->middleware('auth')->middleware('auth');
@@ -110,7 +104,7 @@ Route::get('/confirmarPendente/{id}', 'OrdersController@confirmPending')->name('
 
 Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido')->middleware('auth');
 
-//Rotas de avaliação
+//Rotas de avaliação.
 Route::get('/avaliacoes', 'RatingController@evaluate')->name('avaliacoes')->middleware('auth');
 
 Route::get('/avaliar/{id}', 'RatingController@sendRating')->name('avaliar')->middleware('auth');
@@ -121,8 +115,7 @@ Route::get('/enviarAvaliacao', 'RatingController@rate')->name('enviarAvaliacao')
 
 Route::get('/travarAvaliacoes/{rate}', 'MenuController@ratingLock')->name('travaAvaliacoes')->middleware('auth');
 
-
-//Rotas do ACL
+//Rotas do ACL.
 Route::resource('/roles', 'RoleController')->middleware('auth');
 
 Route::resource('/permissions', 'PermissionController')->middleware('auth');
@@ -141,7 +134,7 @@ Route::get('/permissionsList', 'PermissionController@permissions')->name('permis
 
 Auth::routes();
 
-//Rotas PHP para o Ajax
+//Rotas PHP para o Ajax.
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::get('/gerenciamentoPedidos', 'HomeController@hybridHome')->name('hybridHome')->middleware('auth');
@@ -150,8 +143,7 @@ Route::get('/dados', 'HomeController@getData')->name('dados')->middleware('auth'
 
 Route::get('/hybridTaking', 'HomeController@hybrid')->name('hybridTaking')->middleware('auth');
 
-//Rotas Ajax
-
+//Rotas Ajax.
 Route::get('/ajaxpreparo', 'HomeController@getPrepare')->name('prepajax');
 
 Route::get('/ajaxcozinha', 'HomeController@getKitchen')->name('cozjax');
@@ -162,4 +154,4 @@ Route::get('/buscaPedidos', 'LiveSearch@action')->name('buscaPedidos');
 
 Route::get('/pedidoCliente', 'PreparingController@clientOrder')->name('pedidoCliente');
 
-
+Route::get('/verificarFrete', 'TrayController@verificaFrete')->name('verificarFrete');

@@ -1,5 +1,6 @@
 @extends('layouts.extend-client')
 <script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/ajaxFinalizarPedido.js') }}"></script>
 
 @section('title')
     Finalizar compra
@@ -250,7 +251,7 @@
 
                                     <div class="col-12">
                                         <label class="text-muted font-weight-bold" style="font-size: 18px">Valor total:</label>
-                                        <span class="text-success font-weight-bold total-val" style="font-size: 18px">{{ $myOrder['totalValue'] }}</span>
+                                            <span class="text-success font-weight-bold total-val" style="font-size: 18px">{{ $myOrder['totalValue'] }}</span>
                                     </div>
 
 

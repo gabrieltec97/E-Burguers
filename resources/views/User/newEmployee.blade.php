@@ -62,6 +62,23 @@
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">
+                                        <label class="text-muted font-weight-bold">Bairro (Modo cliente)</label>
+                                        <select class="form-control {{ ($errors->has('district') ? 'is-invalid' : '') }}" name="district" required>
+                                            <option value="" selected hidden>Selecione</option>
+                                            @foreach($places as $place)
+                                                <option value="{{ $place->name }}" {{ old('district') == $place->name ? 'selected' : '' }}>{{ $place->name }}</option>
+                                            @endforeach
+                                            <option value="FORA DA ÁREA DE ENTREGAS">FORA DA ÁREA DE ENTREGAS</option>
+                                        </select>
+
+                                        @if($errors->has('bairro'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('bairro') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
                                         <label class="text-muted font-weight-bold">Horário de serviço</label>
                                         <input type="text" placeholder="xx:xx - xx:xx" class="form-control empHour {{ ($errors->has('empWorkingTime') ? 'is-invalid' : '') }}" name="empWorkingTime" value="{{ old('empWorkingTime') }}" required>
                                          @if($errors->has('empWorkingTime'))
@@ -92,25 +109,6 @@
             </div>
         </div>
     </div>
-
-    <div class="bg-box"></div>
-    <div class="div-box">
-        <div class="card">
-            <div class="card-header text-danger font-weight-bold d-flex" style="font-size: 22px">
-                <i class="fas fa-exclamation-triangle mt-1"></i>&nbsp; Atenção
-            </div>
-            <div class="card-body">
-                <p class="text-muted font-weight-bold mb-4">Você está criando um novo usuário e escolheu a opção "Administrador". O usuário de administrador
-                tem o total controle do sistema, contendo permissões importantes que se mal usadas, podem acarretar
-                em um descontrole e visualização de informações financeiras. Caso tenha marcado esta opção por acidente,
-                basta voltar à caixa de Cargo(Usuário do sistema) e alterar. Caso contrário, basta fechar este alerta.</p>
-                <p class="d-flex justify-content-end mb-0"><a href="#" class="btn btn-primary sair">Compreendi</a></p>
-            </div>
-        </div>
-    </div>
-
-
-    <button class="disparador">disparar</button>
 
 @endsection
 

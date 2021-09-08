@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Adverts;
 use App\AuxiliarDetached;
 use App\Coupon;
+use App\deliver;
 use App\Extras;
 use App\ItemWithoutExtras;
 use App\Tray;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -723,11 +725,20 @@ class TrayController extends Controller
             ->where('status', '=', 'Pendente')
             ->get();
 
-        //Valor da entrega.
+        //Valor da entrega (frete).
         if (count($pending) != 0){
             $deliverValue = 0;
         }else{
-            $deliverValue = 3;
+            $currentUser = User::find(Auth::user()->id);
+            $taxe = DB::table('delivers')
+                ->where('name', '=', $currentUser->district)
+                ->get()->toArray();
+
+            if ($taxe != null){
+                $deliverValue = $taxe[0]->price;
+            }else{
+                $deliverValue = 0;
+            }
         }
 
         //Evitando erro de cliente voltar a página até hamburguer quando tiver com outros itens na bandeja.
@@ -1141,6 +1152,26 @@ class TrayController extends Controller
                 }
             }
         }
+    }
+
+    public function verificaFrete()
+    {
+        $user = Auth::user()->userOrderTray()->get()->first();
+        $places = deliver::all();
+        $district = User::find(Auth::user()->id);
+        $district = $district->district;
+        $price = DB::table('delivers')
+            ->where('name', '=', $district)
+            ->get()->toArray();
+
+
+        $data = array(
+           '0' =>  $user->totalValue,
+           '1' =>  $district,
+           '2' =>  $price[0]->price
+        );
+
+        return [$data, $places];
     }
 
     public function removeCustom($id)
