@@ -84,7 +84,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
-                                    <form action="{{ route('area-de-entrega.store') }}" method="post">
+                                    <form action="{{ route('locaisDeEntrega.store') }}" method="post">
                                         @csrf
                                         <label class="font-weight-bold" style="color: black">Nome do bairro</label>
                                         <input type="text" autocomplete="off" class="form-control {{ ($errors->has('bairro') ? 'is-invalid' : '') }}" value="{{ old('bairro') }}" name="bairro" required>
@@ -133,7 +133,7 @@
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->price }}</td>
                                                 <td>
-                                                    <form id="destroyArea{{ $data->id }}" action="{{ route('area-de-entrega.destroy', $data->id) }}" method="post">
+                                                    <form id="destroyArea{{ $data->id }}" action="{{ route('locaisDeEntrega.destroy', $data->id) }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{ $data->id }}" title="Editar"><i class="fas fa-pencil-alt"></i></button>
@@ -179,7 +179,7 @@
                                                         <div class="modal-body">
                                                             <div class="row">
                                                                 <div class="col-12">
-                                                                    <form action="{{ route('area-de-entrega.update', $data->id) }}" method="post" class="">
+                                                                    <form action="{{ route('locaisDeEntrega.update', $data->id) }}" method="post" class="">
                                                                         @csrf
                                                                         @method('PUT')
                                                                         <label class="font-weight-bold" style="color: black;">Nome do bairro</label>
@@ -212,8 +212,6 @@
     </div>
     </div>
     </div>
-
-
 @endsection
 
 

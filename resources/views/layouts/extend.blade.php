@@ -279,10 +279,12 @@
                                 <i class="fas fa-list fa-sm fa-fw mr-2 font-weight-bold"></i>
                                 <span class="font-weight-bold">Meus dados</span>
                             </a>
-                            <a class="dropdown-item mt-2" href="{{ route('area-de-entrega.index') }}">
+                            @can('Áreas de entrega')
+                            <a class="dropdown-item mt-2" href="{{ route('locaisDeEntrega.index') }}">
                                 <i class="fas fa-shipping-fast mr-2 "></i>
                                 <span class="font-weight-bold">Locais de entrega</span>
                             </a>
+                            @endcan
 
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"

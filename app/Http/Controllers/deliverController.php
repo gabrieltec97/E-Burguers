@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\deliver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class deliverController extends Controller
 {
@@ -15,6 +17,10 @@ class deliverController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()->hasPermissionTo('Áreas de entrega')){
+            return redirect()->back();
+        }
+
         $places = deliver::all();
 
         return view('Deliver.deliverManagement', compact('places'));
