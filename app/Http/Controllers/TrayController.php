@@ -1044,21 +1044,37 @@ class TrayController extends Controller
             return redirect()->route('tipoPedido');
 
         }elseif($checkCurrent[0]['orderType'] == 'Avulso'){
-            $client = DB::table('users')->select('name', 'surname', 'district')->where('id', '=', Auth::user()->id)->get();
 
-            $districtPrice = DB::table('delivers')
-                ->where('name', '=', $client[0]->district)
-                ->get()->toArray();
+            //Verificando se há pedidos pendentes e/ou em andamento.
+            $pending = DB::table('orders')
+                ->where('idClient', '=', $user->id)
+                ->where('status', '=', 'Pendente')
+                ->get();
 
-            $districtPrice = $districtPrice[0]->price;
+            $going = DB::table('orders')
+                ->select('status', 'deliverWay')
+                ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
+                ->where('idClient', '=', Auth::user()->id)
+                ->get();
 
-            $insertTaxe = Tray::find($checkCurrent[0]['id']);
+            //Valor da entrega (frete).
+            if (count($pending) == 0 and count($going) == 0){
+                $client = DB::table('users')->select('name', 'surname', 'district')->where('id', '=', Auth::user()->id)->get();
 
-            if ($insertTaxe->deliverFee == null){
-                $insertTaxe->totalValue = $insertTaxe->totalValue + $districtPrice;
-                $insertTaxe->valueWithoutDisccount = $insertTaxe->valueWithoutDisccount + $districtPrice;
-                $insertTaxe->deliverFee = 'Sim';
-                $insertTaxe->save();
+                $districtPrice = DB::table('delivers')
+                    ->where('name', '=', $client[0]->district)
+                    ->get()->toArray();
+
+                $districtPrice = $districtPrice[0]->price;
+
+                $insertTaxe = Tray::find($checkCurrent[0]['id']);
+
+                if ($insertTaxe->deliverFee == null){
+                    $insertTaxe->totalValue = $insertTaxe->totalValue + $districtPrice;
+                    $insertTaxe->valueWithoutDisccount = $insertTaxe->valueWithoutDisccount + $districtPrice;
+                    $insertTaxe->deliverFee = 'Sim';
+                    $insertTaxe->save();
+                }
             }
         }
 
@@ -1080,7 +1096,7 @@ class TrayController extends Controller
         }
 
         $exist= DB::table('orders')
-            ->select('status', 'deliverWay')
+            ->select('status', 'deliverWay', 'address')
             ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")
             ->where('idClient', '=', Auth::user()->id)
             ->get()->toArray();
@@ -1122,7 +1138,6 @@ class TrayController extends Controller
         if (isset($user->id)){
             $address = DB::table('users')->select('address')->where('id', '=', $user->id)->get()->toArray();
         }
-
 
         if(isset($items) && isset($address[0]->address)){
             $sendAddress = $address[0]->address;
@@ -1190,11 +1205,36 @@ class TrayController extends Controller
             ->where('name', '=', $district)
             ->get()->toArray();
 
+        $pending = DB::table('orders')
+            ->where('idClient', '=', Auth::user()->id)
+            ->where('status', '=', 'Pendente')
+            ->get();
+
+        $going = DB::table('orders')
+            ->select('status', 'deliverWay')
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
+            ->where('idClient', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        if ($going != null){
+            $going = 'Sim';
+        }else{
+            $going = 'Não';
+        }
+
+        //Verificando se há itens pendentes.
+        if (count($pending) != 0){
+            $pending = 'Sim';
+        }else{
+            $pending = 'Não';
+        }
 
         $data = array(
-           '0' =>  $user->totalValue,
-           '1' =>  $district,
-           '2' =>  $price[0]->price
+           '0' => $user->totalValue,
+           '1' => $district,
+           '2' => $price[0]->price,
+           '3' => $pending,
+           '4' => $going
         );
 
         return [$data, $places];

@@ -78,10 +78,22 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         $order = Auth::user()->userOrderTray()->get()->toArray();
-
         if ($order == null){
             return redirect()->route('preparo.index')->with('duplicated', ' ');
         }
+
+        //Verificando se há pedidos pendentes e/ou em andamento.
+        $pending = DB::table('orders')
+            ->where('idClient', '=', Auth::user()->id)
+            ->where('status', '=', 'Pendente')
+            ->get();
+
+        $going = DB::table('orders')
+            ->select('status', 'deliverWay')
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
+            ->where('idClient', '=', Auth::user()->id)
+            ->get();
+
 
         $client = DB::table('users')->select('name', 'surname', 'district', 'address')->where('id', '=', $order[0]['idClient'])->get();
         $districtPrice = DB::table('delivers')
@@ -109,15 +121,17 @@ class OrdersController extends Controller
         $tray->clientComments = $request->obs;
 
         //Verificando o valor do frete.
-        if ($request->formaRetirada == 'Retirada no restaurante'){
-            $tray->totalValue = $tray->totalValue - $districtPrice;
-        }else{
-            if ($request->entrega == 'localEntregaFora'){
-                $local = DB::table('delivers')
-                    ->where('name', '=', $request->diffDistrict)
-                    ->get()->toArray();
+        if (count($pending) == 0 and count($going) == 0){
+            if ($request->formaRetirada == 'Retirada no restaurante'){
+                $tray->totalValue = $tray->totalValue - $districtPrice;
+            }else{
+                if ($request->entrega == 'localEntregaFora'){
+                    $local = DB::table('delivers')
+                        ->where('name', '=', $request->diffDistrict)
+                        ->get()->toArray();
 
-                $tray->totalValue = $tray->totalValue - $districtPrice + $local[0]->price;
+                    $tray->totalValue = $tray->totalValue - $districtPrice + $local[0]->price;
+                }
             }
         }
 
@@ -211,7 +225,6 @@ class OrdersController extends Controller
             $newOrder->status = 'Pedido registrado';
         }
         $newOrder->save();
-
 
         //Limpando a bandeja e tabelas de itens
         $clearTray = Tray::find($updOrder[0]['id']);

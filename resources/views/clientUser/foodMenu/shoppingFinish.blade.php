@@ -343,6 +343,12 @@
                                                     <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
                                                 </div>
 
+                                                @if(isset($exist[0]))
+                                                        <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
+                                                        </div>
+                                                @else
                                                 <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
                                                     <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
                                                     <br>
@@ -355,6 +361,22 @@
                                                 <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
                                                     <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
                                                     <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                </div>
+                                                @endif
+
+                                                <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
+                                                    <select class="form-control entregaDiff" name="diffDistrict">
+                                                        <option value="" selected hidden>Selecione</option>
+                                                        @foreach($places as $place)
+                                                            <option value="{{ $place->name }}">{{ $place->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Ponto de referência</label>
+                                                    <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
                                                 </div>
                                             @endif
                                             @endif
@@ -381,18 +403,40 @@
                                                     <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
                                                 </div>
 
-                                                <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
-                                                    <br>
-                                                    <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
-                                                    <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
-                                                    <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
-                                                    <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
+                                                    @if(isset($exist[0]))
+                                                        <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
+                                                        </div>
+                                                    @else
+                                                        <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
+                                                            <br>
+                                                            <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
+                                                            <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
+                                                            <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
+                                                            <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
+                                                        </div>
+
+                                                        <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                        </div>
+                                                    @endif
+
+                                                <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
+                                                    <select class="form-control entregaDiff" name="diffDistrict">
+                                                        <option value="" selected hidden>Selecione</option>
+                                                        @foreach($places as $place)
+                                                            <option value="{{ $place->name }}">{{ $place->name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
 
-                                                <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
-                                                    <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Ponto de referência</label>
+                                                    <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
                                                 </div>
                                             @endif
                                             @endif
@@ -418,23 +462,30 @@
                                                         <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
                                                     </div>
 
-                                                    <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
-                                                        <br>
-                                                        <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
-                                                        <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
-                                                        <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
-                                                        <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
-                                                    </div>
+                                                    @if(isset($exist[0]))
+                                                        <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
+                                                        </div>
+                                                    @else
+                                                        <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
+                                                            <br>
+                                                            <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
+                                                            <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
+                                                            <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
+                                                            <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
+                                                        </div>
 
-                                                    <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
-                                                        <input type="text" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
-                                                    </div>
+                                                        <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                        </div>
+                                                    @endif
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
                                                         <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
-                                                        <select class="form-control entregaDiff" name="diffDistrict" required>
+                                                        <select class="form-control entregaDiff" name="diffDistrict">
                                                             <option value="" selected hidden>Selecione</option>
                                                             @foreach($places as $place)
                                                                 <option value="{{ $place->name }}">{{ $place->name }}</option>
