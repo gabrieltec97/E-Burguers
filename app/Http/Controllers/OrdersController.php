@@ -89,7 +89,6 @@ class OrdersController extends Controller
             ->get();
 
         $going = DB::table('orders')
-            ->select('status', 'deliverWay')
             ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
             ->where('idClient', '=', Auth::user()->id)
             ->get();
@@ -102,26 +101,27 @@ class OrdersController extends Controller
 
         $districtPrice = $districtPrice[0]->price;
 
-        //Terminando de adicionar os itens à bandeja.
-        $id = $order[0]['id'];
-
-        $tray = Tray::find($id);
-        $tray->deliverWay = $request->formaRetirada;
-        $tray->payingMethod = $request->formaPagamento;
-        if ($request->entrega == 'Entregaemcasa'){
-            $tray->address = $client[0]->address;
-        }else{
-            if ($request->pontoRef != ''){
-                $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
-            }else{
-                $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict;
-            }
-        }
-        $tray->payingValue = $request->valEntregue;
-        $tray->clientComments = $request->obs;
-
         //Verificando o valor do frete.
         if (count($pending) == 0 and count($going) == 0){
+
+            //Terminando de adicionar os itens à bandeja.
+            $id = $order[0]['id'];
+
+            $tray = Tray::find($id);
+            $tray->deliverWay = $request->formaRetirada;
+            $tray->payingMethod = $request->formaPagamento;
+            if ($request->entrega == 'Entregaemcasa'){
+                $tray->address = $client[0]->address;
+            }else{
+                if ($request->pontoRef != ''){
+                    $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                }else{
+                    $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict;
+                }
+            }
+            $tray->payingValue = $request->valEntregue;
+            $tray->clientComments = $request->obs;
+
             if ($request->formaRetirada == 'Retirada no restaurante'){
                 $tray->totalValue = $tray->totalValue - $districtPrice;
             }else{
@@ -132,6 +132,30 @@ class OrdersController extends Controller
 
                     $tray->totalValue = $tray->totalValue - $districtPrice + $local[0]->price;
                 }
+            }
+        }else{
+
+            //Inserindo valores de entrega com base no dos pedidos correntes atuais.
+            if (count($pending) != 0){
+                $id = $order[0]['id'];
+
+                $tray = Tray::find($id);
+                $tray->deliverWay = $pending[0]->deliverWay;
+                $tray->payingMethod = $request->formaPagamento;
+                $tray->address = $pending[0]->address;
+                $tray->payingValue = $request->valEntregue;
+                $tray->clientComments = $request->obs;
+
+            }elseif(count($going) != 0){
+
+                $id = $order[0]['id'];
+
+                $tray = Tray::find($id);
+                $tray->deliverWay = $going[0]->deliverWay;
+                $tray->payingMethod = $request->formaPagamento;
+                $tray->address = $going[0]->address;
+                $tray->payingValue = $request->valEntregue;
+                $tray->clientComments = $request->obs;
             }
         }
 
