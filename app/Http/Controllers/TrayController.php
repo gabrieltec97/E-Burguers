@@ -1502,6 +1502,23 @@ class TrayController extends Controller
 
     public function couponApply(Request $request)
     {
+        //Alterando dados do pedido para em caso de aplicação de cupom e entrega em endereço diferente.
+        if (isset($request->district)){
+
+            DB::table('trays')
+                ->where('idClient', '=', Auth::user()->id)
+                ->update(['totalValue' => $request->newPrice, 'address' => $request->diffEnd . ' Bairro: ' . $request->district]);
+
+            $district = DB::table('delivers')
+                ->select('price')
+                ->where('name', '=', $request->district)
+                ->get()->toArray();
+
+            DB::table('trays')
+                ->where('idClient', '=', Auth::user()->id)
+                ->update(['valueWithoutDeliver' => $request->newPrice - $district[0]->price]);
+        }
+
         $order = Auth::user()->userOrderTray()->select('id', 'orderType', 'comboItem', 'detached', 'address', 'extras', 'hamburguer', 'portion', 'image', 'drinks', 'totalValue')->get()->toArray();
         $couponOld = DB::table('coupons')->where('name', '=', $request->cupomDesconto)->get()->toArray();
         $update = Tray::find($order[0]['id']);

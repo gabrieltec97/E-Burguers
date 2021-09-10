@@ -61,5 +61,22 @@ $(document).ready(() => {
             }
 
         },
-        error: function(erro){console.log(erro)}})
-})
+        error: function(erro){console.log(erro)}});
+
+    $(".aplicar-cupom").on('click', function(e){
+        e.preventDefault();
+        $(".diffEnd").val($(".end-entrega").val());
+        $(".newPrice").val($(".total-val").text());
+        $(".refPoint").val($(".pontoRef").val());
+        $(".district").val($(".entregaDiff").val());
+
+        if ($(".cupomDesconto").val() != ''){
+            $("#couponApply").submit();
+        }else{
+            $(".aplicar-cupom").html('<p>Aplicar cupom</p>')
+            console.log($(".cupomDesconto").val())
+        }
+
+    })
+});
+

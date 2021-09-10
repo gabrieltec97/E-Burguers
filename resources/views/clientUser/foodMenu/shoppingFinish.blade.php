@@ -255,8 +255,13 @@
                                     </div>
 
 
-                                    <form action="{{ route('aplicarCupom') }}" method="post">
+                                    <form id="couponApply" action="{{ route('aplicarCupom') }}" method="post">
                                         @csrf
+
+                                        <input name="diffEnd" class="diffEnd" hidden>
+                                        <input name="newPrice" class="newPrice" hidden>
+                                        <input name="refPoint" class="refPoint" hidden>
+                                        <input name="district" class="district" hidden>
                                         <div class="col-12 div-cupom">
                                             <label class="font-weight-bold text-muted" style="font-size: 18px">Cupom de desconto
 
@@ -272,7 +277,7 @@
                                                         style="cursor: not-allowed;" readonly title="Cupom já aplicado"
                                                         @endif
                                                    @endif
-                                                   placeholder="Insira um cupom (se tiver).">
+                                                   placeholder="Insira um cupom (se tiver)." required>
                                         </div>
 
                                         <div class="col-12 mt-4 d-flex justify-content-end">
