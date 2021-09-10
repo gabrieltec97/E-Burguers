@@ -123,6 +123,7 @@ class OrdersController extends Controller
             $tray->clientComments = $request->obs;
 
             if ($request->formaRetirada == 'Retirada no restaurante'){
+                $tray->valueWithoutDeliver = $tray->totalValue - $districtPrice;
                 $tray->totalValue = $tray->totalValue - $districtPrice;
             }else{
                 if ($request->entrega == 'localEntregaFora'){
@@ -130,6 +131,7 @@ class OrdersController extends Controller
                         ->where('name', '=', $request->diffDistrict)
                         ->get()->toArray();
 
+                    $tray->valueWithoutDeliver = $tray->totalValue - $districtPrice;
                     $tray->totalValue = $tray->totalValue - $districtPrice + $local[0]->price;
                 }
             }

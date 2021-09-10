@@ -11,10 +11,17 @@ $(document).ready(() => {
 
             if (pendente == 'Não' && emAndamento == 'Não'){
                 $(".forma-entrega").on('change', function (){
-                    if ($(this).val() == 'Retirada no restaurante'){
-                        let totalValue = data[0][0] - data[0][2];
 
-                        $(".total-val").text(totalValue.toFixed(2));
+                    //Verificando se há o uso de cupom de frete grátis.
+                    if ($(this).val() == 'Retirada no restaurante'){
+                        if (data[0][5] == "Frete Grátis"){
+                            console.log('sim');
+                        }else{
+                            let totalValue = data[0][0] - data[0][2];
+
+                            $(".total-val").text(totalValue.toFixed(2));
+                        }
+
                     }else{
                         let totalValue = data[0][0];
 

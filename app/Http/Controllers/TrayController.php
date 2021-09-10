@@ -725,8 +725,16 @@ class TrayController extends Controller
             ->where('status', '=', 'Pendente')
             ->get();
 
+        $going = DB::table('orders')
+            ->select('status', 'deliverWay')
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
+            ->where('idClient', '=', $user)
+            ->get();
+
         //Valor da entrega (frete).
         if (count($pending) != 0){
+            $deliverValue = 0;
+        }elseif(count($going) != 0){
             $deliverValue = 0;
         }else{
             $currentUser = User::find(Auth::user()->id);
@@ -740,6 +748,7 @@ class TrayController extends Controller
                 $deliverValue = 0;
             }
         }
+
 
         //Evitando erro de cliente voltar a página até hamburguer quando tiver com outros itens na bandeja.
         $verifyHamburguer = DB::table('trays')
@@ -849,7 +858,6 @@ class TrayController extends Controller
                     $order->valueWithoutDisccount = $hamburguer->comboValue + $noDisccount;
                 }
 
-
             }else{
                 if (isset($request->extras)){
                     $order->extras = $addItems;
@@ -914,7 +922,6 @@ class TrayController extends Controller
                     ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount]);
             }
         }
-
 
         $rate = DB::table('lock_rating')
             ->get();
@@ -1038,6 +1045,37 @@ class TrayController extends Controller
         $user = Auth::user();
         $checkCurrent = $user->userOrderTray()->get()->toArray();
         $places = deliver::all();
+        $client = DB::table('users')->select('name', 'surname', 'district')->where('id', '=', Auth::user()->id)->get();
+
+        //Verificando se há pedidos pendentes e/ou em andamento.
+        $pending = DB::table('orders')
+            ->where('idClient', '=', $user->id)
+            ->where('status', '=', 'Pendente')
+            ->get();
+
+        $going = DB::table('orders')
+            ->select('status', 'deliverWay')
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
+            ->where('idClient', '=', Auth::user()->id)
+            ->get();
+
+        //Inserindo valor sem frete para combo.
+        if ($checkCurrent[0]['orderType'] == 'Combo'){
+            $comboDistrict = DB::table('delivers')
+                ->where('name', '=', $client[0]->district)
+                ->get()->toArray();
+
+            if (count($pending) == 0 and count($going) == 0){
+                $updateNoTaxeCombo = Tray::find($checkCurrent[0]['id']);
+                $updateNoTaxeCombo->valueWithoutDeliver = $updateNoTaxeCombo->totalValue - $comboDistrict[0]->price;
+                $updateNoTaxeCombo->save();
+
+            }else{
+                $updateNoTaxeCombo = Tray::find($checkCurrent[0]['id']);
+                $updateNoTaxeCombo->valueWithoutDeliver = $updateNoTaxeCombo->totalValue;
+                $updateNoTaxeCombo->save();
+            }
+        }
 
         //Inserindo taxa de entrega para avulso.
         if ($checkCurrent == null){
@@ -1045,22 +1083,8 @@ class TrayController extends Controller
 
         }elseif($checkCurrent[0]['orderType'] == 'Avulso'){
 
-            //Verificando se há pedidos pendentes e/ou em andamento.
-            $pending = DB::table('orders')
-                ->where('idClient', '=', $user->id)
-                ->where('status', '=', 'Pendente')
-                ->get();
-
-            $going = DB::table('orders')
-                ->select('status', 'deliverWay')
-                ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
-                ->where('idClient', '=', Auth::user()->id)
-                ->get();
-
-            //Valor da entrega (frete).
+            //Inserindo valor da entrega (frete).
             if (count($pending) == 0 and count($going) == 0){
-                $client = DB::table('users')->select('name', 'surname', 'district')->where('id', '=', Auth::user()->id)->get();
-
                 $districtPrice = DB::table('delivers')
                     ->where('name', '=', $client[0]->district)
                     ->get()->toArray();
@@ -1070,14 +1094,19 @@ class TrayController extends Controller
                 $insertTaxe = Tray::find($checkCurrent[0]['id']);
 
                 if ($insertTaxe->deliverFee == null){
+                    $insertTaxe->valueWithoutDeliver = $insertTaxe->totalValue;
                     $insertTaxe->totalValue = $insertTaxe->totalValue + $districtPrice;
                     $insertTaxe->valueWithoutDisccount = $insertTaxe->valueWithoutDisccount + $districtPrice;
                     $insertTaxe->deliverFee = 'Sim';
                     $insertTaxe->save();
                 }
+            }else{
+
+                $insertTaxe = Tray::find($checkCurrent[0]['id']);
+                $insertTaxe->valueWithoutDeliver = $insertTaxe->totalValue;
+                $insertTaxe->save();
             }
         }
-
 
         //Verificando se há bandeja, se não, redirecionando para página de novo pedido.
         $verify = $user->userOrderTray()->get();
@@ -1201,6 +1230,7 @@ class TrayController extends Controller
         $places = deliver::all();
         $district = User::find(Auth::user()->id);
         $district = $district->district;
+
         $price = DB::table('delivers')
             ->where('name', '=', $district)
             ->get()->toArray();
@@ -1215,6 +1245,23 @@ class TrayController extends Controller
             ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
             ->where('idClient', '=', Auth::user()->id)
             ->get()->toArray();
+
+        //Verificando se há um cupom em uso.
+        $coupon = DB::table('trays')
+            ->select('disccountUsed')
+            ->where('idClient', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        if ($coupon[0]->disccountUsed != null){
+            $disccount = DB::table('coupons')
+                ->select('disccount')
+                ->where('name', '=', $coupon[0]->disccountUsed)
+                ->get()->toArray();
+
+            $disccount = $disccount[0]->disccount;
+        }else{
+            $disccount = 'Não';
+        }
 
         if ($going != null){
             $going = 'Sim';
@@ -1234,7 +1281,8 @@ class TrayController extends Controller
            '1' => $district,
            '2' => $price[0]->price,
            '3' => $pending,
-           '4' => $going
+           '4' => $going,
+           '5' => $disccount
         );
 
         return [$data, $places];

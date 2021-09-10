@@ -34,6 +34,7 @@ class CreateTraysTable extends Migration
             $table->string('deliverFee')->nullable();
             $table->string('disccountUsed')->nullable();
             $table->longText('extras')->nullable();
+            $table->string('valueWithoutDeliver')->nullable();
             $table->string('valueWithoutDisccount')->nullable();
             $table->timestamps();
         });
