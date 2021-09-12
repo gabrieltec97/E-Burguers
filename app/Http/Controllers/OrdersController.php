@@ -124,7 +124,13 @@ class OrdersController extends Controller
 
             if ($request->formaRetirada == 'Retirada no restaurante'){
                 $tray->valueWithoutDeliver = $tray->totalValue - $districtPrice;
-                $tray->totalValue = $tray->totalValue - $districtPrice;
+
+                //Verificação de uso de cupom de frete grátis.
+                if ($tray->disccountUsed == null){
+                    $tray->totalValue = $tray->totalValue - $districtPrice;
+                }
+
+
             }else{
                 if ($request->entrega == 'localEntregaFora'){
                     $local = DB::table('delivers')

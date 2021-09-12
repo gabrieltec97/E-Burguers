@@ -14,9 +14,7 @@ $(document).ready(() => {
 
                     //Verificando se há o uso de cupom de frete grátis.
                     if ($(this).val() == 'Retirada no restaurante'){
-                        if (data[0][5] == "Frete Grátis"){
-                            console.log('sim');
-                        }else{
+                        if (data[0][5] == "Não"){
                             let totalValue = data[0][0] - data[0][2];
 
                             $(".total-val").text(totalValue.toFixed(2));
@@ -63,12 +61,15 @@ $(document).ready(() => {
         },
         error: function(erro){console.log(erro)}});
 
+    //Formatações fora do Ajax.
+
     $(".aplicar-cupom").on('click', function(e){
         e.preventDefault();
         $(".diffEnd").val($(".end-entrega").val());
         $(".newPrice").val($(".total-val").text());
         $(".refPoint").val($(".pontoRef").val());
         $(".district").val($(".entregaDiff").val());
+        $(".deliverType").val($(".forma-entrega").val());
 
         if ($(".cupomDesconto").val() != ''){
             $("#couponApply").submit();
@@ -76,7 +77,22 @@ $(document).ready(() => {
             $(".aplicar-cupom").html('<p>Aplicar cupom</p>')
             console.log($(".cupomDesconto").val())
         }
+    });
 
-    })
+
+    let deliver = $(".deliver-coupon").val();
+
+    if(deliver != "" || deliver != null){
+
+        if (deliver == 'Retirada no restaurante'){
+            $(".troco").removeAttr('required', 'true');
+            $(".pagamento").hide();
+            $(".entrega").hide();
+            $(".local-entrega").hide();
+            $(".val-entregue").hide();
+            $(".finalizar-pedido").removeAttr('disabled', 'true');
+        }
+
+    }
 });
 

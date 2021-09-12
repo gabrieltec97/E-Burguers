@@ -262,6 +262,7 @@
                                         <input name="newPrice" class="newPrice" hidden>
                                         <input name="refPoint" class="refPoint" hidden>
                                         <input name="district" class="district" hidden>
+                                        <input name="deliverType" class="deliverType" hidden>
                                         <div class="col-12 div-cupom">
                                             <label class="font-weight-bold text-muted" style="font-size: 18px">Cupom de desconto
 
@@ -319,6 +320,8 @@
                                                         <option value="{{ $pendings }}">{{ $pendings }}</option>
                                                     @elseif(isset($exist[0]))
                                                         <option value="{{ $exist[0]->deliverWay }}">{{ $exist[0]->deliverWay }}</option>
+                                                    @elseif($deliver != null)
+                                                        <option value="{{ $deliver }}" class="deliver-coupon" title="Local inserido junto com cupom. Para trocar, clique em alterar local.">{{ $deliver }}</option>
                                                     @else
                                                         <option value="Entrega em domicílio">Entrega em domicílio</option>
                                                         <option value="Retirada no restaurante">Retirada no restaurante</option>
