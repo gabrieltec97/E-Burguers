@@ -1187,6 +1187,10 @@ class TrayController extends Controller
             return redirect()->route('tipoPedido');
         }
 
+//        print_r($diffSend);
+//
+//        die();
+
         if(isset($items) && isset($address[0]->address)){
             $sendAddress = $address[0]->address;
 
@@ -1522,6 +1526,10 @@ class TrayController extends Controller
     public function couponApply(Request $request)
     {
         //Alterando dados do pedido para em caso de aplicação de cupom e entrega em endereço diferente.
+        if ($request->deliverType != 'Retirada no restaurante' && $request->payingMethod == 'Dinheiro' && $request->payingValue < $request->newPrice){
+            return redirect()->back()->with('msg-troco', '.');
+        }
+
         if (isset($request->district)){
             $userData = User::find(Auth::user()->id);
 
@@ -1541,7 +1549,7 @@ class TrayController extends Controller
 
             DB::table('trays')
                 ->where('idClient', '=', Auth::user()->id)
-                ->update(['totalValue' => $request->newPrice, 'address' => $request->diffEnd . ' Bairro: ' . $request->district]);
+                ->update(['totalValue' => $request->newPrice, 'address' => $request->diffEnd . ', Bairro: ' . $request->district]);
 
         }
 
@@ -1611,8 +1619,12 @@ class TrayController extends Controller
                     if ($update->address == null){
                         $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
                     }
-                    $update->payingMethod = $request->payingMethod;
-                    $update->payingValue = $request->payingValue;
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
                     $update->disccountUsed = $coupon[0]->name;
                     $update->save();
@@ -1811,6 +1823,8 @@ class TrayController extends Controller
         $edit = Tray::find($id);
         $edit->totalValue = $originalValue;
         $edit->address = null;
+        $edit->payingMethod = null;
+        $edit->payingValue = null;
         $edit->disccountUsed = null;
         $edit->deliverWay = null;
         $edit->save();

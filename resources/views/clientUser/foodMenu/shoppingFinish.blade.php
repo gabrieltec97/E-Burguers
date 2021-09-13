@@ -41,86 +41,8 @@
 
                                             @if($separated != 0 && $pendings == 'Entrega em domicílio')
 
-                                                <div class="col-12 col-lg-6 mt-4 mt-lg-0 pagamento">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
-                                                    <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
-                                                        <option value="Dinheiro">Dinheiro</option>
-                                                        <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
-                                                        <option value="Cartão de crédito (Visa)">Cartão de crédito (Visa)</option>
-                                                        <option value="Cartão de débito (Elo)">Cartão de débito (Elo)</option>
-                                                        <option value="Cartão de débito (Visa)">Cartão de débito (Visa)</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-lg-9 mt-4 mt-lg-4 val-entregue">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
-                                                    <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
-                                                    <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
-                                                    <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
-                                                </div>
-
-                                                @if(isset($exist[0]))
-                                                        <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
-                                                            <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
-                                                        </div>
-                                                @else
-                                                <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
-                                                    <br>
-                                                    <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
-                                                    <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
-                                                    <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
-                                                    <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
-                                                </div>
-
-                                                <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
-                                                    <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
-                                                </div>
-                                                @endif
-
-                                                <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
-                                                    <select class="form-control entregaDiff" name="diffDistrict">
-                                                        <option value="" selected hidden>Selecione</option>
-                                                        @foreach($places as $place)
-                                                            <option value="{{ $place->name }}">{{ $place->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Ponto de referência</label>
-                                                    <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
-                                                </div>
-                                            @endif
-                                            @endif
-
-
-
-                                            @if(isset($exist[0]) && !isset($pendings))
-                                                @if($exist[0]->deliverWay == 'Entrega em domicílio')
-                                                <div class="col-12 col-lg-6 mt-4 mt-lg-0 pagamento">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
-                                                    <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
-                                                        <option value="Dinheiro">Dinheiro</option>
-                                                        <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
-                                                        <option value="Cartão de crédito (Visa)">Cartão de crédito (Visa)</option>
-                                                        <option value="Cartão de débito (Elo)">Cartão de débito (Elo)</option>
-                                                        <option value="Cartão de débito (Visa)">Cartão de débito (Visa)</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-lg-9 mt-4 mt-lg-4 val-entregue">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
-                                                    <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
-                                                    <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
-                                                    <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
-                                                </div>
-
                                                     @if(isset($exist[0]))
-                                                        <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
+                                                        <div class="col-12 col-lg-6 local-entrega">
                                                             <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
                                                             <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
                                                         </div>
@@ -140,6 +62,38 @@
                                                         </div>
                                                     @endif
 
+                                            @if($diffSend != null)
+                                              @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
+                                                  <div class="col-12 mt-4">
+                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-removebg-preview.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
+                                                      <h5>Pagamento em {{ $diffSend[1] }}</h5>
+                                                  </div>
+                                              @elseif($diffSend[1] != null)
+                                                  <div class="col-12 mt-4">
+                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money-removebg-preview.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
+                                                      <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
+                                                  </div>
+                                              @endif
+                                            @else
+                                            <div class="col-12 col-lg-6 mt-4 pagamento">
+                                                <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
+                                                <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
+                                                    <option value="Dinheiro">Dinheiro</option>
+                                                    <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
+                                                    <option value="Cartão de crédito (Visa)">Cartão de crédito (Visa)</option>
+                                                    <option value="Cartão de débito (Elo)">Cartão de débito (Elo)</option>
+                                                    <option value="Cartão de débito (Visa)">Cartão de débito (Visa)</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-12 col-lg-6 mt-4 val-entregue">
+                                                <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
+                                                <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
+                                                <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
+                                                <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
+                                            </div>
+                                            @endif
+
                                                 <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
                                                     <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
                                                     <select class="form-control entregaDiff" name="diffDistrict">
@@ -157,6 +111,78 @@
                                             @endif
                                             @endif
 
+                                            @if(isset($exist[0]) && !isset($pendings))
+                                                @if($exist[0]->deliverWay == 'Entrega em domicílio')
+                                                    @if(isset($exist[0]))
+                                                        <div class="col-12 col-lg-6 local-entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
+                                                        </div>
+                                                    @else
+                                                        <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
+                                                            <br>
+                                                            <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
+                                                            <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
+                                                            <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
+                                                            <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
+                                                        </div>
+
+                                                        <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                        </div>
+                                                    @endif
+
+                                                    @if($diffSend != null)
+                                                        @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
+                                                            <div class="col-12 mt-4">
+                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-removebg-preview.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
+                                                                <h5>Pagamento em {{ $diffSend[1] }}</h5>
+                                                            </div>
+                                                        @elseif($diffSend[1] != null)
+                                                            <div class="col-12 mt-4">
+                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money-removebg-preview.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
+                                                                <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        <div class="col-12 col-lg-6 mt-4 pagamento">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
+                                                            <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
+                                                                <option value="Dinheiro">Dinheiro</option>
+                                                                <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
+                                                                <option value="Cartão de crédito (Visa)">Cartão de crédito (Visa)</option>
+                                                                <option value="Cartão de débito (Elo)">Cartão de débito (Elo)</option>
+                                                                <option value="Cartão de débito (Visa)">Cartão de débito (Visa)</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-12 col-lg-6 mt-4 val-entregue">
+                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
+                                                            <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
+                                                            <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
+                                                            <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
+                                                        </div>
+                                                    @endif
+
+                                                    <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
+                                                        <select class="form-control entregaDiff" name="diffDistrict">
+                                                            <option value="" selected hidden>Selecione</option>
+                                                            @foreach($places as $place)
+                                                                <option value="{{ $place->name }}">{{ $place->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Ponto de referência</label>
+                                                        <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
+                                                    </div>
+                                                @endif
+                                            @endif
+
                                                 @if(isset($separated))
                                                 @if($separated == 0)
 
@@ -167,12 +193,12 @@
                                                         <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $diffSend[0] }}" title="Local inserido junto com cupom.">
                                                     </div>
 
-                                                    @if($diffSend[1] != 'dinheiro')
+                                                    @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
                                                       <div class="col-12 mt-4">
                                                           <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-removebg-preview.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
                                                           <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                       </div>
-                                                    @else
+                                                    @elseif($diffSend[1] != null)
                                                       <div class="col-12 mt-4">
                                                           <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money-removebg-preview.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
                                                           <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
@@ -646,7 +672,16 @@
             @endif
         @endif
 
-    @if(session('msg-exp') or session('msg-use') or session('msg-success') or session('msg-rem-cup') or session('msg') or isset($exist[0]))
+    @if(session('msg-troco'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                text: 'Você inseriu um valor inválido para troco.',
+            })
+        </script>
+    @endif
+
+    @if(session('msg-exp') or session('msg-troco') or session('msg-use') or session('msg-success') or session('msg-rem-cup') or session('msg') or isset($exist[0]))
 
     @else
         <script>

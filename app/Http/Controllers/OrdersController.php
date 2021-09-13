@@ -114,9 +114,18 @@ class OrdersController extends Controller
                 $tray->address = $client[0]->address;
             }else{
                 if ($request->pontoRef != ''){
-                    $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                    if ($tray->address == null){
+                        $tray->address = $request->localEntrega. '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                    }else{
+                        $tray->address = $request->localEntrega;
+                    }
                 }else{
-                    $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict;
+                    if ($tray->address == null){
+                        $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                    }else{
+                        $tray->address = $request->localEntrega;
+                    }
+
                 }
             }
             $tray->payingValue = $request->valEntregue;
