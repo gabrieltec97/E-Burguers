@@ -70,6 +70,8 @@ $(document).ready(() => {
         $(".refPoint").val($(".pontoRef").val());
         $(".district").val($(".entregaDiff").val());
         $(".deliverType").val($(".forma-entrega").val());
+        $(".payingMethod").val($(".forma-pagamento").val());
+        $(".payingValue").val($(".troco").val());
 
         if ($(".cupomDesconto").val() != ''){
             $("#couponApply").submit();

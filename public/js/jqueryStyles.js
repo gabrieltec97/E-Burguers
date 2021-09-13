@@ -602,6 +602,7 @@ $(".forma-entrega").on("change", function () {
         $(".entrega").hide('slow');
         $(".local-entrega").hide('slow');
         $(".val-entregue").hide('slow');
+        $(".bairro-entrega").hide('slow');
         pagamento = 'Pagar no restaurante';
         $(".finalizar-pedido").removeAttr('disabled', 'true');
     }else{
