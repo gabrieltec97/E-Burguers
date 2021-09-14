@@ -78,6 +78,7 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         $order = Auth::user()->userOrderTray()->get()->toArray();
+
         if ($order == null){
             return redirect()->route('preparo.index')->with('duplicated', ' ');
         }
@@ -109,7 +110,9 @@ class OrdersController extends Controller
 
             $tray = Tray::find($id);
             $tray->deliverWay = $request->formaRetirada;
-            $tray->payingMethod = $request->formaPagamento;
+            if ($tray->payingMethod == null){
+                $tray->payingMethod = $request->formaPagamento;
+            }
             if ($request->entrega == 'Entregaemcasa'){
                 $tray->address = $client[0]->address;
             }else{
@@ -158,7 +161,9 @@ class OrdersController extends Controller
 
                 $tray = Tray::find($id);
                 $tray->deliverWay = $pending[0]->deliverWay;
-                $tray->payingMethod = $request->formaPagamento;
+                if ($tray->payingMethod == null){
+                    $tray->payingMethod = $request->formaPagamento;
+                }
                 $tray->address = $pending[0]->address;
                 $tray->payingValue = $request->valEntregue;
                 $tray->clientComments = $request->obs;
@@ -169,7 +174,10 @@ class OrdersController extends Controller
 
                 $tray = Tray::find($id);
                 $tray->deliverWay = $going[0]->deliverWay;
-                $tray->payingMethod = $request->formaPagamento;
+                if ($tray->payingMethod == null){
+                    $tray->payingMethod = $request->formaPagamento;
+                }
+
                 $tray->address = $going[0]->address;
                 $tray->payingValue = $request->valEntregue;
                 $tray->clientComments = $request->obs;

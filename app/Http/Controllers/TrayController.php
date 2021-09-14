@@ -1187,10 +1187,6 @@ class TrayController extends Controller
             return redirect()->route('tipoPedido');
         }
 
-//        print_r($diffSend);
-//
-//        die();
-
         if(isset($items) && isset($address[0]->address)){
             $sendAddress = $address[0]->address;
 
@@ -1630,7 +1626,6 @@ class TrayController extends Controller
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
-
 
                     //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){

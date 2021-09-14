@@ -21,7 +21,7 @@
                                     <form id="cadastrarPedido" action="{{ route('pedidos.store') }}" method="post" class="form-group">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-12 col-lg-6 mt-4 mt-lg-0 div-forma-retirada">
+                                            <div class="col-12 col-lg-6 div-forma-retirada">
                                                 <label class="font-weight-bold text-muted" style="font-size: 18px">Forma de retirada</label>
                                                 <select name="formaRetirada" class="form-control forma-entrega">
                                                     @if(isset($pendings))
@@ -68,6 +68,7 @@
                                                       <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-removebg-preview.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
                                                       <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                   </div>
+
                                               @elseif($diffSend[1] != null)
                                                   <div class="col-12 mt-4">
                                                       <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money-removebg-preview.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
@@ -194,14 +195,22 @@
                                                     </div>
 
                                                     @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
-                                                      <div class="col-12 mt-4">
+                                                      <div class="col-6 mt-4">
                                                           <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-removebg-preview.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
                                                           <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                       </div>
+
+                                                      <div class="col-6 mt-4">
+                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local</button>
+                                                      </div>
                                                     @elseif($diffSend[1] != null)
-                                                      <div class="col-12 mt-4">
+                                                      <div class="col-6 mt-4">
                                                           <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money-removebg-preview.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
                                                           <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
+                                                      </div>
+
+                                                      <div class="col-6 mt-4">
+                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local</button>
                                                       </div>
                                                     @endif
                                                 @else
@@ -285,25 +294,6 @@
                                                 <select name="pedir" hidden>
                                                     <option class="valor-retorno"></option>
                                                 </select>
-                                            </div>
-
-                                            <div class="col-12 mt-3 d-flex justify-content-end" style="bottom: -20px">
-                                                @if(isset($pendings))
-                                                    @if($pendings == 'Entrega em domicílio')
-                                                        <button class="btn btn-success font-weight-bold finalizar-pedido"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
-                                                    @else
-                                                        <button class="btn btn-success font-weight-bold verifica-outro"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
-                                                    @endif
-
-                                                @elseif(isset($exist[0]))
-                                                    @if($exist[0]->deliverWay == 'Entrega em domicílio')
-                                                        <button class="btn btn-success font-weight-bold finalizar-pedido"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
-                                                    @else
-                                                        <button class="btn btn-success font-weight-bold verifica-outro"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
-                                                    @endif
-                                                @else
-                                                    <button class="btn btn-success font-weight-bold finalizar-pedido"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
-                                                @endif
                                             </div>
                                         </div>
 
@@ -598,8 +588,8 @@
                                                    placeholder="Insira um cupom (se tiver)." required>
                                         </div>
 
-                                        <div class="col-12 mt-4 d-flex justify-content-end">
-                                            <button type="submit"  class="btn btn-success font-weight-bold aplicar-cupom"
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit"  class="btn btn-primary font-weight-bold mt-2 aplicar-cupom"
                                                     @if(session('msg-success') or $myOrder['disccountUsed'] != null)
                                                     hidden
                                                 @endif
@@ -614,12 +604,31 @@
                                                     <form action="{{ route('removerCupom', session('msg-success')) }}" method="post">
                                                         @endif
                                                         @csrf
-                                                        <div class="col-12 mt-1 d-flex justify-content-end">
-                                                            <button type="submit" class="btn btn-danger font-weight-bold" title="Remover cupom">Remover Cupom</button></li>
+                                                        <div class="col-12 d-flex justify-content-end">
+                                                            <button type="submit" class="btn btn-danger font-weight-bold remove-cupon" title="Remover cupom">Remover Cupom</button></li>
                                                         </div>
                                                     </form>
                                         @endif
+
+                                    <div class="col-12 mt-4">
+                                        @if(isset($pendings))
+                                            @if($pendings == 'Entrega em domicílio')
+                                                <button class="btn btn-success font-weight-bold finalizar-pedido w-100"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                            @else
+                                                <button class="btn btn-success font-weight-bold verifica-outro w-100"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                            @endif
+                                        @elseif(isset($exist[0]))
+                                            @if($exist[0]->deliverWay == 'Entrega em domicílio')
+                                                <button class="btn btn-success font-weight-bold finalizar-pedido w-100"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                            @else
+                                                <button class="btn btn-success font-weight-bold verifica-outro w-100"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                            @endif
+                                        @else
+                                            <button class="btn btn-success font-weight-bold finalizar-pedido w-100"><i class="fas fa-check-circle mr-2"></i>Finalizar Pedido</button>
+                                        @endif
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -631,6 +640,7 @@
 
         @if(isset($exist[0]))
             @if($exist[0]->deliverWay == 'Entrega em domicílio')
+              @if(session('msg-exp') == false or !session('msg-use') == false)
                 <script>
                     function shoot(){
                         Swal.fire({
@@ -649,7 +659,9 @@
                         shoot();
                     })
                 </script>
+              @endif
             @elseif($exist[0]->deliverWay == 'Retirada no restaurante')
+                @if(session('msg-exp') == false or !session('msg-use') == false)
                 <script>
                     function shoot(){
 
@@ -669,6 +681,7 @@
                         shoot();
                     })
                 </script>
+                @endif
             @endif
         @endif
 

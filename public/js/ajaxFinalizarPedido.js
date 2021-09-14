@@ -81,7 +81,6 @@ $(document).ready(() => {
         }
     });
 
-
     let deliver = $(".deliver-coupon").val();
 
     if(deliver != "" || deliver != null){
@@ -94,7 +93,11 @@ $(document).ready(() => {
             $(".val-entregue").hide();
             $(".finalizar-pedido").removeAttr('disabled', 'true');
         }
-
     }
+
+    //Envio de formulário de remoção de cupom e local alterado.
+    $(".alterar-local-cupom").on('click', function (){
+        $(".remove-cupon").click();
+    });
 });
 
