@@ -151,7 +151,7 @@ class menuController extends Controller
 
         $rules = [
             'mealValue' => 'required',
-            'mealName' => 'required|min:4|max:35',
+            'mealName' => 'required|min:4|max:70',
             'promoValue' => 'required',
             'mealDescription' => 'required|min:70|max:90'
 
@@ -160,7 +160,7 @@ class menuController extends Controller
         $messages = [
             'mealName.required' => 'Por favor, insira o nome da refeição.',
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
-            'mealName.max' => 'O nome da refeição não pode ter mais de 35 caracteres.',
+            'mealName.max' => 'O nome da refeição não pode ter mais de 70 caracteres.',
             'valComboPromo.required' => 'Por favor, insira o valor propocional.',
             'disccount.required' => 'Por favor, insira o descondo a ser aplicado.',
             'ingredients.required' => 'Por favor, insira os ingredientes da refeição.',
@@ -290,7 +290,7 @@ class menuController extends Controller
         }
 
         $rules = [
-            'mealName' => 'required|min:4|max:35',
+            'mealName' => 'required|min:4|max:70',
             'mealValue' => 'required|min:5|max:5',
             'mealDescription' => 'required|min:70|max:90'
         ];
@@ -298,7 +298,7 @@ class menuController extends Controller
         $messages = [
             'mealName.required' => 'Por favor, insira o nome da refeição.',
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
-            'mealName.max' => 'O nome da refeição não pode ter mais de 20 caracteres.',
+            'mealName.max' => 'O nome da refeição não pode ter mais de 70 caracteres.',
             'mealValue.required' => 'Por favor, insira o valor da refeição.',
             'mealValue.min' => 'Por favor, insira um valor válido.',
             'promoValue.required' => 'Por favor, insira o valor propocional.',
@@ -330,6 +330,23 @@ class menuController extends Controller
             $advert->extras = $addExtra;
         }
 
+        if($request->hasFile('advPhoto')){
+            $image = $request->file('advPhoto');
+            $extension = $image->getClientOriginalExtension();
+
+            if ($extension != 'png' && $extension != 'jpg' && $extension != 'jpeg' && $extension != 'gif'){
+                return back()->with('msg', 'Não foi possível fazer o upload da imagem. Por favor, insira uma imagem no formato png ou jpg.
+              Você inseriu um arquivo no formato .'.$extension);
+            }
+        }
+
+        if($request->hasFile('advPhoto')){
+            $number = rand(1, 2000000);
+            File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
+            $advert->picture = 'imagens/img'.$number.'.'.$extension;
+        }else{
+            $advert->picture = 'logo/hamburguer.jpg';
+        }
 
         $advert->save();
 

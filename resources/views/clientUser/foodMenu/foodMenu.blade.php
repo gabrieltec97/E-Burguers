@@ -32,7 +32,7 @@
                                 <form action="{{ route('adicionarItem', $food->id) }}">
                                     @if($food->foodType == 'Hamburguer')
                                         <div class="card cardapio-card">
-                                            <img class="card-img-top img-card" src="{{ asset($food->picture) }}">
+                                            <img class="card-img-top img-card" src="{{ asset($food->picture) }}" style="height: 200px; width: 294px">
                                             <div class="card-body">
                                                 <h5 class="card-title font-weight-bold">{{ $food->name }}</h5>
                                                 @if($rate != "Não")
@@ -115,7 +115,7 @@
                                                             <div class="container-fluid">
                                                                 <div class="row">
                                                                     <div class="col-6">
-                                                                        <img class="card-img-top" src="{{ asset($food->picture) }}">
+                                                                        <img class="card-img-top" src="{{ asset($food->picture) }}" style="height: 200px; width: 294px">
                                                                     </div>
 
                                                                     <div class="col-6">
@@ -166,7 +166,7 @@
                                     @else
                                     <article>
                                         <div class="card cardapio-card mb-4" id="addTray{{ $food->id }}">
-                                            <img class="card-img-top img-card" src="{{ asset($food->picture) }}" alt="Card image cap">
+                                            <img class="card-img-top img-card" src="{{ asset($food->picture) }}" alt="Card image cap" style="height: 200px; width: 294px">
                                             <div class="card-body">
                                                 <h5 class="card-title font-weight-bold">{{ $food->name }}</h5>
                                                 @if($food->foodType != 'Bebida')

@@ -497,7 +497,7 @@ class TrayController extends Controller
 
                 DB::table('trays')
                     ->where('id', '=',$editTray->id)
-                    ->update(['disccountUsed' => null, 'valueWithoutDisccount' => $totalValue, 'totalValue' => $totalValue]);
+                    ->update(['disccountUsed' => null, 'valueWithoutDisccount' => $totalValue, 'totalValue' => $totalValue, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
 
                 return redirect()->route('fimCompra')->with('msg-rem-cup', '.');
             }
@@ -546,7 +546,7 @@ class TrayController extends Controller
 
                         DB::table('trays')
                             ->where('id', '=', $check->id)
-                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount]);
+                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
 
                         return back()->with('msg-rem-cup', '.');
                     }
@@ -585,7 +585,7 @@ class TrayController extends Controller
 
                         DB::table('trays')
                             ->where('id', '=', $check->id)
-                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount]);
+                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
 
                         return back()->with('msg-rem-cup', '.');
                     }
@@ -621,7 +621,7 @@ class TrayController extends Controller
 
                     DB::table('trays')
                         ->where('id', '=', $check->id)
-                        ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount]);
+                        ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
 
                     return back()->with('msg-rem-cup', '.');
                 }
@@ -1330,7 +1330,7 @@ class TrayController extends Controller
 
                 DB::table('trays')
                     ->where('id', '=', $order['id'])
-                    ->update(['disccountUsed' => null, 'totalValue' => $totalValue, 'valueWithoutDisccount' => $totalValue]);
+                    ->update(['disccountUsed' => null, 'totalValue' => $totalValue, 'valueWithoutDisccount' => $totalValue, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
 
                 return redirect()->back()->with('msg-rem-cup', '.');
 
@@ -1461,7 +1461,12 @@ class TrayController extends Controller
             ->get()->toArray();
 
         //Abatendo o preço na tabela de pedido.
-        $updateOrder = $order['totalValue'] - $item[0]->value;
+        if (isset($item[0])){
+            $updateOrder = $order['totalValue'] - $item[0]->value;
+        }else{
+            return redirect()->route('fimCompra');
+        }
+
         $totalValue = $order['valueWithoutDisccount'] - $item[0]->value;
 
         //Verificando o uso de cupom e se bate com o preço atual.
@@ -1479,7 +1484,7 @@ class TrayController extends Controller
 
                 DB::table('trays')
                     ->where('id', '=', $order['id'])
-                    ->update(['disccountUsed' => null, 'totalValue' => $totalValue, 'valueWithoutDisccount' => $totalValue]);
+                    ->update(['disccountUsed' => null, 'totalValue' => $totalValue, 'valueWithoutDisccount' => $totalValue, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
 
                 return redirect()->back()->with('msg-rem-cup', '.');
 
@@ -1515,6 +1520,20 @@ class TrayController extends Controller
 //
 //            return redirect(route('minhaBandeja.index'))->with('msg', '.');
 //        }
+
+        $checkItems = DB::table('trays')
+            ->select('id','hamburguer', 'portion', 'drinks')
+            ->where('idClient', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        $checkItemWithoutExtras = DB::table('item_without_extras')
+            ->select('itemName')
+            ->where('idOrder', '=', $checkItems[0]->id)
+            ->get()->toArray();
+
+        if (count($checkItems) == 1 && count($checkItemWithoutExtras) == 0){
+            return redirect()->route('tipoPedido');
+        }
 
         return redirect()->back()->with('msg', '.');
     }
@@ -1911,6 +1930,12 @@ class TrayController extends Controller
             $removeFood->portion = null;
         }
         $removeFood->save();
+
+        $checkItems = $user->userOrderTray()->select('detached', 'hamburguer', 'fries', 'drinks')->get()->toArray();
+
+        if ($checkItems == null){
+            return redirect()->route('tipoPedido');
+        }
 
         return redirect(route('minhaBandeja.index'));
     }

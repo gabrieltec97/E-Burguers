@@ -31,12 +31,23 @@
             @if(session('msg-3'))
                 <script>
                     Swal.fire({
-                        icon: 'error',
+                        icon: 'warning',
                         title: 'Feito!',
                         text: 'Cupom deletado com sucesso!',
                     })
                 </script>
             @endif
+
+            @if(session('msg-4'))
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Tudo certo!',
+                        text: 'Cupom editado com sucesso!',
+                    })
+                </script>
+            @endif
+
         <div class="row">
             <div class="col-lg-8 col-sm-12 mb-5">
                 <div class="card">

@@ -91,7 +91,7 @@ class CouponController extends Controller
         $date = date('Y'. '-' . 'm' . '-' . 'd');
 
         if ($request->expireDate == $date){
-            return back()->withInput()->with('msg-2', 'Cupom não cadastrado! A data de expiração deve ser diferente da data atual.');
+            return back()->withInput()->with('msg-2', '.');
         }
 
         $name = DB::table('coupons')
@@ -100,19 +100,20 @@ class CouponController extends Controller
             ->get()->toArray();
 
         if (count($name) != 0){
-            return back()->withInput()->with('msg-2', 'Cupom não cadastrado! Já existe um cupom cadastrado com este nome.');
+            return back()->withInput()->with('msg-2', '.');
         }
 
         $coupon = new Coupon();
 
         $coupon->name = $request->couponName;
+        $coupon->usingName = $request->couponName . ' | ' . $request->expireDate. ' | ' . rand('10000', '10000000');
         $coupon->expireDate = $request->expireDate;
         $coupon->disccount = $request->disccount;
         $coupon->disccountRule = $request->disccountRule;
 
         $coupon->save();
 
-        return redirect(route('cupons.index'))->with('msg', 'Cupom cadastrado com sucesso!');
+        return redirect(route('cupons.index'))->with('msg', '.');
     }
 
     /**
@@ -174,7 +175,7 @@ class CouponController extends Controller
 
         $coupon->save();
 
-        return redirect(route('cupons.index'))->with('msg', 'Cupom alterado com sucesso!');
+        return redirect(route('cupons.index'))->with('msg-4', '.');
     }
 
     /**

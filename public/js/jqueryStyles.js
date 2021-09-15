@@ -964,4 +964,8 @@ $(".adicionar-bandeja, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .canc
   }, 3000)
 });
 
+$(".edit-extras-items").on('click', function (){
+    $("#modalDeItens").modal('close');
+})
+
 });
