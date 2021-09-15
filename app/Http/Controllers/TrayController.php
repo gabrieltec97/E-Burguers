@@ -1187,22 +1187,33 @@ class TrayController extends Controller
             return redirect()->route('tipoPedido');
         }
 
+        if ($myOrder['disccountUsed'] != null){
+            $usedCoupon = DB::table('coupons')
+                ->select('name')
+                ->where('usingName', '=', $myOrder['disccountUsed'])
+                ->get()->toArray();
+
+            $usedCoupon = $usedCoupon[0]->name;
+        }else{
+            $usedCoupon = null;
+        }
+
         if(isset($items) && isset($address[0]->address)){
             $sendAddress = $address[0]->address;
 
             if (isset($pendings)){
 
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'myOrder', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'myOrder', 'items', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'customs', 'myOrder', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'customs', 'myOrder', 'items', 'sendAddress', 'addons'));
                 }
 
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'items', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'customs', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'customs', 'items', 'sendAddress', 'addons'));
                 }
             }
 
@@ -1211,15 +1222,15 @@ class TrayController extends Controller
 
             if (isset($pendings)){
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'items', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'items', 'pendings', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs','items', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs','items', 'pendings', 'addons'));
                 }
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'items', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'items', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs', 'items', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs', 'items', 'addons'));
                 }
             }
         }
@@ -1229,15 +1240,15 @@ class TrayController extends Controller
 
             if (isset($pendings)){
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'sendAddress', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'sendAddress', 'pendings', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs','sendAddress', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs','sendAddress', 'pendings', 'addons'));
                 }
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'sendAddress', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs', 'sendAddress', 'addons'));
                 }
             }
         }
@@ -1597,7 +1608,9 @@ class TrayController extends Controller
             }
         }
 
-        $coupon = DB::table('coupons')->where('name', '=', $request->cupomDesconto)->get()->toArray();
+        $coupon = DB::table('coupons')
+            ->where('name', '=', $request->cupomDesconto)
+            ->get()->toArray();
 
 
         if (isset($order[0])) {
@@ -1621,6 +1634,17 @@ class TrayController extends Controller
 
                 if ($coupon[0]->disccount == '10% de desconto' && $update->disccountUsed == null) {
 
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
                     if ($request->deliverType == 'Retirada no restaurante'){
                         $disccount = doubleval($myOrder['valueWithoutDeliver']) - (doubleval($myOrder['valueWithoutDeliver']) * 0.1);
                         $update->deliverWay = 'Retirada no restaurante';
@@ -1641,156 +1665,389 @@ class TrayController extends Controller
                     }
 
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 }elseif ($coupon[0]->disccount == '5% de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.05);
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - (doubleval($myOrder['valueWithoutDeliver']) * 0.05);
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.05);
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 }elseif ($coupon[0]->disccount == '15% de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.15);
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - (doubleval($myOrder['valueWithoutDeliver']) * 0.15);
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.15);
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 } elseif ($coupon[0]->disccount == '20% de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.2);
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - (doubleval($myOrder['valueWithoutDeliver']) * 0.2);
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.2);
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 } elseif ($coupon[0]->disccount == '30% de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.3);
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - (doubleval($myOrder['valueWithoutDeliver']) * 0.3);
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.3);
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 } elseif ($coupon[0]->disccount == '50% de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.5);
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - (doubleval($myOrder['valueWithoutDeliver']) * 0.5);
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - (doubleval($myOrder['totalValue']) * 0.5);
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 } elseif ($coupon[0]->disccount == 'R$ 5 reais de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - 5;
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - 5;
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - 5;
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                  //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 } elseif ($coupon[0]->disccount == 'R$ 7 reais de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - 7;
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - 7;
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - 7;
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 } elseif ($coupon[0]->disccount == 'R$ 10 reais de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - 10;
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - 10;
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - 10;
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
 
                 } elseif ($coupon[0]->disccount == 'R$ 15 reais de desconto' && $update->disccountUsed == null){
 
-                    $disccount = doubleval($myOrder['totalValue']) - 15;
+                    //Verificando se o cupom já foi utilizado anteriormente.
+                    $checkUsing = DB::table('orders')
+                        ->select('usedCoupon')
+                        ->whereRaw("status <> 'Cancelado' AND idClient = " . Auth::user()->id)
+                        ->where('usedCoupon', '=', $coupon[0]->usingName)
+                        ->get()->toArray();
+
+                    if ($checkUsing != null){
+                        return redirect()->back()->with('msg-coupon-used', '.');
+                    }
+
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        $disccount = doubleval($myOrder['valueWithoutDeliver']) - 15;
+                        $update->deliverWay = 'Retirada no restaurante';
+                    }else{
+                        $update->deliverWay = 'Entrega em domicílio';
+                        $disccount = doubleval($myOrder['totalValue']) - 15;
+                    }
+
                     $totalValue = number_format($disccount, 2, '.', '');
 
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
                     $update->totalValue = $totalValue;
-                    $update->disccountUsed = $coupon[0]->name;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');
@@ -1800,13 +2057,28 @@ class TrayController extends Controller
 
                 elseif ($coupon[0]->disccount == 'Frete Grátis' && $update->disccountUsed == null){
 
-                    $update->totalValue = $update->valueWithoutDeliver;
-                    $update->disccountUsed = $coupon[0]->name;
+                    //Verificando se o cliente irá buscar pedido na loja.
+                    if ($request->deliverType == 'Retirada no restaurante'){
+                        return redirect()->back()->withInput()->with('msg-retire', '.');
+                    }
+
+                    $totalValue = number_format($update->valueWithoutDeliver, 2, '.', '');
+
+                    if ($update->address == null){
+                        $update->address = $userDataNow->address . ', Bairro: ' . $currentDistrictNow[0]->name;
+                    }
+
+                    if ($request->deliverType != 'Retirada no restaurante'){
+                        $update->payingMethod = $request->payingMethod;
+                        $update->payingValue = $request->payingValue;
+                    }
+
+                    $update->totalValue = $totalValue;
+                    $update->disccountUsed = $coupon[0]->usingName;
                     $update->save();
 
                     return redirect()->back()->with('msg-success', $couponName);
 
-                    //Verificando se o cupom já está sendo utilizado.
                 }elseif($update->disccountUsed != null){
 
                     return redirect()->back()->with('msg-use', 'Este cupom já está sendo utilizado.');

@@ -255,6 +255,7 @@ class OrdersController extends Controller
         $newOrder->year = strftime('%Y');;
         $newOrder->monthDay =  date("d");
         $newOrder->month = strftime('%B', strtotime('today'));
+        $newOrder->usedCoupon = $updOrder[0]['disccountUsed'];
         $newOrder->address = $updOrder[0]['address'];
 
         if($updOrder[0]['deliverWay'] == "Retirada no restaurante"){

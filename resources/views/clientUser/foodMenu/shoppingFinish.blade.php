@@ -339,9 +339,26 @@
                                     })
                                 </script>
                             @endif
+
+                            @if(session('msg-retire'))
+                                    <script>
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 10000,
+                                            timerProgressBar: true,
+                                        })
+
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: 'Cupom não inserido, pois você tinha escolhido a opção de retirada no restaurante.'
+                                        })
+                                    </script>
+                            @endif
+
                             @if(session('msg-rem-cup'))
                                 <script>
-                                    console.log('r');
                                     const Toast = Swal.mixin({
                                         toast: true,
                                         position: 'top-end',
@@ -601,7 +618,7 @@
 
                                                    @if(session('msg-success') or $myOrder['disccountUsed'] != null)
                                                    @if($myOrder['disccountUsed'] != null)
-                                                   value="{{ $myOrder['disccountUsed'] }}"
+                                                   value="{{ $usedCoupon }}"
                                                    style="cursor: not-allowed;" readonly title="Cupom já aplicado"
                                                    @else
                                                    value="{{ session('msg-success') }} "
@@ -662,6 +679,22 @@
 
 
         @if(isset($exist[0]))
+            @if(session('msg-coupon-used') or session('msg-retire'))
+                <script>
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 8000,
+                        timerProgressBar: true,
+                    })
+
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'Cupom não aplicado pois você já o utilizou anteriormente.'
+                    })
+                </script>
+            @else
             @if($exist[0]->deliverWay == 'Entrega em domicílio')
               @if(session('msg-exp') == false or !session('msg-use') == false)
                 <script>
@@ -707,6 +740,7 @@
                 @endif
             @endif
         @endif
+    @endif
 
     @if(session('msg-troco'))
         <script>
@@ -717,7 +751,7 @@
         </script>
     @endif
 
-    @if(session('msg-exp') or session('msg-troco') or session('msg-use') or session('msg-success') or session('msg-rem-cup') or session('msg') or isset($exist[0]))
+    @if(session('msg-exp') or session('msg-retire') or session('msg-coupon-used') or session('msg-troco') or session('msg-use') or session('msg-success') or session('msg-rem-cup') or session('msg') or isset($exist[0]))
 
     @else
         <script>
