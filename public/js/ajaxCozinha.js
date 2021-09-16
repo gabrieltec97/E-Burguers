@@ -25,4 +25,4 @@ $(document).ready(() => {
             },
             error: function(erro){console.log(erro)}})
     },10000)
-})
+});

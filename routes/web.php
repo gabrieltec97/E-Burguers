@@ -122,6 +122,10 @@ Route::resource('/roles', 'RoleController')->middleware('auth');
 
 Route::resource('/permissions', 'PermissionController')->middleware('auth');
 
+Route::get('/rolesAndPermissions', 'PermissionController@routeAuth')->name('routeAuth')->middleware('auth');
+
+Route::post('/rolesAndPermissionsLogin', 'PermissionController@routeAuthLogin')->name('routeAuthLogin')->middleware('auth');
+
 //Rotas de sincronização entre usuário e tipo de usuário.
 Route::get('user/{user}/roles', 'UserController@roles')->name('userRoles')->middleware('auth');
 

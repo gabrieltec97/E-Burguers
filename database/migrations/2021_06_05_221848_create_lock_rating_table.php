@@ -16,6 +16,8 @@ class CreateLockRatingTable extends Migration
         Schema::create('lock_rating', function (Blueprint $table) {
             $table->id();
             $table->string('lock');
+            $table->string('lockAuth');
+            $table->string('password');
             $table->timestamps();
         });
     }

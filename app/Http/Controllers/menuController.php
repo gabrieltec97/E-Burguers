@@ -22,13 +22,14 @@ class menuController extends Controller
             return redirect()->route('home');
         }
 
+        //Permitindo mostrar as avaliações e inserindo senha de proteção à rota ACL.
         $lock = DB::table('lock_rating')
             ->get()->toArray();
 
         if (count($lock) == 0){
             DB::table('lock_rating')
                 ->insert(
-                    ['lock' => "Sim"]);
+                    ['id'=> 1, 'lock' => "Sim", 'lockAuth' => 'Sim', 'password' => '7sPa)@x%p,aXbzX?E48X\Z=CD']);
 
             $rate = "Sim";
         }else{

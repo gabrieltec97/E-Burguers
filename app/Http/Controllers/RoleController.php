@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -15,6 +16,17 @@ class RoleController extends Controller
      */
     public function index()
     {
+        //Verificando se o usuário pode acessar esta rota.
+        $accessPermission = DB::table('lock_rating')
+            ->select('lockAuth')
+            ->get()->toArray();
+
+        if (isset($accessPermission[0])){
+            if ($accessPermission[0]->lockAuth == 'Sim'){
+                return redirect()->route('home');
+            }
+        }
+
         $roles = Role::all()->toArray();
 
         return view('auth.roles.index', compact('roles'));
@@ -22,6 +34,17 @@ class RoleController extends Controller
 
     public function permissions($role)
     {
+        //Verificando se o usuário pode acessar esta rota.
+        $accessPermission = DB::table('lock_rating')
+            ->select('lockAuth')
+            ->get()->toArray();
+
+        if (isset($accessPermission[0])){
+            if ($accessPermission[0]->lockAuth == 'Sim'){
+                return redirect()->route('home');
+            }
+        }
+
        $role = Role::where('id', $role)->first();
        $permissions = Permission::all();
 

@@ -46,6 +46,16 @@ class HomeController extends Controller
             }
         }
 
+        //Permitindo mostrar as avaliações e inserindo senha de proteção à rota ACL.
+        $lock = DB::table('lock_rating')
+            ->get()->toArray();
+
+        if (count($lock) == 0){
+            DB::table('lock_rating')
+                ->insert(
+                    ['id'=> 1, 'lock' => "Sim", 'lockAuth' => 'Sim', 'password' => '7sPa)@x%p,aXbzX?E48X\Z=CD']);
+        }
+
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->paginate(10);
         $prepare = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Pedido registrado')->simplePaginate(9);
         $total = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->get()->toArray();

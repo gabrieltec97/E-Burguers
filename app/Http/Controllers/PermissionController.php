@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
@@ -14,9 +15,45 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        //Verificando se o usuário pode acessar esta rota.
+        $accessPermission = DB::table('lock_rating')
+            ->select('lockAuth')
+            ->get()->toArray();
+
+        if (isset($accessPermission[0])){
+            if ($accessPermission[0]->lockAuth == 'Sim'){
+                return redirect()->route('home');
+            }
+        }
+
         $function = Permission::all()->toArray();
 
         return view('Permissions.permissions', compact('function'));
+    }
+
+    public function routeAuth()
+    {
+        return view('Permissions.accessAcl');
+    }
+
+    public function routeAuthLogin(Request $request)
+    {
+        $password = DB::table('lock_rating')
+            ->select('password')
+            ->where('id', '=', 1)
+            ->get()->toArray();
+
+        if ($request->password == $password[0]->password){
+
+            DB::table('lock_rating')
+                ->where('id', '=', 1)
+                ->update(['lockAuth' => 'Não']);
+
+            return redirect()->route('roles.index');
+            
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function password()
