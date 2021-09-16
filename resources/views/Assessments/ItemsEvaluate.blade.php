@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container w-75 mt-5">
-       <div class="row mt-5">
+       <div class="row" style="margin-top: 200px">
 
            @if($rated['ordered'] != 0)
                @if(count($itensToEvaluate) == 0)

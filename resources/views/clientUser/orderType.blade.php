@@ -48,6 +48,28 @@
         </div>
     </div>
 
+    @if(session('msg') == false && session('msg-cancel') == false)
+        @if($rated['ordered'] != 0)
+            @if(count($itensToEvaluate) != 0)
+                    <script>
+                        Swal.fire({
+                            title: 'Poderia avaliar como foram os outros pedidos por favor?',
+                            icon: 'question',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            html:
+                                '<a href="{{ route('avaliacoes') }}" class="btn btn-success mt-2">Avaliar</a>' +
+                                '<button type="button" class="btn btn-danger mt-2 ml-4 fechar">Fechar</button>'
+                        })
+
+                        $(".fechar").on('click', function (){
+                            Swal.close()
+                        })
+                    </script>
+            @endif
+        @endif
+    @endif
+
     @if(session('msg'))
         <script>
             Swal.fire({
@@ -76,7 +98,6 @@
                 icon: 'warning',
                 title: 'Seu pedido foi cancelado, mas fique à vontade para fazer novos pedidos, ok?'
             })
-
         </script>
     @endif
 

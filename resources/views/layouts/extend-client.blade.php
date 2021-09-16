@@ -42,10 +42,13 @@
                 <a href="{{ route('preparo.index') }}" class="nav-item nav-link menu-items">Pedidos em andamento</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('meusPedidos') }}" class="nav-item nav-link menu-items">Histórico de pedidos</a>
+                <a href="{{ route('meusCupons') }}" class="nav-item nav-link menu-items">Cupons</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('pedidosPendentes') }}" class="nav-item nav-link menu-items">Pedidos pendentes</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('meusPedidos') }}" class="nav-item nav-link menu-items">Histórico de pedidos</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('avaliacoes') }}" class="nav-item nav-link menu-items">Avaliações</a>

@@ -42,10 +42,8 @@ class HomeController extends Controller
                     throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
                 }
             }else{
-                throw new UnauthorizedException('403', 'Sua conta não possui um perfil de usuário. Contate o administrador para que seja configurado um perfil em sua conta.');
+                return redirect()->route('tipoPedido');
             }
-
-
         }
 
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->paginate(10);
@@ -61,10 +59,10 @@ class HomeController extends Controller
     public function hybridHome()
     {
         if(!Auth::user()->hasPermissionTo('Pedidos (Híbrido)')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
-        $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->paginate(10);
+        $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
         $count = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
 
         return view('hybridHome', compact('registered', 'count'));

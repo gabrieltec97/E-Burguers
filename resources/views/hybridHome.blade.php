@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding: 0px 0px">
 
         <div class="col-12">
             @if(session('msg'))
@@ -80,8 +80,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Informações</th>
+                                <th scope="col">Status e informações</th>
                                 <th scope="col">Tratativas</th>
                             </tr>
                             </thead>
@@ -90,11 +89,13 @@
                                 @foreach($registered as $reg)
                                     <tr>
                                         <td>#{{ $reg->id }}</td>
-                                        <td>{{ $reg->status }}</td>
+                                        <td><button class="btn font-weight-bold" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações a serem repassadas ao entregador quando o pedido for enviado." style="border-radius: 50px; border: none;
+
+                                       {{ $reg->status == 'Em rota de entrega' ? 'background: #22e583; color: white' : ''  }}
+                                       {{ $reg->status == 'Pedido registrado' ? 'background: #DC143C; color: white' : ''  }}
+                                       {{ $reg->status == 'Em preparo' ? 'background: #FFD700; color: black' : ''  }}
+                                                ">{{ $reg->status }}</button></td>
                                         <td>
-                                             <button class="btn btn-primary" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações a serem repassadas ao entregador."><i class="fas fa-info-circle mr-1"></i> Informações de entrega</button>
-                                        </td>
-                                        <td colspan="2">
 
                                             <select name="teste" class="menuHibrido form-control" style="cursor:pointer;" id="{{ $reg->id }}" onchange="muda({{ $reg->id }})">
                                                 <option value=""selected disabled>Alterar Status</option>
@@ -188,9 +189,7 @@
                     @endif
                     </tbody>
                     </table>
-                        <div class="col-12 offset-1 offset-xl-2">
-                            <span>{{ $registered->links() }}</span>
-                        </div>
+
                 </div>
             </div>
 

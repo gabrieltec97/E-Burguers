@@ -1460,7 +1460,44 @@ class TrayController extends Controller
             }
         }
 
-        return view('clientUser.orderType');
+        $items = Adverts::all()->where('foodType', '<>', 'Bebida');
+        $eval = \App\User::find(Auth::user()->id);
+        $eval = explode(',', $eval->itemsRated);
+        $itensToEvaluate = array();
+
+        foreach ($items as $item){
+            $evaluate = DB::table('orders')
+                ->where('detached', 'like', '%'. $item->name . '%')
+                ->where('idClient', '=', Auth::user()->id)
+                ->get()->toArray();
+
+            if (count($evaluate) != ''){
+                array_push($itensToEvaluate, [$item->id, $item->name, $item->picture]);
+            }
+        }
+
+        foreach ($eval as $ev){
+            foreach ($itensToEvaluate as $i => $value){
+                if ($ev == $value[0]){
+                    unset($itensToEvaluate[$i]);
+                }
+            }
+        }
+
+        $rated = DB::table('ratings')
+            ->where('idUser', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        $orders = DB::table('orders')
+            ->where('idClient', '=', Auth::user()->id)
+            ->get();
+
+        $rated = [
+            'rated' => count($rated),
+            'ordered' => count($orders)
+        ];
+        
+        return view('clientUser.orderType', compact('rated', 'itensToEvaluate'));
     }
 
     public function detached($key)

@@ -145,9 +145,9 @@
                                     </div>
 
 
-                                    <div class="col-12  col-md-4">
+                                    <div class="col-12 col-md-4">
                                         <label class="text-muted font-weight-bold">Foto (Alterar)</label>
-                                        <input type="file" name="advPhoto" accept=".png, .jpg, .jpeg, .gif">
+                                        <input type="file" name="updPhoto" accept=".png, .jpg, .jpeg, .gif">
                                     </div>
                                 </div>
 

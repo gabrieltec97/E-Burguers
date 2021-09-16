@@ -35,8 +35,10 @@ Route::resource('/itensAdicionais', 'ExtrasController')->middleware('auth');
 
 Route::resource('/locaisDeEntrega', 'deliverController')->middleware('auth');
 
-//Rotas de pedido.
+//Rotas de cliente.
 Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido')->middleware('auth');
+
+Route::get('/meusCupons', 'CouponController@myCoupons')->name('meusCupons')->middleware('auth');
 
 //Rotas de combo.
 Route::get('/hamburguer', 'TrayController@orderComboHamburguer')->name('comboHamburguer')->middleware('auth');

@@ -19,7 +19,7 @@ class menuController extends Controller
     public function index()
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $lock = DB::table('lock_rating')
@@ -125,7 +125,7 @@ class menuController extends Controller
     public function create()
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $items = Extras::all();
@@ -146,7 +146,7 @@ class menuController extends Controller
     public function store(Request $request)
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $rules = [
@@ -224,8 +224,6 @@ class menuController extends Controller
         $advert->save();
 
       return redirect(route('refeicoes.index'))->with('msg-2', 'A refeição foi cadastrada com sucesso e já está disponível no');
-
-
     }
 
     /**
@@ -237,7 +235,7 @@ class menuController extends Controller
     public function show($id)
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $meal = Adverts::find($id);
@@ -254,7 +252,7 @@ class menuController extends Controller
     public function edit($id)
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $meal = Adverts::find($id);
@@ -286,7 +284,7 @@ class menuController extends Controller
     public function update(Request $request, $id)
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Refeições')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $rules = [
@@ -330,8 +328,8 @@ class menuController extends Controller
             $advert->extras = $addExtra;
         }
 
-        if($request->hasFile('advPhoto')){
-            $image = $request->file('advPhoto');
+        if($request->hasFile('updPhoto')){
+            $image = $request->file('updPhoto');
             $extension = $image->getClientOriginalExtension();
 
             if ($extension != 'png' && $extension != 'jpg' && $extension != 'jpeg' && $extension != 'gif'){
@@ -340,7 +338,7 @@ class menuController extends Controller
             }
         }
 
-        if($request->hasFile('advPhoto')){
+        if($request->hasFile('updPhoto')){
             $number = rand(1, 2000000);
             File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
             $advert->picture = 'imagens/img'.$number.'.'.$extension;

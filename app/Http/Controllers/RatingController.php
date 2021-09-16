@@ -21,8 +21,7 @@ class RatingController extends Controller
     public function index()
     {
         if(!Auth::user()->hasPermissionTo('Avaliações')){
-//            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
-            return redirect()->back();
+            return redirect()->route('home');
         }
 
         $rating = Rating::all()->toArray();

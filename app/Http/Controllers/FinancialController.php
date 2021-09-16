@@ -16,7 +16,7 @@ class FinancialController extends Controller
     public function index(Request $req)
     {
         if(!Auth::user()->hasPermissionTo('Informações Financeiras')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
@@ -390,7 +390,7 @@ class FinancialController extends Controller
     public function dashboard()
     {
         if(!Auth::user()->hasPermissionTo('Dashboard')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         setlocale(LC_TIME, 'pt_BR', 'portuguese');

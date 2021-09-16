@@ -19,7 +19,7 @@ class CouponController extends Controller
     public function index()
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         date_default_timezone_set('America/Sao_Paulo');
@@ -39,6 +39,13 @@ class CouponController extends Controller
         return view('Coupons.couponsManagement', compact('coupons', 'date'));
     }
 
+    public function myCoupons()
+    {
+        $coupons = Coupon::all();
+
+        return view('clientUser.clientCoupons', compact('coupons'));
+    }
+
     public function create()
     {
         //Não foi necessária a utilização, uma vez que se cria os cupons na mesma view que olha os que estão ativos.
@@ -53,7 +60,7 @@ class CouponController extends Controller
     public function store(Request $request)
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $rules = [
@@ -106,7 +113,7 @@ class CouponController extends Controller
         $coupon = new Coupon();
 
         $coupon->name = $request->couponName;
-        $coupon->usingName = $request->couponName . ' | ' . $request->expireDate. ' | ' . rand('10000', '10000000');
+        $coupon->usingName = $request->couponName . ' | ' . $request->expireDate;
         $coupon->expireDate = $request->expireDate;
         $coupon->disccount = $request->disccount;
         $coupon->disccountRule = $request->disccountRule;
@@ -125,7 +132,7 @@ class CouponController extends Controller
     public function edit($id)
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $coupon = Coupon::find($id);
@@ -142,7 +149,7 @@ class CouponController extends Controller
     public function update(Request $request, $id)
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $rules = [
@@ -187,7 +194,7 @@ class CouponController extends Controller
     public function destroy($id)
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $coupon = Coupon::find($id);

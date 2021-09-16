@@ -340,19 +340,36 @@
                                 </script>
                             @endif
 
+                            @if(session('msg-coupon-used'))
+                                <script>
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 8000,
+                                        timerProgressBar: true,
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: 'Cupom não aplicado pois você já o utilizou anteriormente.'
+                                    })
+                                </script>
+                            @endif
+
                             @if(session('msg-retire'))
                                     <script>
                                         const Toast = Swal.mixin({
                                             toast: true,
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 10000,
+                                            timer: 12000,
                                             timerProgressBar: true,
                                         })
 
                                         Toast.fire({
-                                            icon: 'warning',
-                                            title: 'Cupom não inserido, pois você tinha escolhido a opção de retirada no restaurante.'
+                                            icon: 'error',
+                                            title: 'O cupom de frete grátis não se aplica a pedidos para a retirada no restaurante.'
                                         })
                                     </script>
                             @endif

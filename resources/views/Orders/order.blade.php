@@ -32,6 +32,11 @@
                                     @else
                                         <label class="font-weight-bold mt-1" style="color: black">Refeições: {{ $order->hamburguer }}, {{ $order->portion }}, {{ $order->drinks }}</label>
                                     @endif
+
+                                    @if($order->usedCoupon != null)
+                                        <label class="font-weight-bold" style="color: black">Cupom utilizado: {{ $order->usedCoupon }}</label>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>

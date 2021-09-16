@@ -64,7 +64,7 @@ class PreparingController extends Controller
     public function toPrepare()
     {
         if(!Auth::user()->hasPermissionTo('Em Preparo')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+            return redirect()->route('home');
         }
 
         $orders = DB::table('orders')->where('status', '=', 'Em preparo')->simplePaginate(6);
