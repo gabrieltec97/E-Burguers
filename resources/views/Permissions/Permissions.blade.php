@@ -1,4 +1,9 @@
 @extends('layouts.extend')
+<script src="{{ asset('js/jquery.js') }}"></script>
+
+@section('title')
+    Permissões de usuário
+@endsection
 
 @section('content')
     <div class="container">
@@ -34,6 +39,10 @@
                                         <input type="text" class="form-control" name="function">
                                         <button type="submit" class="btn btn-success float-right mt-3">Cadastrar</button>
                                     </form>
+                                </div>
+
+                                <div class="col-12">
+                                    <a href="{{ route('routeAuthLock') }}" class="text-danger font-weight-bold"><i class="fas fa-user-lock mr-2"></i>Encerrar Sessão</a>
                                 </div>
                             </div>
                         </div>
@@ -114,6 +123,15 @@
 
         </div>
     </div>
+
+    <script>
+        window.onbeforeunload = confirmar_saida;
+
+        function confirmar_saida()
+        {
+            return 'Deseja sair do site?';
+        }
+    </script>
 @endsection
 
 

@@ -50,10 +50,19 @@ class PermissionController extends Controller
                 ->update(['lockAuth' => 'Não']);
 
             return redirect()->route('roles.index');
-            
+
         }else{
             return redirect()->back();
         }
+    }
+
+    public function routeAuthLock()
+    {
+        DB::table('lock_rating')
+            ->where('id', '=', 1)
+            ->update(['lockAuth' => 'Sim']);
+
+        return redirect()->back();
     }
 
     public function password()
