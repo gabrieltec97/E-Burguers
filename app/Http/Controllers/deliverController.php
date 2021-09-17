@@ -26,6 +26,35 @@ class deliverController extends Controller
         return view('Deliver.deliverManagement', compact('places'));
     }
 
+    public function deliveryStatus()
+    {
+        $status = DB::table('delivery_status')
+            ->select('status', 'message')
+            ->where('id', '=', 1)
+            ->get()->toArray();
+
+        return view('Deliver.deliveryStatus', compact('status'));
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $status = DB::table('delivery_status')
+            ->select('status')
+            ->where('id', '=', 1)
+            ->get()->toArray();
+
+        if($status[0]->status == 'Fechado'){
+            $status = 'Aberto';
+        }else{
+            $status = 'Fechado';
+        }
+
+        DB::table('delivery_status')
+            ->update(['status' => $status, 'message' => $request->feedback]);
+
+        return redirect()->back()->with('msg', '.');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -92,8 +121,13 @@ class deliverController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editStatus(Request $request)
     {
+        DB::table('delivery_status')
+            ->where('id', '=', 1)
+            ->update(['message' => $request->feedback]);
+
+        return redirect()->back()->with('msg-2', '.');
 
     }
 

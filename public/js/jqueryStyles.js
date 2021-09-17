@@ -956,7 +956,7 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
     });
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){

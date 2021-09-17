@@ -86,13 +86,19 @@ Route::post('/alterarStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersControl
 Route::post('/clinteAlteraStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@clientChangesStatus')->name('clienteAlteraStatus')->middleware('auth');
 
 //Rotas de gerenciamento.
-Route::get('/emPreparo', 'PreparingController@toPrepare')->name('emPreparo')->middleware('auth')->middleware('auth');
+Route::get('/emPreparo', 'PreparingController@toPrepare')->name('emPreparo')->middleware('auth');
 
-Route::get('/meusDados', 'ClientsController@myData')->name('meusDados')->middleware('auth')->middleware('auth');
+Route::get('/meusDados', 'ClientsController@myData')->name('meusDados')->middleware('auth');
 
-Route::get('/meusPedidos', 'OrdersController@clientsOrders')->name('meusPedidos')->middleware('auth')->middleware('auth');
+Route::get('/meusPedidos', 'OrdersController@clientsOrders')->name('meusPedidos')->middleware('auth');
 
-Route::get('/gerenciamento', 'UserController@management')->name('gerenciamento')->middleware('auth')->middleware('auth');
+Route::get('/gerenciamento', 'UserController@management')->name('gerenciamento')->middleware('auth');
+
+Route::get('/delivery', 'deliverController@deliveryStatus')->name('delivery')->middleware('auth');
+
+Route::post('/changeDeliveryStatus', 'deliverController@changeStatus')->name('changeDeliveryStatus')->middleware('auth');
+
+Route::post('/editDeliveryStatus', 'deliverController@editStatus')->name('editDeliveryStatus')->middleware('auth');
 
 Route::get('/financeiro', 'FinancialController@index')->name('financeiro')->middleware('auth');
 

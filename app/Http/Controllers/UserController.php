@@ -35,6 +35,16 @@ class UserController extends Controller
 //            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
 //        }
 
+        //Permitindo mostrar as avaliações e inserindo senha de proteção à rota ACL.
+        $lock = DB::table('lock_rating')
+            ->get()->toArray();
+
+        if (count($lock) == 0){
+            DB::table('lock_rating')
+                ->insert(
+                    ['id'=> 1, 'lock' => "Sim", 'lockAuth' => 'Sim', 'password' => '7sPa)@x%p,aXbzX?E48X\Z=CD']);
+        }
+
         $employees = User::all();
 
         return view('User.management', compact('employees'));

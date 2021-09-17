@@ -286,6 +286,27 @@
                             </a>
                             @endcan
 
+                            <?php
+                                $delivery = \Illuminate\Support\Facades\DB::table('delivery_status')
+                                    ->select('status')
+                                    ->get()->toArray();
+
+                                if (isset($delivery[0])){
+                                    $delivery = $delivery[0]->status;
+                                }else{
+                                    \Illuminate\Support\Facades\DB::table('delivery_status')
+                                    ->insert(['status' => 'Fechado', 'id' => 1]);
+                                    $delivery = 'Fechado';
+                                }
+                            ?>
+
+                            @can('Delivery')
+                                <a class="dropdown-item mt-2" href="{{ route('delivery') }}">
+                                    <i class="fas fa-mobile-alt mr-2"></i>
+                                    <span class="font-weight-bold">{{ $delivery == 'Fechado' ? 'Abrir' : 'Fechar' }} Delivery</span>
+                                </a>
+                            @endcan
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
