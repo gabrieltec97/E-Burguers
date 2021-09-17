@@ -96,9 +96,10 @@
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span></p>
+                                                @if($deliveryStatus[0]->status != 'Fechado')
                                                 <button type="button" value="{{ session('scroll') }}" class="btn btn-primary text-white personalizar-session" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</button>
                                                 <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
-
+                                                @endif
                                             </div>
 
                                             <!-- Modal -->
@@ -156,8 +157,10 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
+                                                            @if($deliveryStatus[0]->status != 'Fechado')
                                                             <button type="button" class="btn btn-danger mt-1" data-dismiss="modal">Cancelar</button>
                                                             <button type="submit" style="margin-top: 2px;" class="btn btn-success adicionar-bandeja text-white" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -239,7 +242,9 @@
                                                 @endif
                                                 <p class="card-text"> {{ $food->description }}</p>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span><br>
+                                                @if($deliveryStatus[0]->status != 'Fechado')
                                                 <button type="submit" class="btn btn-success adicionar-bandeja" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
+                                                @endif
                                             </div>
                                         </div>
                                     </article>
@@ -253,9 +258,12 @@
 
             <div class="col-3">
                 <div class="card fixo">
-                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> Seu pedido está assim</div>
+                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> {{ $deliveryStatus[0]->status == 'Fechado' ? 'Delivery fechado :(' : 'Seu pedido está assim'}}</div>
 
                     <div class="card-body">
+                        @if($deliveryStatus[0]->status == 'Fechado')
+                            inserir imagem de delivery fechado
+                        @else
                         <ol>
                             @if(isset($items))
                                 @foreach($items as $item)
@@ -286,12 +294,15 @@
                             <div class="mt-3">
                                 <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Pagamento</a>
                             </div>
+
                         @else
                             bandeja vazia, escolhe aí..
+                        @endif
                         @endif
                     </div>
             </div>
         </div>
+
     </div>
 
     @if(isset($insert))

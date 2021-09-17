@@ -51,6 +51,19 @@ class OrdersController extends Controller
 
     public function confirmPending($id)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            DB::table('orders')
+                ->where('idClient', '=', Auth::user()->id)
+                ->where('status', '=', 'Pendente')
+                ->update(['status' => 'Cancelado']);
+
+
+            return redirect()->route('tipoPedido');
+        }
+
         DB::table('orders')
             ->where('id', '=', $id)
             ->update(['status' => 'Pedido registrado']);
@@ -77,6 +90,13 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $order = Auth::user()->userOrderTray()->get()->toArray();
 
         if ($order == null){
@@ -335,6 +355,13 @@ class OrdersController extends Controller
 
     public function clientChangesStatus($id, $acao, $remetente, $idCliente)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $order = Orders::find($id);
 
         //Cancelamento por parte do cliente.

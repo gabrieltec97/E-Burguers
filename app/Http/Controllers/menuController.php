@@ -45,6 +45,7 @@ class menuController extends Controller
         $foods = Adverts::all();
         $tray = Auth::user()->userOrderTray()->select('id')->get();
         $val = Auth::user()->userOrderTray()->select('totalValue')->get()->toArray();
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
         if (isset($tray[0]->id)){
             $items = DB::table('item_without_extras')
@@ -91,10 +92,10 @@ class menuController extends Controller
 
         if(isset($tray[0]->id)){
 
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'insert', 'rate', 'tray', 'items', 'val', 'itemWExtras'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'deliveryStatus', 'insert', 'rate', 'tray', 'items', 'val', 'itemWExtras'));
         }else{
 
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'rate', 'insert', 'rate'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'deliveryStatus', 'rate', 'insert', 'rate'));
         }
     }
 

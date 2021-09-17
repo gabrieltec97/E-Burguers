@@ -62,8 +62,9 @@ class HomeController extends Controller
         $prepareCount = DB::table('orders')->where('status', '=', 'Pronto')->get()->toArray();
         $ready = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->simplePaginate(10);
         $totalReady = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get()->toArray();
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
-        return view('home', compact('registered', 'prepare', 'ready', 'prepareCount', 'total', 'totalReady'));
+        return view('home', compact('registered','deliveryStatus', 'prepare', 'ready', 'prepareCount', 'total', 'totalReady'));
     }
 
     public function hybridHome()
@@ -74,8 +75,9 @@ class HomeController extends Controller
 
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
         $count = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
-        return view('hybridHome', compact('registered', 'count'));
+        return view('hybridHome', compact('registered', 'count', 'deliveryStatus'));
     }
 
     public function getData()

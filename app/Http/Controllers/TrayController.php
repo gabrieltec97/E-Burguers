@@ -140,6 +140,13 @@ class TrayController extends Controller
         $user = Auth::user()->id;
         $item = Adverts::find($id);
 
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         //Verificando se o usuário possui um pedido.
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
@@ -353,6 +360,13 @@ class TrayController extends Controller
 
     public function addExtraItem(Request $request, $id)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
        //Buscando os itens e os formatando para entrar na tabela.
        $extras = array();
        $price = 0;
@@ -395,6 +409,13 @@ class TrayController extends Controller
 
     public function removePersonalized($id)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $personalized = AuxiliarDetached::find($id);
         $order = Tray::find($personalized->idOrder);
 
@@ -413,6 +434,13 @@ class TrayController extends Controller
 
     public function editPersonalized(Request $req, $id)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $personalized = AuxiliarDetached::find($id);
 
         //Recuperando o id do pedido com base no id do item personalizado.
@@ -508,6 +536,13 @@ class TrayController extends Controller
 
     public function editComboExtras(Request $request)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
         if ($request->ingredients != null){
@@ -633,6 +668,13 @@ class TrayController extends Controller
 
     public function orderComboHamburguer()
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+        
         $foods = DB::table('adverts')
             ->where('foodType', '=', 'hamburguer')
             ->where('combo', '=', 'Sim')
@@ -668,6 +710,12 @@ class TrayController extends Controller
 
     public function fries(Request $request, $id)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
 
         if (isset ($request->extras)){
             //Buscando acompanhamento.
@@ -951,6 +999,13 @@ class TrayController extends Controller
 
     public function editPortion()
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $foods = DB::table('adverts')
             ->where('foodType', '=', 'acompanhamento')
             ->where('combo', '=', 'Sim')
@@ -967,6 +1022,13 @@ class TrayController extends Controller
 
     public function drinks ($idFood)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $user = Auth::user();
         $myOrder = $user->userOrderTray()->get()->first()->toArray();
         $idOrder = $myOrder['id'];
@@ -997,6 +1059,13 @@ class TrayController extends Controller
 
     public function editDrink()
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $foods = DB::table('adverts')
             ->where('foodType', '=', 'bebida')
             ->where('combo', '=', 'Sim')
@@ -1046,6 +1115,13 @@ class TrayController extends Controller
         $checkCurrent = $user->userOrderTray()->get()->toArray();
         $places = deliver::all();
         $client = DB::table('users')->select('name', 'surname', 'district')->where('id', '=', Auth::user()->id)->get();
+
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
 
         //Verificando se há pedidos pendentes e/ou em andamento.
         $pending = DB::table('orders')
@@ -1320,6 +1396,13 @@ class TrayController extends Controller
 
     public function removeCustom($id)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $delete = AuxiliarDetached::find($id);
         $order = Tray::find($delete->idOrder);
 
@@ -1496,12 +1579,23 @@ class TrayController extends Controller
             'rated' => count($rated),
             'ordered' => count($orders)
         ];
-        
-        return view('clientUser.orderType', compact('rated', 'itensToEvaluate'));
+
+        //Verificando se o delivery está aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status', 'message')->where('id', '=', 1)->get()->toArray();
+
+
+        return view('clientUser.orderType', compact('rated', 'itensToEvaluate', 'deliveryStatus'));
     }
 
     public function detached($key)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $order = Auth::user()->userOrderTray()->get()->first()->toArray();
         $item = DB::table('item_without_extras')
             ->select()
@@ -1588,6 +1682,13 @@ class TrayController extends Controller
 
     public function couponApply(Request $request)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         //Alterando dados do pedido para em caso de aplicação de cupom e entrega em endereço diferente.
         if ($request->deliverType != 'Retirada no restaurante' && $request->payingMethod == 'Dinheiro' && $request->payingValue < $request->newPrice){
             return redirect()->back()->with('msg-troco', '.');
@@ -2136,6 +2237,13 @@ class TrayController extends Controller
 
     public function couponRemove($couponName)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         $order = Auth::user()->userOrderTray()->select('id', 'totalValue', 'valueWithoutDisccount')->get()->toArray();
 
         if (isset($order[0])){
@@ -2158,6 +2266,13 @@ class TrayController extends Controller
 
     public function destroy($food)
     {
+        //Verificando se o delivery continua aberto.
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus[0]->status == 'Fechado'){
+            return redirect()->route('tipoPedido');
+        }
+
         //Encontrando usuário e pedido.
         $user = Auth::user();
         $tray = $user->userOrderTray()->select('totalValue', 'hamburguer', 'portion', 'drinks', 'valueWithoutDisccount')->get()->toArray();

@@ -325,6 +325,26 @@
             }
         }
     </script>
+
+    @if($deliveryStatus[0]->status == 'Fechado')
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'O delivery está fechado!',
+                text: 'Você precisa abri-lo para que possa receber pedidos, ok?',
+                showCancelButton: false,
+                showConfirmButton: false,
+                html:
+                    '<p>Você precisa abri-lo para que possa receber pedidos.</p>' +
+                    '<button type="button" class="btn btn-primary mt-2 fechar">Ignorar</button>' +
+                    '<a href="{{ route('delivery') }}" type="button" class="btn btn-success mt-2 ml-4 ">Abrir delivery</a>'
+            })
+
+            $(".fechar").on('click', function (){
+                Swal.close()
+            })
+        </script>
+    @endif
 @endsection
 
 

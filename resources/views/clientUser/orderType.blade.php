@@ -101,4 +101,20 @@
         </script>
     @endif
 
+    @if($deliveryStatus[0]->status == 'Fechado')
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'O delivery está fechado no momento!',
+                text: '{{ $deliveryStatus[0]->message != null ? $deliveryStatus[0]->message : 'Encerramos nosso horário de funcionamento.'}}',
+                showCancelButton: false,
+                showConfirmButton: true,
+            })
+
+            $(".fechar").on('click', function (){
+                Swal.close()
+            })
+        </script>
+    @endif
+
 @endsection
