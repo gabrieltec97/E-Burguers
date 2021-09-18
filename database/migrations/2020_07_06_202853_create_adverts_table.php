@@ -18,6 +18,7 @@ class CreateAdvertsTable extends Migration
             $table->string('name');
             $table->string('value');
             $table->string('foodType');
+            $table->string('status');
             $table->string('ingredients')->nullable();
             $table->string('extras')->nullable();
             $table->string('combo');

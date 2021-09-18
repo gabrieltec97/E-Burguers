@@ -169,24 +169,6 @@
         </div>
     </div>
 
-    <div class="bg-box"></div>
-    <div class="div-box">
-        <div class="card">
-            <div class="card-header text-danger font-weight-bold d-flex" style="font-size: 22px">
-                <i class="fas fa-exclamation-triangle mt-1"></i>&nbsp; Atenção
-            </div>
-            <div class="card-body">
-                <p class="text-muted font-weight-bold mb-4">Você está criando um novo usuário e escolheu a opção "Administrador". O usuário de administrador
-                    tem o total controle do sistema, contendo permissões importantes que se mal usadas, podem acarretar
-                    em um descontrole e visualização de informações financeiras. Caso tenha marcado esta opção por acidente,
-                    basta voltar à caixa de Cargo(Usuário do sistema) e alterar. Caso contrário, basta fechar este alerta.</p>
-                <p class="d-flex justify-content-end mb-0"><a href="#" class="btn btn-primary sair">Compreendi</a></p>
-            </div>
-        </div>
-    </div>
-
-    <button class="disparador">disparar</button>
-
     <form action="{{ route('usuario.destroy', $user->id) }}" method="post">
     @csrf
     @method('DELETE')

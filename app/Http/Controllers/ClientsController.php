@@ -18,6 +18,7 @@ class ClientsController extends Controller
 
     public function myData()
     {
+//        $data =
         return view('clientUser.clientData');
     }
 

@@ -138,7 +138,7 @@ class UserController extends Controller
             'empSurname.min' => 'O sobrenome do funcionário deve conter no mínimo 5 caracteres',
             'empPhone.required' => 'Insira o número de telefone do funcionário.',
             'empPhone.min' => 'Você inseriu um formato inválido de telefone do funcionário',
-            'empAddress.max' => 'Você inseriu um endereço muito curto, caso esteja correto, preencha com xxxx',
+            'empAddress.min' => 'Você inseriu um endereço muito curto, caso esteja correto, preencha com xxxx',
             'empWorkingTime.required' => 'Por favor, insira o horário de trabalho do funcionário',
             'district.required' => 'Por favor, selecione o bairro a ser entregue.'
         ];
@@ -268,15 +268,13 @@ class UserController extends Controller
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
-        $employee = Employee::find($id);
-        $userEmail = DB::table('users')->where('email', '=', $employee->email)->get()->toArray();
-
-        if( $userEmail != null){
-            $userDelete = User::find($userEmail[0]->id);
-            $userDelete->destroy($userEmail[0]->id);
+        if ($id == Auth::user()->id){
+            return redirect()->route('gerenciamento')->with('msg-not', 'Contate o administrador caso queira deletar seu próprio login de usuário.');
         }
 
-        $employee->destroy($id);
+        $userDelete = User::find($id);
+        $userDelete->delete();
+
 
         return redirect(route('gerenciamento'))->with('msg-2', 'Registro deletado com sucesso!');
     }

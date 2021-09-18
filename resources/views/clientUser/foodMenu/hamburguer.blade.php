@@ -85,9 +85,12 @@
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->comboValue }}</span></p>
+                                                @if($food->status == 'Ativo')
                                                 <a class="btn btn-primary text-white" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</a>
                                                 <button type="submit" class="btn btn-success adicionar-bandeja text-white">Adicionar à bandeja</button>
-
+                                                @else
+                                                    <label class="text-danger font-weight-bold">Este item está temporariamente indisponível.</label>
+                                                @endif
                                             </div>
 
                                             <!-- Modal -->
@@ -149,4 +152,21 @@
             </div>
         </div>
     </div>
+
+    @if(session('msg-dstv'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 8000,
+                timerProgressBar: true,
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: 'Desculpe, mas este hambúrguer não está mais disponível.'
+            })
+        </script>
+    @endif
 @endsection

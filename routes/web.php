@@ -94,6 +94,8 @@ Route::get('/meusPedidos', 'OrdersController@clientsOrders')->name('meusPedidos'
 
 Route::get('/gerenciamento', 'UserController@management')->name('gerenciamento')->middleware('auth');
 
+Route::get('/toggleAdvert/{id}', 'menuController@toggleAdvert')->name('toggleAdvert')->middleware('auth');
+
 Route::get('/delivery', 'deliverController@deliveryStatus')->name('delivery')->middleware('auth');
 
 Route::post('/changeDeliveryStatus', 'deliverController@changeStatus')->name('changeDeliveryStatus')->middleware('auth');

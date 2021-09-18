@@ -46,6 +46,13 @@ class HomeController extends Controller
             }
         }
 
+        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+
+        if ($deliveryStatus == null){
+            DB::table('delivery_status')
+                ->insert(['id' => 1, 'status' => 'Fechado']);
+        }
+
         //Permitindo mostrar as avaliações e inserindo senha de proteção à rota ACL.
         $lock = DB::table('lock_rating')
             ->get()->toArray();

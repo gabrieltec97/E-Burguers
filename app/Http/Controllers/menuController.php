@@ -203,6 +203,7 @@ class menuController extends Controller
 
         $advert->description = $request->mealDescription;
         $advert->comboValue = $request->promoValue;
+        $advert->status = 'Ativo';
 
 
         if($request->hasFile('advPhoto')){
@@ -243,6 +244,28 @@ class menuController extends Controller
         $meal = Adverts::find($id);
 
         return view('adverts.advShow', compact('meal'));
+    }
+
+    public function toggleAdvert($id)
+    {
+       $advert = DB::table('adverts')
+           ->select('status')
+           ->where('id', '=', $id)
+           ->get()->toArray();
+
+       if ($advert[0]->status == 'Ativo'){
+           DB::table('adverts')
+               ->where('id', '=', $id)
+               ->update(['status' => 'Inativo']);
+
+           return redirect()->back()->with('msg-dstv', 'Anúncio desativado com sucesso!');
+       }else{
+           DB::table('adverts')
+               ->where('id', '=', $id)
+               ->update(['status' => 'Ativo']);
+
+           return redirect()->back()->with('msg-att', 'Anúncio ativado com sucesso!');
+       }
     }
 
     /**

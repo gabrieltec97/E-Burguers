@@ -23,7 +23,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Cupom não cadastrado!',
-                        text: 'Já existe um cupom registrado com este nome, consulte a lista de cupons ativos.',
+                        text: 'Já existe um cupom registrado com este nome e data, consulte a lista de cupons ativos.',
                     })
                 </script>
             @endif
@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-lg-8 col-sm-12 mb-5">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 25px;">Cadastrar cupom</div>
+                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 25px;">Cadastrar cupom </div>
                     <div class="card-body">
                         <form action="{{ route('cupons.store') }}" method="post" class="form-group cupom-sub">
                             @csrf

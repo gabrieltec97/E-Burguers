@@ -378,4 +378,21 @@
             })
         </script>
     @endif
+
+    @if(session('msg-dstv'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 8000,
+                timerProgressBar: true,
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: 'Desculpe, mas este hambúrguer não está mais disponível.'
+            })
+        </script>
+    @endif
 @endsection

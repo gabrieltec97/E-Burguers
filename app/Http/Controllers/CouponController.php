@@ -85,30 +85,16 @@ class CouponController extends Controller
         $request->validate($rules, $messages);
 
         $coupons = DB::table('coupons')
-            ->select('name')
             ->get()->toArray();
 
         foreach ($coupons as $c){
-            if ($request->couponName == $c->name){
-                return back()->withInput()->with('msg-2', ' ');
+            if ($c->name == $request->couponName && $c->expireDate == $request->expireDate){
+                return back()->withInput()->with('msg-2', '.');
             }
         }
 
         date_default_timezone_set('America/Sao_Paulo');
         $date = date('Y'. '-' . 'm' . '-' . 'd');
-
-        if ($request->expireDate == $date){
-            return back()->withInput()->with('msg-2', '.');
-        }
-
-        $name = DB::table('coupons')
-            ->select('name')
-            ->where('name', '=', $request->couponName)
-            ->get()->toArray();
-
-        if (count($name) != 0){
-            return back()->withInput()->with('msg-2', '.');
-        }
 
         $coupon = new Coupon();
 

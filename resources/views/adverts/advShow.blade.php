@@ -16,6 +16,30 @@
                         </button>
                     </div>
                 @endif
+
+                @if(session('msg-att'))
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Tudo certo!',
+                                text: '{{ session('msg-att') }}',
+                                timer: 7000,
+                                timerProgressBar: true,
+                            })
+                        </script>
+                @endif
+
+                @if(session('msg-dstv'))
+                        <script>
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Desativação concluída!',
+                                text: '{{ session('msg-dstv') }}',
+                                timer: 7000,
+                                timerProgressBar: true,
+                            })
+                        </script>
+                @endif
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">{{ $meal->name }}</div>
 
@@ -47,19 +71,39 @@
                                     <br>
                                     <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Descrição:</span><span class="text-primary"> {{ $meal->description }} </span></label>
                                     <br>
-                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Criado em:</span><span class="text-primary"> {{ $meal->created_at }}</span></label>
-                                    <br>
-                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Última modificação:</span><span class="text-primary"> {{ $meal->updated_at }} </span></label>
-                                    <br>
                                     <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Nota de avaliação:</span><span class="text-primary"> {{ round($meal->finalGrade, 1) }}</span></label>
-
-                                    <a href="{{ route('refeicoes.edit', $meal->id) }}" class="btn btn-primary mt-5 float-right"><i class="fas fa-edit mr-2"></i>Editar dados cadastrais</a>
+                                    <br>
+                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Status:</span><span class="text-primary"> {{ $meal->status }}</span></label>
+                                    <br>
+                                    <button type="button" style="color: white" class="btn {{ $meal->status == 'Ativo' ? 'btn-danger' : 'btn-success' }} mt-5" data-toggle="modal" data-target="#toggleAdvert">{{ $meal->status == 'Ativo' ? 'Desativar anúncio' : 'Ativar anúncio' }}</button>
+                                    <a href="{{ route('refeicoes.edit', $meal->id) }}" class="btn btn-primary float-right mt-5"><i class="fas fa-edit mr-2"></i>Editar dados cadastrais</a>
                                 </div>
 
 
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="toggleAdvert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Atenção!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja {{ $meal->status == 'Ativo' ? 'desativar o anúncio deste item?' : 'ativar o anúncio deste item' }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Voltar</button>
+                    <a href="{{ route('toggleAdvert', $meal->id) }}" style="color: white" class="btn toggleAdvert {{ $meal->status == 'Ativo' ? 'btn-danger' : 'btn-success' }}">{{ $meal->status == 'Ativo' ? 'Desativar anúncio' : 'Ativar anúncio' }}</a>
                 </div>
             </div>
         </div>

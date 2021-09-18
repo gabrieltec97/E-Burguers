@@ -85,7 +85,11 @@
                                                 <p class="card-text"> {{ $food->description }}
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->comboValue }}</span></p>
+                                                @if($food->status == 'Ativo')
                                                 <button type="submit" class="btn btn-primary adicionar-bandeja">Adicionar à bandeja</button>
+                                                @else
+                                                    <label class="text-danger font-weight-bold">Este item está temporariamente indisponível.</label>
+                                                @endif
                                             </div>
                                         </div>
                                     </form>
@@ -98,7 +102,7 @@
         </div>
     </div>
 
-    @if(isset($edit) == false)
+    @if(isset($edit) == false && session('msg-dstv') == false)
         <script>
             const Toast = Swal.mixin({
                 toast: true,
@@ -113,5 +117,23 @@
                 title: 'Item adicionado ao pedido!'
             })
         </script>
+    @else
+        @if(session('msg-dstv'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 8000,
+                    timerProgressBar: true,
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Desculpe, mas este acompanhamento não está mais disponível.'
+                })
+            </script>
+        @endif
     @endif
+
 @endsection

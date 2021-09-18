@@ -9,22 +9,34 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12">
                 @if(session('msg'))
-                    <div class="alert alert-success alerta-sucesso-user alert-dismissible fade show" role="alert">
-                       <span class="text-muted font-weight-bold">{{ session('msg') }}</span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Tudo certo!',
+                            text: '{{ session('msg') }}',
+                        })
+                    </script>
                 @endif
 
-                    @if(session('msg-2'))
-                        <div class="alert alert-danger alerta-sucesso-user alert-dismissible fade show" role="alert">
-                            <span class="text-muted font-weight-bold">{{ session('msg-2') }}</span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
+                @if(session('msg-2'))
+                    <script>
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Tudo certo!',
+                            text: '{{ session('msg-2') }}',
+                        })
+                    </script>
+                @endif
+
+                @if(session('msg-not'))
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Não permitido!',
+                            text: '{{ session('msg-not') }}',
+                        })
+                    </script>
+                @endif
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Funcionários cadastrados</div>
 

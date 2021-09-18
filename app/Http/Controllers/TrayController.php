@@ -367,6 +367,30 @@ class TrayController extends Controller
             return redirect()->route('tipoPedido');
         }
 
+        $itemCheckStatus = DB::table('item_without_extras')
+            ->where('id', '=', $id)
+            ->get()->toArray();
+
+        //Verificando se o item está ativo.
+        $checkStatus = DB::table('adverts')
+            ->select('status')
+            ->where('name', '=', $itemCheckStatus[0]->itemName)
+            ->get()->toArray();
+
+        if ($checkStatus[0]->status == 'Inativo'){
+
+            //Deletando o item das duas tabelas.
+            DB::table('auxiliar_detacheds')
+                ->where('Item', '=', $itemCheckStatus[0]->itemName)
+                ->delete();
+
+            DB::table('item_without_extras')
+                ->where('itemName', '=', $itemCheckStatus[0]->itemName)
+                ->delete();
+
+            return redirect()->back()->with('msg-dstv', '.');
+        }
+
        //Buscando os itens e os formatando para entrar na tabela.
        $extras = array();
        $price = 0;
@@ -439,6 +463,31 @@ class TrayController extends Controller
 
         if ($deliveryStatus[0]->status == 'Fechado'){
             return redirect()->route('tipoPedido');
+        }
+
+        //Verificando se o item está ativo.
+        $itemCheckStatus = DB::table('auxiliar_detacheds')
+            ->where('id', '=', $id)
+            ->get()->toArray();
+
+        //Verificando se o item está ativo.
+        $checkStatus = DB::table('adverts')
+            ->select('status')
+            ->where('name', '=', $itemCheckStatus[0]->Item)
+            ->get()->toArray();
+
+        if ($checkStatus[0]->status == 'Inativo'){
+
+            //Removendo-o das duas tabelas.
+            DB::table('auxiliar_detacheds')
+                ->where('Item', '=', $itemCheckStatus[0]->Item)
+                ->delete();
+
+            DB::table('item_without_extras')
+                ->where('ItemName', '=', $itemCheckStatus[0]->Item)
+                ->delete();
+
+            return redirect()->back()->with('msg-dstv', '.');
         }
 
         $personalized = AuxiliarDetached::find($id);
@@ -674,7 +723,7 @@ class TrayController extends Controller
         if ($deliveryStatus[0]->status == 'Fechado'){
             return redirect()->route('tipoPedido');
         }
-        
+
         $foods = DB::table('adverts')
             ->where('foodType', '=', 'hamburguer')
             ->where('combo', '=', 'Sim')
@@ -715,6 +764,16 @@ class TrayController extends Controller
 
         if ($deliveryStatus[0]->status == 'Fechado'){
             return redirect()->route('tipoPedido');
+        }
+
+        //Verificando se o item está ativo.
+        $checkStatus = DB::table('adverts')
+            ->select('status')
+            ->where('id', '=', $id)
+            ->get()->toArray();
+
+        if ($checkStatus[0]->status == 'Inativo'){
+            return redirect()->back()->with('msg-dstv', '.');
         }
 
         if (isset ($request->extras)){
@@ -1029,6 +1088,16 @@ class TrayController extends Controller
             return redirect()->route('tipoPedido');
         }
 
+        //Verificando se o item está ativo.
+        $checkStatus = DB::table('adverts')
+            ->select('status')
+            ->where('id', '=', $idFood)
+            ->get()->toArray();
+
+        if ($checkStatus[0]->status == 'Inativo'){
+            return redirect()->back()->with('msg-dstv', '.');
+        }
+
         $user = Auth::user();
         $myOrder = $user->userOrderTray()->get()->first()->toArray();
         $idOrder = $myOrder['id'];
@@ -1079,6 +1148,16 @@ class TrayController extends Controller
 
     public function shoppingFinish (Request $request, $idFood)
     {
+        //Verificando se o item está ativo.
+        $checkStatus = DB::table('adverts')
+            ->select('status')
+            ->where('id', '=', $idFood)
+            ->get()->toArray();
+
+        if ($checkStatus[0]->status == 'Inativo'){
+            return redirect()->back()->with('msg-dstv', '.');
+        }
+
         $user = Auth::user();
         $myOrder = $user->userOrderTray()->get()->first()->toArray();
         $idOrder = $myOrder['id'];

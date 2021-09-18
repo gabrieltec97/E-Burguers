@@ -97,8 +97,12 @@
                                                     <br><br>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span></p>
                                                 @if($deliveryStatus[0]->status != 'Fechado')
+                                                    @if($food->status == 'Ativo')
                                                 <button type="button" value="{{ session('scroll') }}" class="btn btn-primary text-white personalizar-session" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</button>
                                                 <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
+                                                    @else
+                                                        <label class="text-danger font-weight-bold">Este item está temporariamente indisponível.</label>
+                                                    @endif
                                                 @endif
                                             </div>
 
@@ -158,8 +162,12 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             @if($deliveryStatus[0]->status != 'Fechado')
+                                                                @if($food->status == 'Ativo')
                                                             <button type="button" class="btn btn-danger mt-1" data-dismiss="modal">Cancelar</button>
                                                             <button type="submit" style="margin-top: 2px;" class="btn btn-success adicionar-bandeja text-white" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
+                                                                @else
+                                                                    <label class="text-danger font-weight-bold">Este item está temporariamente indisponível.</label>
+                                                                @endif
                                                             @endif
                                                         </div>
                                                     </div>
@@ -243,7 +251,11 @@
                                                 <p class="card-text"> {{ $food->description }}</p>
                                                     <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span><br>
                                                 @if($deliveryStatus[0]->status != 'Fechado')
+                                                    @if($food->status == 'Ativo')
                                                 <button type="submit" class="btn btn-success adicionar-bandeja" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
+                                                @else
+                                                    <label class="text-danger font-weight-bold">Este item está temporariamente indisponível.</label>
+                                                @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -335,10 +347,6 @@
             showConfirmButton: false,
             timer: 5000,
             timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
         })
 
         Toast.fire({
