@@ -367,17 +367,32 @@ class TrayController extends Controller
             return redirect()->route('tipoPedido');
         }
 
+        //Verificando se o item está ativo.
         $itemCheckStatus = DB::table('item_without_extras')
             ->where('id', '=', $id)
             ->get()->toArray();
 
-        //Verificando se o item está ativo.
+        $itemWExtrasValue = DB::table('item_without_extras')
+            ->where('itemName', '=', $itemCheckStatus[0]->itemName)
+            ->get()->toArray();
+
         $checkStatus = DB::table('adverts')
             ->select('status')
             ->where('name', '=', $itemCheckStatus[0]->itemName)
             ->get()->toArray();
 
         if ($checkStatus[0]->status == 'Inativo'){
+
+            //Abatendo de valor na tabela de pedidos.
+            $currentItemsVal = 0;
+
+            foreach ($itemWExtrasValue as $i){
+                $currentItemsVal += $i->value;
+            }
+
+            $myTray = Tray::find($itemCheckStatus[0]->idOrder);
+            $myTray->totalValue -= $currentItemsVal;
+            $myTray->save();
 
             //Deletando o item das duas tabelas.
             DB::table('auxiliar_detacheds')
@@ -470,13 +485,27 @@ class TrayController extends Controller
             ->where('id', '=', $id)
             ->get()->toArray();
 
-        //Verificando se o item está ativo.
+        $itemWExtrasValue = DB::table('auxiliar_detacheds')
+            ->where('Item', '=', $itemCheckStatus[0]->Item)
+            ->get()->toArray();
+
         $checkStatus = DB::table('adverts')
             ->select('status')
             ->where('name', '=', $itemCheckStatus[0]->Item)
             ->get()->toArray();
 
         if ($checkStatus[0]->status == 'Inativo'){
+
+            //Abatendo de valor na tabela de pedidos.
+            $currentItemsVal = 0;
+
+            foreach ($itemWExtrasValue as $i){
+                $currentItemsVal += $i->valueWithExtras;
+            }
+
+            $myTray = Tray::find($itemCheckStatus[0]->idOrder);
+            $myTray->totalValue -= $currentItemsVal;
+            $myTray->save();
 
             //Removendo-o das duas tabelas.
             DB::table('auxiliar_detacheds')

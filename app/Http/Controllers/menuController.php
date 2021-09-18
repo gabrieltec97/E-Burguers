@@ -36,8 +36,10 @@ class menuController extends Controller
             $rate = $lock[0]->lock;
         }
 
+        $deactivated = DB::table('adverts')->where('status', '=', 'Inativo')->get()->toArray();
+
         $meals = Adverts::all();
-        return view('adverts.advertsManagement', compact('meals', 'rate'));
+        return view('adverts.advertsManagement', compact('meals', 'rate', 'deactivated'));
     }
 
     public function foodMenu($insert)

@@ -56,8 +56,8 @@
                             <thead>
                             <tr>
                                 <th scope="col" class="text-primary">Nome</th>
+                                <th scope="col" class="text-primary">Status</th>
                                 <th scope="col" class="text-primary">Valor</th>
-                                <th scope="col" class="text-primary">Descrição</th>
                                 <th scope="col" class="text-primary">Participa do combo</th>
                             </tr>
                             </thead>
@@ -65,9 +65,9 @@
                                 @foreach($meals as $meal)
                                     <tr>
                                         <td class="font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->name }}</a></td>
-                                        <td class="font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->value }}</a></td>
-                                        <td class="w-25 font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->combo }}</a></td>
-                                        <td class="w-50 font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->description }}</a></td>
+                                        <td class="font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->status }}</a></td>
+                                        <td class="w-25 font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->value }}</a></td>
+                                        <td class="w-50 font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->combo }}</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -112,4 +112,16 @@
             </div>
         </div>
     </div>
+
+    @if($deactivated != null)
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atenção!',
+                text: 'Você tem {{ count($deactivated) }} {{ count($deactivated) > 1 ? 'itens desativados. Lembre-se de reativá-los quando estes estiverem disponíveis' : 'item desativado. Lembre-se de reativá-lo quando ele estiver disponível' }}, ok?',
+                showCancelButton: false,
+                showConfirmButton: true,
+            });
+        </script>
+    @endif
 @endsection
