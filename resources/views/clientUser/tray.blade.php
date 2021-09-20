@@ -391,7 +391,7 @@
 
             Toast.fire({
                 icon: 'error',
-                title: 'Desculpe, mas este hambúrguer não está mais disponível.'
+                title: 'Desculpe, mas o item {{ session('msg-dstv') }} não está mais disponível.'
             })
         </script>
     @endif

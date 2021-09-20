@@ -147,6 +147,16 @@ class TrayController extends Controller
             return redirect()->route('tipoPedido');
         }
 
+        //Verificando se o item está ativo.
+        $checkStatus = DB::table('adverts')
+            ->select('status')
+            ->where('id', '=', $id)
+            ->get()->toArray();
+
+        if ($checkStatus[0]->status == 'Inativo'){
+            return redirect()->back()->with('msg-dstv', '.');
+        }
+
         //Verificando se o usuário possui um pedido.
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
@@ -376,6 +386,10 @@ class TrayController extends Controller
             ->where('itemName', '=', $itemCheckStatus[0]->itemName)
             ->get()->toArray();
 
+        $itemWithExtrasValue = DB::table('auxiliar_detacheds')
+            ->where('Item', '=', $itemCheckStatus[0]->itemName)
+            ->get()->toArray();
+
         $checkStatus = DB::table('adverts')
             ->select('status')
             ->where('name', '=', $itemCheckStatus[0]->itemName)
@@ -390,8 +404,19 @@ class TrayController extends Controller
                 $currentItemsVal += $i->value;
             }
 
+            foreach ($itemWithExtrasValue as $iwt){
+                $currentItemsVal += $iwt->valueWithExtras;
+            }
+
             $myTray = Tray::find($itemCheckStatus[0]->idOrder);
             $myTray->totalValue -= $currentItemsVal;
+            $myTray->valueWithoutDisccount -= $currentItemsVal;
+
+            if ($myTray->valueWithoutDeliver != null){
+                $myTray->valueWithoutDeliver -= $currentItemsVal;
+            }
+
+            $myTray->extras = null;
             $myTray->save();
 
             //Deletando o item das duas tabelas.
@@ -403,7 +428,7 @@ class TrayController extends Controller
                 ->where('itemName', '=', $itemCheckStatus[0]->itemName)
                 ->delete();
 
-            return redirect()->back()->with('msg-dstv', '.');
+            return redirect()->back()->with('msg-dstv', $itemCheckStatus[0]->itemName);
         }
 
        //Buscando os itens e os formatando para entrar na tabela.
@@ -489,6 +514,10 @@ class TrayController extends Controller
             ->where('Item', '=', $itemCheckStatus[0]->Item)
             ->get()->toArray();
 
+        $itemWithoutExtrasValue = DB::table('item_without_extras')
+            ->where('itemName', '=', $itemCheckStatus[0]->Item)
+            ->get()->toArray();
+
         $checkStatus = DB::table('adverts')
             ->select('status')
             ->where('name', '=', $itemCheckStatus[0]->Item)
@@ -503,8 +532,19 @@ class TrayController extends Controller
                 $currentItemsVal += $i->valueWithExtras;
             }
 
+            foreach ($itemWithoutExtrasValue as $iwth){
+                $currentItemsVal += $iwth->value;
+            }
+
             $myTray = Tray::find($itemCheckStatus[0]->idOrder);
             $myTray->totalValue -= $currentItemsVal;
+            $myTray->valueWithoutDisccount -= $currentItemsVal;
+
+            if ($myTray->valueWithoutDeliver != null){
+                $myTray->valueWithoutDeliver -= $currentItemsVal;
+            }
+
+            $myTray->extras = null;
             $myTray->save();
 
             //Removendo-o das duas tabelas.
@@ -516,7 +556,7 @@ class TrayController extends Controller
                 ->where('ItemName', '=', $itemCheckStatus[0]->Item)
                 ->delete();
 
-            return redirect()->back()->with('msg-dstv', '.');
+            return redirect()->back()->with('msg-dstv', $itemCheckStatus[0]->Item);
         }
 
         $personalized = AuxiliarDetached::find($id);
@@ -1380,6 +1420,183 @@ class TrayController extends Controller
             $usedCoupon = $usedCoupon[0]->name;
         }else{
             $usedCoupon = null;
+        }
+
+        //Verificação se os itens estão disponíveis.
+        $orderType = DB::table('trays')
+            ->select('orderType', 'comboItem', 'portion', 'drinks', 'extras', 'id')
+            ->where('idClient', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        if ($orderType[0]->orderType == "Combo"){
+
+            if ($orderType[0]->comboItem != null){
+                //Encontrando o item.
+                $orderItemData = DB::table('adverts')
+                    ->select('comboValue', 'status', 'foodType')
+                    ->where('name', '=', $orderType[0]->comboItem)
+                    ->get()->toArray();
+
+                if ($orderItemData[0]->status == 'Inativo'){
+
+                    //Fazendo o abatimento de preço com seus extras.
+                    $orderItemExtras = explode(',', $orderType[0]->extras);
+                    $extrasValue = 0;
+                    foreach ($orderItemExtras as $ite){
+                        $sumValue = DB::table('extras')
+                            ->select('price')
+                            ->where('name', '=', ltrim($ite))
+                            ->get()->toArray();
+
+                        $extrasValue += $sumValue[0]->price;
+                    }
+
+                    $subtract = $orderItemData[0]->comboValue + $extrasValue;
+
+                    $comboTray = Tray::find($orderType[0]->id);
+                    $comboTray->extras = null;
+                    $comboTray->hamburguer = null;
+                    $comboTray->comboItem = null;
+                    $comboTray->image = null;
+                    $comboTray->totalValue -= $subtract;
+                    if ($comboTray->valueWithoutDeliver != null) {
+                        $comboTray->valueWithoutDeliver -= $subtract;
+                    }
+                    $comboTray->valueWithoutDisccount -= $subtract;
+                    $comboTray->save();
+
+                    return redirect()->route('minhaBandeja.index')->with('msg-dstv', $orderType[0]->comboItem);
+                }
+            }
+
+            if ($orderType[0]->portion != null){
+                //Descobrindo o valor e status
+                $orderItemData = DB::table('adverts')
+                    ->select('comboValue', 'status', 'foodType')
+                    ->where('name', '=', $orderType[0]->portion)
+                    ->get()->toArray();
+
+                if ($orderItemData[0]->status == 'Inativo'){
+
+                    $comboTray = Tray::find($orderType[0]->id);
+                    $comboTray->totalValue -= $orderItemData[0]->comboValue;
+                    $comboTray->portion = null;
+                    if ($comboTray->valueWithoutDeliver != null) {
+                        $comboTray->valueWithoutDeliver -= $orderItemData[0]->comboValue;
+                    }
+                    $comboTray->valueWithoutDisccount -= $orderItemData[0]->comboValue;
+                    $comboTray->save();
+
+                    return redirect()->route('minhaBandeja.index')->with('msg-dstv', $orderType[0]->portion);
+                }
+            }
+
+            if ($orderType[0]->drinks != null){
+                //Descobrindo o valor e status
+                $orderItemData = DB::table('adverts')
+                    ->select('comboValue', 'status', 'foodType')
+                    ->where('name', '=', $orderType[0]->drinks)
+                    ->get()->toArray();
+
+                if ($orderItemData[0]->status == 'Inativo'){
+
+                    $comboTray = Tray::find($orderType[0]->id);
+                    $comboTray->totalValue -= $orderItemData[0]->comboValue;
+                    $comboTray->drinks = null;
+                    if ($comboTray->valueWithoutDeliver != null) {
+                        $comboTray->valueWithoutDeliver -= $orderItemData[0]->comboValue;
+                    }
+                    $comboTray->valueWithoutDisccount -= $orderItemData[0]->comboValue;
+                    $comboTray->save();
+
+                    return redirect()->route('minhaBandeja.index')->with('msg-dstv', $orderType[0]->drinks);
+                }
+            }
+        }
+
+        if (isset($customs)){
+            foreach ($customs as $c){
+                //Verificando se o item está ativo.
+
+                $itemCheckStatus = DB::table('auxiliar_detacheds')
+                    ->where('id', '=', $c->id)
+                    ->get()->toArray();
+
+                $itemWExtrasValue = DB::table('auxiliar_detacheds')
+                    ->where('Item', '=', $itemCheckStatus[0]->Item)
+                    ->get()->toArray();
+
+                $checkStatus = DB::table('adverts')
+                    ->select('status')
+                    ->where('name', '=', $itemCheckStatus[0]->Item)
+                    ->get()->toArray();
+
+                //Abatendo valor na tabela de pedidos.
+                if ($checkStatus[0]->status == 'Inativo'){
+
+                    $currentItemsVal = 0;
+
+                    foreach ($itemWExtrasValue as $i){
+                        $currentItemsVal += $i->valueWithExtras;
+                    }
+
+                    $myTray = Tray::find($itemCheckStatus[0]->idOrder);
+                    $myTray->totalValue -= $currentItemsVal;
+                    $myTray->valueWithoutDeliver -= $currentItemsVal;
+                    $myTray->valueWithoutDisccount -= $currentItemsVal;
+                    $myTray->save();
+
+                    //Removendo-o das duas tabelas.
+                    DB::table('auxiliar_detacheds')
+                        ->where('Item', '=', $itemCheckStatus[0]->Item)
+                        ->delete();
+
+                    if (!isset($items)){
+                        return redirect()->back()->with('msg-dstv', $itemCheckStatus[0]->Item);
+                    }
+                }
+            }
+        }
+
+        if (isset($items)){
+            foreach ($items as $item){
+
+                //Verificando se o item está ativo.
+                $itemCheckStatus = DB::table('item_without_extras')
+                    ->where('id', '=', $item->id)
+                    ->get()->toArray();
+
+                $itemWithoutExtrasValue = DB::table('item_without_extras')
+                    ->where('itemName', '=', $itemCheckStatus[0]->itemName)
+                    ->get()->toArray();
+
+                $checkStatus = DB::table('adverts')
+                    ->select('status', 'name')
+                    ->where('name', '=', $itemCheckStatus[0]->itemName)
+                    ->get()->toArray();
+
+                //Abatendo valor na tabela de pedidos.
+                if ($checkStatus[0]->status == 'Inativo'){
+
+                    $currentItemsVal = 0;
+
+                    foreach ($itemWithoutExtrasValue as $itw){
+                        $currentItemsVal += $itw->value;
+                    }
+
+                    $myTray = Tray::find($itemCheckStatus[0]->idOrder);
+                    $myTray->totalValue -= $currentItemsVal;
+                    $myTray->valueWithoutDeliver -= $currentItemsVal;
+                    $myTray->valueWithoutDisccount -= $currentItemsVal;
+                    $myTray->save();
+
+                    DB::table('item_without_extras')
+                        ->where('ItemName', '=', $itemCheckStatus[0]->itemName)
+                        ->delete();
+
+                    return redirect()->back()->with('msg-dstv', $itemCheckStatus[0]->itemName);
+                }
+            }
         }
 
         if(isset($items) && isset($address[0]->address)){
@@ -2417,9 +2634,11 @@ class TrayController extends Controller
         //Atualizando o valor atual do combo.
         if (isset($extraPrices)){
             $updatedPrice = doubleval($currentPrice) - doubleval($price) - doubleval($extraPrices);
+            $wtDeliver = doubleval($price) + doubleval($extraPrices);
             $updatedWithoutDisccount = doubleval($tray[0]['valueWithoutDisccount']) - doubleval($price) - doubleval($extraPrices);
         }else{
             $updatedPrice = doubleval($currentPrice) - doubleval($price);
+            $wtDeliver = doubleval($price);
             $updatedWithoutDisccount = doubleval($tray[0]['valueWithoutDisccount']) - doubleval($price);
         }
 
@@ -2441,6 +2660,7 @@ class TrayController extends Controller
         }else{
             $resetPrice->totalValue = $updatedPrice;
             $resetPrice->valueWithoutDisccount = $updatedWithoutDisccount;
+            $resetPrice->valueWithoutDeliver -= $wtDeliver;
         }
 
         if ($foodType == "Hamburguer"){
@@ -2463,7 +2683,7 @@ class TrayController extends Controller
         }
         $removeFood->save();
 
-        $checkItems = $user->userOrderTray()->select('detached', 'hamburguer', 'fries', 'drinks')->get()->toArray();
+        $checkItems = $user->userOrderTray()->select('detached', 'hamburguer', 'portion', 'drinks')->get()->toArray();
 
         if ($checkItems == null){
             return redirect()->route('tipoPedido');

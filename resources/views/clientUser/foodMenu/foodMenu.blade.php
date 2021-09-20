@@ -328,11 +328,7 @@
                  showConfirmButton: false,
                  timer: 5000,
                  timerProgressBar: true,
-                 didOpen: (toast) => {
-                     toast.addEventListener('mouseenter', Swal.stopTimer)
-                     toast.addEventListener('mouseleave', Swal.resumeTimer)
-                 }
-             })
+             });
 
              Toast.fire({
                  icon: 'error',
@@ -340,6 +336,23 @@
              })
          </script>
     @else
+       @if(session('msg-dstv'))
+           <script>
+               const Toast = Swal.mixin({
+                   toast: true,
+                   position: 'top-end',
+                   showConfirmButton: false,
+                   timer: 12000,
+                   timerProgressBar: true,
+               })
+
+               Toast.fire({
+                   icon: 'error',
+                   title: 'Desculpe, mas o item {{ session('msg-dstv') }} não está mais disponível.'
+               })
+           </script>
+       @else
+
     <script>
         const Toast = Swal.mixin({
             toast: true,
@@ -356,7 +369,25 @@
     </script>
         @endif
         @endif
+        @endif
     @endif
+
+        @if(session('msg-dstv'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 8000,
+                    timerProgressBar: true,
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Desculpe, mas o item {{ session('msg-dstv') }} não está mais disponível.'
+                })
+            </script>
+        @endif
 
 
     @if(session('scroll'))
