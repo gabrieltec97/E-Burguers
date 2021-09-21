@@ -120,6 +120,8 @@ class OrdersController extends Controller
             ->where('name', '=', $client[0]->district)
             ->get()->toArray();
 
+        $currentDistrict = $client[0]->district;
+
         $districtPrice = $districtPrice[0]->price;
 
         //Verificando o valor do frete.
@@ -137,6 +139,7 @@ class OrdersController extends Controller
                 $tray->address = $client[0]->address;
             }else{
                 if ($request->pontoRef != ''){
+                    $currentDistrict = $request->diffDistrict;
                     if ($tray->address == null){
                         $tray->address = $request->localEntrega. '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
                     }else{
@@ -277,6 +280,7 @@ class OrdersController extends Controller
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->usedCoupon = $updOrder[0]['disccountUsed'];
         $newOrder->address = $updOrder[0]['address'];
+        $newOrder->district = $currentDistrict;
 
         if($updOrder[0]['deliverWay'] == "Retirada no restaurante"){
             $newOrder->payingMethod = 'Pagamento no restaurante';
@@ -429,7 +433,7 @@ class OrdersController extends Controller
         }
     }
 
-    public function changeStatus($id, $acao, $remetente, $idCliente)
+    public function changeStatus(Request $request, $id, $acao, $remetente, $idCliente)
     {
         if(!Auth::user()->hasPermissionTo('Pedidos (Comum)') && !Auth::user()->hasPermissionTo('Pedidos (Híbrido)')){
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
@@ -466,9 +470,11 @@ class OrdersController extends Controller
 
             if ($order->deliverWay == 'Retirada no restaurante'){
                 $order->status = 'Pronto para ser retirado no restaurante';
+                $order->deliverMan = null;
                 $order->save();
             } else if($order->deliverWay == 'Entrega em domicílio'){
                 $order->status = 'Em rota de entrega';
+                $order->deliverMan = $request->deliverMan;
                 $order->save();
             }
 
@@ -480,6 +486,7 @@ class OrdersController extends Controller
         }else if($acao == 'Cancelado' && $remetente == 'atendente'){
 
             $order->status = $acao;
+            $order->deliverMan = null;
             $order->save();
 
             return redirect()->back()->with('msg-2',
@@ -488,6 +495,7 @@ class OrdersController extends Controller
         }else if($acao == 'Em preparo' or $acao == 'Pronto'){
 
             $order->status = $acao;
+            $order->deliverMan = null;
             $order->save();
 
             return redirect()->back()->with('msg',

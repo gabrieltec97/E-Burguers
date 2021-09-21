@@ -275,13 +275,10 @@
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ route('usuario.index') }}">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 font-weight-bold"></i>
-                                <span class="font-weight-bold">Meus dados</span>
-                            </a>
+
                             @can('Áreas de entrega')
                             <a class="dropdown-item mt-2" href="{{ route('locaisDeEntrega.index') }}">
-                                <i class="fas fa-shipping-fast mr-2 "></i>
+                                <i class="fas fa-shipping-fast mr-2"></i>
                                 <span class="font-weight-bold">Locais de entrega</span>
                             </a>
                             @endcan
@@ -306,6 +303,11 @@
                                     <span class="font-weight-bold">{{ $delivery == 'Fechado' ? 'Abrir' : 'Fechar' }} Delivery</span>
                                 </a>
                             @endcan
+
+                            <a class="dropdown-item mt-2" href="{{ route('entregadores.index') }}">
+                                <img src="{{ asset('logo/delivery-man.png') }}" title="Enviar ao cliente" style="width: 18px; height: 18px; cursor: pointer; margin-top: 1px" alt="Enviar ao cliente">
+                                <span class="font-weight-bold ml-1">Entregadores</span>
+                            </a>
 
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"

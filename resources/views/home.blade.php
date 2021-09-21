@@ -115,8 +115,31 @@
                                                                     @if($prep->deliverWay == 'Retirada no restaurante')
                                                                         <i class="fas fa-check-circle text-success pronto-retirar" title="Pronto para entrega" style="font-size: 25px; cursor: pointer; margin-top: 1px" onclick="deliverToClient({{ $prep->id }})"></i>
                                                                     @else
-                                                                        <img src="{{ asset('logo/delivery-man.png') }}" title="Enviar ao cliente" style="width: 25px; height: 25px; margin-left: 5px; cursor: pointer; margin-top: 1px" alt="Enviar ao cliente" onclick="deliverToClient({{ $prep->id }})">
+                                                                        <img src="{{ asset('logo/delivery-man.png') }}" title="Enviar ao cliente" style="width: 25px; height: 25px; margin-left: 5px; cursor: pointer; margin-top: 1px" alt="Enviar ao cliente" data-toggle="modal" data-target="#modalChooseBoy{{$prep->id}}">
                                                                     @endif
+
+                                                                <!-- Modal -->
+                                                                    <div class="modal fade" id="modalChooseBoy{{$prep->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-body">
+                                                                                    <h4 class="mb-3">Deseja enviar o pedido #{{ $prep->id }} ao cliente?</h4>
+
+                                                                                    <label>Selecione o entregador responsável</label>
+                                                                                    <select name="deliverMan" class="form-control">
+                                                                                        @foreach($deliverMen as $key => $value)
+                                                                                            <option value="{{ $value->name }}">{{ $value->name }}</option>
+                                                                                        @endforeach
+                                                                                        <option value="Não informado"> -- Não informar --</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Voltar</button>
+                                                                                    <button type="button" class="btn btn-success sendOrder" onclick="deliverToClient2({{ $prep->id }})">Enviar ao cliente</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
                                                                 </form>
                                                             @elseif($prep->status == 'Pedido registrado')
@@ -155,6 +178,7 @@
                                                             @csrf
                                                             </form>
                                             </td>
+
                                         </tr>
 
                                         <!-- Modal -->
@@ -358,6 +382,11 @@
                 $(this).html('<div class="spinner-border text-light" role="status"></div>');
                 $("#sendToClient" + id).submit();
             })
+        }
+
+        function deliverToClient2(id){
+            $(".sendOrder").html('<div class="spinner-border text-light" role="status"></div>');
+            $("#sendToClient" + id).submit()
         }
 
         function cancelOrder(id){

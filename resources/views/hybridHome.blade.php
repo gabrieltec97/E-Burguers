@@ -148,7 +148,12 @@
                                                         @if($reg->deliverWay == 'Retirada no restaurante')
                                                             <b style="color: red">Retirada no restaurante</b>
                                                         @else
-                                                        <b style="color: black">Endereço:</b><span style="color: black">{{ $reg->address }}</span>
+                                                        <b style="color: black">Endereço: </b><span style="color: black">{{ $reg->address }}</span>
+                                                        @endif
+
+                                                        @if($reg->deliverMan != null)
+                                                            <br>
+                                                            <b style="color: black">Entregador:</b> <span style="color: black"> {{ $reg->deliverMan }}</span><br>
                                                         @endif
                                                     </div>
                                                     <div class="modal-footer">
@@ -174,10 +179,45 @@
                                             @csrf
                                         </form>
 
-                                        <form id="readyOrder{{ $reg->id }}" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
-                                            @csrf
-                                        </form>
 
+                    </div>
+                </div>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary envia-lanche{{ $reg->id }}" data-toggle="modal" data-target="#enviarlanche{{$reg->id}}" hidden>
+                    Launch demo modal
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="enviarLanche{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Deseja enviar o pedido {{ $reg->id }} ao cliente? <br>
+
+                                <form id="readyOrder{{ $reg->id }}" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                    @csrf
+
+                                    <label class="mt-2">Selecione o entregador</label>
+                                    <select name="c" class="form-control">
+                                        @foreach($deliveryMen as $d => $man)
+                                            <option value="{{ $man->name }}">{{ $man->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-success sendOrder">Enviar ao cliente</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -283,24 +323,13 @@
                         $("#readyOrder"+ id).submit();
                     })
                 }else if (acao == 'Rota'){
-                    Swal.fire({
-                        title: 'Deseja informar que o pedido ' + id + ' saiu para entrega?',
-                        icon: 'question',
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        html:
-                            '<button type="button" class="btn btn-success mt-2 sendOrder">Enviar pedido</button>' +
-                            '<button type="button" class="btn btn-primary mt-2 ml-4 fechar">Voltar</button>'
-                    })
 
-                    $(".fechar").on('click', function (){
-                        Swal.close()
-                    })
+                    $(".envia-lanche"+id).click();
 
                     $(".sendOrder").on('click', function (){
                         $(this).html('<div class="spinner-border text-light" role="status"></div>');
                         $("#readyOrder"+ id).submit();
-                    })
+                    });
                 }
             }else if (acao == 'Entregue'){
 

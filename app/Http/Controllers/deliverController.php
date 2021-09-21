@@ -66,7 +66,7 @@ class deliverController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**

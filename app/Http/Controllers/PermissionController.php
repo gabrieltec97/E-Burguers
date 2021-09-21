@@ -34,9 +34,9 @@ class PermissionController extends Controller
 
     public function routeAuth()
     {
-        if(!Auth::user()->hasPermissionTo('Gerenciamento de ACL')){
-            return redirect()->route('home');
-        }
+//        if(!Auth::user()->hasPermissionTo('Gerenciamento de ACL')){
+//            return redirect()->route('home');
+//        }
 
         $status = DB::table('lock_rating')
             ->select('lockAuth')

@@ -35,6 +35,8 @@ Route::resource('/itensAdicionais', 'ExtrasController')->middleware('auth');
 
 Route::resource('/locaisDeEntrega', 'deliverController')->middleware('auth');
 
+Route::resource('/entregadores', 'DeliveryManController')->middleware('auth');
+
 //Rotas de cliente.
 Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido')->middleware('auth');
 

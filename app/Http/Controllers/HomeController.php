@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DeliveryMan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -70,8 +71,9 @@ class HomeController extends Controller
         $ready = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->simplePaginate(10);
         $totalReady = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get()->toArray();
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+        $deliverMen = DeliveryMan::all();
 
-        return view('home', compact('registered','deliveryStatus', 'prepare', 'ready', 'prepareCount', 'total', 'totalReady'));
+        return view('home', compact('registered', 'deliverMen', 'deliveryStatus', 'prepare', 'ready', 'prepareCount', 'total', 'totalReady'));
     }
 
     public function hybridHome()
@@ -83,8 +85,9 @@ class HomeController extends Controller
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
         $count = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+        $deliveryMen = DeliveryMan::all();
 
-        return view('hybridHome', compact('registered', 'count', 'deliveryStatus'));
+        return view('hybridHome', compact('registered', 'count', 'deliveryStatus', 'deliveryMen'));
     }
 
     public function getData()
