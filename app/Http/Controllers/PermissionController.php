@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
@@ -33,6 +34,19 @@ class PermissionController extends Controller
 
     public function routeAuth()
     {
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de ACL')){
+            return redirect()->route('home');
+        }
+
+        $status = DB::table('lock_rating')
+            ->select('lockAuth')
+            ->where('id', '=', 1)
+            ->get()->toArray();
+
+        if ($status[0]->lockAuth == 'Não'){
+            return redirect()->route('roles.index');
+        }
+
         return view('Permissions.accessAcl');
     }
 

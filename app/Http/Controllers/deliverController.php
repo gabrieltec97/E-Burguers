@@ -28,6 +28,10 @@ class deliverController extends Controller
 
     public function deliveryStatus()
     {
+        if(!Auth::user()->hasPermissionTo('Delivery')){
+            return redirect()->route('home');
+        }
+
         $status = DB::table('delivery_status')
             ->select('status', 'message')
             ->where('id', '=', 1)
