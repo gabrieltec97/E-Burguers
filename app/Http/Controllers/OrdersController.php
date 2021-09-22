@@ -441,6 +441,28 @@ class OrdersController extends Controller
 
         $order = Orders::find($id);
 
+        //Verificando se há outros pedidos simultâneos para o mesmo endereço.
+        $check = DB::table('orders')
+            ->select('id')
+            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")
+            ->where('address', '=', $order->address)
+            ->get()->toArray();
+
+        if (count($check) > 1){
+            $items = '';
+            if (count($check) == 2){
+                $items = $check[0]->id . ' e ' . $check[1]->id;
+            }elseif (count($check) > 2){
+                foreach ($check as $c){
+                    if ($items == ''){
+                        $items = $c->id;
+                    }else{
+                        $items = $items . ', ' . $c->id;
+                    }
+                }
+            }
+        }
+
         //Cancelamento por parte do cliente.
         if ($remetente == 'cliente'){
 
@@ -465,22 +487,30 @@ class OrdersController extends Controller
             }
         }
 
-
         if($acao == 'prontoretiradaenvio'){
 
             if ($order->deliverWay == 'Retirada no restaurante'){
                 $order->status = 'Pronto para ser retirado no restaurante';
                 $order->deliverMan = null;
                 $order->save();
+
+                return redirect()->back()->with('msg-prep',
+                    'Pedido pronto para retirada por parte do cliente.');
+
             } else if($order->deliverWay == 'Entrega em domicílio'){
                 $order->status = 'Em rota de entrega';
                 $order->deliverMan = $request->deliverMan;
                 $order->save();
+
+                if (isset($items)){
+                    return redirect()->back()->with('msg-prep',
+                        'Pedido em rota de entrega. Mas atenção que os pedidos ' . $items . ' são para o mesmo endereço.');
+                }else{
+                    return redirect()->back()->with('msg-prep',
+                        'Pedido em rota de entrega.');
+                }
+
             }
-
-
-            return redirect()->back()->with('msg-prep',
-                'Pedido pronto para ser entregue!');
 
 
         }else if($acao == 'Cancelado' && $remetente == 'atendente'){
@@ -498,8 +528,13 @@ class OrdersController extends Controller
             $order->deliverMan = null;
             $order->save();
 
-            return redirect()->back()->with('msg',
-                'Pedido disponível para equipe da cozinha.');
+            if (isset($items)){
+                return redirect()->back()->with('msg-prep',
+                    'Pedido disponível para equipe da cozinha. Mas atenção que os pedidos ' . $items . ' são para o mesmo endereço, ok?');
+            }else{
+                return redirect()->back()->with('msg',
+                    'Pedido disponível para equipe da cozinha.');
+            }
 
         }else if($acao == 'Pedido Entregue'){
             $order->status = $acao;

@@ -27,12 +27,12 @@
                 @if(session('msg-prep'))
                     <script>
                         Swal.fire({
-                            icon: 'info',
-                            title: 'Item pronto para retirada/envio!',
+                            icon: 'success',
+                            title: '{{ session('msg-prep') }}',
                             position: 'top-end',
                             toast: true,
                             showConfirmButton: false,
-                            timer: 5000,
+                            timer: 10000,
                             timerProgressBar: true
                         })
                     </script>
@@ -209,6 +209,7 @@
                                         @foreach($deliveryMen as $d => $man)
                                             <option value="{{ $man->name }}">{{ $man->name }}</option>
                                         @endforeach
+                                            <option value="Não informado"> -- Não informar --</option>
                                     </select>
                                 </form>
 
