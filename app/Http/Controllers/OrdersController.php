@@ -131,6 +131,7 @@ class OrdersController extends Controller
             $id = $order[0]['id'];
 
             $tray = Tray::find($id);
+
             $tray->deliverWay = $request->formaRetirada;
             if ($tray->payingMethod == null){
                 $tray->payingMethod = $request->formaPagamento;
@@ -177,12 +178,17 @@ class OrdersController extends Controller
                 }
             }
         }else{
-
             //Inserindo valores de entrega com base no dos pedidos correntes atuais.
             if (count($pending) != 0){
                 $id = $order[0]['id'];
 
+                //Capturando o bairro para pedidos pendentes
                 $tray = Tray::find($id);
+                $result = strstr($pending[0]->address, "Ponto", true);
+                $format = strstr($result, ":");
+                $format = trim($format, ':');
+                $format = trim($format);
+                $currentDistrict = $format;
                 $tray->deliverWay = $pending[0]->deliverWay;
                 if ($tray->payingMethod == null){
                     $tray->payingMethod = $request->formaPagamento;
@@ -195,7 +201,14 @@ class OrdersController extends Controller
 
                 $id = $order[0]['id'];
 
+                //Encontrando endereço em caso de envio para outro local.
                 $tray = Tray::find($id);
+                $result = strstr($going[0]->address, "Ponto", true);
+                $format = strstr($result, ":");
+                $format = trim($format, ':');
+                $format = trim($format);
+                $currentDistrict = $format;
+
                 $tray->deliverWay = $going[0]->deliverWay;
                 if ($tray->payingMethod == null){
                     $tray->payingMethod = $request->formaPagamento;
@@ -449,6 +462,12 @@ class OrdersController extends Controller
             ->get()->toArray();
 
         if (count($check) > 1){
+            $verify = array();
+
+            foreach ($check as $c){
+                array_push($verify, $c->id);
+            }
+
             $items = '';
             if (count($check) == 2){
                 $items = $check[0]->id . ' e ' . $check[1]->id;
@@ -499,7 +518,18 @@ class OrdersController extends Controller
 
             } else if($order->deliverWay == 'Entrega em domicílio'){
                 $order->status = 'Em rota de entrega';
-                $order->deliverMan = $request->deliverMan;
+
+                //Evitando um entregador somar mais de uma entrega com mais de um pedido no mesmo endereço.
+                if (isset($verify)){
+                    if ($order->id == $verify[0]){
+                        $order->deliverMan = $request->deliverMan;
+                    }else{
+                        $order->deliverMan = $request->deliverMan . '*';
+                    }
+                }else{
+                    $order->deliverMan = $request->deliverMan;
+                }
+
                 $order->save();
 
                 if (isset($items)){

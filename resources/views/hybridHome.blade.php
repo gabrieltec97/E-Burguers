@@ -205,7 +205,7 @@
                                     @csrf
 
                                     <label class="mt-2">Selecione o entregador</label>
-                                    <select name="c" class="form-control">
+                                    <select name="deliverMan" class="form-control">
                                         @foreach($deliveryMen as $d => $man)
                                             <option value="{{ $man->name }}">{{ $man->name }}</option>
                                         @endforeach
