@@ -20,12 +20,14 @@ $(document).ready(() => {
 
                     setTimeout(function (){
                         location.reload();
-                    }, 800)
+                    }, 800);
+
+
                 }else if (valorAnterior > valorAtual){
 
                     setTimeout(function (){
                         location.reload();
-                    }, 800)
+                    }, 800);
                 }
             },
             error: function(erro){console.log(erro)}})

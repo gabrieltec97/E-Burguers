@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid" style="padding: 0px 0px">
+    <div class="container-fluid" style="padding: 0px 0px;">
 
         <div class="col-12">
             @if(session('msg'))
@@ -72,16 +72,16 @@
 
             <div class="col-12 mt-4 mt-lg-0">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(238,8,8,1) 24%, rgba(248,249,252,1) 76%);">
-                        <span style="color: white;" class="font-weight-bold">Pedidos em andamento</span> <span class="badge bg-secondary">{{count($count)}}</span></div>
+                    <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: #28f5ac">
+                        <span style="color: #2f2f2f;" class="font-weight-bold">Pedidos em andamento</span> <span class="badge" style="background: #e37750">{{count($count)}}</span></div>
 
                     <div class="card-body">
-                        <table class="table table-bordered table-hover table-responsive-lg">
+                        <table class="table table-bordered table-hover table-striped table-responsive-lg">
                             <thead>
                             <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Status e informações</th>
-                                <th scope="col">Tratativas</th>
+                                <th scope="col" style="color: #2f2f2f">Id</th>
+                                <th scope="col" style="color: #2f2f2f">Status e informações</th>
+                                <th scope="col" style="color: #2f2f2f">Tratativas</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -89,11 +89,12 @@
                                 @foreach($registered as $reg)
                                     <tr>
                                         <td>#{{ $reg->id }}</td>
-                                        <td><button class="btn font-weight-bold" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações a serem repassadas ao entregador quando o pedido for enviado." style="border-radius: 50px; border: none;
+                                        <td><button class="btn font-weight-bold" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações referentes à este pedido." style="border-radius: 50px; border: none;
 
-                                       {{ $reg->status == 'Em rota de entrega' ? 'background: #22e583; color: white' : ''  }}
-                                       {{ $reg->status == 'Pedido registrado' ? 'background: #DC143C; color: white' : ''  }}
+                                       {{ $reg->status == 'Em rota de entrega' ? 'background: #22e583; color: #fffcfc' : ''  }}
+                                       {{ $reg->status == 'Pedido registrado' ? 'background: #5bc0de; color: #fffcfc' : ''  }}
                                        {{ $reg->status == 'Em preparo' ? 'background: #FFD700; color: black' : ''  }}
+                                       {{ $reg->status == 'Pronto para ser retirado no restaurante' ? 'background: #22e583; color: #fffcfc' : ''  }}
                                                 ">{{ $reg->status }}</button></td>
                                         <td>
 
@@ -192,19 +193,15 @@
                 <div class="modal fade" id="enviarLanche{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
                             <div class="modal-body">
-                                Deseja enviar o pedido {{ $reg->id }} ao cliente? <br>
+                                <h5 style="color: black" class="font-weight-bold mt-1 text-center">O pedido {{ $reg->id }} será enviado ao cliente. Escolha o entregador responsável.</h5><br>
+{{--                                <p style="margin-top: -20px; color: black">O cliente será informado que o pedido saiu para entrega.--}}
+{{--                                Selecione o entregador responsável pelo envio.</p>--}}
 
                                 <form id="readyOrder{{ $reg->id }}" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                     @csrf
 
-                                    <label class="mt-2">Selecione o entregador</label>
+                                    <label style="margin-top: -25px;color: black" class="font-weight-bold">Selecione o entregador</label>
                                     <select name="deliverMan" class="form-control">
                                         @foreach($deliveryMen as $d => $man)
                                             <option value="{{ $man->name }}">{{ $man->name }}</option>
@@ -215,8 +212,8 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-                                <button type="button" class="btn btn-success sendOrder">Enviar ao cliente</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Voltar</button>
+                                <button type="button" class="btn btn-success sendOrder">Enviar pedido</button>
                             </div>
                         </div>
                     </div>
@@ -225,7 +222,7 @@
                 @endforeach
                 @else
                     <tr>
-                        <td align="center" colspan="6">Sem registros encontrados.</td>
+                        <td align="center" colspan="6">Nenhum pedido cadastrado ainda.</td>
                     </tr>
                     @endif
                     </tbody>
