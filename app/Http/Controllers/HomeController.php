@@ -64,11 +64,11 @@ class HomeController extends Controller
                     ['id'=> 1, 'lock' => "Sim", 'lockAuth' => 'Sim', 'password' => '7sPa)@x%p,aXbzX?E48X\Z=CD']);
         }
 
-        $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->paginate(10);
-        $prepare = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Pedido registrado')->simplePaginate(9);
+        $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->get()->toArray();
+        $prepare = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Pedido registrado')->get()->toArray();
         $total = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->get()->toArray();
         $prepareCount = DB::table('orders')->where('status', '=', 'Pronto')->get()->toArray();
-        $ready = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->simplePaginate(10);
+        $ready = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get()->toArray();
         $totalReady = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get()->toArray();
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
         $deliverMen = DeliveryMan::all();

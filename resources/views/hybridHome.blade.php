@@ -195,8 +195,6 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <h5 style="color: black" class="font-weight-bold mt-1 text-center">O pedido {{ $reg->id }} será enviado ao cliente. Escolha o entregador responsável.</h5><br>
-{{--                                <p style="margin-top: -20px; color: black">O cliente será informado que o pedido saiu para entrega.--}}
-{{--                                Selecione o entregador responsável pelo envio.</p>--}}
 
                                 <form id="readyOrder{{ $reg->id }}" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'prontoretiradaenvio','remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                     @csrf

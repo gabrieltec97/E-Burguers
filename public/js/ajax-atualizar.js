@@ -10,8 +10,6 @@ $(document).ready(() => {
                 var valorAnterior = $(".count").val();
                 var valorAtual = data.length;
                 var tocar = document.getElementById("newOne");
-                console.log(valorAtual);
-                console.log('ant' + valorAnterior);
 
                 function playAudio() {
                     tocar.play();
@@ -23,7 +21,7 @@ $(document).ready(() => {
                         location.reload();
                     }, 800)
                 }else if (valorAnterior > valorAtual){
-                    
+
                     setTimeout(function (){
                         location.reload();
                     }, 800)
