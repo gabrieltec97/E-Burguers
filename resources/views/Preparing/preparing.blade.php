@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" style="padding: 0px 0px;">
         <div class="row">
             <div class="col-lg-12 col-sm-12">
                 @if(session('msg'))
@@ -27,32 +27,32 @@
                     </script>
                 @endif
                 <div class="card card-prep-emp mb-4">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: linear-gradient(90deg, rgba(230,85,85,1) 45%, rgba(231,224,73,1) 76%);">
-                        <span class="text-white">Pedidos à serem preparados</span> <span class="badge bg-secondary text-white">{{ count($orders) }}</span></div>
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #2D2D2D;">
+                        <span class="text-white">Pedidos à serem preparados</span> <span class="badge" style="color: black; background: #FFFFFF">{{ count($orders) }}</span></div>
 
                     <div class="card-body first-table">
 
                         <table class="table table-bordered table-hover table-responsive-lg">
                             <thead>
                             <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">A preparar</th>
-                                <th scope="col">Detalhes</th>
-                                <th scope="col">Adicionais</th>
-                                <th scope="col">Tratativa</th>
+                                <th scope="col" style="color: black">Id</th>
+                                <th scope="col" style="color: black">A preparar</th>
+                                <th scope="col" style="color: black">Detalhes</th>
+                                <th scope="col" style="color: black">Adicionais</th>
+                                <th scope="col" style="color: black">Tratativa</th>
                             </tr>
                             </thead>
                             <tbody>
 
                                 @foreach($orders as $order)
                                   <tr style="cursor: pointer">
-                                    <td>#{{ $order->id }}</td>
-                                    <td title="Itens do pedido.">
+                                    <td style="color: black">#{{ $order->id }}</td>
+                                    <td title="Itens do pedido." style="color: black">
                                         @if($order->detached != '')
                                             <ul>
                                                 @foreach(explode(';', $order->detached) as $item)
                                                     @if($item != null)
-                                                        <li class="mt-2">{{$item}}.</li>
+                                                        <li class="mt-2" style="color: black">{{$item}}.</li>
                                                     @endif
                                                 @endforeach
                                             </ul>
@@ -68,13 +68,15 @@
                                           @if($order->clientComments != '')
                                               {{ $order->clientComments }}
                                           @else
-                                              <span>Sem comentários adicionados.</span>
+                                              <span style="color: black">Sem comentários adicionados.</span>
                                           @endif
                                       </td>
 
                                       <td>
                                           @if($order->extras != null)
-                                              <p class="text-success font-weight-bold">{{ $order->extras }}</p>
+                                              <p class="text-success font-weight-bold" style="color: black">{{ $order->extras }}</p>
+                                          @elseif(strripos($order->hamburguer, 'Adicionais'))
+                                              <p class="text-success font-weight-bold" style="color: black">Sim</p>
                                           @else
                                             <p class="text-danger font-weight-bold">Não</p>
                                           @endif
@@ -94,10 +96,6 @@
 
                             </tbody>
                         </table>
-
-                        <div class="col-12">
-                            <span style="">{{ $orders->links() }}</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -116,7 +114,7 @@
         function triggerModal(id){
 
             Swal.fire({
-                title: 'Este pedido está pronto? Verifique se foi feito corretamente.',
+                title: 'Este pedido está pronto? Verifique se foi preparado corretamente.',
                 icon: 'question',
                 showCancelButton: false,
                 showConfirmButton: false,

@@ -67,7 +67,7 @@ class PreparingController extends Controller
             return redirect()->route('home');
         }
 
-        $orders = DB::table('orders')->where('status', '=', 'Em preparo')->simplePaginate(6);
+        $orders = DB::table('orders')->where('status', '=', 'Em preparo')->get()->toArray();
 
         return view('Preparing.preparing', compact('orders'));
     }

@@ -222,7 +222,7 @@ class OrdersController extends Controller
 
         if ($tray->hamburguer != null && $tray->extras != null){
 
-            $tray->hamburguer = $tray->hamburguer . ' Adicionais: ' . $tray->extras . '.';
+            $tray->hamburguer = $tray->hamburguer . '. Adicionais: ' . $tray->extras . '.';
 
         }
         $tray->save();
