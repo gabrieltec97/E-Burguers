@@ -166,7 +166,7 @@ Route::get('/ajaxpreparo', 'HomeController@getPrepare')->name('prepajax');
 
 Route::get('/ajaxcozinha', 'HomeController@getKitchen')->name('cozjax');
 
-Route::get('/historicoPedidos', 'LiveSearch@index')->name('historicoPedidos');
+Route::get('/historicoPedidos', 'OrdersController@index')->name('historicoPedidos')->middleware('auth');;
 
 Route::get('/buscaPedidos', 'LiveSearch@action')->name('buscaPedidos');
 

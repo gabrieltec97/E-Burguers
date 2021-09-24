@@ -103,10 +103,9 @@
                                                     {{ $prep->status == 'Pedido registrado' ? 'background: #5bc0de; color: #fffcfc' : ''  }}
                                                     {{ $prep->status == 'Pronto' ? 'background: #FFD700; color: black' : ''  }}
                                                     {{ $prep->status == 'Em preparo' ? 'background: #FFD700; color: black' : ''  }}
-                                                    {{ $prep->status == 'Pronto para ser retirado no restaurante' ? 'background: #22e583; color: #fffcfc' : ''  }}
                                                         ">{{ $prep->status }}
                                                         @if($prep->status == 'Pronto')
-                                                            <span class="spinner-grow spinner-grow-sm mb-1 text-danger" role="status" aria-hidden="true"></span>
+                                                            <span class="spinner-grow spinner-grow-sm mb-1 text-danger" style="margin-bottom: 2.8px; margin-left: 4px" role="status" aria-hidden="true"></span>
                                                         @endif
                                                     </button>
                                             </td>
@@ -191,7 +190,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações do pedido</h5>
+                                                        <h5 class="modal-title" id="exampleModalLongTitle" style="margin-bottom: -13px">Informações do pedido</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -294,7 +293,7 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle" style="margin-bottom: -10px">Informações de entrega.</h5>
+                                                    <h5 class="modal-title" id="exampleModalLongTitle" style="margin-bottom: -13px">Informações de entrega.</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -322,8 +321,10 @@
                                                     @if($rd->deliverWay == 'Entrega em domicílio')
                                                         <b style="color: black">Endereço: </b><span style="color: black">{{ $rd->address }}</span> <br>
                                                     @endif
-                                                    <b class="text-success">Entregador: </b><span style="color: black">{{ $rd->deliverMan }}</span>
 
+                                                    @if($rd->deliverMan != null)
+                                                        <b class="text-success">Entregador: </b><span style="color: black">{{ $rd->deliverMan }}</span>
+                                                    @endif
                                                     <hr>
 
                                                     @if($rd->detached == '')

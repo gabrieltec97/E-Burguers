@@ -7,8 +7,8 @@ $(document).ready(() => {
     }
 
     function mostrarNotificacao2(){
-        const notificacao = new Notification("Pedido cancelado!", {
-            body: 'Poxa, infelizmente houve um cancelamento de pedido'
+        const notificacao2 = new Notification("Pedido cancelado!", {
+            body: 'Poxa, infelizmente houve um cancelamento de pedido.'
         });
     }
 
@@ -27,41 +27,6 @@ $(document).ready(() => {
                     tocar.play();
                 }
 
-                console.log(valorAtual);
-                console.log(valorAnterior);
-
-                // if (valorAtual < valorAnterior){
-                //
-                //     if (Notification.permission === "granted"){
-                //         mostrarNotificacao2();
-                //     }else if(Notification.permission !== 'denied'){
-                //         Notification.requestPermission().then(permission => {
-                //             if (permission === "granted"){
-                //                 mostrarNotificacao2();
-                //             }
-                //         })
-                //     }
-                //
-                //     setTimeout(function (){
-                //         location.reload();
-                //     }, 800);
-                // }else if (valorAnterior < valorAtual){
-                //
-                //     if (Notification.permission === "granted"){
-                //         mostrarNotificacao2();
-                //     }else if(Notification.permission !== 'denied'){
-                //         Notification.requestPermission().then(permission => {
-                //             if (permission === "granted"){
-                //                 mostrarNotificacao2();
-                //             }
-                //         })
-                //     }
-                //
-                //     setTimeout(function (){
-                //         location.reload();
-                //     }, 800)
-                // }
-
                 if (valorAtual > valorAnterior){
                    playAudio();
 
@@ -78,22 +43,23 @@ $(document).ready(() => {
                     setTimeout(function (){
                         location.reload();
                     }, 800)
-                }else if (valorAnterior > valorAtual){
-                    playAudio();
+                }
+
+                else if (valorAtual < valorAnterior){
 
                     if (Notification.permission === "granted"){
-                        mostrarNotificacao();
+                        mostrarNotificacao2();
                     }else if(Notification.permission !== 'denied'){
                         Notification.requestPermission().then(permission => {
                             if (permission === "granted"){
-                                mostrarNotificacao();
+                                mostrarNotificacao2();
                             }
                         })
                     }
 
                     setTimeout(function (){
                         location.reload();
-                    }, 800)
+                    }, 800);
                 }
 
                 $(".registereds").text(valorAtual);

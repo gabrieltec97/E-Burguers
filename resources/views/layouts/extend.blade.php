@@ -49,97 +49,89 @@
 
         <!-- Nav Item - Charts -->
         @can('Dashboard')
-        <li class="nav-item">
+        <li class="nav-item" title="Painel com informações resumidas sobre as vendas">
             <a class="nav-link" href="{{ route('dashboard') }}">
-                <i class="fas fa-tachometer-alt"></i>
+                <img src="{{ asset('logo/dashboard.png') }}" style="width: 25px; height: 25px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
                 <span class="font-weight-bold">Dashboard</span></a>
         </li>
         @endcan
 
         <!-- Nav Item - Charts -->
         @can('Pedidos (Híbrido)')
-        <li class="nav-item">
+        <li class="nav-item" title="Gerencie completamente os de pedidos">
             <a class="nav-link" href="{{ route('hybridHome') }}">
-                <i class="fas fa-tv"></i>
+                <img src="{{ asset('logo/comum.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
                 <span class="font-weight-bold">Gerenciamento de pedidos</span></a>
         </li>
         @endcan
 
         <!-- Nav Item - Charts -->
         @can('Pedidos (Comum)')
-        <li class="nav-item">
+        <li class="nav-item" title="Gerencie os pedidos em andamento">
             <a class="nav-link" href="{{ route('home') }}">
-                <i class="fas fa-hamburger"></i>
+                <img src="{{ asset('logo/dinner.png') }}" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
                 <span class="font-weight-bold">Pedidos em andamento</span></a>
         </li>
         @endcan
 
         <!-- Nav Item - Charts -->
         @can('Em Preparo')
-        <li class="nav-item">
+        <li class="nav-item" title="Pedidos para a equipe de cozinha preparar">
             <a class="nav-link" href="{{ route('emPreparo') }}">
-                <i class="fas fa-bread-slice"></i>
+                <img src="{{ asset('logo/cook.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
                 <span class="font-weight-bold">Para preparo</span></a>
         </li>
         @endcan
 
         <!-- Nav Item - Charts -->
         @can('Histórico de Pedidos')
-        <li class="nav-item">
+        <li class="nav-item" title="Veja detalhadamente cada pedido cadastrado">
             <a class="nav-link" href="{{ route('historicoPedidos') }}">
-                <i class="fas fa-history"></i>
+                <img src="{{ asset('logo/historico.png') }}" style="width: 28px; height: 28px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
                 <span class="font-weight-bold">Histórico de pedidos</span></a>
         </li>
         @endcan
 
-{{--        <!-- Nav Item - Charts -->--}}
-{{--        <li class="nav-item">--}}
-{{--            <a class="nav-link" href="{{ route('clientes.index') }}">--}}
-{{--                <i class="fas fa-user"></i>--}}
-{{--                <span class="font-weight-bold">Clientes</span></a>--}}
-{{--        </li>--}}
-
-        <!-- Nav Item - Charts -->
         @can('Cupons')
-        <li class="nav-item">
+        <li class="nav-item" title="Gerencie os cupons para atrair a clientela">
             <a class="nav-link" href="{{ route('cupons.index') }}">
-                <i class="fas fa-ticket-alt"></i>
+                <img src="{{ asset('logo/coupon.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
                 <span class="font-weight-bold">Cupons</span></a>
         </li>
         @endcan
 
         <!-- Nav Item - Charts -->
         @can('Gerenciamento de Usuários')
-        <li class="nav-item">
+        <li class="nav-item" title="Gerencie os funcionários que tem acesso ao sistema">
             <a class="nav-link" href="{{ route('gerenciamento') }}">
-                <i class="fas fa-users-cog"></i>
+                <img src="{{ asset('logo/usersconfig.png') }}" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
                 <span class="font-weight-bold">Gerenciamento de usuários</span></a>
         </li>
         @endcan
 
         <!-- Nav Item - Charts -->
         @can('Gerenciamento de Refeições')
-        <li class="nav-item">
+        <li class="nav-item" title="Gerencie os itens do cardápio e seus adicionais">
             <a class="nav-link" href="{{ route('refeicoes.index') }}">
-                <i class="fas fa-tasks"></i>
+                <img src="{{ asset('logo/advertsp.png') }}" style="width: 28px; height: 28px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
                 <span class="font-weight-bold">Gerenciamento de refeições</span></a>
         </li>
         @endcan
 
     <!-- Nav Item - Charts -->
         @can('Avaliações')
-            <li class="nav-item">
+            <li class="nav-item" title="Avaliações dos clientes para o estabelecimento e itens do cardápio.">
                 <a class="nav-link" href="{{ route('avaliacoesClientes') }}">
-                    <i class="far fa-thumbs-up"></i>
+                    <img src="{{ asset('logo/like.png') }}" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
                     <span class="font-weight-bold">Avaliações</span></a>
             </li>
         @endcan
 
         <!-- Nav Item - Charts -->
         @can('Informações Financeiras')
-        <li class="nav-item">
+        <li class="nav-item" title="Veja detalhadamente as informações financeiras e vendas">
             <a class="nav-link" href="{{ route('financeiro') }}">
-                <i class="fas fa-chart-bar"></i>
+                <img src="{{ asset('logo/graphic.png') }}" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
                 <span class="font-weight-bold">Informações Financeiras</span></a>
         </li>
         @endcan

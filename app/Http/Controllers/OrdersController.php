@@ -21,7 +21,15 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
+        if(!Auth::user()->hasPermissionTo('Histórico de Pedidos')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
+        $today = date('d/m/Y');
+        $query = DB::table('orders')->where('day', '=', $today)->get()->toArray();
+        $count = count($query);
+
+        return view('Orders.list', compact('count'));
     }
 
     public function clientsOrders()

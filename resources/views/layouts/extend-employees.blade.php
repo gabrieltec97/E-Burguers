@@ -81,7 +81,7 @@
                 @can('Em Preparo')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('emPreparo') }}">
-                            <i class="fas fa-bread-slice"></i>
+                            <img src="{{ asset('logo/cook.png') }}" title="Pedidos para preparo" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
                             <span class="font-weight-bold">Para preparo</span></a>
                     </li>
                 @endcan

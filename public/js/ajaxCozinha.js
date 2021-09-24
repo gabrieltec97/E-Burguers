@@ -1,8 +1,14 @@
 $(document).ready(() => {
 
     function mostrarNotificacao(){
-        const notificacao = new Notification("Hey! Uma nova notificação.", {
+        const notificacao = new Notification("Hey! Novo pedido.", {
             body: 'Temos um novo pedido para preparo, vamos nessa?'
+        });
+    }
+
+    function mostrarNotificacao2(){
+        const notificacao2 = new Notification("Poxa, pedido cancelado!", {
+            body: 'Infelizmente houve um cancelamento de pedido.'
         });
     }
 
@@ -21,7 +27,7 @@ $(document).ready(() => {
                     tocar3.play();
                 }
 
-                if (valorAnterior2 != valorAtual2){
+                if (valorAnterior2 < valorAtual2){
                     playAudio3();
 
                         if (Notification.permission === "granted"){
@@ -33,6 +39,23 @@ $(document).ready(() => {
                                 }
                             })
                         }
+
+                    setTimeout(function (){
+                        location.reload();
+                    }, 800)
+                }
+
+                else if (valorAnterior2 > valorAtual2){
+
+                    if (Notification.permission === "granted"){
+                        mostrarNotificacao2();
+                    }else if(Notification.permission !== 'denied'){
+                        Notification.requestPermission().then(permission => {
+                            if (permission === "granted"){
+                                mostrarNotificacao2();
+                            }
+                        })
+                    }
 
                     setTimeout(function (){
                         location.reload();

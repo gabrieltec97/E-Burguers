@@ -95,7 +95,9 @@
                                        {{ $reg->status == 'Pedido registrado' ? 'background: #5bc0de; color: #fffcfc' : ''  }}
                                        {{ $reg->status == 'Em preparo' ? 'background: #FFD700; color: black' : ''  }}
                                        {{ $reg->status == 'Pronto para ser retirado no restaurante' ? 'background: #22e583; color: #fffcfc' : ''  }}
-                                                ">{{ $reg->status }}</button></td>
+                                        ">{{ $reg->status == 'Pronto para ser retirado no restaurante' ? 'Aguardando retirada' : $reg->status  }}
+                                            </button>
+                                        </td>
                                         <td>
 
                                             <select name="teste" class="menuHibrido form-control" style="cursor:pointer;" id="{{ $reg->id }}" onchange="muda({{ $reg->id }})">
@@ -116,45 +118,47 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações de entrega.</h5>
+                                                        <h5 class="modal-title" id="exampleModalLongTitle" style="margin-bottom: -13px;">Informações de entrega.</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p class="text-center" style="color: black; font-size: 18px;">Passe estas informações ao responsável pela entrega.</p>
+                                                        @if($reg->deliverWay != 'Entrega em domicílio')
+                                                            <p class="text-center font-weight-bold" style="color: black; margin-top: -10px; font-size: 18px;">Pedido a ser retirado no restaurante.</p>
+                                                        @endif
 
-                                                        <b style="color: black">Pedido:</b> <span style="color: black">{{ $reg->id }}</span> <br>
+                                                        <b style="color: black">Pedido:</b> <span style="color: black">{{ $reg->id }}</span>
 
-                                                        <b style="color: black">Cliente:</b> <span style="color: black">{{ $reg->clientName }}</span> <br>
-                                                        {{--                                           Endereço: {{ $reg-> }} <br>--}}
+                                                        <b style="color: black"class="ml-2">Hora:</b> <span style="color: black">{{ $reg->hour }}</span>
+
+                                                        <b style="color: black" class="ml-2 text-primary">Valor total:</b> <span style="color: black"> {{ $reg->totalValue }}</span>
+
+                                                        @if($reg->payingMethod == 'Dinheiro')
+                                                            <b style="color: black" class="ml-2 text-primary">Troco para: </b> <span style="color: black">{{ $reg->payingValue }}</span><br>
+                                                        @else
+                                                            <br><b style="color: black" class="mt-2">Pagamento em cartão:</b> <span style="color: black">{{ $reg->payingMethod }}</span><br>
+                                                        @endif
+
+                                                        <b style="color: black; margin-top: 20px;">Cliente:</b> <span style="color: black">{{ $reg->clientName }}</span> <br>
+
+                                                        @if($reg->deliverWay == 'Entrega em domicílio')
+                                                            <b style="color: black">Endereço: </b><span style="color: black">{{ $reg->address }}</span> <br>
+                                                        @endif
+
+                                                        @if($reg->deliverMan != null)
+                                                            <b class="text-success">Entregador: </b><span style="color: black">{{ $reg->deliverMan }}</span>
+                                                        @endif
+                                                        <hr>
 
                                                         @if($reg->detached == '')
                                                             <b style="color: black">Itens: </b> <span style="color: black">{{ $reg->comboItem }},  {{ $reg->fries }}, {{ $reg->drinks }}</span><br><br>
                                                         @else
-                                                            <b style="color: black">Itens: </b> <span style="color: black">{{ $reg->detached }}</span><br>
-                                                        @endif
-
-                                                        <hr>
-
-                                                        @if($reg->payingMethod == 'Dinheiro')
-                                                            <b style="color: black">Valor total:</b> <span style="color: black"> {{ $reg->totalValue }}</span><br>
-                                                            <b style="color: black">Troco para: </b> <span style="color: black">{{ $reg->payingValue }}</span><br>
-                                                        @else
-                                                            <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $reg->payingMethod }}</span><br>
-                                                        @endif
-                                                        @if($reg->payingMethod != 'Dinheiro')
-                                                            <b style="color: black">Valor total:</b> <span style="color: black"> {{ $reg->totalValue }}</span><br>
-                                                        @endif
-                                                        @if($reg->deliverWay == 'Retirada no restaurante')
-                                                            <b style="color: red">Retirada no restaurante</b>
-                                                        @else
-                                                        <b style="color: black">Endereço: </b><span style="color: black">{{ $reg->address }}</span>
-                                                        @endif
-
-                                                        @if($reg->deliverMan != null)
-                                                            <br>
-                                                            <b style="color: black">Entregador:</b> <span style="color: black"> {{ $reg->deliverMan }}</span><br>
+                                                            @foreach(explode(';', $reg->detached) as $item)
+                                                                @if($item != null)
+                                                                    <li class="mt-2" style="color: black">{{$item}}.</li>
+                                                                @endif
+                                                            @endforeach
                                                         @endif
                                                     </div>
                                                     <div class="modal-footer">
