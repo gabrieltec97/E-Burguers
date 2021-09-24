@@ -191,48 +191,44 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações do pedido.</h5>
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Informações do pedido</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
                                                         @if($prep->deliverWay != 'Entrega em domicílio')
-                                                            <p class="text-center" style="color: black; font-size: 18px;">Pedido a ser retirado no restaurante.</p>
+                                                            <p class="text-center font-weight-bold" style="color: black; margin-top: -10px; font-size: 18px;">Pedido a ser retirado no restaurante.</p>
                                                         @endif
 
-                                                        <b style="color: black">Pedido:</b> <span style="color: black">{{ $prep->id }}</span> <br>
+                                                        <b style="color: black">Pedido:</b> <span style="color: black">{{ $prep->id }}</span>
 
-                                                        <b style="color: black">Hora:</b> <span style="color: black">{{ $prep->hour }}</span> <br>
+                                                        <b style="color: black"class="ml-2">Hora:</b> <span style="color: black">{{ $prep->hour }}</span>
 
-                                                        <b style="color: black">Cliente:</b> <span style="color: black">{{ $prep->clientName }}</span> <br>
-                                                        {{--                                           Endereço: {{ $reg-> }} <br>--}}
-
-                                                        @if($prep->detached == '')
-                                                            <b style="color: black">Itens: </b> <span style="color: black">{{ $prep->comboItem }},  {{ $prep->fries }}, {{ $prep->drinks }}</span><br><br>
-                                                        @else
-                                                           @foreach(explode(';', $prep->detached) as $item)
-                                                               @if($item != null)
-                                                                   <li class="mt-2" style="color: black">{{$item}}.</li>
-                                                               @endif
-                                                           @endforeach
-                                                        @endif
-
-                                                        <hr>
+                                                        <b style="color: black" class="ml-2 text-primary">Valor total:</b> <span style="color: black"> {{ $prep->totalValue }}</span>
 
                                                         @if($prep->payingMethod == 'Dinheiro')
-                                                            <b style="color: black">Valor total:</b> <span style="color: black"> {{ $prep->totalValue }}</span><br>
-                                                            <b style="color: black">Troco para: </b> <span style="color: black">{{ $prep->payingValue }}</span><br>
+                                                            <b style="color: black" class="ml-2 text-primary">Troco para: </b> <span style="color: black">{{ $prep->payingValue }}</span><br>
                                                         @else
-                                                            <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $prep->payingMethod }}</span><br>
-                                                                <b class="text-success">Valor total:</b> <span style="color: black"> {{ $prep->totalValue }}</span><br>
+                                                            <br><b style="color: black" class="mt-2">Pagamento em cartão:</b> <span style="color: black">{{ $prep->payingMethod }}</span><br>
                                                         @endif
 
+                                                        <b style="color: black; margin-top: 20px;">Cliente:</b> <span style="color: black">{{ $prep->clientName }}</span> <br>
+
                                                         @if($prep->deliverWay == 'Entrega em domicílio')
-                                                            <b style="color: black">Endereço:</b><span style="color: black">{{ $prep->address }}</span>
-                                                        @else
-                                                            <span class="text-danger font-weight-bold">Pedido a ser retirado no restaurante.</span>
+                                                            <b style="color: black">Endereço: </b><span style="color: black">{{ $prep->address }}</span>
                                                         @endif
+                                                        <hr>
+
+                                                            @if($prep->detached == '')
+                                                                <b style="color: black">Itens: </b> <span style="color: black">{{ $prep->comboItem }},  {{ $prep->fries }}, {{ $prep->drinks }}</span><br><br>
+                                                            @else
+                                                                @foreach(explode(';', $prep->detached) as $item)
+                                                                    @if($item != null)
+                                                                        <li class="mt-2" style="color: black">{{$item}}.</li>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
@@ -265,7 +261,7 @@
                         <thead>
                         <tr>
                             <th style="color: black">Id</th>
-                            <th style="color: black">Hora do pedido</th>
+                            <th style="color: black">Informações</th>
                             <th style="color: black">Tratativas</th>
                         </tr>
                         </thead>
@@ -305,12 +301,30 @@
                                                 </div>
                                                 <div class="modal-body">
 
-                                                    <b style="color: black">Pedido: </b> <span style="color: black">{{ $rd->id }}</span> <br>
+                                                    @if($rd->deliverWay != 'Entrega em domicílio')
+                                                        <p class="text-center font-weight-bold" style="color: black; margin-top: -10px; font-size: 18px;">Pedido a ser retirado no restaurante.</p>
+                                                    @endif
 
-                                                    <b style="color: black">Hora:</b> <span style="color: black">{{ $rd->hour }}</span> <br>
+                                                    <b style="color: black">Pedido:</b> <span style="color: black">{{ $rd->id }}</span>
 
-                                                    <b style="color: black">Cliente: </b> <span style="color: black">{{ $rd->clientName }}</span> <br>
-                                                    {{--                                           Endereço: {{ $reg-> }} <br>--}}
+                                                    <b style="color: black"class="ml-2">Hora:</b> <span style="color: black">{{ $rd->hour }}</span>
+
+                                                    <b style="color: black" class="ml-2 text-primary">Valor total:</b> <span style="color: black"> {{ $rd->totalValue }}</span>
+
+                                                    @if($rd->payingMethod == 'Dinheiro')
+                                                        <b style="color: black" class="ml-2 text-primary">Troco para: </b> <span style="color: black">{{ $rd->payingValue }}</span><br>
+                                                    @else
+                                                        <br><b style="color: black" class="mt-2">Pagamento em cartão:</b> <span style="color: black">{{ $rd->payingMethod }}</span><br>
+                                                    @endif
+
+                                                    <b style="color: black; margin-top: 20px;">Cliente:</b> <span style="color: black">{{ $rd->clientName }}</span> <br>
+
+                                                    @if($rd->deliverWay == 'Entrega em domicílio')
+                                                        <b style="color: black">Endereço: </b><span style="color: black">{{ $rd->address }}</span> <br>
+                                                    @endif
+                                                    <b class="text-success">Entregador: </b><span style="color: black">{{ $rd->deliverMan }}</span>
+
+                                                    <hr>
 
                                                     @if($rd->detached == '')
                                                         <b style="color: black">Itens: </b> <span style="color: black">{{ $rd->comboItem }},  {{ $rd->fries }}, {{ $rd->drinks }}</span><br><br>
@@ -321,24 +335,6 @@
                                                             @endif
                                                         @endforeach
                                                     @endif
-
-                                                    <hr>
-
-                                                    @if($rd->payingMethod == 'Dinheiro')
-                                                        <b style="color: black">Valor total: </b> <span style="color: black"> {{ $rd->totalValue }}</span><br>
-                                                        <b style="color: black">Troco para: </b> <span style="color: black">{{ $rd->payingValue }}</span><br>
-                                                    @else
-                                                        <b class="text-primary">Valor total: </b> <span style="color: black"> {{ $rd->totalValue }}</span><br>
-                                                        <b style="color: black">Pagamento em cartão:</b> <span style="color: black">{{ $rd->payingMethod }}</span><br>
-                                                    @endif
-
-                                                    @if($rd->deliverWay == 'Entrega em domicílio')
-                                                        <b style="color: black">Endereço: </b><span style="color: black">{{ $rd->address }}</span>
-                                                    @else
-                                                        <span class="text-danger font-weight-bold">Pedido a ser retirado no restaurante.</span>
-                                                    @endif
-                                                    <br>
-                                                    <b class="text-success">Entregador: </b><span style="color: black">{{ $rd->deliverMan }}</span>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>

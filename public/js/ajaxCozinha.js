@@ -1,5 +1,11 @@
 $(document).ready(() => {
 
+    function mostrarNotificacao(){
+        const notificacao = new Notification("Hey! Uma nova notificação.", {
+            body: 'Temos um novo pedido para preparo, vamos nessa?'
+        });
+    }
+
     setInterval(function () {
 
         $.ajax({type: 'GET',
@@ -17,6 +23,16 @@ $(document).ready(() => {
 
                 if (valorAnterior2 != valorAtual2){
                     playAudio3();
+
+                        if (Notification.permission === "granted"){
+                            mostrarNotificacao();
+                        }else if(Notification.permission !== 'denied'){
+                            Notification.requestPermission().then(permission => {
+                                if (permission === "granted"){
+                                    mostrarNotificacao();
+                                }
+                            })
+                        }
 
                     setTimeout(function (){
                         location.reload();

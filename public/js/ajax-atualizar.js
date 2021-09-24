@@ -1,5 +1,17 @@
 $(document).ready(() => {
 
+    function mostrarNotificacao(){
+        const notificacao = new Notification("Hey! Temos um novo pedido.", {
+            body: 'Um novo pedido foi cadastrado, confira!'
+        });
+    }
+
+    function mostrarNotificacao2(){
+        const notificacao = new Notification("Pedido cancelado!", {
+            body: 'Poxa, infelizmente houve um cancelamento de pedido'
+        });
+    }
+
     setInterval(function(){
 
         $.ajax({type: 'GET',
@@ -14,13 +26,70 @@ $(document).ready(() => {
                 function playAudio() {
                     tocar.play();
                 }
-                if (valorAtual > valorAnterior ){
+
+                console.log(valorAtual);
+                console.log(valorAnterior);
+
+                // if (valorAtual < valorAnterior){
+                //
+                //     if (Notification.permission === "granted"){
+                //         mostrarNotificacao2();
+                //     }else if(Notification.permission !== 'denied'){
+                //         Notification.requestPermission().then(permission => {
+                //             if (permission === "granted"){
+                //                 mostrarNotificacao2();
+                //             }
+                //         })
+                //     }
+                //
+                //     setTimeout(function (){
+                //         location.reload();
+                //     }, 800);
+                // }else if (valorAnterior < valorAtual){
+                //
+                //     if (Notification.permission === "granted"){
+                //         mostrarNotificacao2();
+                //     }else if(Notification.permission !== 'denied'){
+                //         Notification.requestPermission().then(permission => {
+                //             if (permission === "granted"){
+                //                 mostrarNotificacao2();
+                //             }
+                //         })
+                //     }
+                //
+                //     setTimeout(function (){
+                //         location.reload();
+                //     }, 800)
+                // }
+
+                if (valorAtual > valorAnterior){
                    playAudio();
+
+                    if (Notification.permission === "granted"){
+                        mostrarNotificacao();
+                    }else if(Notification.permission !== 'denied'){
+                        Notification.requestPermission().then(permission => {
+                            if (permission === "granted"){
+                                mostrarNotificacao();
+                            }
+                        })
+                    }
 
                     setTimeout(function (){
                         location.reload();
                     }, 800)
                 }else if (valorAnterior > valorAtual){
+                    playAudio();
+
+                    if (Notification.permission === "granted"){
+                        mostrarNotificacao();
+                    }else if(Notification.permission !== 'denied'){
+                        Notification.requestPermission().then(permission => {
+                            if (permission === "granted"){
+                                mostrarNotificacao();
+                            }
+                        })
+                    }
 
                     setTimeout(function (){
                         location.reload();

@@ -46,8 +46,8 @@
 
                                 @foreach($orders as $order)
                                   <tr style="cursor: pointer">
-                                    <td style="color: black">#{{ $order->id }}</td>
-                                    <td title="Itens do pedido." style="color: black">
+                                    <td style="color: black" data-toggle="modal" data-target="#exampleModalCenter">#{{ $order->id }}</td>
+                                    <td title="Itens do pedido." style="color: black" data-toggle="modal" data-target="#exampleModalCenter">
                                         @if($order->detached != '')
                                             <ul>
                                                 @foreach(explode(';', $order->detached) as $item)
@@ -64,7 +64,7 @@
                                             </ul>
                                         @endif
                                     </td>
-                                      <td title="Comentários que o cliente inseriu sobre este pedido.">
+                                      <td title="Comentários que o cliente inseriu sobre este pedido." data-toggle="modal" data-target="#exampleModalCenter">
                                           @if($order->clientComments != '')
                                               {{ $order->clientComments }}
                                           @else
@@ -72,7 +72,7 @@
                                           @endif
                                       </td>
 
-                                      <td>
+                                      <td data-toggle="modal" data-target="#exampleModalCenter">
                                           @if($order->extras != null)
                                               <p class="text-success font-weight-bold" style="color: black">{{ $order->extras }}</p>
                                           @elseif(strripos($order->hamburguer, 'Adicionais'))
@@ -91,9 +91,41 @@
 
                                       </td>
                                   </tr>
+
+                                  <!-- Modal -->
+                                  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered" role="document">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLongTitle">Informações do pedido.</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                  @if($order->detached != '')
+                                                      <ul>
+                                                          @foreach(explode(';', $order->detached) as $item)
+                                                              @if($item != null)
+                                                                  <li class="mt-2 font-weight-bold" style="color: black">{{$item}}.</li>
+                                                              @endif
+                                                          @endforeach
+                                                      </ul>
+                                                  @else
+                                                      <ul>
+                                                          <li class="font-weight-bold" style="color: black"><label>{{ $order->hamburguer }}</label></li>
+                                                          <li class="font-weight-bold" style="color: black"><label> {{ $order->fries }} </label></li>
+                                                          <li class="font-weight-bold" style="color: black"><label>{{ $order->drinks }}</label></li>
+                                                      </ul>
+                                                  @endif
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
                                 @endforeach
-
-
                             </tbody>
                         </table>
                     </div>
