@@ -116,10 +116,6 @@ $(".select-cargo").change(function () {
         $(".div-box").fadeOut('fast');
     })
 
-//Inserção de máscara na view de cupons
-
-    $(".compras-acima").mask('00.00');
-
 //Inserção de máscara na view de cadastro de funcionários.
 
     $(".empHour").mask('00:00 - 00:00');
@@ -188,8 +184,7 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
             $(".imagem-alteracao").removeAttr('hidden');
             $(".botao-salvar").attr('hidden', 'true');
         }else{
-            $(".p-mudancas").text('Você está fazendo alterações neste cupom. Por favor, revise as alterações antes de prosseguir com\n' +
-                'o salvamento.');
+            $(".p-mudancas").text('Você está fazendo alterações neste cupom. Por favor, revise-as antes de prosseguir com o salvamento.');
             $(".imagem-alteracao").attr('hidden', 'true');
             $(".botao-salvar").removeAttr('hidden', 'true');
         }
@@ -348,7 +343,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     $(".descricao2").text($(".descricao").val());
 })
 
-
 //Edição de dados do funcionário.
 
     $(".telFuncionario").mask('(00) 00000-0000');
@@ -356,8 +350,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     $(".horarioFuncionario").mask('00:00 - 00:00');
     $(".profileFuncionario").attr('readonly', 'true');
     $(".profileFuncionario").css('cursor', 'not-allowed');
-
-
 
     const nomeFunc = $(".nome-funcionario").val();
     const sobrenomeFunc = $(".sobrenome-funcionario").val();
@@ -956,7 +948,7 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
     });
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .cadastrar-cupom, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){

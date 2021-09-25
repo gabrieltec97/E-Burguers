@@ -32,7 +32,7 @@
                 <script>
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Feito!',
+                        title: 'Exclusão concluida!',
                         text: 'Cupom deletado com sucesso!',
                     })
                 </script>
@@ -51,13 +51,13 @@
         <div class="row">
             <div class="col-lg-8 col-sm-12 mb-5">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 25px;">Cadastrar cupom </div>
+                    <div class="card-header font-weight-bold bg-primary text-white" style="font-size: 25px;">Cadastrar cupom </div>
                     <div class="card-body">
                         <form action="{{ route('cupons.store') }}" method="post" class="form-group cupom-sub">
                             @csrf
                            <div class="row">
                                <div class="col-lg-6 col-12">
-                                   <label class="text-muted font-weight-bold">Nome do cupom</label>
+                                   <label class="font-weight-bold" style="color: black">Nome do cupom</label>
                                    <input type="text" name="couponName" class="form-control nome-cupom {{ ($errors->has('couponName') ? 'is-invalid' : '') }}" value="{{ old('couponName') }}" required>
                                    @if($errors->has('couponName'))
                                        <div class="invalid-feedback">
@@ -68,7 +68,7 @@
                                </div>
 
                                <div class="col-lg-6 mt-3 mt-lg-0 col-12">
-                                   <label class="text-muted font-weight-bold">Data de expiração</label>
+                                   <label class="font-weight-bold" style="color: black">Data de expiração</label>
                                    <input type="date" name="expireDate" class="form-control data-exp-cupom {{ ($errors->has('expireDate') ? 'is-invalid' : '') }}" value="{{ old('expireDate') }}" required>
                                    @if($errors->has('expireDate'))
                                        <div class="invalid-feedback">
@@ -79,8 +79,8 @@
                                    <label class="text-danger mt-2 font-weight-bold cupom-expire2" style="font-size: 13px">A data de expiração não pode ser menor ou igual a data atual.</label>
                                </div>
 
-                               <div class="col-lg-12 mt-3 mt-lg-4 col-12">
-                                   <label class="text-muted font-weight-bold">Desconto a ser aplicado</label>
+                               <div class="col-lg-6 mt-3 mt-lg-4 col-12">
+                                   <label class="font-weight-bold" style="color: black">Desconto a ser aplicado</label>
                                    <select class="form-control select-desconto {{ ($errors->has('disccount') ? 'is-invalid' : '') }}" name="disccount" required>
                                        <option value="" selected hidden>Selecione</option>
                                        <option value="5% de desconto"{{ old('disccount') == '5% de desconto' ? 'selected' : '' }}>5% de desconto</option>
@@ -103,8 +103,8 @@
                                    @endif
                                </div>
 
-                               <div class="col-lg-12 mt-4 col-12">
-                                   <label class="text-muted font-weight-bold">Nas compras acima de R$:</label>
+                               <div class="col-lg-6 mt-4 col-12">
+                                   <label class="font-weight-bold" style="color: black">Nas compras acima de R$:</label>
                                    <input type="text" name="disccountRule" autocomplete="off" class="form-control compras-acima {{ ($errors->has('disccountRule') ? 'is-invalid' : '') }}" value="{{ old('disccountRule') }}" required>
                                    @if($errors->has('disccountRule'))
                                        <div class="invalid-feedback">
@@ -124,23 +124,23 @@
 
             <div class="col-lg-4 col-sm-12 mt-3 mb-5 mt-md-0">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-black-50" style="font-size: 18px; background-color: #00FA9A">Cupons ativos</div>
+                    <div class="card-header font-weight-bold bg-primary text-white" style="font-size: 18px;">Cupons ativos</div>
 
                     <div class="card-body">
                         <table class="table table-responsive table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col">Cupom</th>
-                                <th scope="col">Desconto</th>
-                                <th scope="col">Expiração</th>
+                                <th scope="col" style="color: black">Cupom</th>
+                                <th scope="col" style="color: black">Desconto</th>
+                                <th scope="col" style="color: black">Expiração</th>
                             </tr>
                             </thead>
                             <tbody>
                                 @foreach($coupons as $coupon)
                                     <tr>
-                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold" style="text-decoration: none" title="Clique para gerenciar este cupom">{{ $coupon->name }}</a></td>
-                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold" style="text-decoration: none" title="Clique para gerenciar este cupom">{{ $coupon->disccount }}</a></td>
-                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold" style="text-decoration: none" title="Clique para gerenciar este cupom">{{ $coupon->expireDate }}</a></td>
+                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold text-dark" style="text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->name }}</a></td>
+                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold text-dark" style="text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->disccount }}</a></td>
+                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold text-dark" style="text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->expireDate }}</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -79,45 +79,45 @@
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Atenção!</h5>
+                                                <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle" style="color: black; margin-bottom: -5px">Revise as alterações</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="font-weight-bold mb-4 p-mudancas text-center"></p>
+                                                <p class="font-weight-bold mb-2 p-mudancas text-center" style="color: black"></p>
 
                                                 <img src="{{ asset('logo/cara.svg') }}" class="imagem-alteracao" style="width: 100px; margin-left: 40%; height: 100px" hidden>
                                                 <div class="row">
 
                                                     <div class="col-6 div-novo-nome" hidden>
-                                                        <p class="font-weight-bold text-primary text-center">Nome do cupom</p>
-                                                        <p class="font-weight-bold text-center">Nome anterior: <span class="text-danger">{{ $coupon->name }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo nome: <span class="novo-nome-cupom text-success"></span></p>
+                                                        <p class="font-weight-bold text-primary text-center" style="color: black">Nome do cupom</p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Nome anterior: <span class="text-danger">{{ $coupon->name }}</span></p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Novo nome: <span class="novo-nome-cupom text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-nova-data" hidden>
-                                                        <p class="font-weight-bold text-center text-primary">Data de expiração</p>
-                                                        <p class="font-weight-bold text-center">Data anterior: <span class="text-danger">{{ $coupon->expireDate }}</span></p>
-                                                        <p class="font-weight-bold text-center">Nova data: <span class="nova-data text-success"></span></p>
+                                                        <p class="font-weight-bold text-center text-primary" style="color: black">Data de expiração</p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Data anterior: <span class="text-danger">{{ $coupon->expireDate }}</span></p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Nova data: <span class="nova-data text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 mt-4 div-novo-desconto" hidden>
-                                                        <p class="font-weight-bold text-center">Desconto aplicado</p>
-                                                        <p class="font-weight-bold text-center">Anterior: <span class="text-danger">{{ $coupon->disccount }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo: <span class="novo-desconto text-success"></span></p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Desconto aplicado</p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Anterior: <span class="text-danger">{{ $coupon->disccount }}</span></p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Novo: <span class="novo-desconto text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 mt-4 div-novo-valor" hidden>
-                                                        <p class="font-weight-bold text-center">Valor compra mínimo</p>
-                                                        <p class="font-weight-bold text-center">Valor compra anterior: <span class="text-danger">{{ $coupon->disccountRule }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo valor compra: <span class="novo-valor text-success"></span></p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Valor de compra mínimo</p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Valor compra anterior: <span class="text-danger">{{ $coupon->disccountRule }}</span></p>
+                                                        <p class="font-weight-bold text-center" style="color: black">Novo valor compra: <span class="novo-valor text-success"></span></p>
                                                     </div>
                                                 </div>
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar à edição</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Voltar à edição</button>
                                                 <button type="submit" class="btn btn-success botao-salvar">Salvar alterações</button>
                                             </div>
                                         </div>
@@ -126,7 +126,7 @@
                             </div>
                         </form>
                         <div class="col-12 ml-3 mt-5 d-flex justify-content-end">
-                            <button data-toggle="modal" data-target="#exampleModalCenterDelete" class="btn btn-danger salvamento-alteracoes-cupom mr-2">Deletar Cupom</button>
+                            <button class="btn btn-danger salvamento-alteracoes-cupom mr-2" onclick="deleteThis()">Deletar Cupom</button>
                             <button data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary salvamento-alteracoes-cupom">Salvar alterações</button>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
             </div>
 
 
-            <form action="{{ route('cupons.destroy', $coupon->id) }}" method="post">
+            <form id="couponDelete" action="{{ route('cupons.destroy', $coupon->id) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <!-- Modal -->
@@ -148,8 +148,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h5 class="font-weight-bold text-muted">Tem certeza que deseja excluir este cupom? Ele não ficará mais acessível e não poderá ser
-                                    recuperado.</h5>
+                                <h5 class="font-weight-bold text-muted">Tem certeza que deseja excluir este cupom? E</h5>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
@@ -159,6 +158,38 @@
                     </div>
                 </div>
             </form>
+
+            @if(session('msg-2'))
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Cupom não alterado!',
+                        text: 'Já existe um cupom registrado com este nome e data, consulte a lista de cupons ativos.',
+                    })
+            </script>
+    @endif
+
+            <script>
+               function deleteThis(){
+                   Swal.fire({
+                       icon: 'warning',
+                       title: 'Deseja excluir este cupom?',
+                       showCancelButton: false,
+                       showConfirmButton: false,
+                       html: '<button type="button" class="btn btn-success mt-2 fechar">Voltar</button>' +
+                           '<button type="button" class="btn btn-danger mt-2 ml-4 deleteNow">Deletar cupom</button>'
+                   });
+
+                   $(".fechar").on('click', function (){
+                       Swal.close()
+                   })
+
+                   $(".deleteNow").on('click', function (){
+                       $(this).html('<div class="spinner-border text-light" role="status"></div>');
+                       $("#couponDelete").submit();
+                   })
+               }
+            </script>
 @endsection
 
 

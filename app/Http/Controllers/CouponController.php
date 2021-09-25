@@ -159,14 +159,23 @@ class CouponController extends Controller
 
         $request->validate($rules, $messages);
 
-        $coupon = Coupon::find($id);
+        $coupons = DB::table('coupons')
+            ->get()->toArray();
 
-        $coupon->name = $request->couponName;
-        $coupon->expireDate = $request->expireDate;
-        $coupon->disccount = $request->disccount;
-        $coupon->disccountRule = $request->disccountRule;
+        foreach ($coupons as $c){
+            if ($c->name == $request->couponName && $c->expireDate == $request->expireDate && $c->id == $id){
+                $coupon = Coupon::find($id);
 
-        $coupon->save();
+                $coupon->name = $request->couponName;
+                $coupon->expireDate = $request->expireDate;
+                $coupon->disccount = $request->disccount;
+                $coupon->disccountRule = $request->disccountRule;
+
+                $coupon->save();
+            }elseif ($c->name == $request->couponName && $c->expireDate == $request->expireDate && $c->id != $id){
+                return back()->withInput()->with('msg-2', '.');
+            }
+        }
 
         return redirect(route('cupons.index'))->with('msg-4', '.');
     }
