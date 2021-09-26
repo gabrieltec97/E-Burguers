@@ -168,7 +168,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect(route('gerenciamento'))->with('msg', 'Usuário cadastrado com sucesso!');
+        return redirect(route('gerenciamento'))->with('msg', $user->id);
     }
 
     /**

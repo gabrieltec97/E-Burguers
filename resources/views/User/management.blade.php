@@ -1,4 +1,5 @@
 @extends('layouts.extend')
+<script src="{{ asset('js/jquery.js') }}"></script>
 
 @section('title')
     Gestão de funcionários
@@ -12,9 +13,16 @@
                     <script>
                         Swal.fire({
                             icon: 'success',
-                            title: 'Tudo certo!',
-                            text: '{{ session('msg') }}',
-                        })
+                            title: 'Funcionário cadastrado!',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            html:'<button type="button" class="btn btn-success mt-2 configureProfile">Configurar perfil</button>'
+                        });
+
+                        $(".configureProfile").on("click", function (){
+                            window.location.href = '/E-Pedidos/public/user/{{ session('msg') }}/roles';
+                            console.log('click');
+                        });
                     </script>
                 @endif
 
@@ -42,10 +50,10 @@
 
                     <div class="card-body first-table">
 
-                        <div class="mb-1 d-flex justify-content-end">
+                        <div class="mb-1">
                             <a href="{{ route('usuario.create') }}" title="Cadastre um novo funcionário para usar o sistema" class="cadastrar-link" style="cursor: pointer; text-decoration: none;">
                                 <i class="fas fa-user-plus"></i>
-                                <label class="ml-1 cadastrar-link font-weight-bold" style="cursor: pointer;">Cadastrar funcionário</label>
+                                <label class="ml-1 cadastrar-link font-weight-bold" style="cursor: pointer;">Novo funcionário</label>
                             </a>
                         </div>
 
@@ -61,10 +69,10 @@
                             <tbody>
                             @foreach($employees as $employee)
                                 <tr>
-                                    <td class="font-weight-bold"><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->name }} {{ $employee->surname }}</a></td>
-                                    <td class="font-weight-bold"><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->phone }} </a></td>
-                                    <td class="font-weight-bold"><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->workingTime }} </a></td>
-                                    <td class="font-weight-bold"><a href="{{ route('userRoles', ['user' => $employee->id]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Configurar perfil</a></td>
+                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->name }} {{ $employee->surname }}</a></td>
+                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->phone }} </a></td>
+                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->workingTime }} </a></td>
+                                    <td><a href="{{ route('userRoles', ['user' => $employee->id]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Configurar perfil</a></td>
                                 </tr>
                             @endforeach
                             </tbody>

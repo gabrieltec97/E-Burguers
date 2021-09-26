@@ -55,10 +55,10 @@
                         <table class="table table-bordered table-hover table-responsive">
                             <thead>
                             <tr>
-                                <th scope="col" class="text-primary">Nome</th>
-                                <th scope="col" class="text-primary">Status</th>
-                                <th scope="col" class="text-primary">Valor</th>
-                                <th scope="col" class="text-primary">Participa do combo</th>
+                                <th scope="col" style="color: black">Nome</th>
+                                <th scope="col" style="color: black">Status</th>
+                                <th scope="col" style="color: black">Valor</th>
+                                <th scope="col" style="color: black">Participa do combo</th>
                             </tr>
                             </thead>
                             <tbody>

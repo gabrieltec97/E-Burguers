@@ -184,7 +184,7 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Voltar</button>
                                                 <button type="submit" class="btn btn-success botao-salvar">Salvar alterações</button>
                                             </div>
                                         </div>
@@ -193,8 +193,8 @@
                             </form>
                         </div>
                         <div class="col-12 mt-5 d-flex justify-content-end" style="margin-bottom: -20px">
-                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter2" class="btn btn-danger salvar-alteracoes-func mb-3 mr-3 font-weight-bold">Deletar registro</button>
-                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary salvar-alteracoes-func mb-3 font-weight-bold">Salvar alterações</button>
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter2" class="btn btn-danger salvar-alteracoes-func mb-3 mr-3">Deletar registro</button>
+                            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary salvar-alteracoes-func mb-3">Salvar alterações</button>
                         </div>
                     </div>
                 </div>
@@ -222,8 +222,8 @@
                       </span>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success font-weight-bold" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger font-weight-bold deletar-func">Deletar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger deletar-func">Deletar</button>
                     </div>
                 </div>
             </div>

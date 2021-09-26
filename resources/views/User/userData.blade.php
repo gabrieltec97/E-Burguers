@@ -23,33 +23,59 @@
                     <div class="card-body">
                         <div class="container-fluid">
                                 <div class="row">
-
-                                    <div class="col-12 col-lg-5 mb-lg-5">
-                                        <img src="{{ asset('logo/user.png') }}" style="width: 400px; height: 400px;">
+                                    <div class="col-12 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Nome</label>
+                                        <input type="text" placeholder="Apenas o nome" class="form-control" value="{{ $user['name'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
                                     </div>
 
-                                    <div class="col-12 col-lg-6">
-                                        <label class="font-weight-bold" style="color: black;"><span style="font-size: 16px" class="font-weight-bold">Nome:</span><span class="text-primary"> {{ $user['name'] }} {{ $user['surname'] }}</span></label><br>
-                                        <label class="font-weight-bold" style="color: black;"><span style="font-size: 16px" class="font-weight-bold">Endereço:</span><span class="text-primary"> {{ $user['address'] }}</span></label><br>
-                                        <label class="font-weight-bold" style="color: black;"><span style="font-size: 16px" class="font-weight-bold">Bairro:</span><span class="text-primary"> {{ $user['district'] }}</span></label>
-                                        <br>
-                                        <label class="font-weight-bold" style="color: black;"><span style="font-size: 16px" class="font-weight-bold">Telefone:</span><span class="text-primary"> {{ $user['phone'] }}</span></label>
-                                        <br>
-                                        <label class="font-weight-bold" style="color: black;"><span style="font-size: 16px" class="font-weight-bold">Telefone fixo:</span><span class="text-primary"> {{ ($user['fixedPhone'] != '') ? $user['fixedPhone']: 'Não informado' }}</span></label>
-                                        <br>
-                                        <label class="font-weight-bold" style="color: black;"><span style="font-size: 16px" class="font-weight-bold">E-mail:</span><span class="text-primary"> {{ ($user['email'] == '')?'Não informado': $user['email'] }}</span></label>
-                                        <br>
-                                        <label class="font-weight-bold" style="color: black;"><span style="font-size: 16px" class="font-weight-bold">Horário de trabalho:</span><span class="text-primary"> {{ $user['workingTime'] }}</span></label>
-                                        <br>
-
-                                        <a href="{{ route('usuario.edit', $user['id']) }}" class="btn btn-primary mt-5"><i class="fas fa-user-edit mr-2"></i>Editar dados cadastrais</a>
+                                    <div class="col-12 mt-3 mt-md-0 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Sobrenome(s)</label>
+                                        <input type="text" class="form-control" value="{{ $user['surname'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
                                     </div>
 
+                                    <div class="col-12 mt-3 mt-md-0 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Telefone</label>
+                                        <input type="text"  class="form-control user-Phone" value="{{ $user['phone'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
+                                    </div>
 
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Telefone fixo (Opcional)</label>
+                                        <input type="text" class="form-control userFixedPhone" value="{{ $user['fixedPhone'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
+
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Endereço</label>
+                                        <input type="text" class="form-control" value="{{ $user['address'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
+
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Bairro (Modo cliente)</label>
+                                        <input type="text" value="{{ $user['district'] }}" class="form-control" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
+
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Horário de serviço</label>
+                                        <input type="text" class="form-control empHour" value="{{ $user['workingTime'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
+
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold empEmail" style="color: black">E-mail</label>
+                                        <input type="email" class="form-control empEmail" value="{{ $user['email'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
+                                    </div>
+
+                                    <div class="col-12 mt-4 d-flex justify-content-end">
+                                        <a href="{{ route('usuario.edit', $user['id']) }}" class="btn btn-primary">Editar cadastro</a>
+                                    </div>
                                 </div>
                         </div>
                     </div>
-                </div>
+
+                                </div>
+                        </div>
             </div>
         </div>
     </div>
