@@ -32,6 +32,10 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <div class="col-12 mt-4">
+                                    <span class="font-weight-bold" style="color: black">Total: <span class="font-weight-normal">{{ $total == 1 ? $total . ' entrega.' : $total . ' entregas.' }}</span> </span>
+                                </div>
                             </div>
                     </div>
                 </div>

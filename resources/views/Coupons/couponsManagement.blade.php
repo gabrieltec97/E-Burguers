@@ -138,9 +138,9 @@
                             <tbody>
                                 @foreach($coupons as $coupon)
                                     <tr>
-                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold text-dark" style="text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->name }}</a></td>
-                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold text-dark" style="text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->disccount }}</a></td>
-                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold text-dark" style="text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->expireDate }}</a></td>
+                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" style="color: #49e183; text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->name }}</a></td>
+                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" style="color: cornflowerblue; text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->disccount }}</a></td>
+                                        <td><a href="{{ route('cupons.edit', $coupon->id) }}" class="font-weight-bold" style="color: red; text-decoration: none;" title="Clique para gerenciar este cupom">{{ $coupon->expireDate }}</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

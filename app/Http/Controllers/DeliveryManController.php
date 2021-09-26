@@ -77,6 +77,7 @@ class DeliveryManController extends Controller
         $deliveryMan = DeliveryMan::find($id);
         $districts = deliver::all();
         $count = array();
+        $total = 0;
 
         if ($deliveryMan == null){
             return redirect()->back();
@@ -89,9 +90,10 @@ class DeliveryManController extends Controller
                 ->get()->toArray();
 
             array_push($count, [1 => $value->name, 2 => count($delivers)]);
+            $total += count($delivers);
         }
 
-        return view('Deliver.deliverManDelivers', compact('deliveryMan', 'count'));
+        return view('Deliver.deliverManDelivers', compact('deliveryMan', 'count', 'total'));
     }
 
     /**

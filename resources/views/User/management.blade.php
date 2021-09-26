@@ -38,24 +38,24 @@
                     </script>
                 @endif
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Funcionários cadastrados</div>
+                        <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: #2E21ED">Funcionários cadastrados</div>
 
                     <div class="card-body first-table">
 
                         <div class="mb-1 d-flex justify-content-end">
-                            <a href="{{ route('usuario.create') }}" class="cadastrar-link">
+                            <a href="{{ route('usuario.create') }}" title="Cadastre um novo funcionário para usar o sistema" class="cadastrar-link" style="cursor: pointer; text-decoration: none;">
                                 <i class="fas fa-user-plus"></i>
-                                <label class="ml-1 cadastrar-link">Cadastrar funcionário</label>
+                                <label class="ml-1 cadastrar-link font-weight-bold" style="cursor: pointer;">Cadastrar funcionário</label>
                             </a>
                         </div>
 
                         <table class="table table-bordered table-hover table-responsive-lg">
                             <thead>
                             <tr>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Telefone</th>
-                                <th scope="col">Horário de serviço</th>
-                                <th scope="col">Perfis de usuário</th>
+                                <th scope="col" style="color: black;">Nome</th>
+                                <th scope="col" style="color: black;">Telefone</th>
+                                <th scope="col" style="color: black;">Horário de serviço</th>
+                                <th scope="col" style="color: black;">Perfis de usuário</th>
                             </tr>
                             </thead>
                             <tbody>

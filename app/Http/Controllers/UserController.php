@@ -125,7 +125,7 @@ class UserController extends Controller
             'empName' => 'required|min:3',
             'empSurname' => 'required|min:3',
             'empPhone' => 'required|min:10',
-            'empAddress' => 'required|min:10',
+            'empAddress' => 'required|min:5',
             'empWorkingTime' => 'required',
             'district' => 'required'
 
@@ -144,6 +144,14 @@ class UserController extends Controller
         ];
 
         $request->validate($rules, $messages);
+
+        $checkEmail = User::all();
+
+        foreach ($checkEmail as $e => $value){
+            if ($value->email == $request->empEmail){
+                return redirect()->back()->withInput()->with('msg-error', '.');
+            }
+        }
 
 
         $user = new User();
@@ -193,8 +201,9 @@ class UserController extends Controller
         }
 
         $user = User::find($id);
+        $places = deliver::all();
 
-        return view('User.employeeEdit', compact('user'));
+        return view('User.employeeEdit', compact('user', 'places'));
     }
 
     /**
@@ -246,6 +255,8 @@ class UserController extends Controller
         $user->fixedPhone = $request->empFixedPhone;
         $user->address = $request->empAddress;
         $user->workingTime = $request->empWorkingTime;
+        $user->district = $request->district;
+        $user->email = $request->empEmail;
         $user->save();
 
         if($request->empSenha != ''){
@@ -253,7 +264,7 @@ class UserController extends Controller
             $userPassword->save();
         }
 
-        return redirect()->route('gerenciamento')->with('msg', 'Dados alterados com sucesso!');
+        return redirect()->route('usuario.show', $id)->with('msg', 'Dados alterados com sucesso!');
     }
 
     /**

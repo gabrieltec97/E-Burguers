@@ -184,7 +184,7 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
             $(".imagem-alteracao").removeAttr('hidden');
             $(".botao-salvar").attr('hidden', 'true');
         }else{
-            $(".p-mudancas").text('Você está fazendo alterações neste cupom. Por favor, revise-as antes de prosseguir com o salvamento.');
+            $(".p-mudancas").text('Revise as alterações antes de prosseguir com o salvamento.');
             $(".imagem-alteracao").attr('hidden', 'true');
             $(".botao-salvar").removeAttr('hidden', 'true');
         }
@@ -352,6 +352,8 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     $(".profileFuncionario").css('cursor', 'not-allowed');
 
     const nomeFunc = $(".nome-funcionario").val();
+    const emailFunc = $(".empEmail2").val();
+    const bairroFunc = $(".userDistrict").val();
     const sobrenomeFunc = $(".sobrenome-funcionario").val();
     const telFunc = $(".telFuncionario").val();
     const fixoFunc =  $(".fixoFuncionario").val();
@@ -361,15 +363,14 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".salvar-alteracoes-func").on("click", function () {
 
-        if(nomeFunc == $(".nome-funcionario").val() && sobrenomeFunc == $(".sobrenome-funcionario").val() && telFunc == $(".telFuncionario").val() && fixoFunc == $(".fixoFuncionario").val() && enderecoFunc == $(".enderecoFuncionario").val() && horarioFunc == $(".horarioFuncionario").val() && profileFunc == $(".profileFuncionario").val() && $(".senhaFuncionario").val() == ''){
+        if(bairroFunc == $(".userDistrict").val() && emailFunc == $(".empEmail2").val() && nomeFunc == $(".nome-funcionario").val() && sobrenomeFunc == $(".sobrenome-funcionario").val() && telFunc == $(".telFuncionario").val() && fixoFunc == $(".fixoFuncionario").val() && enderecoFunc == $(".enderecoFuncionario").val() && horarioFunc == $(".horarioFuncionario").val() && profileFunc == $(".profileFuncionario").val() && $(".senhaFuncionario").val() == ''){
 
             $(".func-mudancas").text("Você não efetuou nenhuma alteração.");
             $(".func-mudancas").css('text-align', 'center');
             $(".imagem-alteracao").removeAttr('hidden');
             $(".botao-salvar").attr('hidden', 'true');
         }else{
-            $(".func-mudancas").text('Você está fazendo alterações nos dados cadastrais deste funcionário. Por favor, revise as alterações antes de prosseguir com\n' +
-                'o salvamento. Suas alterações são:');
+            $(".func-mudancas").text('Revise as alterações antes de prosseguir com o salvamento.');
             $(".func-mudancas").css('text-align', 'left');
             $(".imagem-alteracao").attr('hidden', 'true');
             $(".botao-salvar").removeAttr('hidden', 'true');
@@ -380,6 +381,20 @@ $(".btn-cadastrar-refeicao").on("click", function () {
             $(".novo-nome").text($(".nome-funcionario").val());
         }else{
             $(".div-nome-func").attr('hidden', 'true');
+        }
+
+        if(emailFunc != $(".empEmail2").val()){
+            $(".div-email-func").removeAttr('hidden', 'true');
+            $(".novo-email").text($(".empEmail2").val());
+        }else{
+            $(".div-email-func").attr('hidden', 'true');
+        }
+
+        if(bairroFunc != $(".userDistrict").val()){
+            $(".div-bairro-func").removeAttr('hidden', 'true');
+            $(".novo-bairro").text($(".userDistrict").val());
+        }else{
+            $(".div-bairro-func").attr('hidden', 'true');
         }
 
         if(sobrenomeFunc != $(".sobrenome-funcionario").val()){
@@ -948,11 +963,13 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
     });
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .cadastrar-cupom, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){
-      $('.cadastrar-taxa').text('Cadastrar')
+      $('.cadastrar-taxa').text('Cadastrar');
+      $('.cadastrar-cupom').text('Cadastrar cupom');
+      $('.cadastrar-funcionario').html('<i class="fas fa-user-plus mr-2"></i>Cadastrar funcionário');
   }, 3000)
 });
 
