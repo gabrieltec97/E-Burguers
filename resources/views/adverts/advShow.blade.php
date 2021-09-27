@@ -47,34 +47,82 @@
                         <div class="container-fluid">
                             <div class="row">
 
-                                <div class="col-12 col-lg-6 mb-4 mb-lg-0">
-                                    <img src="{{ asset($meal->picture) }}" style="margin-top: 30px" class="img-fluid" alt="">
+                                <div class="col-12 col-lg-4 mb-4 mb-lg-0">
+                                    <img src="{{ asset($meal->picture) }}" style="margin-top: 10px; width: 300px; height: 300px; border-radius: 5px" class="img-fluid" alt="">
                                 </div>
 
-                                <div class="col-12 col-lg-6 mt-4 mt-lg-0">
-                                    <label class="text-muted font-weight-bold mt-3"><span style="font-size: 16px" class="text-muted font-weight-bold">Nome:</span><span class="text-primary"> {{ $meal->name }} </span></label><br>
-                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Valor:</span><span class="text-primary"> {{ $meal->value }}</span></label>
-                                    <br>
-                                    @if($meal->foodType != 'Bebida')
-                                        @if($meal->ingredients != null)
-                                            <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Ingredientes:</span><span class="text-primary"> {{$meal->ingredients}} </span></label>
+                                <div class="col-12 col-lg-8 mt-4 mt-lg-0">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Nome</label>
+                                                <input type="text" value="{{ $meal->name }}" class="form-control w-100" title="{{ $meal->name }}" readonly>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Tipo
+                                                @if($meal->foodType == 'Hamburguer')
+                                                    <i class="fas fa-hamburger ml-1 text-dark" title="Este item é do tipo hamburguer" style="cursor:pointer;"></i>
+                                                @elseif($meal->foodType == 'Bebida')
+                                                    <i class="fas fa-wine-glass-alt ml-1 text-danger" title="Este item é uma bebida" style="cursor:pointer;"></i>
+                                                @elseif($meal->foodType == 'Sobremesa')
+                                                    <i class="fas fa-ice-cream ml-1" style="color: lightpink; cursor:pointer;" title="Este item é uma sobremesa"></i>
+                                                @elseif($meal->foodType == 'Acompanhamento')
+                                                    <i class="fas fa-cookie-bite ml-1 text-info" title="Este item é um acompanhamento" style="cursor:pointer;"></i>
+                                                @endif
+
+                                            </label>
+                                                <input type="text" value="{{ $meal->foodType }}" class="form-control w-100" title="Apenas visualização." readonly>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Valor <i class="fas fa-dollar-sign ml-1 text-success" style="cursor:pointer;" title="Valor que o cliente pagará por este item"></i></label>
+                                                <input type="text" value="{{ $meal->value }}" class="form-control w-100" title="Apenas visualização." readonly>
+                                        </div>
+
+                                        <div class="col-4 mt-4">
+                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Participa do combo</label>
+                                            <input type="text" value="{{ $meal->combo }}" class="form-control w-100" title="Informação se este item participa do combo." readonly>
+                                        </div>
+
+                                        @if($meal->combo == 'Sim')
+                                            <div class="col-4 mt-4">
+                                                <label style="font-size: 16px; color: black;" class="font-weight-bold">Valor no combo <i class="fas fa-hand-holding-usd ml-1 text-primary" style="cursor:pointer;" title="Valor que o cliente paga por este item no combo"></i></label>
+                                                <input type="text" value="{{ $meal->comboValue }}" class="form-control w-100"  title="Apenas visualização." readonly>
+                                            </div>
                                         @endif
-                                        @if($meal->extras != null)
-                                            <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Adicionais:</span><span class="text-primary"> {{$meal->extras}} </span></label>
+
+                                        <div class="col-4 mt-4">
+                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Nota de avaliação <i class="fas fa-star text-warning ml-1" style="cursor:pointer;" title="Nota média com base nas avaliações dos clientes"></i></label>
+                                            <input type="text" value="{{ round($meal->finalGrade, 1) }}" class="form-control w-100" title="{{ $meal->ratingAmount == null ? 'Este item ainda não tem' :  'Nota ' . round($meal->finalGrade, 1) . ' em ' . $meal->ratingAmount}} {{ $meal->ratingAmount == 1 ? 'avaliação' :  'avaliações'}}" readonly>
+                                        </div>
+
+                                        @if($meal->foodType != 'Bebida')
+                                            @if($meal->ingredients != null)
+                                                <div class="col-6 mt-4">
+                                                    <label style="font-size: 16px; color: black;" class="font-weight-bold">Ingredientes: <i class="fas fa-clipboard-list text-info ml-1" style="cursor:pointer;" title="Ingredientes que podem acompanhar este item"></i></label>
+                                                    <textarea  id="" cols="30" rows="3" class="form-control" style="resize: none;" readonly>{{ $meal->ingredients }}</textarea>
+                                                </div>
+                                            @endif
+                                            @if($meal->extras != null)
+                                                    <div class="col-6 mt-4">
+                                                        <label style="font-size: 16px; color: black;" class="font-weight-bold">Adicionais: <i class="fas fa-plus-circle text-danger ml-1" style="cursor:pointer;" title="Adicionais que podem ser inseridos neste item"></i></label>
+                                                        <textarea  id="" cols="30" rows="3" class="form-control" style="resize: none;" readonly>{{ $meal->extras }}</textarea>
+                                                    </div>
+                                            @endif
+                                        @else
+                                            <div class="col-6 mt-4">
+                                                <label style="font-size: 16px; color: black;" class="font-weight-bold">Sabores: <i class="far fa-lemon text-warning ml-1" style="cursor:pointer;" title="Variações de sabor deste item"></i></label>
+                                                <textarea  id="" cols="30" rows="4" class="form-control" style="resize: none;" readonly>{{ $meal->tastes }}</textarea>
+                                            </div>
                                         @endif
-                                    @else
-                                        <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Sabores:</span><span class="text-primary"> {{$meal->tastes}} </span></label>
-                                    @endif
-                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Participa do combo:</span><span class="text-primary"> {{ $meal->combo }} </span></label>
-                                    <br>
-                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Valor no combo:</span><span class="text-primary"> {{ $meal->comboValue }} </span></label>
-                                    <br>
-                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Descrição:</span><span class="text-primary"> {{ $meal->description }} </span></label>
-                                    <br>
-                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Nota de avaliação:</span><span class="text-primary"> {{ round($meal->finalGrade, 1) }}</span></label>
-                                    <br>
-                                    <label class="text-muted font-weight-bold"><span style="font-size: 16px" class="text-muted font-weight-bold">Status:</span><span class="text-primary"> {{ $meal->status }}</span></label>
-                                    <br>
+
+                                        <div class="col-6 mt-4">
+                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Descrição: <i class="far fa-keyboard text-dark ml-1" style="cursor:pointer;" title="Descrição do item apresentada ao cliente"></i></label>
+                                            <textarea  id="" cols="30" rows="4" class="form-control" style="resize: none;" readonly>{{ $meal->description }}</textarea>
+                                        </div>
+                                    </div>
+
+
                                     <button type="button" style="color: white" class="btn {{ $meal->status == 'Ativo' ? 'btn-danger' : 'btn-success' }} mt-5" data-toggle="modal" data-target="#toggleAdvert">{{ $meal->status == 'Ativo' ? 'Desativar anúncio' : 'Ativar anúncio' }}</button>
                                     <a href="{{ route('refeicoes.edit', $meal->id) }}" class="btn btn-primary float-right mt-5"><i class="fas fa-edit mr-2"></i>Editar dados cadastrais</a>
                                 </div>
