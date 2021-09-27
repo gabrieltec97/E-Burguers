@@ -963,7 +963,7 @@ $(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
     });
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .toggle-aval, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){

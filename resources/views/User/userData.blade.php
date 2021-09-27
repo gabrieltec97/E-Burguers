@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Dados do funcionário</div>
+                    <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">Dados do funcionário</div>
 
                     <div class="card-body">
                         <div class="container-fluid">

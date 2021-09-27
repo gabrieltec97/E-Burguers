@@ -1,8 +1,6 @@
 @extends('layouts.extend')
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-
+<script src="{{ asset('js/jquery.js') }}"></script>
 
 @section('title')
     Gerenciamento de anúncios
@@ -30,12 +28,12 @@
                         </div>
                     @endif
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Refeições cadastradas</div>
+                    <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">Refeições cadastradas</div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <input type="checkbox" class="form-check-input ml-1 travarAvaliacoes" data-toggle="modal" data-target="#modalTrava" id="travarAval" name="travarAval" {{ $rate == "Sim" ? 'checked' : '' }}>
-                                <label for="travarAval" class="ml-4"> Habilitar avaliações</label><br>
+                                <input type="checkbox" style="width: 16px; height: 16px;" class="form-check-input ml-1 travarAvaliacoes" data-toggle="modal" data-target="#modalTrava" id="travarAval" name="travarAval" {{ $rate == "Sim" ? 'checked' : '' }}>
+                                <label for="travarAval" class="ml-4 font-weight-bold" style="color: black; cursor: pointer;  margin-top: 2px;"> Habilitar avaliações</label><br>
                             </div>
 
                             <div class="col-6 mb-2 d-flex justify-content-end">
@@ -52,32 +50,35 @@
                             </div>
                         </div>
 
-                        <table class="table table-bordered table-hover table-responsive">
+                        <table class="table table-hover table-bordered table-striped table-responsive-lg">
                             <thead>
                             <tr>
                                 <th scope="col" style="color: black">Nome</th>
                                 <th scope="col" style="color: black">Status</th>
+                                <th scope="col" style="color: black">Tipo de refeição</th>
+                                <th scope="col" style="color: black">Vendas</th>
                                 <th scope="col" style="color: black">Valor</th>
-                                <th scope="col" style="color: black">Participa do combo</th>
+                                <th scope="col" style="color: black">Nota</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($meals as $meal)
-                                    <tr>
-                                        <td class="font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->name }}</a></td>
-                                        <td class="font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->status }}</a></td>
-                                        <td class="w-25 font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->value }}</a></td>
-                                        <td class="w-50 font-weight-bold"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->combo }}</a></td>
-                                    </tr>
-                                @endforeach
+                            @foreach($meals as $meal)
+                                <tr>
+                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->name }}</a></td>
+                                    <td style="cursor: pointer;" ><a href="{{ route('refeicoes.show', $meal->id) }}" style="text-decoration: none; {{ $meal->status == 'Ativo' ? 'color: #25d366;' : 'color: red;' }}"> {{ $meal->status }} </a></td>
+                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->foodType }} </a></td>
+                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->totalSale }}</a></td>
+                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->value }}</a></td>
+                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" title="Nota {{ round($meal->finalGrade, 1) }} em {{ $meal->ratingAmount == null ? '0' : $meal->ratingAmount }} avaliações" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ round($meal->finalGrade, 1) }}</a></td>
+                                </tr>
+                            @endforeach
+
                             </tbody>
                         </table>
                     </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -86,7 +87,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Atenção!</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: black; margin-bottom: -30px">Atenção!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -96,17 +97,17 @@
                         @csrf
                         <p>
                             @if($rate == "Sim")
-                            Deseja ocultar as avaliações? As avaliações dos clientes não aparecerão mais ao lado de cada item
-                            do cardápio.
+                           <p style="color: black; margin-top: -20px;"> Deseja ocultar as avaliações? As avaliações dos clientes não aparecerão mais ao lado de cada item
+                               do cardápio.</p>
                             @else
-                                Deseja mostrar as avaliações? As avaliações dos clientes aparecerão ao lado de cada item
-                                do cardápio.
+                                <p style="color: black; margin-top: -20px;">Deseja mostrar as avaliações? As avaliações dos clientes aparecerão ao lado de cada item
+                                    do cardápio.</p>
                             @endif
                         </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal">Voltar</button>
-                    <button type="submit" class="btn btn-primary">Sim</button>
+                    <button type="submit" class="btn btn-primary toggle-aval">Sim</button>
                 </div>
                 </form>
             </div>

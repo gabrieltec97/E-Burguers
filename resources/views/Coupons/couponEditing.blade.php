@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 25px;">Edição de cupom</div>
+                    <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">Edição de cupom</div>
                     <div class="card-body">
                         <form action="{{ route('cupons.update', $coupon->id) }}" method="post" class="form-group cupom-sub">
                             @csrf
