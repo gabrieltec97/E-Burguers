@@ -16,13 +16,13 @@ $anoAtual = strftime('%Y');
 ?>
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 col-sm-12 mb-5">
-                <div class="card shadow" style="height: 560px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
+                <div class="card shadow" style="height: 560px;">
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #1fbee1">
                         <div class="row">
-                            <div class="col-lg-5 col-12 vendaMes">
+                            <div class="col-lg-5 col-12 vendaMes" style="color: ghostwhite;">
 
                             </div>
                             <div class="col-lg-7 col-12 d-flex mt-2 mt-lg-0 justify-content-end" style="margin-bottom: -25px;">
@@ -99,7 +99,7 @@ $anoAtual = strftime('%Y');
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: black; margin-bottom: -30px">Atenção!</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -109,7 +109,7 @@ $anoAtual = strftime('%Y');
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                                                    <button type="submit" class="btn btn-success">Confirmar</button>
+                                                    <button type="submit" class="btn btn-success buscar-dados">Confirmar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -131,9 +131,9 @@ $anoAtual = strftime('%Y');
 
             <div class="col-lg-12 col-sm-12 mb-5 alvo">
                 <div class="card shadow" style="height: 560px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #1fbee1">
                         <div class="row">
-                            <div class="col-lg-7 col-12 textoAno">
+                            <div class="col-lg-7 col-12 textoAno" style="color: ghostwhite;">
 
                             </div>
                             <div class="col-lg-5 col-12 d-flex mt-2 mt-lg-0 justify-content-end" style="margin-bottom: -25px;">
@@ -158,7 +158,7 @@ $anoAtual = strftime('%Y');
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: black; margin-bottom: -30px">Atenção!</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -168,7 +168,7 @@ $anoAtual = strftime('%Y');
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                                                    <button type="submit" class="btn btn-success">Confirmar</button>
+                                                    <button type="submit" class="btn btn-success buscar-dados">Confirmar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,9 +187,9 @@ $anoAtual = strftime('%Y');
 
             <div class="col-lg-12 col-sm-12 mb-5">
                 <div class="card shadow" style="height: 330px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #1fbee1">
                         <div class="row">
-                            <div class="col-lg-7 col-12">
+                            <div class="col-lg-7 col-12" style="color: ghostwhite;">
                                 Total de vendas por dia
                             </div>
                             <div class="col-lg-5 col-12 d-flex mt-2 mt-lg-0 justify-content-end" style="margin-bottom: -25px;">
@@ -201,7 +201,7 @@ $anoAtual = strftime('%Y');
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: black; margin-bottom: -30px">Atenção!</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -211,7 +211,7 @@ $anoAtual = strftime('%Y');
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                                                    <button type="submit" class="btn btn-success">Confirmar</button>
+                                                    <button type="submit" class="btn btn-success buscar-dados">Confirmar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -351,7 +351,7 @@ $anoAtual = strftime('%Y');
 
                         <div class="row mt-2">
                             <div class="col-3">
-                                <button type="submit" class="btn btn-primary">Buscar dados</button>
+                                <button type="submit" class="btn buscar-dados" style="background: #1fbee1; color: white">Buscar dados</button>
                             </div>
                         </div>
                     </div>

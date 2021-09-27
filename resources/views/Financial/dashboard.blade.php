@@ -83,7 +83,7 @@
 
             <div class="col-12 col-lg-8 my-4">
                 <div class="card shadow" style="height: 560px">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #1eb9da;">
                         <h4 class="m-0 font-weight-bold text-white">Estatísticas das vendas</h4></div>
 
                     <div class="card-body financial-table">
@@ -99,7 +99,7 @@
             <div class="col-12 col-lg-4 mb-4 mt-lg-4 mt-2">
                 <div class="card shadow">
                     <!-- Card Header - Dropdown -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background: #1eb9da;">
                         <h5 class="m-0 font-weight-bold text-white">Itens mais vendidos</h5>
                     </div>
                     <!-- Card Body -->
@@ -113,9 +113,9 @@
                 </div>
             </div>
 
-            <div class="col-12 mb-5 mt-lg-5">
+            <div class="col-12 mb-5 mt-lg-3">
                     <div class="card shadow" style="height: 580px">
-                        <div class="card-header font-weight-bold text-muted items" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">
+                        <div class="card-header font-weight-bold text-muted items" style="font-size: 25px; background: #1eb9da;">
                             <h4 class="m-0 font-weight-bold text-white">Itens vendidos</h4></div>
 
                         <div class="card-body financial-table">

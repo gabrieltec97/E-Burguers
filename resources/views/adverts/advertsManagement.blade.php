@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-5">
                 @if(session('msg-2'))
@@ -50,31 +50,7 @@
                             </div>
                         </div>
 
-                        <table class="table table-hover table-bordered table-striped table-responsive-lg">
-                            <thead>
-                            <tr>
-                                <th scope="col" style="color: black">Nome</th>
-                                <th scope="col" style="color: black">Status</th>
-                                <th scope="col" style="color: black">Tipo de refeição</th>
-                                <th scope="col" style="color: black">Vendas</th>
-                                <th scope="col" style="color: black">Valor</th>
-                                <th scope="col" style="color: black">Nota</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($meals as $meal)
-                                <tr>
-                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->name }}</a></td>
-                                    <td style="cursor: pointer;" ><a href="{{ route('refeicoes.show', $meal->id) }}" style="text-decoration: none; {{ $meal->status == 'Ativo' ? 'color: #25d366;' : 'color: red;' }}"> {{ $meal->status }} </a></td>
-                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->foodType }} </a></td>
-                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->totalSale }}</a></td>
-                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->value }}</a></td>
-                                    <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" title="Nota {{ round($meal->finalGrade, 1) }} em {{ $meal->ratingAmount == null ? '0' : $meal->ratingAmount }} avaliações" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ round($meal->finalGrade, 1) }}</a></td>
-                                </tr>
-                            @endforeach
-
-                            </tbody>
-                        </table>
+                        @livewire('adverts')
                     </div>
                     </div>
                 </div>

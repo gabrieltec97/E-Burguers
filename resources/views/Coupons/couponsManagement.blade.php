@@ -7,7 +7,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
         @if(session('msg'))
             <script>
                 Swal.fire({
