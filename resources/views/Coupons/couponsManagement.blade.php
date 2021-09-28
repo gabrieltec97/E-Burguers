@@ -113,7 +113,7 @@
                                    @endif
                                </div>
 
-                               <div class="col-12 mt-5 d-flex justify-content-end">
+                               <div class="col-12 mt-5 d-flex justify-content-end" style="margin-bottom: -27px">
                                    <button type="submit" class="btn btn-primary cadastrar-cupom">Cadastrar cupom</button>
                                </div>
                            </div>

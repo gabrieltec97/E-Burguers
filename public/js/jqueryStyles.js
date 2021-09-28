@@ -471,12 +471,13 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
 
 //Verificação de alterações em refeições.
+    $(".valorRefeicao-edit").on('keyup', function (){
+        $(this).mask('000.00', {reverse: true});
+    })
 
-    $(".valorRefeicao-edit").mask('00.00');
-
-    if ($.isNumeric($(".valComboPromo-edit").val())){
-        $(".valComboPromo-edit").mask('00.00');
-    }
+    $(".valComboPromo-edit").on('keyup', function (){
+        $(this).mask('000.00', {reverse: true});
+    })
 
     $(".impComboNao").on('click', function () {
 
@@ -907,69 +908,22 @@ $(".anoVenda").on('change', function () {
 })
 
 //Inserção de máscara em cadastro de item adicional.
+$(".valor-item-add-edit").on('keyup', function (){
+    $(this).mask('000.00', {reverse: true});
+});
 
-$(".valor-item-add").mask('00.00');
-$(".valor-item-add-edit").mask('00.00');
-$(".cadastrar-item-add").attr('disabled', 'true');
-$(".cadastrar-item-add").css('cursor', 'not-allowed');
-$(".cadastrar-item-add").attr('title', 'Preencha todos os campos corretamente');
-
-    $(".valor-item-add").on('keyup',function () {
-        var valorItem = $(".valor-item-add").val();
-
-        if (valorItem.length < 5){
-            $(".cadastrar-item-add").attr('disabled', 'true');
-            $(".cadastrar-item-add").css('cursor', 'not-allowed');
-        }else{
-            $(".cadastrar-item-add").removeAttr('disabled', 'true');
-            $(".cadastrar-item-add").css('cursor', 'pointer');
-        }
-    })
-
-    $(".nome-item-add").on('keyup',function () {
-        var nomeItem = $(".nome-item-add").val();
-
-        if (nomeItem.length < 3){
-            $(".cadastrar-item-add").attr('disabled', 'true');
-            $(".cadastrar-item-add").css('cursor', 'not-allowed');
-        }else{
-            $(".cadastrar-item-add").removeAttr('disabled', 'true');
-            $(".cadastrar-item-add").css('cursor', 'pointer');
-        }
-    })
-
-    $(".valor-item-add-edit").on('keyup',function () {
-        var valorItem2 = $(".valor-item-add-edit").val();
-
-        if (valorItem2.length < 5){
-            $(".edit-item-add").attr('disabled', 'true');
-            $(".edit-item-add").css('cursor', 'not-allowed');
-        }else{
-            $(".edit-item-add").removeAttr('disabled', 'true');
-            $(".edit-item-add").css('cursor', 'pointer');
-        }
-    })
-
-    $(".nome-item-add-edit").on('keyup',function () {
-        var nomeItem2 = $(".nome-item-add-edit").val();
-
-        if (nomeItem2.length < 3){
-            $(".edit-item-add").attr('disabled', 'true');
-            $(".edit-item-add").css('cursor', 'not-allowed');
-        }else{
-            $(".edit-item-add").removeAttr('disabled', 'true');
-            $(".edit-item-add").css('cursor', 'pointer');
-        }
-    });
+$(".valor-item-add").mask('000.00', {reverse: true});
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .toggle-aval, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){
       $('.cadastrar-taxa').text('Cadastrar');
       $('.cadastrar-cupom').text('Cadastrar cupom');
+      $('.cadastrar-cupom').text('Salvar alterações');
       $('.cadastrar-funcionario').html('<i class="fas fa-user-plus mr-2"></i>Cadastrar funcionário');
+      $('.cadastrar-item-add').html('<i class="fas fa-plus mr-2"></i>Cadastrar');
   }, 3000)
 });
 

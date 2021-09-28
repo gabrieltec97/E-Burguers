@@ -29,28 +29,28 @@ class ExtrasController extends Controller
      */
     public function store(Request $request)
     {
-//        $rules = [
-//            'nome' => 'required',
-//            'value' => 'required|min:3|max:5'
-//        ];
-//
-//        $messages = [
-//            'name.required' => 'Por favor, insira o nome do item.',
-//            'name.min' => 'O nome do item deve conter no mínimo 4 caracteres.',
-//            'name.max' => 'O nome do item deve conter no máximo 50 caracteres.',
-//            'value.required' => 'Por favor, insira o valor do item.',
-//            'value.min' => 'O valor do item deve conter apenas 5 caracteres.',
-//            'value.max' => 'O valor do item deve conter apenas 5 caracteres.'
-//        ];
-//
-//        $request->validate($rules, $messages);
+        $rules = [
+            'name' => 'required|min:4|max:30',
+            'value' => 'required|min:4|max:6'
+        ];
+
+        $messages = [
+            'name.required' => 'Por favor, insira o nome do item.',
+            'name.min' => 'O nome do item deve conter no mínimo 4 caracteres.',
+            'name.max' => 'O nome do item deve conter no máximo 30 caracteres.',
+            'value.required' => 'Por favor, insira o valor do item.',
+            'value.min' => 'O valor do item deve conter no mínimo 3 caracteres.',
+            'value.max' => 'O valor do item deve conter no máximo 5 caracteres.'
+        ];
+
+        $request->validate($rules, $messages);
 
         $items = DB::table('extras')->select('name')->get();
 
         foreach ($items as $key){
             foreach ($key as $item) {
                 if ($item == $request->name){
-                   return back()->with('msg-2', 'Item não cadastrado. Já existe um item com o nome "'. $request->name . '". Por favor escolha outro nome.');
+                   return back()->with('msg-2', 'Item não cadastrado. Já existe um item com este nome.');
                 }
             }
         }
@@ -85,8 +85,23 @@ class ExtrasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $valor = $request->price;
+        if (strlen($request->name) < 4){
+            return redirect()->back()->with('msg-error', 'Insira um nome com pelo menos 4 caracteres.');
+        }
 
+        if (strlen($request->price) < 4){
+            return redirect()->back()->with('msg-error', 'Você inseriu um valor inválido!');
+        }
+
+        $items = Extras::all();
+
+        foreach ($items as $item => $value){
+            if ($value->name == $request->name && $value->id != $id){
+                    return back()->with('msg-3', 'Item não alterado. Já existe um item com este nome.');
+            }
+        }
+
+        $valor = $request->price;
         $item = Extras::find($id);
 
         $item->name = $request->name;

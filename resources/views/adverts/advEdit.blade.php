@@ -38,29 +38,65 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-12 mt-3 mt-md-0 col-md-4">
-                                        <label class="text-muted font-weight-bold">Participa do combo?</label><br>
-                                        <input type="radio" class="impComboSim" {{ ($meal->combo == 'Sim')?'checked':'' }} title="Ao escolher esta opção, esta refeição participará de um combo promocional." name="combo" value="Sim">
-                                        <label class="mr-3 font-weight-bold text-success" title="Ao escolher esta opção, esta refeição participará de um combo promocional.">Sim</label>
-                                        <input type="radio" class="impComboNao"  {{ ($meal->combo == 'Não')?'checked':'' }} title="Ao escolher esta opção, esta refeição NÃO participará de um combo promocional." name="combo" value="Não">
-                                        <label class="font-weight-bold text-danger" title="Ao escolher esta opção, esta refeição NÃO participará de um combo promocional.">Não</label><br>
-                                    </div>
+                                    @if($meal->foodType != "Sobremesa")
+                                        <div class="col-12 mt-3 mt-md-0 col-md-4">
+                                            <label class="text-muted font-weight-bold">Participa do combo?</label><br>
+                                            <input type="radio" class="impComboSim" {{ ($meal->combo == 'Sim')?'checked':'' }} title="Ao escolher esta opção, esta refeição participará de um combo promocional." name="combo" value="Sim">
+                                            <label class="mr-3 font-weight-bold text-success" title="Ao escolher esta opção, esta refeição participará de um combo promocional.">Sim</label>
+                                            <input type="radio" class="impComboNao"  {{ ($meal->combo == 'Não')?'checked':'' }} title="Ao escolher esta opção, esta refeição NÃO participará de um combo promocional." name="combo" value="Não">
+                                            <label class="font-weight-bold text-danger" title="Ao escolher esta opção, esta refeição NÃO participará de um combo promocional.">Não</label><br>
+                                        </div>
 
-                                    <div class="col-12 mt-3 col-md-6">
-                                        <label class="text-muted font-weight-bold">Valor no combo</label>
-                                        @if($meal->comboValue != 'Esta refeição não participará do combo.')
-                                        <input type="text" value="{{$meal->comboValue}}" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional." name="promoValue" required>
+                                        <div class="col-12 mt-3 col-md-6">
+                                            <label class="text-muted font-weight-bold">Valor no combo</label>
+                                            @if($meal->comboValue != 'Esta refeição não participará do combo.')
+                                                <input type="text" value="{{$meal->comboValue}}" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional." name="promoValue" required>
+                                            @else
+                                                <input type="text" value="{{$meal->comboValue}}" readonly style="cursor: not-allowed;" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Esta refeição não participará do combo." name="promoValue" required>
+                                            @endif
+                                            <label class="text-danger verificaPreco mt-2 font-weight-bold" style="font-size: 13.7px">O valor promocional não pode ser maior ou igual ao valor
+                                                normal.</label>
+                                            @if($errors->has('promoValue'))
+                                                <div class="invalid-feedback">
+                                                    <span class="font-weight-bold"> {{ $errors->first('promoValue') }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        @if($meal->foodType != 'Bebida')
+                                            <div class="col-12 mt-3 col-md-6">
+                                                <label class="text-muted font-weight-bold">Ingredientes</label>
+                                                @if($meal->ingredients == '')
+                                                    <input type="text" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Item sem ingredientes" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" disabled style="cursor: not-allowed">
+                                                @else
+                                                    <input type="text" value="{{ $meal->ingredients }}" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,tomate,alface" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" required>
+                                                @endif
+                                                <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os separando por vírgulas e sem dar espaços.</label>
+                                                @if($errors->has('ingredients'))
+                                                    <div class="invalid-feedback">
+                                                        <span class="font-weight-bold"> {{ $errors->first('ingredients') }}</span>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         @else
-                                            <input type="text" value="{{$meal->comboValue}}" readonly style="cursor: not-allowed;" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Esta refeição não participará do combo." name="promoValue" required>
-                                        @endif
-                                        <label class="text-danger verificaPreco mt-2 font-weight-bold" style="font-size: 13.7px">O valor promocional não pode ser maior ou igual ao valor
-                                            normal.</label>
-                                        @if($errors->has('promoValue'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('promoValue') }}</span>
+                                            <div class="col-12 mt-3 col-md-6">
+                                                <label class="text-muted font-weight-bold">Sabores</label>
+                                                <input type="text" value="{{ $meal->tastes }}" class="form-control sabores-edit" placeholder="Exemplo:Uva,Morango,Laranja" title="Insira-os separando por vírgula e sem dar espaços." name="sabores" required>
+                                                <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os com a primeira letra maiúscula, separando por vírgulas e sem dar espaços.</label>
+                                                @if($errors->has('tastes'))
+                                                    <div class="invalid-feedback">
+                                                        <span class="font-weight-bold"> {{ $errors->first('tastes') }}</span>
+                                                    </div>
+                                                @endif
+
+                                                @if($errors->has('ingredients'))
+                                                    <div class="invalid-feedback">
+                                                        <span class="font-weight-bold"> {{ $errors->first('ingredients') }}</span>
+                                                    </div>
+                                                @endif
                                             </div>
                                         @endif
-                                    </div>
+                                    @endif
 
 {{--                                    <div class="col-12 mt-3 col-md-6">--}}
 {{--                                        <label class="text-muted font-weight-bold">Ingredientes</label>--}}
@@ -77,39 +113,6 @@
 {{--                                        @endif--}}
 {{--                                    </div>--}}
 
-                                    @if($meal->foodType != 'Bebida')
-                                        <div class="col-12 mt-3 col-md-6">
-                                            <label class="text-muted font-weight-bold">Ingredientes</label>
-                                            @if($meal->ingredients == '')
-                                                <input type="text" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Item sem ingredientes" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" disabled style="cursor: not-allowed">
-                                            @else
-                                                <input type="text" value="{{ $meal->ingredients }}" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Exemplo:Cebola,tomate,alface" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" required>
-                                            @endif
-                                            <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os separando por vírgulas e sem dar espaços.</label>
-                                            @if($errors->has('ingredients'))
-                                                <div class="invalid-feedback">
-                                                    <span class="font-weight-bold"> {{ $errors->first('ingredients') }}</span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @else
-                                        <div class="col-12 mt-3 col-md-6">
-                                            <label class="text-muted font-weight-bold">Sabores</label>
-                                            <input type="text" value="{{ $meal->tastes }}" class="form-control sabores-edit" placeholder="Exemplo:Uva,Morango,Laranja" title="Insira-os separando por vírgula e sem dar espaços." name="sabores" required>
-                                            <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os com a primeira letra maiúscula, separando por vírgulas e sem dar espaços.</label>
-                                            @if($errors->has('tastes'))
-                                                <div class="invalid-feedback">
-                                                    <span class="font-weight-bold"> {{ $errors->first('tastes') }}</span>
-                                                </div>
-                                            @endif
-
-                                            @if($errors->has('ingredients'))
-                                                <div class="invalid-feedback">
-                                                    <span class="font-weight-bold"> {{ $errors->first('ingredients') }}</span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @endif
 
                                     @if($meal->foodType == 'Hamburguer')
                                         <div class="col-4 mt-3 itr">

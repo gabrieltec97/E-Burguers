@@ -222,7 +222,7 @@ $anoAtual = strftime('%Y');
                     <div class="card-body financial-table">
                         <div class="row">
                             <div class="col-2">
-                                <label>Dia</label>
+                                <label style="color: black;">Dia</label>
                                 <select name="dia" class="form-control">
                                     <option value="01" @if($day == 01) selected @endif>01</option>
                                     <option value="02" @if($day == '02') selected @endif>02</option>
@@ -259,7 +259,7 @@ $anoAtual = strftime('%Y');
                             </div>
 
                             <div class="col-3">
-                                <label>Mês</label>
+                                <label style="color: black;">Mês</label>
                                 <select name="mesvenda" class="form-control">
                                     <option value="janeiro"
                                             @if($reqmonth == 'janeiro')
@@ -327,21 +327,21 @@ $anoAtual = strftime('%Y');
                             </div>
 
                             <div class="col-8 mt-4 target">
-                                <label>Total de vendas: <b>
+                                <label style="color: black;">Total de vendas: <b>
                                         @if($sales < 1)
-                                            <span class="text-danger">{{ $sales }} venda</span>
+                                            <span class="text-danger font-weight-normal">{{ $sales }} venda</span>
                                         @elseif($sales == 1)
-                                            <span class="text-success">{{ $sales }} venda</span>
+                                            <span class="text-success font-weight-normal">{{ $sales }} venda</span>
                                         @elseif($sales > 1)
-                                            <span class="text-success">{{ $sales }} vendas</span>
+                                            <span class="text-success font-weight-normal">{{ $sales }} vendas</span>
                                         @endif
                                     </b></label>
                                 <br>
-                                <label>Total de arrecadado: <b>
+                                <label style="color: black;">Total de arrecadado: <b>
                                         @if($money < 1)
-                                            <span class="text-danger">R$ {{ $money }}</span>
+                                            <span class="text-danger font-weight-normal">R$ {{ $money }}</span>
                                         @elseif($money >= 1)
-                                            <span class="text-success">R$ {{ $money }}</span>
+                                            <span class="text-success font-weight-normal">R$ {{ $money }}</span>
                                         @endif
                                     </b></label>
                                 <br>
@@ -350,7 +350,7 @@ $anoAtual = strftime('%Y');
                         </div>
 
                         <div class="row mt-2">
-                            <div class="col-3">
+                            <div class="col-12">
                                 <button type="submit" class="btn buscar-dados" style="background: #1fbee1; color: white">Buscar dados</button>
                             </div>
                         </div>

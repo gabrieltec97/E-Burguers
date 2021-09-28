@@ -316,7 +316,7 @@ class menuController extends Controller
 
         $rules = [
             'mealName' => 'required|min:4|max:70',
-            'mealValue' => 'required|min:5|max:5',
+            'mealValue' => 'required|min:4|max:6',
             'mealDescription' => 'required|min:70|max:90'
         ];
 

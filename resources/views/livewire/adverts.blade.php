@@ -2,12 +2,12 @@
     <table class="table table-hover table-bordered table-striped table-responsive-lg">
         <thead>
         <tr>
-            <th scope="col" style="color: black">Nome</th>
-            <th scope="col" style="color: black">Status</th>
-            <th scope="col" style="color: black">Tipo de refeição</th>
-            <th scope="col" style="color: black">Vendas</th>
-            <th scope="col" style="color: black">Valor</th>
-            <th scope="col" style="color: black">Nota</th>
+            <th scope="col" style="color: black; border-bottom: 2px solid  #bdbcbc;">Nome</th>
+            <th scope="col" style="color: black; border-bottom: 2px solid #bdbcbc;">Status</th>
+            <th scope="col" style="color: black; border-bottom: 2px solid #bdbcbc;">Tipo de refeição</th>
+            <th scope="col" style="color: black; border-bottom: 2px solid #bdbcbc;">Vendas</th>
+            <th scope="col" style="color: black; border-bottom: 2px solid #bdbcbc;">Valor</th>
+            <th scope="col" style="color: black; border-bottom: 2px solid #bdbcbc;">Nota</th>
         </tr>
         </thead>
         <tbody>

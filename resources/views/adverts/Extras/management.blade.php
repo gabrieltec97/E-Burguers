@@ -8,22 +8,54 @@
 
     <div class="container">
     @if(session('msg'))
-        <div class="alert alert-success alerta-sucesso-ref alert-dismissible fade show" role="alert">
-            <span class="text-muted font-weight-bold">{{ session('msg') }}</span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Tudo certo!',
+                    text: '{{ session('msg') }}',
+                    showCancelButton: false,
+                    showConfirmButton: true,
+                });
+            </script>
     @endif
 
-        @if(session('msg-2'))
-            <div class="alert alert-danger alerta-sucesso-ref alert-dismissible fade show" role="alert">
-                <span class="text-muted font-weight-bold">{{ session('msg-2') }}</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+    @if(session('msg-error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Item não alterado!',
+                text: '{{ session('msg-error') }}',
+                showCancelButton: false,
+                showConfirmButton: true,
+            });
+        </script>
+    @endif
+
+    @if(session('msg-2'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Item não cadastrado!',
+                text: '{{ session('msg-2') }}',
+                showCancelButton: false,
+                showConfirmButton: true,
+            });
+        </script>
+    @endif
+
+    @if(session('msg-3'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Item não alterado!',
+                text: '{{ session('msg-3') }}',
+                showCancelButton: false,
+                showConfirmButton: true,
+            });
+        </script>
+    @endif
+
+
         <div class="row">
             <div class="col-lg-6 col-12 col-sm-12">
 
@@ -35,8 +67,8 @@
                             @csrf
                             <div class="row">
                                 <div class="col-6">
-                                    <label class="font-weight-bold">Nome</label>
-                                    <input type="text" class="form-control nome-item-add {{ ($errors->has('name') ? 'is-invalid' : '') }}" placeholder="Nome do item" name="name">
+                                    <label class="font-weight-bold" style="color: black;">Nome</label>
+                                    <input type="text" class="form-control nome-item-add {{ ($errors->has('name') ? 'is-invalid' : '') }}" placeholder="Nome do item" name="name" value="{{ old('name') }}" autocomplete="off" required>
                                     @if($errors->has('name'))
                                         <div class="invalid-feedback">
                                             <span class="font-weight-bold"> {{ $errors->first('name') }}</span>
@@ -45,8 +77,8 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <label class="font-weight-bold">Valor</label>
-                                    <input type="text" class="form-control valor-item-add {{ ($errors->has('value') ? 'is-invalid' : '') }}" placeholder="R$" name="value" required>
+                                    <label class="font-weight-bold" style="color: black;">Valor</label>
+                                    <input type="text" class="form-control valor-item-add {{ ($errors->has('value') ? 'is-invalid' : '') }}" placeholder="R$" name="value" value="{{ old('value') }}" autocomplete="off" required>
                                     @if($errors->has('value'))
                                         <div class="invalid-feedback">
                                             <span class="font-weight-bold"> {{ $errors->first('value') }}</span>
@@ -72,18 +104,18 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Valor</th>
-                                <th scope="col">Opções</th>
+                                <th scope="col" style="color: black;">Nome</th>
+                                <th scope="col" style="color: black;">Valor</th>
+                                <th scope="col" style="color: black;">Opções</th>
                             </tr>
                             </thead>
                             <tbody>
                             @if(isset($items))
                                 @foreach($items as $item)
                                     <tr>
-                                        <th>{{ $item->name }}</th>
-                                        <td>{{ $item->price }}</td>
-                                        <td style="cursor: pointer">
+                                        <th style="color: black;" class="font-weight-normal">{{ $item->name }}</th>
+                                        <td style="color: black;">{{ $item->price }}</td>
+                                        <td style="cursor: pointer;">
                                             <i class="fas fa-trash-alt mr-3 text-danger editar-item" title="Deletar item" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}"></i>
                                             <i class="fas fa-edit text-info editar-item" title="Editar item" data-toggle="modal" data-target="#exampleModalCenterEdit{{$item->id}}"></i>
                                         </td>
@@ -136,7 +168,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Edição de item adicional.</h5>
+                                                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle" style="color: black; margin-bottom: -30px">Edição de item adicional</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -144,13 +176,13 @@
                                                     <div class="modal-body">
                                                         <div class="row">
                                                             <div class="col-12 col-lg-6">
-                                                                <label class="font-weight-bold">Nome</label>
-                                                                <input type="text" class="form-control nome-item-add-edit" name="name" value="{{ $item->name }}" placeholder="Nome do item">
+                                                                <label class="font-weight-bold" style="color: black;">Nome</label>
+                                                                <input type="text" class="form-control nome-item-add-edit" name="name" value="{{ $item->name }}" autocomplete="off" placeholder="Nome do item">
                                                             </div>
 
                                                             <div class="col-12 col-lg-6">
-                                                                <label class="font-weight-bold">Valor</label>
-                                                                <input type="text" class="form-control valor-item-add-edit" name="price" value="{{ $item->price }}" placeholder="R$">
+                                                                <label class="font-weight-bold" style="color: black;">Valor</label>
+                                                                <input type="text" class="form-control valor-item-add-edit" name="price" value="{{ $item->price }}" autocomplete="off" placeholder="R$">
                                                             </div>
                                                         </div>
                                                     </div>

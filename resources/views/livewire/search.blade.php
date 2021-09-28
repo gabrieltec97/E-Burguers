@@ -4,7 +4,7 @@
             <input wire:model="search" class="form-control mb-3" type="text" placeholder="Digite sua pesquisa.">
         </div>
 
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered table-responsive-lg">
             <thead>
             <tr>
                 <th style="color: black">Id</th>

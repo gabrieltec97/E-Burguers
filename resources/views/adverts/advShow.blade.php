@@ -9,12 +9,15 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12">
                 @if(session('msg'))
-                    <div class="alert alert-success alerta-sucesso-ref alert-dismissible fade show" role="alert">
-                        <span class="text-muted font-weight-bold">{{ session('msg') }}</span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Tudo certo!',
+                            text: '{{ session('msg') }}',
+                            timer: 7000,
+                            timerProgressBar: true,
+                        })
+                    </script>
                 @endif
 
                 @if(session('msg-att'))
@@ -100,13 +103,13 @@
                                             @if($meal->ingredients != null)
                                                 <div class="col-6 mt-4">
                                                     <label style="font-size: 16px; color: black;" class="font-weight-bold">Ingredientes: <i class="fas fa-clipboard-list text-info ml-1" style="cursor:pointer;" title="Ingredientes que podem acompanhar este item"></i></label>
-                                                    <textarea  id="" cols="30" rows="3" class="form-control" style="resize: none;" readonly>{{ $meal->ingredients }}</textarea>
+                                                    <textarea  id="" cols="30" rows="3" class="form-control" style="resize: none;" readonly>{{ $meal->ingredients }}.</textarea>
                                                 </div>
                                             @endif
                                             @if($meal->extras != null)
                                                     <div class="col-6 mt-4">
                                                         <label style="font-size: 16px; color: black;" class="font-weight-bold">Adicionais: <i class="fas fa-plus-circle text-danger ml-1" style="cursor:pointer;" title="Adicionais que podem ser inseridos neste item"></i></label>
-                                                        <textarea  id="" cols="30" rows="3" class="form-control" style="resize: none;" readonly>{{ $meal->extras }}</textarea>
+                                                        <textarea  id="" cols="30" rows="3" class="form-control" style="resize: none;" readonly>{{ $meal->extras }}.</textarea>
                                                     </div>
                                             @endif
                                         @else
@@ -118,7 +121,7 @@
 
                                         <div class="col-6 mt-4">
                                             <label style="font-size: 16px; color: black;" class="font-weight-bold">Descrição: <i class="far fa-keyboard text-dark ml-1" style="cursor:pointer;" title="Descrição do item apresentada ao cliente"></i></label>
-                                            <textarea  id="" cols="30" rows="4" class="form-control" style="resize: none;" readonly>{{ $meal->description }}</textarea>
+                                            <textarea  id="" cols="30" rows="4" class="form-control" style="resize: none;" readonly>{{ $meal->description }}.</textarea>
                                         </div>
                                     </div>
 
