@@ -227,10 +227,10 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
 
     var dateToday = new Date();
 
-    if (dateToday.getDate() < 10){
+    if (dateToday.getMonth() < 9){
         dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + '0'+ dateToday.getDate();
     }else{
-        dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
+        dateToday = dateToday.getFullYear() + '-' + (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
     }
 
     //Verificando data de novo cupom.
@@ -469,7 +469,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
         $(".alerta-sucesso-user").fadeOut('slow');
     }, 4000);
 
-
 //Verificação de alterações em refeições.
     $(".valorRefeicao-edit").on('keyup', function (){
         $(this).mask('000.00', {reverse: true});
@@ -495,6 +494,10 @@ $(".btn-cadastrar-refeicao").on("click", function () {
         $(".valComboPromo-edit").removeAttr('readonly');
         $(".valComboPromo-edit").attr('title', 'Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional.');
         $(".valComboPromo-edit").css('cursor', 'initial')
+    });
+
+    $(".links-adverts").on('click', function (){
+        console.log('click');
     })
 
     // const nomeRef = $(".nome-refeicao-edit").val();

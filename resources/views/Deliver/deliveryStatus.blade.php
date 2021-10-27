@@ -30,14 +30,19 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card">
-                    <div class="card-header bg-info font-weight-bold" style="font-size: 25px; color: white">Status do delivery</div>
+                    <div class="card-header bg-primary font-weight-bold" style="font-size: 25px; color: white;">
+                        @if($status[0]->status == 'Aberto')
+                            Delivery aberto<i class="fas fa-circle text-success ml-2 mt-1"></i>
+                        @else
+                            Delivery fechado<i class="fas fa-circle text-danger ml-2 mt-1"></i>
+                        @endif
+                    </div>
                     <div class="card-body">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
                                     <form id="changeStatus" action="{{ route('changeDeliveryStatus') }}" method="post">
                                         @csrf
-                                        <label class="font-weight-bold d-flex justify-content-center" style="color: black">O delivery está {{ $status[0]->status == 'Aberto' ? 'aberto' : 'fechado'}}!</label> <br>
 
                                         @if($status[0]->status == "Aberto")
                                             <label>Mensagem de emergência:</label>
@@ -56,7 +61,7 @@
 
             <div class="col-12 col-md-6">
                 <div class="card">
-                    <div class="card-header bg-info font-weight-bold" style="font-size: 25px; color: white">Mensagem de feedback</div>
+                    <div class="card-header bg-primary font-weight-bold" style="font-size: 25px; color: white">Mensagem de feedback</div>
                     <div class="card-body">
                         <div class="container-fluid">
                             <div class="row">
@@ -67,7 +72,7 @@
                                     @elseif($status[0]->status == 'Fechado' && $status[0]->message == null)
                                         <label class="justify-content-center">Sem mensagem de emergência</label>
                                     @else
-                                        <label class="justify-content-center">Delivery aberto.</label>
+                                        <label class="justify-content-center">Delivery aberto. Feche o delivery para inserir uma mensagem de fechamento.</label>
                                     @endif
 
                                         <!-- Modal -->

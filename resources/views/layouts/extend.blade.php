@@ -51,8 +51,8 @@
         @can('Dashboard')
         <li class="nav-item" title="Painel com informações resumidas sobre as vendas">
             <a class="nav-link" href="{{ route('dashboard') }}">
-                <img src="{{ asset('logo/dashboard.png') }}" style="width: 25px; height: 25px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
-                <span class="font-weight-bold">Dashboard</span></a>
+                <img src="{{ asset('logo/teste.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Dashboard</span></a>
         </li>
         @endcan
 
@@ -60,8 +60,8 @@
         @can('Pedidos (Híbrido)')
         <li class="nav-item" title="Gerencie completamente os de pedidos">
             <a class="nav-link" href="{{ route('hybridHome') }}">
-                <img src="{{ asset('logo/comum.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
-                <span class="font-weight-bold">Gerenciamento de pedidos</span></a>
+                <img src="{{ asset('logo/order.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Gerenciamento de pedidos</span></a>
         </li>
         @endcan
 
@@ -69,8 +69,8 @@
         @can('Pedidos (Comum)')
         <li class="nav-item" title="Gerencie os pedidos em andamento">
             <a class="nav-link" href="{{ route('home') }}">
-                <img src="{{ asset('logo/dinner.png') }}" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
-                <span class="font-weight-bold">Pedidos em andamento</span></a>
+                <img src="{{ asset('logo/orders.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Pedidos em andamento</span></a>
         </li>
         @endcan
 
@@ -78,8 +78,8 @@
         @can('Em Preparo')
         <li class="nav-item" title="Pedidos para a equipe de cozinha preparar">
             <a class="nav-link" href="{{ route('emPreparo') }}">
-                <img src="{{ asset('logo/cook.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
-                <span class="font-weight-bold">Para preparo</span></a>
+                <img src="{{ asset('logo/cook.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Para preparo</span></a>
         </li>
         @endcan
 
@@ -87,16 +87,16 @@
         @can('Histórico de Pedidos')
         <li class="nav-item" title="Veja detalhadamente cada pedido cadastrado">
             <a class="nav-link" href="{{ route('historicoPedidos') }}">
-                <img src="{{ asset('logo/historico.png') }}" style="width: 28px; height: 28px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
-                <span class="font-weight-bold">Histórico de pedidos</span></a>
+                <img src="{{ asset('logo/time.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Histórico de pedidos</span></a>
         </li>
         @endcan
 
         @can('Cupons')
         <li class="nav-item" title="Gerencie os cupons para atrair a clientela">
             <a class="nav-link" href="{{ route('cupons.index') }}">
-                <img src="{{ asset('logo/coupon.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
-                <span class="font-weight-bold">Cupons</span></a>
+                <img src="{{ asset('logo/4032869.png') }}" style="background: white; border-radius: 20px; width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Cupons</span></a>
         </li>
         @endcan
 
@@ -104,8 +104,8 @@
         @can('Gerenciamento de Usuários')
         <li class="nav-item" title="Gerencie os funcionários que tem acesso ao sistema">
             <a class="nav-link" href="{{ route('gerenciamento') }}">
-                <img src="{{ asset('logo/usersconfig.png') }}" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
-                <span class="font-weight-bold">Gerenciamento de usuários</span></a>
+                <img src="{{ asset('logo/time-management.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Gerenciamento de usuários</span></a>
         </li>
         @endcan
 
@@ -113,8 +113,8 @@
         @can('Gerenciamento de Refeições')
         <li class="nav-item" title="Gerencie os itens do cardápio e seus adicionais">
             <a class="nav-link" href="{{ route('refeicoes.index') }}">
-                <img src="{{ asset('logo/advertsp.png') }}" style="width: 28px; height: 28px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
-                <span class="font-weight-bold">Gerenciamento de refeições</span></a>
+                <img src="{{ asset('logo/food.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Gerenciamento de refeições</span></a>
         </li>
         @endcan
 
@@ -122,8 +122,8 @@
         @can('Avaliações')
             <li class="nav-item" title="Avaliações dos clientes para o estabelecimento e itens do cardápio.">
                 <a class="nav-link" href="{{ route('avaliacoesClientes') }}">
-                    <img src="{{ asset('logo/like.png') }}" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
-                    <span class="font-weight-bold">Avaliações</span></a>
+                    <img src="{{ asset('logo/heart-rate.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
+                    <span class="font-weight-bold" style="color: white; font-size: 11px">Avaliações</span></a>
             </li>
         @endcan
 
@@ -131,8 +131,8 @@
         @can('Informações Financeiras')
         <li class="nav-item" title="Veja detalhadamente as informações financeiras e vendas">
             <a class="nav-link" href="{{ route('financeiro') }}">
-                <img src="{{ asset('logo/graphic.png') }}" style="width: 23px; height: 23px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
-                <span class="font-weight-bold">Informações Financeiras</span></a>
+                <img src="{{ asset('logo/money-bag.png') }}" style="background: white; border-radius: 20px;width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
+                <span class="font-weight-bold" style="color: white; font-size: 11px">Informações Financeiras</span></a>
         </li>
         @endcan
 

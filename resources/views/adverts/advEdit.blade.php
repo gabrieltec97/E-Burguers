@@ -19,7 +19,7 @@
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-12 col-md-4">
-                                        <label class="text-muted font-weight-bold">Nome</label>
+                                        <label style="color: black;" class="font-weight-bold">Nome</label>
                                         <input type="text" class="form-control nome-refeicao-edit {{ ($errors->has('mealName') ? 'is-invalid' : '') }}" value="{{ $meal->name }}" title="Nome que identifica a refeição" name="mealName" required>
                                         @if($errors->has('mealName'))
                                             <div class="invalid-feedback">
@@ -29,7 +29,7 @@
                                     </div>
 
                                     <div class="col-12 mt-3 mt-md-0 col-md-4">
-                                        <label class="text-muted font-weight-bold">Valor</label>
+                                        <label style="color: black;" class="font-weight-bold">Valor</label>
                                         <input type="text" class="form-control valorRefeicao-edit {{ ($errors->has('mealValue') ? 'is-invalid' : '') }}" value="{{ $meal->value }}" title="Valor a ser pago pela refeição" name="mealValue" required>
                                         @if($errors->has('mealValue'))
                                             <div class="invalid-feedback">
@@ -40,7 +40,7 @@
 
                                     @if($meal->foodType != "Sobremesa")
                                         <div class="col-12 mt-3 mt-md-0 col-md-4">
-                                            <label class="text-muted font-weight-bold">Participa do combo?</label><br>
+                                            <label style="color: black;" class="font-weight-bold">Participa do combo?</label><br>
                                             <input type="radio" class="impComboSim" {{ ($meal->combo == 'Sim')?'checked':'' }} title="Ao escolher esta opção, esta refeição participará de um combo promocional." name="combo" value="Sim">
                                             <label class="mr-3 font-weight-bold text-success" title="Ao escolher esta opção, esta refeição participará de um combo promocional.">Sim</label>
                                             <input type="radio" class="impComboNao"  {{ ($meal->combo == 'Não')?'checked':'' }} title="Ao escolher esta opção, esta refeição NÃO participará de um combo promocional." name="combo" value="Não">
@@ -48,7 +48,7 @@
                                         </div>
 
                                         <div class="col-12 mt-3 col-md-6">
-                                            <label class="text-muted font-weight-bold">Valor no combo</label>
+                                            <label style="color: black;" class="font-weight-bold">Valor no combo</label>
                                             @if($meal->comboValue != 'Esta refeição não participará do combo.')
                                                 <input type="text" value="{{$meal->comboValue}}" class="form-control valComboPromo-edit {{ ($errors->has('promoValue') ? 'is-invalid' : '') }}" title="Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional." name="promoValue" required>
                                             @else
@@ -65,7 +65,7 @@
 
                                         @if($meal->foodType != 'Bebida')
                                             <div class="col-12 mt-3 col-md-6">
-                                                <label class="text-muted font-weight-bold">Ingredientes</label>
+                                                <label style="color: black;" class="font-weight-bold">Ingredientes</label>
                                                 @if($meal->ingredients == '')
                                                     <input type="text" class="form-control ingredientes-edit {{ ($errors->has('ingredients') ? 'is-invalid' : '') }}" placeholder="Item sem ingredientes" title="Insira-os separando por vírgula e sem dar espaços." name="ingredients" disabled style="cursor: not-allowed">
                                                 @else
@@ -80,7 +80,7 @@
                                             </div>
                                         @else
                                             <div class="col-12 mt-3 col-md-6">
-                                                <label class="text-muted font-weight-bold">Sabores</label>
+                                                <label style="color: black;" class="font-weight-bold">Sabores</label>
                                                 <input type="text" value="{{ $meal->tastes }}" class="form-control sabores-edit" placeholder="Exemplo:Uva,Morango,Laranja" title="Insira-os separando por vírgula e sem dar espaços." name="sabores" required>
                                                 <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os com a primeira letra maiúscula, separando por vírgulas e sem dar espaços.</label>
                                                 @if($errors->has('tastes'))
@@ -116,7 +116,7 @@
 
                                     @if($meal->foodType == 'Hamburguer')
                                         <div class="col-4 mt-3 itr">
-                                            <label class="font-weight-bold mb-3">Itens que poderão ser adicionados.</label>
+                                            <label style="color: black" class="font-weight-bold mb-3">Itens que poderão ser adicionados.</label>
                                             <br>
                                             @if(isset($count))
                                                 @foreach($count as $c => $v)
@@ -136,7 +136,7 @@
 
 
                                     <div class="col-12 mt-3">
-                                        <label class="text-muted font-weight-bold">Descrição</label>
+                                        <label style="color: black;" class="font-weight-bold">Descrição</label>
                                         <textarea name="mealDescription" title="Breve texto que informa as características da refeição. O texto deve conter no mínimo 70 e no máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao-edit {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}" required> {{$meal->description}}</textarea>
                                         <label class="text-primary font-weight-bold mt-2 total-char">Total de caracteres: <span class="contagem font-weight-bolder"></span></label><br>
                                         <label class="text-primary font-weight-bold lbl-alerta">A descrição deve conter no mínimo 70 e no máximo 96 caracteres.</label>
@@ -149,7 +149,7 @@
 
 
                                     <div class="col-12 col-md-4">
-                                        <label class="text-muted font-weight-bold">Foto (Alterar)</label>
+                                        <label class="font-weight-bold" style="color: black">Foto (Alterar)</label>
                                         <input type="file" name="updPhoto" accept=".png, .jpg, .jpeg, .gif">
                                     </div>
                                 </div>
