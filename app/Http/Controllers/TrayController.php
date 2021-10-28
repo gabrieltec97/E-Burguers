@@ -2045,6 +2045,7 @@ class TrayController extends Controller
         $order = Auth::user()->userOrderTray()->get()->toArray();
         $couponOld = DB::table('coupons')->where('name', '=', $request->cupomDesconto)->get()->toArray();
         $update = Tray::find($order[0]['id']);
+        date_default_timezone_set('America/Sao_Paulo');
         $date = date('Y'. '-' . 'm' . '-' . 'd');
 
         //Capturando os itens adicionais.

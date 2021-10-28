@@ -36,22 +36,22 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a href="{{ route('tipoPedido') }}" class="nav-item nav-link menu-items">Novo Pedido</a>
+                <a href="{{ route('tipoPedido') }}" style="color: white" class="nav-item nav-link menu-items">Novo Pedido</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('preparo.index') }}" class="nav-item nav-link menu-items">Pedidos em andamento</a>
+                <a href="{{ route('preparo.index') }}" style="color: white" class="nav-item nav-link menu-items">Pedidos em andamento</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('meusCupons') }}" class="nav-item nav-link menu-items">Cupons</a>
+                <a href="{{ route('meusCupons') }}" style="color: white" class="nav-item nav-link menu-items">Cupons</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('pedidosPendentes') }}" class="nav-item nav-link menu-items">Pedidos pendentes</a>
+                <a href="{{ route('pedidosPendentes') }}" style="color: white" class="nav-item nav-link menu-items">Pedidos pendentes</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('meusPedidos') }}" class="nav-item nav-link menu-items">Histórico de pedidos</a>
+                <a href="{{ route('meusPedidos') }}" style="color: white" class="nav-item nav-link menu-items">Histórico de pedidos</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('avaliacoes') }}" class="nav-item nav-link menu-items">Avaliações</a>
+                <a href="{{ route('avaliacoes') }}" style="color: white" class="nav-item nav-link menu-items">Avaliações</a>
             </li>
         </ul>
 
@@ -93,16 +93,14 @@
                     $count += 1;
                 }
             }
-
-
          ?>
                 <a href="{{ route('minhaBandeja.index') }}"><i class="fas fa-shopping-cart carrinho text-white">
                 <span class="badge badge-secondary"><span class="text-white valor-carrinho"><?= $count ?></span></span></i></a>
         </span>
 
-        <div class="navbar-text nav-saudacao">
+        <div>
             <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle alinhamento-menu" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?php
                     date_default_timezone_set('America/Sao_Paulo');
                     $agora =getdate();
@@ -113,16 +111,16 @@
                     ?>
 
                     @if($hora >= 5 && $hora < 12)
-                        <span class="font-weight-bold saudacao">Bom dia, {{ $usuario }}</span>
+                        <span class="saudacao" style="color: white">Bom dia, {{ $usuario }}</span>
                     @elseif($hora >= 12 && $hora < 18)
-                        <span class="font-weight-bold saudacao" style="font-size: 17px"> Boa tarde, {{ $usuario }} &nbsp;</span>
+                        <span class="saudacao" style="color: white"> Boa tarde, {{ $usuario }} &nbsp;</span>
                     @else
-                        <span class="font-weight-bold saudacao">Boa noite, {{ $usuario }}</span>
+                        <span class="saudacao" style="color: white">Boa noite, {{ $usuario }}</span>
                     @endif
                 </a>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{{ route('meusDados') }}"><span class="font-weight-bold text-secondary">Meus dados</span></a>
+                    <a class="dropdown-item" href="{{ route('meusDados') }}"><span class="font-weight-bold" style="color: black">Meus dados</span></a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();"">
@@ -131,17 +129,12 @@
                         @csrf
                     </form>
 
-                    <span class="font-weight-bold text-secondary">Sair</span></a>
+                    <span class="font-weight-bold" style="color: black">Sair</span></a>
                 </div>
             </div>
         </div>
     </div>
-    <span class="navbar-text area-carrinho-hide-big">
-        <a href="{{ route('minhaBandeja.index') }}"><i class="fas fa-shopping-cart carrinho text-white">
-        <span class="badge badge-secondary"><span class="text-white valor-carrinho"><?= $count ?></span></span></i></a>
-    </span>
 </nav>
-
 
 @yield('content')
 

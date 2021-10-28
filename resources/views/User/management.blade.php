@@ -46,7 +46,7 @@
                     </script>
                 @endif
                 <div class="card">
-                        <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">Funcionários cadastrados</div>
+                        <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: #17B3DF;">Funcionários cadastrados</div>
 
                     <div class="card-body first-table">
 

@@ -27,7 +27,7 @@
                     </script>
                 @endif
                 <div class="card card-prep-emp mb-4">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #2D2D2D;">
+                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #15b4dc;">
                         <span class="text-white">Pedidos à serem preparados</span> <span class="badge" style="color: black; background: #FFFFFF">{{ count($orders) }}</span></div>
 
                     <div class="card-body first-table">

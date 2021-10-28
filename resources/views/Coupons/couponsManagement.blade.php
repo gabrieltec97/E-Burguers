@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-lg-8 col-sm-12 mb-5">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">Cadastrar cupom </div>
+                    <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: #17B3DF;">Cadastrar cupom </div>
                     <div class="card-body">
                         <form action="{{ route('cupons.store') }}" method="post" class="form-group cupom-sub">
                             @csrf
@@ -124,7 +124,7 @@
 
             <div class="col-lg-4 col-sm-12 mt-3 mb-5 mt-md-0">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">Cupons ativos</div>
+                    <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: #17B3DF;">Cupons ativos</div>
 
                     <div class="card-body">
                         <table class="table table-responsive table-bordered">

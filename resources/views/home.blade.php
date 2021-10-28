@@ -79,14 +79,14 @@
 
                 <div class="col-lg-7 col-sm-12 mt-3 mt-md-0">
                     <div class="card card-preparo">
-                        <div class="card-header font-weight-bold text-muted" style="font-size: 18px; background: #394751">
+                        <div class="card-header font-weight-bold text-muted" style="font-size: 18px; background: #2be8a4">
                             <span class="text-white">Em Andamento</span> <span class="badge bg-white" style="color: black;">{{ count($prepare) }}</span> </div>
 
                         <div class="card-body">
                             <table class="table table-bordered table-hover table-responsive-lg">
                                 <thead>
                                 <tr>
-                                    <th scope="col" style="color: black">Id do pedido</th>
+                                    <th scope="col" style="color: black">Id</th>
                                     <th scope="col" style="color: black">Status e Informações</th>
                                     <th scope="col" style="color: black">Tratativas</th>
                                 </tr>

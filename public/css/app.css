@@ -11036,3 +11036,55 @@ a.text-dark:focus {
 .rate:hover .face {
     opacity: 1;
 }
+
+.footertray{
+    position: fixed;
+
+    bottom: 0;
+    color: white;
+    text-align: center;
+}
+
+@media (min-width: 1000px) {
+    .tipopedido{
+        height: 400px;
+    }
+
+    .footertray{
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .tipopedido{
+        height: 230px;
+    }
+
+    .footertray{
+        width: 15%;
+        right: -2px;
+        bottom: 8px;
+    }
+
+    .img-item{
+        width: 90px;
+        height: 90px;
+        margin-left: -20px;
+    }
+
+    .starsrate, .personalizar-session{
+        margin-left: -20px;
+        margin-top: 15px;
+    }
+
+    .select-sabor{
+      margin-left: -20px;
+    }
+
+    .adicionar-bandeja{
+        margin-top: 15px;
+    }
+
+}
+
+
