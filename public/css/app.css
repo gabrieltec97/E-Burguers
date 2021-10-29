@@ -11050,6 +11050,30 @@ a.text-dark:focus {
         height: 400px;
     }
 
+    .img-item{
+        width: 90px;
+        height: 90px;
+        margin-left: -20px;
+    }
+    .img-personaliza{
+        width: 250px;
+        height: 210px;
+    }
+
+    .starsrate, .personalizar-session{
+        margin-left: -17px;
+        margin-top: 15px;
+    }
+
+    .adicionar-bandeja{
+        margin-top: 15px;
+        margin-left: -17px;
+    }
+
+    .select-sabor{
+        margin-left: -20px;
+    }
+
     .footertray{
         display: none;
     }
@@ -11062,8 +11086,13 @@ a.text-dark:focus {
 
     .footertray{
         width: 15%;
-        right: -2px;
+        right: 7px;
         bottom: 8px;
+    }
+
+    .img-personaliza{
+        width: 330px;
+        height: 210px;
     }
 
     .img-item{
@@ -11084,7 +11113,6 @@ a.text-dark:focus {
     .adicionar-bandeja{
         margin-top: 15px;
     }
-
 }
 
 

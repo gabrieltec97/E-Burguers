@@ -14,15 +14,15 @@
                     <div class="row">
                         <div class="col-12 col-lg-8 mb-3">
                             <div class="card">
-                                <div class="card-header bg-danger">
-                                    <h5 class="font-weight-bold text-white">Finalizando pedido</h5>
+                                <div class="card-header bg-dark">
+                                    <h5 class="font-weight-bold text-white" style="margin-bottom: -1px">Finalizando pedido</h5>
                                 </div>
                                 <div class="card-body">
                                     <form id="cadastrarPedido" action="{{ route('pedidos.store') }}" method="post" class="form-group">
                                         @csrf
                                         <div class="row">
                                             <div class="col-12 col-lg-6 div-forma-retirada">
-                                                <label class="font-weight-bold text-muted" style="font-size: 18px">Forma de retirada</label>
+                                                <label class="font-weight-bold" style="font-size: 18px">Forma de retirada</label>
                                                 <select name="formaRetirada" class="form-control forma-entrega">
                                                     @if(isset($pendings))
                                                         <option value="{{ $pendings }}">{{ $pendings }}</option>
@@ -43,12 +43,12 @@
 
                                                     @if(isset($exist[0]))
                                                         <div class="col-12 col-lg-6 local-entrega">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <label class="font-weight-bold" style="font-size: 18px">Será entregue em</label>
                                                             <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
                                                         </div>
                                                     @else
                                                         <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
+                                                            <label class="font-weight-bold" style="color: black; font-size: 18px">Entregar em</label>
                                                             <br>
                                                             <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
                                                             <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
@@ -57,7 +57,7 @@
                                                         </div>
 
                                                         <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
                                                             <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
                                                         </div>
                                                     @endif
@@ -427,7 +427,7 @@
                             @endif
                             <div class="card">
                                 <div class="card-header bg-danger">
-                                    <h5 class="font-weight-bold text-white"><i class="fas fa-hamburger mr-2"></i>Meus itens e cupom</h5>
+                                    <h5 class="font-weight-bold text-white" style="margin-bottom: -1px"><i class="fas fa-hamburger mr-2"></i>Itens e cupom</h5>
                                 </div>
                                 <div class="card-body">
 

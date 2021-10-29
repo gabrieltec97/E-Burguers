@@ -25,12 +25,13 @@
                 </div>
                 @endif
             @endif
-            <div class="col-12 col-md-9">
+            <div class="col-12 col-lg-9">
                 <div class="container-fluid">
                     <div class="row">
                         @foreach($foods as $food)
-                            <form action="{{ route('adicionarItem', $food->id) }}">
                             <div class="col-12 mt-lg-3 col-lg-4 div-food" id="addTray{{ $food->id }}">
+                            <form action="{{ route('adicionarItem', $food->id) }}">
+
                                 <div class="card">
                                     <div class="card-header bg-dark">
                                         <span class="text-white">{{ $food->name }} -</span>  <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span>
@@ -38,12 +39,12 @@
                                     <div class="card-body">
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <img class="card-img-top img-item" src="{{ asset($food->picture) }}">
                                                 </div>
 
-                                                <div class="col-9">
-                                                    <span>{{ $food->description }}</span>
+                                                <div class="col-8">
+                                                    <span class="fooddesc">{{ $food->description }}</span>
                                                 </div>
 
                                                 <div class="col-6 starsrate">
@@ -142,43 +143,45 @@
                                 <div class="modal fade" id="multiCollapseExample{{$food->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Personalização de item</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <div class="modal-header bg-dark">
+                                                <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Personalize seu sanduíche</h5>
+                                                <button type="button" class="close" style="color: white" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body bg-light">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <div class="col-6">
-                                                            <img class="card-img-top" src="{{ asset($food->picture) }}" style="height: 200px; width: 294px">
+                                                        <div class="col-12 d-flex justify-content-center">
+                                                            <img class="card-img-top img-personaliza" style="border-radius: 10px;" src="{{ asset($food->picture) }}">
                                                         </div>
 
-                                                        <div class="col-6">
+
+
+                                                        @if($food->extras != null)
+                                                            <div class="col-12">
+                                                                @if($rate != "Não")
+                                                                    @if($food->ratingAmount == 1)
+                                                                        <p style="color: black" class="font-weight-bold mt-3 float-right"><i class="fas fa-star text-warning"></i> {{ $food->ratingAmount }} avaliação</p>
+                                                                    @elseif($food->ratingAmount > 1)
+                                                                        <p style="color: black" class="font-weight-bold mt-3 float-right"><i class="fas fa-star text-warning"></i> {{ $food->ratingAmount }} avaliações</p>
+                                                                    @endif
+                                                                @endif
+
+                                                            <hr class="mt-5">
+                                                            </div>
+                                                        @endif
+
+                                                        <div class="col-4">
                                                             @foreach(explode(',', $food->ingredients) as $ing)
                                                                 <div>
                                                                     <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $ing }}" checked>
-                                                                    <label for="{{ $ing }}" class="text-muted ml-4 form-check-label font-weight-bold">{{ $ing }}</label>
+                                                                    <label for="{{ $ing }}" class="ml-4 form-check-label font-weight-bold" style="color: black;">{{ $ing }}</label>
                                                                 </div>
                                                             @endforeach
                                                         </div>
 
-                                                        @if($rate != "Não")
-                                                            @if($food->ratingAmount == 1)
-                                                                <p>{{ $food->ratingAmount }} avaliação</p>
-                                                            @elseif($food->ratingAmount > 1)
-                                                                <p>{{ $food->ratingAmount }} avaliações</p>
-                                                            @endif
-                                                        @endif
-
-                                                        @if($food->extras != null)
-                                                            <div class="col-12">
-                                                                <hr class="mt-4">
-                                                            </div>
-                                                        @endif
-
-                                                        <div class="col-12">
+                                                        <div class="col-7">
                                                             @if($food->extras != null)
                                                                 @foreach($food->extras as $e)
                                                                     <div>
@@ -253,7 +256,13 @@
                             </div>
 
                         @else
-                            bandeja vazia, escolhe aí..
+                            <div class="col-12 d-flex justify-content-center">
+                                <img src="{{ asset('logo/pizza.png') }}" style="width: 100px; height: 100px;">
+                            </div>
+
+                            <div class="col-12 mt-4 d-flex justify-content-center" style="margin-bottom: -15px">
+                                <h5>Bandeja vazia no momento</h5>
+                            </div>
                         @endif
                         @endif
                     </div>
@@ -262,7 +271,7 @@
 
             <div class="col-12 d-flex justify-content-end">
                 <div class="footertray">
-                    <img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 50px; height: 50px; cursor: pointer" title="Minha bandeja">
+                    <a href="{{ route('minhaBandeja.index') }}"><img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja"></a>
                 </div>
             </div>
 
