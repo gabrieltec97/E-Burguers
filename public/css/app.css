@@ -11077,6 +11077,11 @@ a.text-dark:focus {
     .footertray{
         display: none;
     }
+
+    .img-cupom{
+        height: 80px;
+        width: 80px;
+    }
 }
 
 @media (max-width: 900px) {
@@ -11084,7 +11089,26 @@ a.text-dark:focus {
         height: 230px;
     }
 
+    .img-cupom{
+        height: 50px;
+        width: 50px;
+    }
+
+    .card-finalizando{
+        margin-top: -30px;
+    }
+
+    .entrega-mobile{
+        margin-top: 25px;
+    }
+
     .footertray{
+        width: 15%;
+        right: 7px;
+        bottom: 8px;
+    }
+
+    .footerpay{
         width: 15%;
         right: 7px;
         bottom: 8px;

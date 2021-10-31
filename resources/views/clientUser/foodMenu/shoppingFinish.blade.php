@@ -13,7 +13,7 @@
                 <div class="container-fluid mt-2">
                     <div class="row">
                         <div class="col-12 col-lg-8 mb-3">
-                            <div class="card">
+                            <div class="card card-finalizando">
                                 <div class="card-header bg-dark">
                                     <h5 class="font-weight-bold text-white" style="margin-bottom: -1px">Finalizando pedido</h5>
                                 </div>
@@ -51,9 +51,9 @@
                                                             <label class="font-weight-bold" style="color: black; font-size: 18px">Entregar em</label>
                                                             <br>
                                                             <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
-                                                            <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
+                                                            <label class="font-weight-bold" style="color: black;"><span class="text-success">Minha residência</span></label><br>
                                                             <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
-                                                            <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
+                                                            <label class="font-weight-bold" style="color: black;"><span class="text-danger">Outro local (Insira)</span></label><br>
                                                         </div>
 
                                                         <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
@@ -77,7 +77,7 @@
                                               @endif
                                             @else
                                             <div class="col-12 col-lg-6 mt-4 pagamento">
-                                                <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
+                                                <label class="font-weight-bold" style="color:black;font-size: 18px;">Método de pagamento</label>
                                                 <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
                                                     <option value="Dinheiro">Dinheiro</option>
                                                     <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
@@ -88,7 +88,7 @@
                                             </div>
 
                                             <div class="col-12 col-lg-6 mt-4 val-entregue">
-                                                <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
+                                                <label class="font-weight-bold text-mutd" style="color:black;font-size: 18px">Valor entregue</label>
                                                 <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
                                                 <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                 <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
@@ -96,7 +96,7 @@
                                             @endif
 
                                                 <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
+                                                    <label class="font-weight-bold" style="color:black; font-size: 18px">Bairro</label>
                                                     <select class="form-control entregaDiff" name="diffDistrict">
                                                         <option value="" selected hidden>Selecione</option>
                                                         @foreach($places as $place)
@@ -106,7 +106,7 @@
                                                 </div>
 
                                                 <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                    <label class="font-weight-bold text-muted" style="font-size: 18px">Ponto de referência</label>
+                                                    <label class="font-weight-bold" style="color:black; font-size: 18px">Ponto de referência</label>
                                                     <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
                                                 </div>
                                             @endif
@@ -116,21 +116,21 @@
                                                 @if($exist[0]->deliverWay == 'Entrega em domicílio')
                                                     @if(isset($exist[0]))
                                                         <div class="col-12 col-lg-6 local-entrega">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
                                                             <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
                                                         </div>
                                                     @else
                                                         <div class="col-12 col-lg-4 mt-4 mt-lg-4 entrega">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
+                                                            <label class="font-weight-bold" style="color: black; font-size: 18px">Entregar em</label>
                                                             <br>
                                                             <input type="radio" class="entregaCasa" name="entrega" value="Entregaemcasa">
-                                                            <label class="font-weight-bold text-muted"><span class="text-success">Minha residência</span></label><br>
+                                                            <label class="font-weight-bold"><span class="text-success">Minha residência</span></label><br>
                                                             <input type="radio" class="entregaFora" name="entrega" value="localEntregaFora">
-                                                            <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
+                                                            <label class="font-weight-bold"><span class="text-danger">Outro local (Insira)</span></label><br>
                                                         </div>
 
                                                         <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
                                                             <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
                                                         </div>
                                                     @endif
@@ -149,7 +149,7 @@
                                                         @endif
                                                     @else
                                                         <div class="col-12 col-lg-6 mt-4 pagamento">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
+                                                            <label class="font-weight-bold" style="color:black; font-size: 18px;">Método de pagamento</label>
                                                             <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
                                                                 <option value="Dinheiro">Dinheiro</option>
                                                                 <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
@@ -160,7 +160,7 @@
                                                         </div>
 
                                                         <div class="col-12 col-lg-6 mt-4 val-entregue">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
+                                                            <label class="font-weight-bold" style="color:black; font-size: 18px">Valor entregue</label>
                                                             <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
                                                             <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                             <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
@@ -168,7 +168,7 @@
                                                     @endif
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
+                                                        <label class="font-weight-bold" style="color: blackfont-size: 18px">Bairro</label>
                                                         <select class="form-control entregaDiff" name="diffDistrict">
                                                             <option value="" selected hidden>Selecione</option>
                                                             @foreach($places as $place)
@@ -178,7 +178,7 @@
                                                     </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Ponto de referência</label>
+                                                        <label class="font-weight-bold" style="color: black;font-size: 18px">Ponto de referência</label>
                                                         <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
                                                     </div>
                                                 @endif
@@ -190,7 +190,7 @@
 {{--                                                Verificando se o cupom foi inserido em um local diferente.    --}}
                                                 @if($diffSend != null)
                                                     <div class="col-12 col-lg-6 local-entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                        <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
                                                         <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $diffSend[0] }}" title="Local inserido junto com cupom.">
                                                     </div>
 
@@ -215,21 +215,21 @@
                                                     @endif
                                                 @else
                                                     <div class="col-12 col-lg-6 entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Entregar em</label>
+                                                        <label class="font-weight-bold entrega-mobile" style="color: black; font-size: 18px">Entregar em</label>
                                                         <br>
                                                         <input type="radio" class="entregaCasa mt-1" name="entrega" value="Entregaemcasa">
-                                                        <label class="font-weight-bold text-muted"><span class="text-success">Meu endereço</span></label>
+                                                        <label class="font-weight-bold" style="color: black;"><span class="text-success">Meu endereço</span></label>
                                                         <input type="radio" class="entregaFora  ml-2" name="entrega" value="localEntregaFora">
-                                                        <label class="font-weight-bold text-muted"><span class="text-danger">Outro local (Insira)</span></label><br>
+                                                        <label class="font-weight-bold"><span class="text-danger">Outro local (Insira)</span></label><br>
                                                     </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 local-entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                        <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
                                                         <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
                                                     </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Bairro</label>
+                                                        <label class="font-weight-bold" style="color: black; font-size: 18px">Bairro</label>
                                                         <select class="form-control entregaDiff" name="diffDistrict">
                                                             <option value="" selected hidden>Selecione</option>
                                                             @foreach($places as $place)
@@ -239,12 +239,12 @@
                                                     </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Ponto de referência</label>
+                                                        <label class="font-weight-bold" style="color: black;font-size: 18px">Ponto de referência</label>
                                                         <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
                                                     </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 pagamento">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px;">Método de pagamento</label>
+                                                        <label class="font-weight-bold" style="color: black;font-size: 18px;">Método de pagamento</label>
                                                         <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
                                                             <option value="Dinheiro">Dinheiro</option>
                                                             <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
@@ -255,7 +255,7 @@
                                                     </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 val-entregue">
-                                                        <label class="font-weight-bold text-muted" style="font-size: 18px">Valor entregue</label>
+                                                        <label class="font-weight-bold" style="color: black;font-size: 18px">Valor entregue</label>
                                                         <input type="number" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
                                                         <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                         <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
@@ -263,7 +263,7 @@
                                                 @endif
                                                     @if(isset($exist[0]))
                                                         <div class="col-12 col-lg-8 mt-4 mt-lg-4 local-entrega">
-                                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Será entregue em</label>
+                                                            <label class="font-weight-bold" style="color: black;font-size: 18px">Será entregue em</label>
                                                             <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $exist[0]->address }}" placeholder="Insira o local a ser entregue.">
                                                         </div>
 {{--                                                    @else--}}
@@ -286,7 +286,7 @@
                                             @endif
 
                                             <div class="col-12 col-lg-12 mt-4 mt-lg-4">
-                                                <label class="font-weight-bold text-muted" style="font-size: 18px">Observações</label>
+                                                <label class="font-weight-bold" style="color: black; font-size: 18px">Observações</label>
                                                 <textarea name="obs" class="form-control" id="" cols="30" rows="5" placeholder="Insira alguma observação caso necessário."></textarea>
                                             </div>
 
@@ -431,17 +431,38 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDeItens">
-                                        <i class="fas fa-utensils mr-2"></i>Ver meus itens
-                                    </button>
+                                    <div class="col-12">
+
+                                        <?php
+                                        $count = strlen($myOrder['totalValue']);
+
+                                        if ($count == 4 && $myOrder['totalValue'] > 10){
+                                            $price = $myOrder['totalValue'] . '0';
+                                        }elseif ($count == 2){
+                                            $price = $myOrder['totalValue']. '.' . '00';
+                                        }
+                                        else{
+                                            $price = $myOrder['totalValue'];
+                                        }
+                                        ?>
+
+                                        <label class="font-weight-bold" style="font-size: 18px; color: black;">Valor total:</label>
+                                        <span class="text-success font-weight-bold total-val" style="font-size: 18px">{{ $price }}</span>
+                                    </div>
+
+                                   <div class="col-12 mb-lg-5">
+                                       <!-- Button trigger modal -->
+                                       <a style="font-size: 16px; color: red; cursor: pointer;" data-toggle="modal" data-target="#modalDeItens">
+                                           <i class="fas fa-utensils mr-2"></i>Ver itens do pedido.
+                                       </a>
+                                   </div>
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalDeItens" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">Meus itens da bandeja.</h5>
+                                                <div class="modal-header bg-danger">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Meus itens da bandeja.</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -454,7 +475,7 @@
                                                                     <form action="{{ route('minhaBandeja.destroy', $food = $myOrder['comboItem']) }}" method="post">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                        <li class="font-weight-bold" style="position: relative; right: 20px">{{ $myOrder['comboItem'] }} <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
+                                                                        <li class="font-weight-bold" style="position: relative; right: 20px">{{ $myOrder['comboItem'] }} <button type="submit" class="removeItem ml-1" title="Remover item" style="border: none; background: none;"><i class="fas fa-times text-danger"></i></button></li>
                                                                     </form>
 
                                                                     <div style="margin-top: -13px">
@@ -498,7 +519,7 @@
                                                                                                                         @endforeach
 
                                                                                                                     >
-                                                                                                                    <span class="text-muted font-weight-bold ml-4 form-check-label">{{ $addon }}</span>
+                                                                                                                    <span class="font-weight-bold ml-4 form-check-label" style="color: black;">{{ $addon }}</span>
                                                                                                                 </div>
                                                                                                             @endforeach
                                                                                                         </div>
@@ -549,10 +570,10 @@
                                                                     @foreach($customs as $key => $val)
                                                                         <form action="{{ route('removeCustomizado', $id = $val->id) }}" method="post">
                                                                             @csrf
-                                                                            <li style="position: relative; right: 20px">{{ $val->Item }} <button type="submit" class="fas fa-times text-danger removeItem" style="cursor: pointer" title="Remover item"></button></li>
+                                                                            <li style="position: relative; right: 20px; font-size: 15px">{{ $val->Item }} <button type="submit" class="fas fa-times text-danger removeItem" style="border: none; background: none; cursor: pointer;" title="Remover item"></button></li>
                                                                             @if($val->nameExtra != '')
                                                                                 <ul>
-                                                                                    <li style="position: relative; right: 20px;">{{ $val->nameExtra }}
+                                                                                    <li style="position: relative; right: 20px; font-size: 15px">{{ $val->nameExtra }}
                                                                                         <a href="{{ route('minhaBandeja.index') }}" class="removeItem ml-1" title="Editar itens extras"><i class="fas fa-edit text-primary" style="font-size: 16px"></i></a></li>
                                                                                 </ul>
                                                                             @endif
@@ -568,8 +589,8 @@
                                                                         <form action="{{ route('removerItem', $value->id)}}" method="post">
                                                                             @csrf
                                                                             @if($value != '')
-                                                                                <li style="position: relative; right: 20px">{{ $value->itemName }}
-                                                                                    <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
+                                                                                <li style="position: relative; right: 20px; font-size: 15px;">{{ $value->itemName }}
+                                                                                    <button type="submit" class="removeItem ml-1" title="Remover item" style="border: none; background: none; cursor: pointer;"><i class="fas fa-times text-danger"></i></button></li>
                                                                             @endif
                                                                         </form>
 
@@ -581,7 +602,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
+                                                    <a href="{{ route('cardapio', $insert = true) }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Adicionar mais itens</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -610,12 +631,6 @@
                                         {{--                                        <hr>--}}
                                         {{--                                    @endif--}}
                                     @endif
-
-                                    <div class="col-12">
-                                        <label class="text-muted font-weight-bold" style="font-size: 18px">Valor total:</label>
-                                        <span class="text-success font-weight-bold total-val" style="font-size: 18px">{{ $myOrder['totalValue'] }}</span>
-                                    </div>
-
 
                                     <form id="couponApply" action="{{ route('aplicarCupom') }}" method="post">
                                         @csrf
@@ -691,6 +706,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="col-12 d-flex justify-content-end">
+        <div class="footertray">
+            <span class="badge badge-success">R$ {{ $price }}</span>
+            <img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja" data-toggle="modal" data-target="#modalDeItens">
         </div>
     </div>
 

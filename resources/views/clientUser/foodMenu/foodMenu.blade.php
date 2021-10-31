@@ -269,9 +269,91 @@
             </div>
         </div>
 
+            <div class="modal fade" id="modalDeItens" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Meus itens da bandeja.</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                @if($deliveryStatus[0]->status == 'Fechado')
+                                    inserir imagem de delivery fechado
+                                @else
+                                    <ol>
+                                        @if(isset($items))
+                                            @foreach($items as $item)
+                                                <form action="{{ route('removerItem', ['id' => $item->id])}}" method="post">
+                                                    @csrf
+                                                    <li>{{$item->itemName}} <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
+
+                                                </form>
+                                            @endforeach
+                                        @endif
+
+                                        @if(isset($itemWExtras))
+                                            @foreach($itemWExtras as $item2)
+                                                <form action="{{ route('removerPersonalizado', $item2['id']) }}" method="post">
+                                                    @csrf
+                                                    <li><span class="text-success">{{$item2['name']}}<button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></span></li>
+                                                </form>
+                                            @endforeach
+                                        @endif
+                                    </ol>
+
+                                    @if(isset($val) && $val[0]['totalValue'] > 0)
+                                        <hr>
+                                        <div>
+                                            <span class="float-right">Valor atual: R$ <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <a href="{{ route('fimCompra') }}" class="btn btn-primary"><i class="fas fa-dollar-sign mr-2"></i>Ir para Pagamento</a>
+                                        </div>
+
+                                    @else
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <img src="{{ asset('logo/pizza.png') }}" style="width: 100px; height: 100px;">
+                                        </div>
+
+                                        <div class="col-12 mt-4 d-flex justify-content-center" style="margin-bottom: -15px">
+                                            <h5>Bandeja vazia no momento</h5>
+                                        </div>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+            if (isset($val)){
+                $count = strlen($val[0]['totalValue']);
+
+                if ($count == 4 && $val[0]['totalValue'] > 10){
+                    $price = $val[0]['totalValue'] . '0';
+                }elseif ($count == 2){
+                    $price = $val[0]['totalValue']. '.' . '00';
+                }
+                else{
+                    $price = $val[0]['totalValue'];
+                }
+            }else{
+                $price = 0;
+            }
+            ?>
+
             <div class="col-12 d-flex justify-content-end">
                 <div class="footertray">
-                    <a href="{{ route('minhaBandeja.index') }}"><img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja"></a>
+                    <span class="badge badge-success">R$ {{ $price }}</span>
+                    <img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja" data-toggle="modal" data-target="#modalDeItens">
                 </div>
             </div>
 
