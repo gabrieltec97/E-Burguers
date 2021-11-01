@@ -20,7 +20,7 @@
 
             @if(isset($tray))
                 @if(isset($val) && $val[0]['totalValue'] > 0)
-                <div class="col-12 d-flex justify-content-center">
+                <div class="col-12 d-flex justify-content-center mb-3 mb-sm-0">
                     <a href="{{ route('fimCompra') }}" class="btn btn-success font-weight-bold"><i class="fas fa-chevron-circle-right mr-2"></i>Ir para pagamento</a>
                 </div>
                 @endif
@@ -247,6 +247,12 @@
 
                         @if(isset($val) && $val[0]['totalValue'] > 0)
                             <hr>
+                                @if(count($coupons) > 0)
+                                <div class="col-12 mb-2">
+                                    <img src="{{ asset('logo/cupom.png') }}" style="width: 17px; height: 17px; margin-bottom: 5px" alt="">
+                                    <a href="{{ route('meusCupons') }}" style="text-decoration: none;">Você pode inserir um cupom (Ver)</a>
+                                </div>
+                                @endif
                             <div>
                                 <span class="float-right">Valor atual: <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
                             </div>
@@ -326,6 +332,14 @@
                                 @endif
                             </div>
                         </div>
+
+                        @if(count($coupons) > 0)
+                            <div class="col-12 mb-2 ml-3">
+                                <img src="{{ asset('logo/cupom.png') }}" style="width: 17px; height: 17px; margin-bottom: 5px" alt="">
+                                <a href="{{ route('meusCupons') }}" style="text-decoration: none;">Você pode inserir um cupom (Ver cupom)</a>
+                            </div>
+                        @endif
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
                         </div>
@@ -352,7 +366,7 @@
 
             <div class="col-12 d-flex justify-content-end">
                 <div class="footertray">
-                    <span class="badge badge-success">R$ {{ $price }}</span>
+                    <span class="badge badge-success" style="cursor:pointer;" data-toggle="modal" data-target="#modalDeItens">R$ {{ $price }} <br> <?= $price  ? 'Pagar agora' : '' ?></span>
                     <img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja" data-toggle="modal" data-target="#modalDeItens">
                 </div>
             </div>

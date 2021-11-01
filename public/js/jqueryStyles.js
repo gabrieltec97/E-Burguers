@@ -918,11 +918,12 @@ $(".valor-item-add-edit").on('keyup', function (){
 $(".valor-item-add").mask('000.00', {reverse: true});
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .send-asset, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){
       $('.cadastrar-taxa').text('Cadastrar');
+      $('.send-asset').text('Enviar avaliação');
       $('.cadastrar-cupom').text('Cadastrar cupom');
       $('.cadastrar-cupom').text('Salvar alterações');
       $('.cadastrar-funcionario').html('<i class="fas fa-user-plus mr-2"></i>Cadastrar funcionário');
@@ -932,6 +933,14 @@ $(".adicionar-bandeja, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salva
 
 $(".edit-extras-items").on('click', function (){
     $("#modalDeItens").modal('close');
+})
+
+$(".copycoupon").on('click', function (){
+    const copiar = document.getElementById('copycoupon');
+
+    copiar.select();
+
+    document.execCommand('copy');
 })
 
 });

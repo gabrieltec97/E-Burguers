@@ -20,7 +20,9 @@
                                 </div>
 
                                 <div class="col-5 col-lg-2">
-                                    <span class="font-weight-bold text-danger" style="font-size: 19px">{{ $coupon->name }}</span> <br>
+                                    <span class="font-weight-bold text-danger" style="font-size: 19px">{{ $coupon->name }}</span>
+                                    <br>
+{{--                                    <button value="{{ $coupon->name }}" style="background: none; border: none;" class="copycoupon" id="copycoupon" title="Copiar"><i class="far fa-clone ml-1" style="font-size: 16px; cursor: pointer; color: #58a5ee"></i></button><br>--}}
                                     <span>Expira em: {{ $coupon->expireDate }}</span>
                                 </div>
 

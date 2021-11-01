@@ -14,7 +14,7 @@ class MyOrders extends Component
     public function render()
     {
         $user = Auth::user()->id;
-        $orders = DB::table('orders')->where('idClient', '=', $user)->paginate(9);
+        $orders = DB::table('orders')->where('idClient', '=', $user)->orderBy('id', 'desc')->paginate(9);
         $countOrders = DB::table('orders')->where('idClient', '=', $user)->get();
 
         return view('livewire.my-orders', compact('orders', 'countOrders'));

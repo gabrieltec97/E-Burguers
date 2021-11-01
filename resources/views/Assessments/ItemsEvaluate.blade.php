@@ -5,70 +5,100 @@
 @endsection
 
 @section('content')
-    <div class="container w-75 mt-5">
+    <div class="container-fluid div-aval-desktop-2">
        <div class="row" style="margin-top: 200px">
 
            @if($rated['ordered'] != 0)
                @if(count($itensToEvaluate) == 0)
                    @if($rated['rated'] == 0)
-                       <div class="col-12">
-                           <h2 class="text-center mt-5 mb-5">Faça uma avaliação sobre nós</h2>
-                       </div>
 
-                       <div class="col-12 mb-5">
-                           <form action="{{ route('enviarAvaliacao') }}" method="get">
-                               @csrf
-                               <div class="wrap">
-                                   <div class="stars">
-                                       <label class="rate">
-                                           <input type="radio" name="radio1" id="star1" value="1">
-                                           <div class="face"></div>
-                                           <i class="far fa-star star one-star"></i>
-                                       </label>
-                                       <label class="rate">
-                                           <input type="radio" name="radio1" id="star2" value="2">
-                                           <div class="face"></div>
-                                           <i class="far fa-star star two-star"></i>
-                                       </label>
-                                       <label class="rate">
-                                           <input type="radio" name="radio1" id="star3" value="3">
-                                           <div class="face"></div>
-                                           <i class="far fa-star star three-star"></i>
-                                       </label>
-                                       <label class="rate">
-                                           <input type="radio" name="radio1" id="star4" value="4">
-                                           <div class="face"></div>
-                                           <i class="far fa-star star four-star"></i>
-                                       </label>
-                                       <label class="rate">
-                                           <input type="radio" name="radio1" required id="star5" value="5">
-                                           <div class="face"></div>
-                                           <i class="far fa-star star five-star"></i>
-                                       </label>
-                                   </div>
-                               </div>
-                       </div>
+                      <div class="container">
+                          <div class="card">
+                              <div class="card-header bg-dark">
+                                  <span style="color: white; font-size: 17px">Faça uma avaliação sobre nós</span>
+                              </div>
+                              <div class="card-body">
+                                  <div class="container-fluid">
+                                      <div class="row">
+                                          <div class="col-12 mb-3 mt-2">
+                                              <form action="{{ route('enviarAvaliacao') }}" method="get">
+                                                  @csrf
+                                                  <div class="wrap">
+                                                      <div class="stars">
+                                                          <label class="rate">
+                                                              <input type="radio" name="radio1" id="star1" value="1">
+                                                              <div class="face"></div>
+                                                              <i class="far fa-star star one-star"></i>
+                                                          </label>
+                                                          <label class="rate">
+                                                              <input type="radio" name="radio1" id="star2" value="2">
+                                                              <div class="face"></div>
+                                                              <i class="far fa-star star two-star"></i>
+                                                          </label>
+                                                          <label class="rate">
+                                                              <input type="radio" name="radio1" id="star3" value="3">
+                                                              <div class="face"></div>
+                                                              <i class="far fa-star star three-star"></i>
+                                                          </label>
+                                                          <label class="rate">
+                                                              <input type="radio" name="radio1" id="star4" value="4">
+                                                              <div class="face"></div>
+                                                              <i class="far fa-star star four-star"></i>
+                                                          </label>
+                                                          <label class="rate">
+                                                              <input type="radio" name="radio1" required id="star5" value="5">
+                                                              <div class="face"></div>
+                                                              <i class="far fa-star star five-star"></i>
+                                                          </label>
+                                                      </div>
+                                                  </div>
+                                          </div>
 
-                       <div class="col-12 mb-3">
-                           <textarea name="opiniao" style="resize: none;" placeholder="Diga em que podemos melhorar :)" class="form-control" cols="30" rows="10" required></textarea>
-                       </div>
+                                          <div class="col-12 mb-3">
+                                              <textarea name="opiniao" style="resize: none;" placeholder="Faça elogios e/ou diga em que podemos melhorar :)" class="form-control" cols="30" rows="10" required></textarea>
+                                          </div>
 
-                       <div class="col-12 mt-4">
-                           <button class="btn btn-success float-right">Enviar avaliação</button>
-                       </div>
+                                          <div class="col-12 mt-4">
+                                              <button class="btn btn-success float-right send-asset">Enviar avaliação</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                        </form>
-
                    @else
-                       Obrigado pela sua avaliação!
 
-                       <button class="btn btn-primary" data-toggle="modal" data-target="#modalAvaliar">Avaliar novamente</button>
+                       <div class="container div-aval-desktop">
+                           <div class="card">
+                               <h5 class="card-header bg-dark" style="color: white">Minhas avaliações</h5>
+                               <div class="card-body">
+                                  <div class="container-fluid">
+                                      <div class="row">
+                                          <div class="col-12 d-flex justify-content-center col-lg-6">
+                                              <img src="{{ asset('logo/reviews.png') }}" class="img-aval" alt="">
+                                          </div>
+
+                                          <div class="col-12 col-lg-6">
+                                              <h2 class="text-center">Obrigado pela sua avaliação</h2>
+                                              <span class="text-center" style="font-size: 15px">Você avaliou todos os itens pedidos até o momento e também avaliou o estabelecimento. Obrigado pela ajuda!</span>
+                                              <br>
+                                              <button class="btn btn-primary mt-3 mt-lg-1 offset-4" data-toggle="modal" data-target="#modalAvaliar"><i class="fa fa-star text-warning"></i> Avaliar novamente</button>
+                                          </div>
+
+                                      </div>
+                                  </div>
+                               </div>
+                           </div>
+                       </div>
+
 
                        <!-- Modal -->
                        <div class="modal fade" id="modalAvaliar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                            <div class="modal-dialog" role="document">
                                <div class="modal-content">
-                                   <div class="modal-header">
-                                       <h5 class="modal-title" id="exampleModalLabel">Nova avaliação</h5>
+                                   <div class="modal-header bg-dark">
+                                       <h5 class="modal-title" id="exampleModalLabel" style="color: white">Nova avaliação</h5>
                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                            <span aria-hidden="true">&times;</span>
                                        </button>
@@ -119,7 +149,7 @@
                                                </div>
 
                                                <div class="col-12 mt-4">
-                                                   <button class="btn btn-success float-right">Enviar avaliação</button>
+                                                   <button class="btn btn-success float-right send-asset">Enviar avaliação</button>
                                                </div>
                                                </form>
                                            </div>
@@ -131,74 +161,110 @@
                    @endif
                @endif
            @else
-               Para fazer uma avaliação, primeiro você precisa fazer um pedido.
-               @endif
 
-           @foreach($itensToEvaluate as $item)
-               <div class="col-5 col-md-4 mt-5">
-                   <img src="{{ asset($item[2]) }}" alt="" style="width: 200px; height: 150px">
-                   <label for="{{ $item[1] }}" class="mt-4 mt-md-0 d-flex justify-content-center">{{ $item[1] }}</label><br>
-                   <button class="btn btn-primary offset-4" data-toggle="modal" data-target="#modalAvaliacao{{$item[0]}}">Avaliar</button>
+               <div class="container div-aval-desktop">
+                   <div class="card">
+                       <h5 class="card-header bg-dark" style="color: white">Minhas avaliações</h5>
+                       <div class="card-body">
+                           <div class="container-fluid">
+                               <div class="row">
+                                   <div class="col-12 d-flex justify-content-center col-lg-6">
+                                       <img src="{{ asset('logo/eta.png') }}" class="img-aval" alt="">
+                                   </div>
 
-                   <!-- Modal -->
-                   <div class="modal fade" id="modalAvaliacao{{$item[0]}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                       <div class="modal-dialog modal-dialog-centered" role="document">
-                           <div class="modal-content">
-                               <div class="modal-header">
-                                   <h5 class="modal-title" id="exampleModalLongTitle">Conte para nós como estava o lanche</h5>
-                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                       <span aria-hidden="true">&times;</span>
-                                   </button>
-                               </div>
-                               <div class="modal-body">
-                                   <form action="{{ route('avaliar', $item[0]) }}" method="get">
-                                       @csrf
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="wrap">
-                                                        <div class="stars">
-                                                            <label class="rate">
-                                                                <input type="radio" name="radio1" id="star1" value="1">
-                                                                <div class="face"></div>
-                                                                <i class="far fa-star star one-star"></i>
-                                                            </label>
-                                                            <label class="rate">
-                                                                <input type="radio" name="radio1" id="star2" value="2">
-                                                                <div class="face"></div>
-                                                                <i class="far fa-star star two-star"></i>
-                                                            </label>
-                                                            <label class="rate">
-                                                                <input type="radio" name="radio1" id="star3" value="3">
-                                                                <div class="face"></div>
-                                                                <i class="far fa-star star three-star"></i>
-                                                            </label>
-                                                            <label class="rate">
-                                                                <input type="radio" name="radio1" id="star4" value="4">
-                                                                <div class="face"></div>
-                                                                <i class="far fa-star star four-star"></i>
-                                                            </label>
-                                                            <label class="rate">
-                                                                <input type="radio" name="radio1" id="star5" value="5">
-                                                                <div class="face"></div>
-                                                                <i class="far fa-star star five-star"></i>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                   <div class="col-12 col-lg-6">
+                                       <hr class="hr-mobile">
+                                       <h2 class="text-center">Para fazer uma avaliação, primeiro você precisa fazer um pedido.</h2>
+                                       <br>
+                                       <a href="{{ route('tipoPedido') }}" class="btn btn-primary mt-lg-1 offset-5">Pedir agora</a>
+                                   </div>
 
-                               </div>
-                               <div class="modal-footer">
-                                   <button type="submit" class="btn btn-success">Enviar avaliação</button>
-                                   </form>
                                </div>
                            </div>
                        </div>
                    </div>
                </div>
-           @endforeach
+               @endif
+
+               @if(count($itensToEvaluate ) != 0)
+                   <div class="container div-aval-desktop">
+                       <div class="card">
+                           <h5 class="card-header bg-dark" style="color: white">Itens para você avaliar</h5>
+                           <div class="card-body">
+                               <div class="container-fluid">
+                                   <div class="row">
+                                       @foreach($itensToEvaluate as $item)
+                                           <div class="col-12 col-lg-3">
+                                               <img src="{{ asset($item[2]) }}" class="img-check" style="margin-left: auto; margin-right: auto; border-radius: 5px">
+                                               <label for="{{ $item[1] }}" class="mt-3">{{ $item[1] }}</label><br>
+                                               <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalAvaliacao{{$item[0]}}">Avaliar</button>
+                                           </div>
+
+                                           <!-- Modal -->
+                                           <div class="modal fade" id="modalAvaliacao{{$item[0]}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                               <div class="modal-dialog modal-dialog-centered" role="document">
+                                                   <div class="modal-content">
+                                                       <div class="modal-header">
+                                                           <h5 class="modal-title" id="exampleModalLongTitle">Que nota você daria para esta pizza?</h5>
+                                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                               <span aria-hidden="true">&times;</span>
+                                                           </button>
+                                                       </div>
+                                                       <div class="modal-body">
+                                                           <form action="{{ route('avaliar', $item[0]) }}" method="get">
+                                                               @csrf
+                                                               <div class="container-fluid mt-4">
+                                                                   <div class="row">
+                                                                       <div class="col-12 d-flex justify-content-center">
+                                                                           <div class="wrap">
+                                                                               <div class="stars">
+                                                                                   <label class="rate">
+                                                                                       <input type="radio" name="radio1" id="star1" value="1">
+                                                                                       <div class="face"></div>
+                                                                                       <i class="far fa-star star one-star"></i>
+                                                                                   </label>
+                                                                                   <label class="rate">
+                                                                                       <input type="radio" name="radio1" id="star2" value="2">
+                                                                                       <div class="face"></div>
+                                                                                       <i class="far fa-star star two-star"></i>
+                                                                                   </label>
+                                                                                   <label class="rate">
+                                                                                       <input type="radio" name="radio1" id="star3" value="3">
+                                                                                       <div class="face"></div>
+                                                                                       <i class="far fa-star star three-star"></i>
+                                                                                   </label>
+                                                                                   <label class="rate">
+                                                                                       <input type="radio" name="radio1" id="star4" value="4">
+                                                                                       <div class="face"></div>
+                                                                                       <i class="far fa-star star four-star"></i>
+                                                                                   </label>
+                                                                                   <label class="rate">
+                                                                                       <input type="radio" name="radio1" id="star5" value="5">
+                                                                                       <div class="face"></div>
+                                                                                       <i class="far fa-star star five-star"></i>
+                                                                                   </label>
+                                                                               </div>
+                                                                           </div>
+                                                                       </div>
+                                                                   </div>
+                                                               </div>
+
+                                                       </div>
+                                                       <div class="modal-footer">
+                                                           <button type="submit" class="btn btn-success send-aval">Enviar avaliação</button>
+                                                           </form>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       @endforeach
+
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               @endif
        </div>
     </div>
 
@@ -232,13 +298,14 @@
 
     @if(session('msg'))
         <script>
-            $.toast({
-                text: '<b style="font-size: 14px;">A sua avaliação é muito importante para nós e para os outros clientes :)</b>',
-                heading: '<b style="font-size: 17px">Muito obrigado!</b>',
-                showHideTransition: 'slide',
-                bgColor : '#38C172',
-                position : 'top-right',
-                hideAfter: 9000
+            Swal.fire({
+                icon: 'success',
+                title: 'Obrigado! A sua avaliação é muito importante para nós e para os outros clientes :)',
+                position: 'top-end',
+                toast: true,
+                showConfirmButton: false,
+                timer: 12000,
+                timerProgressBar: true
             })
         </script>
     @endif

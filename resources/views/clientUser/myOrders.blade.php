@@ -1,7 +1,7 @@
 @extends('layouts.extend-client')
 
 @section('title')
-    Em preparo
+    Histórico de pedidos
 @endsection
 
 @section('content')

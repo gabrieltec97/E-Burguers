@@ -11045,7 +11045,21 @@ a.text-dark:focus {
     text-align: center;
 }
 
-@media (min-width: 1000px) {
+
+@media (max-width: 1024px) {
+    .footertray{
+        width: 15%;
+        right: 7px;
+        bottom: 8px;
+    }
+
+    .img-cupom{
+        height: 80px;
+        width: 80px;
+    }
+}
+
+@media (min-width: 1025px) {
     .tipopedido{
         height: 400px;
     }
@@ -11082,11 +11096,53 @@ a.text-dark:focus {
         height: 80px;
         width: 80px;
     }
+
+    .img-aval{
+        width: 350px;
+        height: 350px;
+    }
+
+    .div-aval-desktop-2{
+        margin-top: -110px;
+    }
+
+    .hr-mobile{
+        display: none;
+    }
+
+    .img-check{
+        height: 130px;
+    }
+
+    .img-pedido{
+        height: 250px;
+    }
 }
 
 @media (max-width: 900px) {
     .tipopedido{
         height: 230px;
+    }
+
+    .img-pedido{
+        height: 150px;
+    }
+
+    .div-aval-desktop-2{
+        margin-top: -120px;
+    }
+
+    .div-aval-desktop{
+        margin-top: -10px;
+    }
+
+    .img-check{
+        height: 200px;
+    }
+
+    .img-aval{
+        width: 350px;
+        height: 350px;
     }
 
     .img-cupom{
@@ -11103,12 +11159,6 @@ a.text-dark:focus {
     }
 
     .footertray{
-        width: 15%;
-        right: 7px;
-        bottom: 8px;
-    }
-
-    .footerpay{
         width: 15%;
         right: 7px;
         bottom: 8px;
