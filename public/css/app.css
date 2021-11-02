@@ -11039,7 +11039,13 @@ a.text-dark:focus {
 
 .footertray{
     position: fixed;
+    bottom: 0;
+    color: white;
+    text-align: center;
+}
 
+.footertake{
+    position: fixed;
     bottom: 0;
     color: white;
     text-align: center;
@@ -11057,11 +11063,46 @@ a.text-dark:focus {
         height: 80px;
         width: 80px;
     }
+
+    .takeNow{
+        margin-left: -5px;
+        margin-bottom: 45px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .footertake{
+        width: 15%;
+        right: -20px;
+        bottom: 10px;
+    }
+
+    .circle {
+        margin-left: 20px;
+    }
 }
 
 @media (min-width: 1025px) {
     .tipopedido{
         height: 400px;
+    }
+
+    .circle {
+        margin-left: 95px;
+        margin-top: 10px;
+    }
+
+    .takeNow{
+        margin-left: 145px;
+        margin-bottom: 24px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .footertake{
+        width: 15%;
+        right: -20px;
+        bottom: 10px;
     }
 
     .img-item{
@@ -11117,11 +11158,19 @@ a.text-dark:focus {
     .img-pedido{
         height: 250px;
     }
+
+    .prep-image{
+        height: 350px;
+    }
 }
 
 @media (max-width: 900px) {
     .tipopedido{
         height: 230px;
+    }
+
+    .prep-image{
+        display: none;
     }
 
     .img-pedido{
@@ -11180,6 +11229,12 @@ a.text-dark:focus {
         margin-top: 15px;
     }
 
+    .footertake{
+        width: 15%;
+        right: 5px;
+        bottom: 10px;
+    }
+
     .select-sabor{
       margin-left: -20px;
     }
@@ -11187,6 +11242,60 @@ a.text-dark:focus {
     .adicionar-bandeja{
         margin-top: 15px;
     }
+
+    .circle {
+        margin-left: -5px;
+        margin-top: 10px;
+    }
+
+    .takeNow{
+        margin-left: -55px;
+        margin-bottom: 24px;
+        width: 60px;
+        height: 60px;
+    }
 }
+
+.circle-wrapper {
+    position: relative;
+    width: 65px;
+    height: 65px;
+    float: left;
+    margin: 10px;
+}
+
+.icon {
+    position: absolute;
+    color: #fff;
+    font-size: 55px;
+    top: 55px;
+    left: 55px;
+    transform: translate(-50%, -50%);
+}
+
+.circle {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    padding: 2.5px;
+    background-clip: content-box;
+    animation: spin 10s linear infinite;
+}
+
+.circle-wrapper:active .circle {
+    animation: spin 2s linear infinite;
+}
+
+.success {
+    border: 3px dashed #08B3F6;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
 
 

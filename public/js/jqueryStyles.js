@@ -935,12 +935,13 @@ $(".edit-extras-items").on('click', function (){
     $("#modalDeItens").modal('close');
 })
 
-$(".copycoupon").on('click', function (){
-    const copiar = document.getElementById('copycoupon');
+$(".takeNow").on('click', function (){
 
-    copiar.select();
-
-    document.execCommand('copy');
 })
+
+
+
+
+
 
 });

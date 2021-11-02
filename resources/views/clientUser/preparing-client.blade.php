@@ -12,26 +12,29 @@
    <div class="row">
        @if(isset($order))
         @if(count($order) == 1)
-               <div class="col-12 col-md-6 mt-md-5 mt-lg-0 col-lg-5">
-                   <img src="{{ asset('logo/undraw_Chef_cu0r.svg') }}" class="img-preparing img-fluid">
-               </div>
 
-               <div class="col-12 col-md-6 mt-3 mt-lg-0 col-lg-4">
+            <div class="col-5 mt-5">
+                <img src="{{ asset('logo/undraw_Chef_cu0r.svg') }}" class="prep-image">
+            </div>
+
+           
+               <div class="col-12 col-lg-7 mt-lg-5">
                    <div class="card card-preparing mb-5">
-                       <div class="card-header bg-primary text-center text-muted font-weight-bold">
+                       <div class="card-header bg-dark text-center text-muted font-weight-bold">
                            <span class="text-white">Hmmm.. Já recebemos seu pedido!</span>
                        </div>
                        <ul class="list-group list-group-flush ul-pedidos">
-                           <li class="list-group-item text-muted font-weight-bold et1"><i class="fas fa-check mr-1"></i> Pedido registrado</li>
-                           <li class="list-group-item font-weight-bold text-secondary et2"><i class="fas fa-spinner mr-2"></i>Em preparo</li>
-                           <li class="list-group-item font-weight-bold text-secondary preparing" hidden>
-                               <div class="spinner-border spinner-border-sm mr-1" style="font-size: 15px;" role="status">
+                           <li class="list-group-item font-weight-bold et1" style="color: black"><i class="fas fa-check mr-1 text-success"></i> Pedido registrado</li>
+                           <li class="list-group-item font-weight-bold text-secondary et2"><i class="fas fa-spinner mr-2 iet2"></i> <i class="fas fa-check mr-1 text-success iet2ready" hidden></i>Em preparo</li>
+                           <li class="list-group-item font-weight-bold preparing" style="color: black" hidden>
+                               <div class="spinner-border spinner-border-sm mr-1 text-success" style="font-size: 15px;" role="status">
                                </div>
                                Em preparo</li>
                            <li class="list-group-item font-weight-bold text-secondary et3"><i class="fas fa-motorcycle mr-2"></i>Saiu para entrega</li>
-                           <li class="list-group-item font-weight-bold text-secondary et5"><i class="fas fa-check-circle mr-2"></i>Pronto para retirar no restaurante</li>
+                           <li class="list-group-item font-weight-bold text-secondary et5"><i class="fas fa-check-circle mr-2 iet5"></i>Pronto para retirar no restaurante</li>
                            <li class="list-group-item font-weight-bold text-secondary li-cancelamento">
-                               <button class="btn btn-danger float-right font-weight-bold cancelarPedido" data-toggle="modal" data-target="#modalCancelamento">Cancelar pedido</button>
+                               <button class="btn btn-danger float-right font-weight-bold cancelarPedido ml-2" data-toggle="modal" data-target="#modalCancelamento">Cancelar pedido</button>
+                               <button class="btn btn-primary float-right font-weight-bold" data-toggle="modal" data-target="#modalCancelamento">Detalhes do pedido</button>
                            </li>
                        </ul>
 
@@ -50,8 +53,12 @@
                        </div>
                    </div>
                </div>
+
+{{--               <div class="col-12 col-md-6 mt-md-5 mt-lg-0 col-lg-5">--}}
+{{--                   <img src="{{ asset('logo/undraw_Chef_cu0r.svg') }}" class="img-preparing">--}}
+{{--               </div>--}}
            @elseif(count($order) > 1)
-               <div class="col-12 col-md-6 mt-md-5 mt-lg-0 col-lg-5">
+               <div class="col-12 mt-5">
                    <img src="{{ asset('logo/undraw_Mobile_pay_re_sjb8.svg') }}" class="img-no-food img-fluid">
                    <h1 class="text-center mt-5 titulo-cardapio">Você tem mais de um pedido em andamento.</h1>
                </div>
@@ -105,6 +112,50 @@
        @endif
    </div>
 </div>
+
+<div class="col-12 d-flex justify-content-end">
+    <div class="footertake">
+        <div class="page-wrapper" hidden>
+            <div class="circle-wrapper">
+                <div class="success circle"></div>
+                <div class="icon">
+                    <img src="{{ asset('logo/alertas.png') }}" class="takeNow" data-toggle="modal" data-target="#exampleModalCenter" style="cursor: pointer;">
+                </div>
+            </div>
+    </div>
+</div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Informações do pedido</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="{{ asset('logo/undraw_Chef_cu0r.svg') }}" style="width: 100px; height: 100px" alt="">
+                            </div>
+
+                            <div class="col-9">
+                                <h4 class="text-center font-weight-bold">Venha buscar seu pedido</h4>
+                                <span>Seu pedido já está pronto, e como você escolheu a opção de retirada no balcão,
+                                    basta você vir aqui buscar seu pedido.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" style="color: white; font-size: 15px">Abrir rota no GPS</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @if(isset($orderStatus))
     <input type="text" class="status" hidden value="{{ $orderStatus }}">

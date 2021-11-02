@@ -130,8 +130,13 @@ $(document).ready(() => {
                         }
                         else if(dados[0].status == 'Pronto para ser retirado no restaurante'){
                             $(".et1, .et2, .et5").css('background', '#d4f5d4');
+                            $(".et5, .et2").removeClass('text-secondary');
+                            $(".iet5, .iet2").addClass('text-success');
                             $(".preparing").attr('hidden', 'true');
+                            $(".iet2").attr('hidden', 'true');
                             $(".et2").removeAttr('hidden', 'true');
+                            $(".page-wrapper").removeAttr('hidden', 'true');
+                            $(".iet2ready").removeAttr('hidden', 'true');
                             $(".btn-cancelamentos, .cancelarPedido, .li-cancelamento").attr('hidden', 'true');
                             $(".hr-cancelamentos").attr('hidden', 'true');
 
