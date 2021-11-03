@@ -102,7 +102,7 @@
                                         <td>
 
                                             <select name="teste" class="menuHibrido form-control" style="cursor:pointer;" id="{{ $reg->id }}" onchange="muda({{ $reg->id }})">
-                                                <option class="alterStatus" disabled>Alterar Status</option>
+                                                <option class="alterStatus" disabled selected>Alterar Status</option>
                                                 <option value="Cancelar">Cancelar</option>
                                                 <option value="EmPreparo">Em Preparo</option>
                                                 @if($reg->deliverWay == 'Retirada no restaurante')
@@ -129,31 +129,31 @@
                                                             <p class="text-center font-weight-bold" style="color: black; margin-top: -10px; font-size: 18px;">Pedido a ser retirado no restaurante.</p>
                                                         @endif
 
-                                                        <b style="color: black">Pedido nº:</b> <span style="color: black">{{ $reg->id }}</span>
+                                                        <span style="color: black; font-size: 17px">Pedido nº:</span> <span style="color: black; font-size: 16px">{{ $reg->id }}</span>
 
-                                                        <b style="color: black"class="ml-2">Hora:</b> <span style="color: black">{{ $reg->hour }}</span>
+                                                        <span style="color: black; font-size: 17px" class="ml-2">Hora:</span> <span style="color: black; font-size: 16px">{{ $reg->hour }}</span>
 
-                                                        <b style="color: black" class="ml-2 text-danger">Valor total:</b> <span style="color: black">R$ {{ $reg->totalValue }}</span>
+                                                        <span style="color: black; font-size: 16px" class="ml-2 text-success">Valor total:</span> <span style="color: black; font-size: 16px">R$ {{ $reg->totalValue }}</span>
 
                                                         @if($reg->payingMethod == 'Dinheiro')
-                                                            <b style="color: black" class="ml-2 text-primary">Troco para: </b> <span style="color: black">{{ $reg->payingValue }}</span><br>
+                                                            <span style="color: black; font-size: 17px" class="ml-2 text-primary">Troco para: </span> <span style="color: black; font-size: 16px">{{ $reg->payingValue }}</span><br>
                                                         @else
-                                                            <br><b style="color: black" class="mt-2">Pagamento em cartão:</b> <span style="color: black">{{ $reg->payingMethod }}</span><br>
+                                                            <br><span style="color: black; font-size: 17px">{{ $reg->payingMethod }}</span><br>
                                                         @endif
 
-                                                        <b style="color: black; margin-top: 20px;">Cliente:</b> <span style="color: black">{{ $reg->clientName }}</span> <br>
+                                                        <span style="color: black; margin-top: 20px;; font-size: 17px">Cliente:</span> <span style="color: black; font-size: 16px" class="text-primary">{{ $reg->clientName }}</span> <br>
 
                                                         @if($reg->deliverWay == 'Entrega em domicílio')
-                                                            <b style="color: black">Endereço: </b><span style="color: black">{{ $reg->address }}</span> <br>
+                                                            <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }} - {{ $reg->district }}</span> <br>
                                                         @endif
 
                                                         @if($reg->deliverMan != null)
-                                                            <b class="text-success">Entregador: </b><span style="color: black">{{ $reg->deliverMan }}</span>
+                                                            <span class="text-success">Entregador: </span><span style="color: black; font-size: 16px">{{ $reg->deliverMan }}</span>
                                                         @endif
                                                         <hr>
 
                                                         @if($reg->detached == '')
-                                                            <b style="color: black">Itens: </b> <span style="color: black">{{ $reg->comboItem }},  {{ $reg->fries }}, {{ $reg->drinks }}</span><br><br>
+                                                            <span style="color: black; font-size: 17px">Itens: </span> <span style="color: black; font-size: 17px">{{ $reg->comboItem }},  {{ $reg->fries }}, {{ $reg->drinks }}</span><br><br>
                                                         @else
                                                             @foreach(explode(';', $reg->detached) as $item)
                                                                 @if($item != null)

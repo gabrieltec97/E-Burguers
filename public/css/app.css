@@ -11198,6 +11198,10 @@ a.text-dark:focus {
     .em-andamento{
         font-size: 21px;
     }
+
+    .hr-order{
+        display: none;
+    }
 }
 
 @media (max-width: 900px) {
