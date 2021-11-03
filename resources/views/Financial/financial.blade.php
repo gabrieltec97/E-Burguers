@@ -98,8 +98,8 @@ $anoAtual = strftime('%Y');
                                     <div class="modal fade" id="modalConsulta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: black; margin-bottom: -30px">Atenção!</h5>
+                                                <div class="modal-header" style="background-color: #343A40">
+                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: white; margin-bottom: -30px">Atenção!</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -157,8 +157,8 @@ $anoAtual = strftime('%Y');
                                     <div class="modal fade" id="modalAno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: black; margin-bottom: -30px">Atenção!</h5>
+                                                <div class="modal-header" style="background-color: #343A40">
+                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: white; margin-bottom: -30px">Atenção!</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -186,7 +186,7 @@ $anoAtual = strftime('%Y');
                 </div>
 
             <div class="col-lg-12 col-sm-12 mb-5">
-                <div class="card shadow" style="height: 330px">
+                <div class="card shadow" >
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #1fbee1">
                         <div class="row">
                             <div class="col-lg-7 col-12" style="color: ghostwhite;">
@@ -196,32 +196,32 @@ $anoAtual = strftime('%Y');
 
                                 <form action="{{ route('financeiro') }}">
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modalAno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: black; margin-bottom: -30px">Atenção!</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p class="font-weight-normal" style="font-size: 17px; color: black">Deseja trazer os dados sobre as vendas do ano de <span class="ano font-weight-bold text-primary"></span>?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                                                    <button type="submit" class="btn btn-success buscar-dados">Confirmar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <!-- Modal -->--}}
+{{--                                    <div class="modal fade" id="modalAno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+{{--                                        <div class="modal-dialog" role="document">--}}
+{{--                                            <div class="modal-content">--}}
+{{--                                                <div class="modal-header" style="background-color: #343A40">--}}
+{{--                                                    <h5 class="modal-title" id="exampleModalLabel" style="color: white; margin-bottom: -30px">Atenção!</h5>--}}
+{{--                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                                        <span aria-hidden="true">&times;</span>--}}
+{{--                                                    </button>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="modal-body">--}}
+{{--                                                    <p class="font-weight-normal" style="font-size: 17px; color: black">Deseja trazer os dados sobre as vendas do ano de <span class="ano font-weight-bold text-primary"></span>?</p>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="modal-footer">--}}
+{{--                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>--}}
+{{--                                                    <button type="submit" class="btn btn-success buscar-dados">Confirmar</button>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                             </div>
                         </div>
                     </div>
                     <div class="card-body financial-table">
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-6 col-lg-2">
                                 <label style="color: black;">Dia</label>
                                 <select name="dia" class="form-control">
                                     <option value="01" @if($day == 01) selected @endif>01</option>
@@ -258,7 +258,7 @@ $anoAtual = strftime('%Y');
                                 </select>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-6 col-lg-3">
                                 <label style="color: black;">Mês</label>
                                 <select name="mesvenda" class="form-control">
                                     <option value="janeiro"
@@ -326,7 +326,7 @@ $anoAtual = strftime('%Y');
                                 </select>
                             </div>
 
-                            <div class="col-8 mt-4 target">
+                            <div class="col-12 col-lg-8 mt-4 target">
                                 <label style="color: black;">Total de vendas: <b>
                                         @if($sales < 1)
                                             <span class="text-danger font-weight-normal">{{ $sales }} venda</span>

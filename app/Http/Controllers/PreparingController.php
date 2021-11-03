@@ -15,7 +15,7 @@ class PreparingController extends Controller
     public function index()
     {
         $idUser = Auth::user()->id;
-        $order = DB::table('orders')->select('id','status', 'deliverWay', 'payingValue', 'totalValue', 'hour')->where('idClient', '=', $idUser)->where('status', '!=', 'Pedido Entregue')->where('status', '!=', 'Cancelado')->get()->toArray();
+        $order = DB::table('orders')->where('idClient', '=', $idUser)->where('status', '!=', 'Pedido Entregue')->where('status', '!=', 'Cancelado')->get()->toArray();
 
         if (isset($order[0])){
             if ($order[0]->status != 'Pendente'){

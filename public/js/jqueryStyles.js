@@ -933,15 +933,6 @@ $(".adicionar-bandeja, .send-asset, .send-aval, .edit-item-add, .cadastrar-item-
 
 $(".edit-extras-items").on('click', function (){
     $("#modalDeItens").modal('close');
-})
-
-$(".takeNow").on('click', function (){
-
-})
-
-
-
-
-
+});
 
 });

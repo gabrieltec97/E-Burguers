@@ -34,6 +34,7 @@ $(document).ready(() => {
 
     var send = 'nao';
     var send2 = 'nao';
+    let clicado = 'nao';
 
     setInterval(function(){
 
@@ -76,10 +77,12 @@ $(document).ready(() => {
 
                         } else if (dados[0].status == 'Em rota de entrega') {
                             $(".et1, .et2, .et3").css('background', '#d4f5d4');
-                            $(".preparing").attr('hidden', 'true');
-                            $(".et2").removeAttr('hidden', 'true');
-                            $(".btn-cancelamentos, .cancelarPedido, .li-cancelamento").attr('hidden', 'true');
-                            $(".hr-cancelamentos").attr('hidden', 'true');
+                            $(".et5, .et2, .et3").removeClass('text-secondary');
+                            $(".iet5, .iet2").addClass('text-success');
+                            $(".iet2ready, #delivery, .page-wrapper, .et2, .closedelivery, .rotaEntrega").removeAttr('hidden', 'true');
+                            $(".btn-cancelamentos, .hr-cancelamentos, .cancelarPedido, .li-cancelamento, .iet2, .iet3, .preparing, .footerinfo").attr('hidden', 'true');
+                            $(".message-take").text('Seu pedido está pronto e estamos levando-o até você. Fique atento que em instantes o entregador chegará por ai!');
+                            $(".title-take").text('Está chegando...');
 
                             //Travando o clique do botão.
                             $(".btn-cancelamentos, .cancelarPedido").on("click", function (e){
@@ -132,13 +135,18 @@ $(document).ready(() => {
                             $(".et1, .et2, .et5").css('background', '#d4f5d4');
                             $(".et5, .et2").removeClass('text-secondary');
                             $(".iet5, .iet2").addClass('text-success');
-                            $(".preparing").attr('hidden', 'true');
+                            $(".preparing, .li-cancelamento, .footer-info").attr('hidden', 'true');
                             $(".iet2").attr('hidden', 'true');
-                            $(".et2").removeAttr('hidden', 'true');
-                            $(".page-wrapper").removeAttr('hidden', 'true');
-                            $(".iet2ready").removeAttr('hidden', 'true');
-                            $(".btn-cancelamentos, .cancelarPedido, .li-cancelamento").attr('hidden', 'true');
-                            $(".hr-cancelamentos").attr('hidden', 'true');
+                            $("#takeThere, .iet2ready, .routegps, .page-wrapper, .et2, .footerinfo, .rotaEntrega").removeAttr('hidden', 'true');
+                            $(".message-take").text('Seu pedido já está pronto, e como você escolheu a opção de retirada no balcão,basta você vir aqui buscar seu pedido.');
+                            $(".title-take").text('Venha buscar seu pedido');
+
+                            if (clicado == 'nao'){
+                                $(".footer-info").click();
+
+                                clicado = 'sim';
+                            }
+
 
                             //Travando o clique do botão.
                             $(".btn-cancelamentos, .cancelarPedido").on("click", function (e){
@@ -228,10 +236,8 @@ $(document).ready(() => {
 
                     if(dados[0].status == 'Pronto para ser retirado no restaurante'){
                         $(".et1, .et2, .et5").css('background', '#d4f5d4');
-                        $(".preparing").attr('hidden', 'true');
-                        $(".et2").removeAttr('hidden', 'true');
-                        $(".btn-cancelamentos").attr('hidden', 'true');
-                        $(".hr-cancelamentos").attr('hidden', 'true');
+                        $(".preparing, .btn-cancelamentos, .hr-cancelamentos, .cancel-alot").attr('hidden', 'true');
+                        $(".et2, .page-wrapper, #takeThere").removeAttr('hidden', 'true');
 
                         //Travando o clique do botão.
                         $(".btn-cancelamentos").on("click", function (e){
@@ -239,13 +245,14 @@ $(document).ready(() => {
                         })
                     }else if (dados[0].status == 'Em rota de entrega') {
                         $(".et1, .et2, .et3").css('background', '#d4f5d4');
-                        $(".preparing").attr('hidden', 'true');
-                        $(".et2").removeAttr('hidden', 'true');
-                        $(".btn-cancelamentos").attr('hidden', 'true');
-                        $(".hr-cancelamentos").attr('hidden', 'true');
+                        $(".hr-cancelamentos, .btn-cancelamentos, .et2, .preparing, .cancel-alot").attr('hidden', 'true');
+                        $(".page-wrapper, #delivery").removeAttr('hidden', 'true');
+                        $(".col-alot").removeClass('col-8');
+                        $(".col-alot").addClass('col-12');
+
 
                         //Travando o clique do botão.
-                        $(".btn-cancelamentos").on("click", function (e) {
+                        $(".btn-cancelamentos, .cancel-alot").on("click", function (e) {
                             e.preventDefault();
                         })
                     }

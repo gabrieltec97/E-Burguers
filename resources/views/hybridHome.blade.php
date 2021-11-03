@@ -69,11 +69,12 @@
             @endif
 
         <div class="row">
-
-            <div class="col-12 mt-4 mt-lg-0">
+            <div class="col-12 mt-lg-0">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: #28f5ac">
-                        <span style="color: #2f2f2f;" class="font-weight-bold">Pedidos em andamento</span> <span class="badge" style="background: #e37750">{{count($count)}}</span></div>
+                    <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: #1FBEE1">
+                        <span style="color: white;" class="font-weight-bold em-andamento">Pedidos em andamento</span>
+                        <span class="badge float-lg-right mt-lg-2" style="background: rgba(0,0,0,0.7);">{{count($count)}}</span>
+                    </div>
 
                     <div class="card-body">
                         <table class="table table-bordered table-hover table-striped table-responsive-lg">
@@ -92,16 +93,16 @@
                                         <td><button class="btn font-weight-bold" data-toggle="modal" data-target="#modalSend{{$reg->id}}" title="Informações referentes à este pedido." style="border-radius: 50px; border: none;
 
                                        {{ $reg->status == 'Em rota de entrega' ? 'background: #22e583; color: #fffcfc' : ''  }}
-                                       {{ $reg->status == 'Pedido registrado' ? 'background: #5bc0de; color: #fffcfc' : ''  }}
-                                       {{ $reg->status == 'Em preparo' ? 'background: #FFD700; color: black' : ''  }}
-                                       {{ $reg->status == 'Pronto para ser retirado no restaurante' ? 'background: #22e583; color: #fffcfc' : ''  }}
-                                        ">{{ $reg->status == 'Pronto para ser retirado no restaurante' ? 'Aguardando retirada' : $reg->status  }}
+                                            {{ $reg->status == 'Pedido registrado' ? 'background: #5bc0de; color: #fffcfc' : ''  }}
+                                            {{ $reg->status == 'Em preparo' ? 'background: #FFD700; color: black' : ''  }}
+                                            {{ $reg->status == 'Pronto para ser retirado no restaurante' ? 'background: #22e583; color: #fffcfc' : ''  }}
+                                                ">{{ $reg->status == 'Pronto para ser retirado no restaurante' ? 'Aguardando retirada' : $reg->status  }}
                                             </button>
                                         </td>
                                         <td>
 
                                             <select name="teste" class="menuHibrido form-control" style="cursor:pointer;" id="{{ $reg->id }}" onchange="muda({{ $reg->id }})">
-                                                <option value=""selected disabled>Alterar Status</option>
+                                                <option class="alterStatus" disabled>Alterar Status</option>
                                                 <option value="Cancelar">Cancelar</option>
                                                 <option value="EmPreparo">Em Preparo</option>
                                                 @if($reg->deliverWay == 'Retirada no restaurante')
@@ -117,8 +118,8 @@
                                         <div class="modal fade" id="modalSend{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle" style="margin-bottom: -13px;">Informações de entrega.</h5>
+                                                    <div class="modal-header" style="background-color: #343A40">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle" style="margin-bottom: -13px; color:white;">Informações de entrega</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -128,11 +129,11 @@
                                                             <p class="text-center font-weight-bold" style="color: black; margin-top: -10px; font-size: 18px;">Pedido a ser retirado no restaurante.</p>
                                                         @endif
 
-                                                        <b style="color: black">Pedido:</b> <span style="color: black">{{ $reg->id }}</span>
+                                                        <b style="color: black">Pedido nº:</b> <span style="color: black">{{ $reg->id }}</span>
 
                                                         <b style="color: black"class="ml-2">Hora:</b> <span style="color: black">{{ $reg->hour }}</span>
 
-                                                        <b style="color: black" class="ml-2 text-primary">Valor total:</b> <span style="color: black"> {{ $reg->totalValue }}</span>
+                                                        <b style="color: black" class="ml-2 text-danger">Valor total:</b> <span style="color: black">R$ {{ $reg->totalValue }}</span>
 
                                                         @if($reg->payingMethod == 'Dinheiro')
                                                             <b style="color: black" class="ml-2 text-primary">Troco para: </b> <span style="color: black">{{ $reg->payingValue }}</span><br>
@@ -208,7 +209,7 @@
                                         @foreach($deliveryMen as $d => $man)
                                             <option value="{{ $man->name }}">{{ $man->name }}</option>
                                         @endforeach
-                                            <option value="Não informado"> -- Não informar --</option>
+                                        <option value="Não informado"> -- Não informar --</option>
                                     </select>
                                 </form>
 
@@ -229,23 +230,10 @@
                     @endif
                     </tbody>
                     </table>
-
-                </div>
             </div>
 
-        </div>
-            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
-    </div>
-
-
-    </div>
-    </div>
 
     <select class="countHybrid" hidden>
         <option value="{{ count($count) }}"></option>
@@ -272,7 +260,9 @@
                 })
 
                 $(".fechar").on('click', function (){
-                    Swal.close()
+                    Swal.close();
+                    $(".alterStatus").removeAttr('selected', 'true');
+                    $(".alterStatus").attr('selected', 'selected');
                 })
 
                 $(".cancelar-pedido").on('click', function (){
@@ -293,7 +283,9 @@
                 })
 
                 $(".fechar").on('click', function (){
-                    Swal.close()
+                    Swal.close();
+                    $(".alterStatus").removeAttr('selected', 'true');
+                    $(".alterStatus").attr('selected', 'selected');
                 })
 
                 $(".sendPrepare").on('click', function (){
@@ -315,7 +307,9 @@
                     })
 
                     $(".fechar").on('click', function (){
-                        Swal.close()
+                        Swal.close();
+                        $(".alterStatus").removeAttr('selected', 'true');
+                        $(".alterStatus").attr('selected', 'selected');
                     })
 
                     $(".sendOrder").on('click', function (){
@@ -344,7 +338,9 @@
                 })
 
                 $(".fechar").on('click', function (){
-                    Swal.close()
+                    Swal.close();
+                    $(".alterStatus").removeAttr('selected', 'true');
+                    $(".alterStatus").attr('selected', 'selected');
                 })
 
                 $(".finished").on('click', function (){
@@ -370,7 +366,9 @@
             })
 
             $(".fechar").on('click', function (){
-                Swal.close()
+                Swal.close();
+                $(".alterStatus").removeAttr('selected', 'true');
+                $(".alterStatus").attr('selected', 'selected');
             })
         </script>
     @endif

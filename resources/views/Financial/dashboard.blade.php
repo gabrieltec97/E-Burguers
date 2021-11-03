@@ -114,7 +114,7 @@
             </div>
 
             <div class="col-12 mb-5 mt-lg-3">
-                    <div class="card shadow" style="height: 580px">
+                    <div class="card shadow">
                         <div class="card-header font-weight-bold text-muted items" style="font-size: 25px; background: #1eb9da;">
                             <h4 class="m-0 font-weight-bold text-white">Itens vendidos</h4></div>
 

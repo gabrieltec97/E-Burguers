@@ -11044,6 +11044,13 @@ a.text-dark:focus {
     text-align: center;
 }
 
+.footerinfo{
+    position: fixed;
+    bottom: 0;
+    color: white;
+    text-align: center;
+}
+
 .footertake{
     position: fixed;
     bottom: 0;
@@ -11080,6 +11087,18 @@ a.text-dark:focus {
     .circle {
         margin-left: 20px;
     }
+
+    .img-no-food{
+        height: 400px;
+    }
+
+    .mobile-foto{
+        display: none;
+    }
+
+    .prep-image{
+        height: 350px;
+    }
 }
 
 @media (min-width: 1025px) {
@@ -11090,6 +11109,14 @@ a.text-dark:focus {
     .circle {
         margin-left: 95px;
         margin-top: 10px;
+    }
+
+    .img-no-food{
+        height: 400px;
+    }
+
+    .mobile-foto{
+        display: none;
     }
 
     .takeNow{
@@ -11138,6 +11165,11 @@ a.text-dark:focus {
         width: 80px;
     }
 
+    .footerinfo{
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
+
     .img-aval{
         width: 350px;
         height: 350px;
@@ -11162,6 +11194,10 @@ a.text-dark:focus {
     .prep-image{
         height: 350px;
     }
+
+    .em-andamento{
+        font-size: 21px;
+    }
 }
 
 @media (max-width: 900px) {
@@ -11170,7 +11206,15 @@ a.text-dark:focus {
     }
 
     .prep-image{
-        display: none;
+        height: 250px;
+    }
+
+    .em-andamento{
+        font-size: 25px;
+    }
+
+    .img-no-food{
+        height: 320px;
     }
 
     .img-pedido{
@@ -11179,6 +11223,14 @@ a.text-dark:focus {
 
     .div-aval-desktop-2{
         margin-top: -120px;
+    }
+
+    .mobile-order{
+        height: 300px;
+    }
+
+    .div-one-mobile{
+        margin-top: -25px;
     }
 
     .div-aval-desktop{
@@ -11207,7 +11259,7 @@ a.text-dark:focus {
         margin-top: 25px;
     }
 
-    .footertray{
+    .footertray, .footerinfo{
         width: 15%;
         right: 7px;
         bottom: 8px;
@@ -11244,13 +11296,13 @@ a.text-dark:focus {
     }
 
     .circle {
-        margin-left: -5px;
+        margin-left: -20px;
         margin-top: 10px;
     }
 
     .takeNow{
-        margin-left: -55px;
-        margin-bottom: 24px;
+        margin-left: -84.5px;
+        margin-bottom: 25px;
         width: 60px;
         height: 60px;
     }
