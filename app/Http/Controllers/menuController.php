@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use function Livewire\str;
 
 class menuController extends Controller
 {
@@ -158,8 +159,7 @@ class menuController extends Controller
         $rules = [
             'mealValue' => 'required',
             'mealName' => 'required|min:4|max:70',
-            'promoValue' => 'required',
-            'mealDescription' => 'required|min:70|max:90'
+            'mealDescription' => 'required|min:70|max:96'
 
         ];
 
@@ -167,9 +167,6 @@ class menuController extends Controller
             'mealName.required' => 'Por favor, insira o nome da refeição.',
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
             'mealName.max' => 'O nome da refeição não pode ter mais de 70 caracteres.',
-            'valComboPromo.required' => 'Por favor, insira o valor propocional.',
-            'disccount.required' => 'Por favor, insira o descondo a ser aplicado.',
-            'ingredients.required' => 'Por favor, insira os ingredientes da refeição.',
             'mealDescription.required' => 'Por favor, insira a descrição da refeição.',
             'mealDescription.min' => 'Este campo deve conter no mínimo 70 caracteres',
             'mealDescription.max' => 'Este campo deve conter no máximo 90 caracteres'
@@ -191,24 +188,15 @@ class menuController extends Controller
 
         $advert->name = $request->mealName;
         $advert->value = $request->mealValue;
-        $advert->ingredients = $request->ingredients;
         $advert->foodType = $request->tipoRef;
         $advert->tastes = $request->sabores;
-
-        if (isset($request->extras)){
-            $extras = implode(',', $request->extras);
-            $advert->extras = $extras;
-        }
-
 
         if(isset($_POST['combo'])){
             $advert->combo = $_POST['combo'];
         }
 
         $advert->description = $request->mealDescription;
-        $advert->comboValue = $request->promoValue;
         $advert->status = 'Ativo';
-
 
         if($request->hasFile('advPhoto')){
            $image = $request->file('advPhoto');
@@ -319,7 +307,7 @@ class menuController extends Controller
         $rules = [
             'mealName' => 'required|min:4|max:70',
             'mealValue' => 'required|min:4|max:6',
-            'mealDescription' => 'required|min:70|max:90'
+            'mealDescription' => 'required|min:70|max:96'
         ];
 
         $messages = [
@@ -328,10 +316,6 @@ class menuController extends Controller
             'mealName.max' => 'O nome da refeição não pode ter mais de 70 caracteres.',
             'mealValue.required' => 'Por favor, insira o valor da refeição.',
             'mealValue.min' => 'Por favor, insira um valor válido.',
-            'promoValue.required' => 'Por favor, insira o valor propocional.',
-            'promoValue.min' => 'Por favor, insira um valor válido.',
-            'disccount.required' => 'Por favor, insira o descondo a ser aplicado.',
-            'ingredients.required' => 'Por favor, insira os ingredientes da refeição.',
             'mealDescription.required' => 'Por favor, insira a descrição da refeição.',
             'mealDescription.min' => 'Este campo deve conter no mínimo 70 caracteres',
             'mealDescription.max' => 'Este campo deve conter no máximo 96 caracteres'
@@ -343,36 +327,34 @@ class menuController extends Controller
 
         $advert->name = $request->mealName;
         $advert->value = $request->mealValue;
-        $advert->ingredients = $request->ingredients;
         $advert->tastes = $request->sabores;
-
-        if(isset($_POST['combo'])){
-            $advert->combo = $_POST['combo'];
-        }
+        $imageName = explode('/', $advert->picture);
+        $imageName = substr($imageName[1], 1);
+        $imageName = '\imagens\i' . $imageName;
         $advert->description = $request->mealDescription;
-        $advert->comboValue = $request->promoValue;
 
-        if ($request->extras != ''){
-            $addExtra = implode(',', $request->extras);
-            $advert->extras = $addExtra;
+        $path = public_path($imageName);
+
+        //Deletando imagem antiga
+        if ($request->advPhoto != null){
+            if ($advert->picture != 'logo/pizza.jpg'){
+                unlink($path);
+            }
         }
 
-        if($request->hasFile('updPhoto')){
-            $image = $request->file('updPhoto');
+        if($request->hasFile('advPhoto')){
+            $image = $request->file('advPhoto');
             $extension = $image->getClientOriginalExtension();
 
             if ($extension != 'png' && $extension != 'jpg' && $extension != 'jpeg' && $extension != 'gif'){
                 return back()->with('msg', 'Não foi possível fazer o upload da imagem. Por favor, insira uma imagem no formato png ou jpg.
               Você inseriu um arquivo no formato .'.$extension);
             }
-        }
 
-        if($request->hasFile('updPhoto')){
             $number = rand(1, 2000000);
             File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
             $advert->picture = 'imagens/img'.$number.'.'.$extension;
-        }else{
-            $advert->picture = 'logo/hamburguer.jpg';
+
         }
 
         $advert->save();

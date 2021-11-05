@@ -117,62 +117,62 @@
 
                                                     <div class="col-6 div-nome-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Nome do funcionário</p>
-                                                        <p class="font-weight-bold text-center">Nome anterior: <span class="text-danger">{{ $user->name }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo nome: <span class="novo-nome text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Nome anterior: <span class="text-danger">{{ $user->name }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo nome: <span class="novo-nome text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-email-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">E-mail do funcionário</p>
-                                                        <p class="font-weight-bold text-center">E-mail anterior: <span class="text-danger">{{ $user->email }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo E-mail: <span class="novo-email text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">E-mail anterior: <span class="text-danger">{{ $user->email }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo E-mail: <span class="novo-email text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-bairro-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Bairro do funcionário</p>
-                                                        <p class="font-weight-bold text-center">Bairro anterior: <span class="text-danger">{{ $user->district }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo bairro: <span class="novo-bairro text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Bairro anterior: <span class="text-danger">{{ $user->district }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo bairro: <span class="novo-bairro text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-sobrenome-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Sobrenome do funcionário</p>
-                                                        <p class="font-weight-bold text-center">Sobrenome anterior: <span class="text-danger">{{ $user->surname }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo sobrenome: <span class="novo-Sobrenome text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Sobrenome anterior: <span class="text-danger">{{ $user->surname }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo sobrenome: <span class="novo-Sobrenome text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-telefone-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Telefone</p>
-                                                        <p class="font-weight-bold text-center">Anterior: <span class="text-danger">{{ $user->phone }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo: <span class="novo-Telefone text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Anterior: <span class="text-danger">{{ $user->phone }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo: <span class="novo-Telefone text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-telefoneFixo-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Telefone Fixo</p>
-                                                        <p class="font-weight-bold text-center">Anterior: <span class="text-danger fixo-anterior">{{ $user->fixedPhone }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo: <span class="novo-telefoneFixo text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Anterior: <span class="text-danger fixo-anterior">{{ $user->fixedPhone }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo: <span class="novo-telefoneFixo text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-endereco-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Endereço do funcionário</p>
-                                                        <p class="font-weight-bold text-center">Endereço anterior: <span class="text-danger">{{ $user->address }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo endereço: <span class="novo-endereco text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Endereço anterior: <span class="text-danger">{{ $user->address }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo endereço: <span class="novo-endereco text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-cargo-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Cargo</p>
-                                                        <p class="font-weight-bold text-center">Cargo anterior: <span class="text-danger">{{ $user->occupation }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo cargo: <span class="novo-cargo text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Cargo anterior: <span class="text-danger">{{ $user->occupation }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo cargo: <span class="novo-cargo text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-perfilUsuario-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Perfil de usuário</p>
-                                                        <p class="font-weight-bold text-center">Anterior: <span class="text-danger">{{ $user->profile }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo: <span class="perfil-usuario text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Anterior: <span class="text-danger">{{ $user->profile }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo: <span class="perfil-usuario text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-horárioServico-func" hidden>
                                                         <p class="font-weight-bold text-center" style="color: black">Horário de serviço</p>
-                                                        <p class="font-weight-bold text-center">Horário anterior: <span class="text-danger">{{ $user->workingTime }}</span></p>
-                                                        <p class="font-weight-bold text-center">Novo horário: <span class="horario-servico text-success"></span></p>
+                                                        <p class="text-center" style="color: black;">Horário anterior: <span class="text-danger">{{ $user->workingTime }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo horário: <span class="horario-servico text-success"></span></p>
                                                     </div>
 
 
@@ -209,16 +209,16 @@
         <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle" style="color: black; margin-bottom: -10px">Atenção!</h5>
+                    <div class="modal-header" style="background-color: #343A40">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="color: white; margin-bottom: -10px">Atenção!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                      <span class="font-weight-bold" style="color: black">
-                        Você está deletando este registro do funcionário. Caso este seja um registro de funcionário que possui
-                        acesso ao sistema, ao deletá-lo ele não terá mais acesso ao sistema. Tem certeza que deseja prosseguir?
+                      <span style="color: black">
+                        Você está deletando o registro deste usuário,
+                          ao deletá-lo ele não terá mais acesso ao sistema. Tem certeza que deseja prosseguir?
                       </span>
                     </div>
                     <div class="modal-footer">

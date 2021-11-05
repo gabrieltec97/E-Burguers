@@ -141,7 +141,23 @@
             @endif
        @endif
 </div>
+
+
 @if(isset($order))
+
+    <?php
+    $count = strlen($order[0]->totalValue);
+
+    if ($count == 4 && $order[0]->totalValue > 10){
+        $price = $order[0]->totalValue . '0';
+    }elseif ($count == 2){
+        $price = $order[0]->totalValue. '.' . '00';
+    }
+    else{
+        $price = $order[0]->totalValue;
+    }
+    ?>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -174,7 +190,7 @@
                                 <span style="font-size: 15px; font-weight: bold">Método de pagamento:</span><span> {{ $order[0]->payingMethod }}</span><br>
                                 <span style="font-size: 15px; font-weight: bold">Forma de entrega:</span><span> {{ $order[0]->deliverWay }}</span><br>
                                 <span style="font-size: 15px; font-weight: bold">Data:</span><span> {{ $order[0]->day }} - {{ $order[0]->hour }}</span><br>
-                                <span style="font-size: 15px; font-weight: bold">Valor: R$ </span><span class="text-primary"> {{ $order[0]->totalValue }}</span><br>
+                                <span style="font-size: 15px; font-weight: bold">Valor: R$ </span><span class="text-primary"> {{ $price }}</span><br>
                                 @if($order[0]->deliverWay != 'Retirada no restaurante')
                                     <span style="font-size: 15px; font-weight: bold">Entregar em:</span> <span> {{ $order[0]->address }} - {{ $order[0]->district }}</span><br>
                                 @endif
@@ -266,12 +282,28 @@
                 </div>
                 </form>
                 @elseif(count($order) > 1)
+
                     @csrf
                         <div class="container">
                             <div class="row">
                                 @foreach($order as $ord)
-                                    <div class="col-8 col-alot">
-                                        <span class="text-danger" style="font-size: 15px; font-weight: bold">Pedido nº: #{{ $ord->id }}</span><span> - {{ $ord->day }} - {{ $ord->hour }} - <span class="text-primary">R$ {{ $ord->totalValue }}</span></span><br>
+
+                                    <?php
+                                    $count = strlen($ord->totalValue);
+
+                                    if ($count == 4 && $ord->totalValue > 10){
+                                        $price = $ord->totalValue . '0';
+                                    }elseif ($count == 2){
+                                        $price = $ord->totalValue. '.' . '00';
+                                    }
+                                    else{
+                                        $price = $ord->totalValue;
+                                    }
+                                    ?>
+
+
+                                    <div class="col-12 col-alot">
+                                        <span class="text-danger" style="font-size: 15px; font-weight: bold">Pedido nº: #{{ $ord->id }}</span><span> - {{ $ord->day }} - {{ $ord->hour }} - <span class="text-primary">R$ {{ $price}}</span></span><br>
                                         <span style="font-size: 15px; font-weight: bold">Itens:</span> <span> {{ $ord->detached }}</span><br>
                                         <span style="font-size: 15px; font-weight: bold">Forma de entrega:</span> <span> {{ $ord->deliverWay }}</span><br>
                                         @if($ord->deliverWay != 'Retirada no restaurante')

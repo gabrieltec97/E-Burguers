@@ -10,7 +10,6 @@
                             <thead>
                             <tr>
                                 <th scope="col">Número do pedido</th>
-                                <th scope="col">Detalhes</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Data</th>
                             </tr>
@@ -19,14 +18,13 @@
                             @foreach($orders as $ord)
                                 <tr data-toggle="modal" data-target="#exampleModalCenter{{ $ord->id }}" style="cursor: pointer;">
                                     <td style="font-size: 16px">#{{ $ord->id }}</td>
-                                    <td style="font-size: 16px">{{$ord->orderType}}</td>
                                     <td>
                                         @if($ord->status == 'Cancelado')
-                                            <span class="text-danger font-weight-bold">{{ $ord->status }}</span>
+                                            <span class="text-danger" style="font-size: 15px">{{ $ord->status }}</span>
                                         @elseif($ord->status == 'Pedido Entregue')
-                                            <span class="text-success font-weight-bold">{{ $ord->status }}</span>
+                                            <span class="text-success" style="font-size: 15px">{{ $ord->status }}</span>
                                         @else
-                                            <span class="text-info font-weight-bold">{{ $ord->status }}</span>
+                                            <span class="text-info" style="font-size: 15px">{{ $ord->status }}</span>
                                         @endif
                                     </td>
                                     <td style="font-size: 16px">{{ $ord->day }}</td>

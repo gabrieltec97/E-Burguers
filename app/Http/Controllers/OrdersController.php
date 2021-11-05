@@ -98,6 +98,7 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+
         //Verificando se o delivery continua aberto.
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
@@ -122,8 +123,7 @@ class OrdersController extends Controller
             ->where('idClient', '=', Auth::user()->id)
             ->get();
 
-
-        $client = DB::table('users')->select('name', 'surname', 'district', 'address')->where('id', '=', $order[0]['idClient'])->get();
+        $client = DB::table('users')->where('id', '=', $order[0]['idClient'])->get();
         $districtPrice = DB::table('delivers')
             ->where('name', '=', $client[0]->district)
             ->get()->toArray();
@@ -146,19 +146,24 @@ class OrdersController extends Controller
             }
             if ($request->entrega == 'Entregaemcasa'){
                 $tray->address = $client[0]->address;
+                $diffPlace = 'Nao';
             }else{
                 if ($request->pontoRef != ''){
                     $currentDistrict = $request->diffDistrict;
                     if ($tray->address == null){
                         $tray->address = $request->localEntrega. '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                        $diffPlace = 'Sim';
                     }else{
                         $tray->address = $request->localEntrega;
+                        $diffPlace = 'Nao';
                     }
                 }else{
                     if ($tray->address == null){
                         $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                        $diffPlace = 'Sim';
                     }else{
                         $tray->address = $request->localEntrega;
+                        $diffPlace = 'Nao';
                     }
 
                 }
@@ -206,6 +211,7 @@ class OrdersController extends Controller
                 $tray->clientComments = $request->obs;
 
             }elseif(count($going) != 0){
+                $diffPlace = 'Nao';
 
                 $id = $order[0]['id'];
 
@@ -275,6 +281,14 @@ class OrdersController extends Controller
         $newOrder->clientName = $client[0]->name. ' ' . $client[0]->surname;
         $newOrder->orderType = $updOrder[0]['orderType'];
 
+        if ($client[0]->fixedPhone == null){
+            $newOrder->userPhone = $client[0]->phone;
+        }elseif ($client[0]->phone == null){
+            $newOrder->userPhone = $client[0]->fixedPhone;
+        }elseif ($client[0]->phone != null && $client[0]->fixedPhone != null){
+            $newOrder->userPhone = $client[0]->phone . '-' .$client[0]->fixedPhone;
+        }
+
         //Verificando a nulidade dos itens para que se evite colocar espaços vazios na hora da impressão em tela.
         if ($itemOne == null){
             $newOrder->detached = $itemTwo;
@@ -288,9 +302,7 @@ class OrdersController extends Controller
             $newOrder->comboItem = $updOrder[0]['comboItem'];
         }
 
-        $newOrder->hamburguer = $updOrder[0]['hamburguer'];
-        $newOrder->fries = $updOrder[0]['portion'];
-        $newOrder->drinks = $updOrder[0]['drinks'];
+
         $newOrder->clientComments = $updOrder[0]['clientComments'];
         $newOrder->deliverWay = $updOrder[0]['deliverWay'];
         $newOrder->totalValue = $updOrder[0]['totalValue'];
@@ -301,7 +313,10 @@ class OrdersController extends Controller
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->usedCoupon = $updOrder[0]['disccountUsed'];
         $newOrder->address = $updOrder[0]['address'];
-        $newOrder->district = $currentDistrict;
+        if ($diffPlace == 'Nao'){
+         $newOrder->district = $currentDistrict;
+        }
+
 
         if($updOrder[0]['deliverWay'] == "Retirada no restaurante"){
             $newOrder->payingMethod = 'Pagamento no restaurante';

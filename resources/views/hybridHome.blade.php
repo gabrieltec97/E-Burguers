@@ -114,6 +114,19 @@
                                             </select>
                                         </td>
 
+                                    <?php
+                                    $count2 = strlen($reg->totalValue);
+
+                                    if ($count2 == 4 && $reg->totalValue > 10){
+                                        $price = $reg->totalValue . '0';
+                                    }elseif ($count2 == 2){
+                                        $price = $reg->totalValue. '.' . '00';
+                                    }
+                                    else{
+                                        $price = $reg->totalValue;
+                                    }
+                                    ?>
+
                                         <!-- Modal -->
                                         <div class="modal fade" id="modalSend{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -133,10 +146,10 @@
 
                                                         <span style="color: black; font-size: 17px" class="ml-2">Hora:</span> <span style="color: black; font-size: 16px">{{ $reg->hour }}</span>
 
-                                                        <span style="color: black; font-size: 16px" class="ml-2 text-success">Valor total:</span> <span style="color: black; font-size: 16px">R$ {{ $reg->totalValue }}</span>
+                                                        <span style="color: black; font-size: 16px" class="ml-2 text-success">Valor total:</span> <span style="color: black; font-size: 16px">R$ {{ $price }}</span>
 
                                                         @if($reg->payingMethod == 'Dinheiro')
-                                                            <span style="color: black; font-size: 17px" class="ml-2 text-primary">Troco para: </span> <span style="color: black; font-size: 16px">{{ $reg->payingValue }}</span><br>
+                                                            <span style="color: black; font-size: 17px" class="ml-2 text-primary">Troco para: </span> <span style="color: black; font-size: 16px">R$ {{ $reg->payingValue }}</span><br>
                                                         @else
                                                             <br><span style="color: black; font-size: 17px">{{ $reg->payingMethod }}</span><br>
                                                         @endif
@@ -144,8 +157,15 @@
                                                         <span style="color: black; margin-top: 20px;; font-size: 17px">Cliente:</span> <span style="color: black; font-size: 16px" class="text-primary">{{ $reg->clientName }}</span> <br>
 
                                                         @if($reg->deliverWay == 'Entrega em domicílio')
-                                                            <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }} - {{ $reg->district }}</span> <br>
+                                                            <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }}  {{ $reg->district != null ? '-' . $reg->district : $reg->district}}</span> <br>
+
+                                                           @if($reg->district == null)
+                                                                    <br>
+                                                           @endif
                                                         @endif
+
+                                                        <span style="color: black; font-size: 17px" class="text-success">Telefone do cliente: </span><span style="color: black; font-size: 16px">{{ $reg->userPhone }} </span> <br>
+
 
                                                         @if($reg->deliverMan != null)
                                                             <span class="text-success">Entregador: </span><span style="color: black; font-size: 16px">{{ $reg->deliverMan }}</span>

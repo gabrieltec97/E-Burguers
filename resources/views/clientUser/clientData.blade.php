@@ -7,9 +7,9 @@
 @section('content')
     <div class="container mt-5">
         <div class="row">
-            <div class="col-lg-12 mt-5 col-sm-12">
+            <div class="col-lg-12 mt-4 mt-lg-5 col-sm-12">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-muted" style="font-size: 25px;">Meus dados cadastrais</div>
+                    <div class="card-header font-weight-bold" style="font-size: 25px; color: white; background-color: #565a5c">Meus dados cadastrais</div>
 
                     <div class="card-body">
                         <div class="container-fluid">
@@ -50,21 +50,6 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-box"></div>
-            <div class="div-box">
-                <div class="card">
-                    <div class="card-header text-danger font-weight-bold d-flex" style="font-size: 22px">
-                        <i class="fas fa-exclamation-triangle mt-1"></i>&nbsp; Aviso
-                    </div>
-                    <div class="card-body">
-                        <p class="text-muted font-weight-bold mb-4">Por questões de segurança, você pode alterar
-                            apenas a sua foto de perfil. Caso queira alterar seus dados cadastrais, entre em contato
-                            com o administrador do sistema.</p>
-                        <p class="d-flex justify-content-end mb-0"><a href="#" class="btn btn-primary sair">Compreendi</a></p>
                     </div>
                 </div>
             </div>

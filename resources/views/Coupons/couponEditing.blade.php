@@ -9,14 +9,14 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: linear-gradient(90deg, rgba(40,114,148,1) 35%, rgba(0,212,255,1) 100%);">Edição de cupom</div>
+                    <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: #1fbee1;">Edição de cupom</div>
                     <div class="card-body">
                         <form action="{{ route('cupons.update', $coupon->id) }}" method="post" class="form-group cupom-sub">
                             @csrf
                             @method('PUT')
                             <div class="row">
                                 <div class="col-lg-6 col-12">
-                                    <label class="text-muted font-weight-bold">Nome do cupom</label>
+                                    <label style="color: black;" class="font-weight-bold">Nome do cupom</label>
                                     <input type="text" name="couponName" class="form-control novo-nome {{ ($errors->has('couponName') ? 'is-invalid' : '') }}" value="{{ $coupon->name }}">
                                     @if($errors->has('couponName'))
                                         <div class="invalid-feedback">
@@ -26,7 +26,7 @@
                                 </div>
 
                                 <div class="col-lg-6 mt-3 mt-lg-0 col-12">
-                                    <label class="text-muted font-weight-bold">Data de expiração</label>
+                                    <label style="color: black;" class="font-weight-bold">Data de expiração</label>
                                     <input type="date" name="expireDate" class="form-control data-exp {{ ($errors->has('expireDate') ? 'is-invalid' : '') }}" value="{{ $coupon->expireDate }}">
                                     @if($errors->has('expireDate'))
                                         <div class="invalid-feedback">
@@ -39,7 +39,7 @@
                                 </div>
 
                                 <div class="col-lg-12 mt-3 mt-lg-4 col-12">
-                                    <label class="text-muted font-weight-bold">Desconto a ser aplicado</label>
+                                    <label style="color: black;" class="font-weight-bold">Desconto a ser aplicado</label>
                                     <select class="form-control select-desconto" name="disccount">
                                         <option value="" selected hidden>Selecione</option>
                                         <option value="5% de desconto" {{ old('disccount') == '5% de desconto' ? 'selected' : '' }} {{ ($coupon->disccount == '5% de desconto')?'selected':'' }}>5% de desconto</option>
@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div class="col-lg-12 mt-4 col-12">
-                                    <label class="text-muted font-weight-bold">Nas compras acima de R$:</label>
+                                    <label style="color: black;" class="font-weight-bold">Nas compras acima de R$:</label>
                                     <input type="text" name="disccountRule" autocomplete="off" class="form-control compras-acima {{ ($errors->has('disccountRule') ? 'is-invalid' : '') }}" value="{{ $coupon->disccountRule }}">
                                     @if($errors->has('disccountRule'))
                                         <div class="invalid-feedback">
@@ -90,28 +90,28 @@
                                                 <img src="{{ asset('logo/cara.svg') }}" class="imagem-alteracao" style="width: 100px; margin-left: 40%; height: 100px" hidden>
                                                 <div class="row">
 
-                                                    <div class="col-6 div-novo-nome" hidden>
+                                                    <div class="col-12 col-lg-6 div-novo-nome" hidden>
                                                         <p class="font-weight-bold text-primary text-center" style="color: black">Nome do cupom</p>
-                                                        <p class="font-weight-bold text-center" style="color: black">Nome anterior: <span class="text-danger">{{ $coupon->name }}</span></p>
-                                                        <p class="font-weight-bold text-center" style="color: black">Novo nome: <span class="novo-nome-cupom text-success"></span></p>
+                                                        <p class="text-center" style="color: black">Nome anterior: <span class="text-danger">{{ $coupon->name }}</span></p>
+                                                        <p class="text-center" style="color: black">Novo nome: <span class="novo-nome-cupom text-success"></span></p>
                                                     </div>
 
-                                                    <div class="col-6 div-nova-data" hidden>
+                                                    <div class="col-12 col-lg-6 div-nova-data" hidden>
                                                         <p class="font-weight-bold text-center text-primary" style="color: black">Data de expiração</p>
-                                                        <p class="font-weight-bold text-center" style="color: black">Data anterior: <span class="text-danger">{{ $coupon->expireDate }}</span></p>
-                                                        <p class="font-weight-bold text-center" style="color: black">Nova data: <span class="nova-data text-success"></span></p>
+                                                        <p class="text-center" style="color: black">Data anterior: <span class="text-danger">{{ $coupon->expireDate }}</span></p>
+                                                        <p class="text-center" style="color: black">Nova data: <span class="nova-data text-success"></span></p>
                                                     </div>
 
-                                                    <div class="col-6 mt-4 div-novo-desconto" hidden>
-                                                        <p class="font-weight-bold text-center" style="color: black">Desconto aplicado</p>
-                                                        <p class="font-weight-bold text-center" style="color: black">Anterior: <span class="text-danger">{{ $coupon->disccount }}</span></p>
-                                                        <p class="font-weight-bold text-center" style="color: black">Novo: <span class="novo-desconto text-success"></span></p>
+                                                    <div class="col-12 col-lg-6 div-novo-desconto" hidden>
+                                                        <p class="font-weight-bold text-center text-primary" style="color: black">Desconto aplicado</p>
+                                                        <p class="text-center" style="color: black">Anterior: <span class="text-danger">{{ $coupon->disccount }}</span></p>
+                                                        <p class="text-center" style="color: black">Novo: <span class="novo-desconto text-success"></span></p>
                                                     </div>
 
-                                                    <div class="col-6 mt-4 div-novo-valor" hidden>
-                                                        <p class="font-weight-bold text-center" style="color: black">Valor de compra mínimo</p>
-                                                        <p class="font-weight-bold text-center" style="color: black">Valor compra anterior: <span class="text-danger">{{ $coupon->disccountRule }}</span></p>
-                                                        <p class="font-weight-bold text-center" style="color: black">Novo valor compra: <span class="novo-valor text-success"></span></p>
+                                                    <div class="col-12 col-lg-6 div-novo-valor" hidden>
+                                                        <p class="font-weight-bold text-center text-primary" style="color: black">Valor de compra mínimo</p>
+                                                        <p class="text-center" style="color: black">Valor compra anterior: <span class="text-danger">{{ $coupon->disccountRule }}</span></p>
+                                                        <p class="text-center" style="color: black">Novo valor compra: <span class="novo-valor text-success"></span></p>
                                                     </div>
                                                 </div>
 

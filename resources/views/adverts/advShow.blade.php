@@ -43,7 +43,7 @@
                             })
                         </script>
                 @endif
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">{{ $meal->name }}</div>
 
                     <div class="card-body">
@@ -82,37 +82,7 @@
                                                 <input type="text" value="{{ $meal->value }}" class="form-control w-100" title="Apenas visualização." readonly>
                                         </div>
 
-                                        <div class="col-12 col-lg-4 mt-lg-4 mt-3">
-                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Participa do combo</label>
-                                            <input type="text" value="{{ $meal->combo }}" class="form-control w-100" title="Informação se este item participa do combo." readonly>
-                                        </div>
-
-                                        @if($meal->combo == 'Sim')
-                                            <div class="col-12 col-lg-4 mt-lg-4 mt-3">
-                                                <label style="font-size: 16px; color: black;" class="font-weight-bold">Valor no combo <i class="fas fa-hand-holding-usd ml-1 text-primary" style="cursor:pointer;" title="Valor que o cliente paga por este item no combo"></i></label>
-                                                <input type="text" value="{{ $meal->comboValue }}" class="form-control w-100"  title="Apenas visualização." readonly>
-                                            </div>
-                                        @endif
-
-                                        <div class="col-12 col-lg-4 mt-lg-4 mt-3">
-                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Nota de avaliação <i class="fas fa-star text-warning ml-1" style="cursor:pointer;" title="Nota média com base nas avaliações dos clientes"></i></label>
-                                            <input type="text" value="{{ round($meal->finalGrade, 1) }}" class="form-control w-100" title="{{ $meal->ratingAmount == null ? 'Este item ainda não tem' :  'Nota ' . round($meal->finalGrade, 1) . ' em ' . $meal->ratingAmount}} {{ $meal->ratingAmount == 1 ? 'avaliação' :  'avaliações'}}" readonly>
-                                        </div>
-
-                                        @if($meal->foodType != 'Bebida')
-                                            @if($meal->ingredients != null)
-                                                <div class="col-12 col-lg-6 mt-lg-6 mt-3">
-                                                    <label style="font-size: 16px; color: black;" class="font-weight-bold">Ingredientes: <i class="fas fa-clipboard-list text-info ml-1" style="cursor:pointer;" title="Ingredientes que podem acompanhar este item"></i></label>
-                                                    <textarea  id="" cols="30" rows="3" class="form-control" style="resize: none;" readonly>{{ $meal->ingredients }}.</textarea>
-                                                </div>
-                                            @endif
-                                            @if($meal->extras != null)
-                                                    <div class="col-12 col-lg-6 mt-lg-6 mt-3">
-                                                        <label style="font-size: 16px; color: black;" class="font-weight-bold">Adicionais: <i class="fas fa-plus-circle text-danger ml-1" style="cursor:pointer;" title="Adicionais que podem ser inseridos neste item"></i></label>
-                                                        <textarea  id="" cols="30" rows="3" class="form-control" style="resize: none;" readonly>{{ $meal->extras }}.</textarea>
-                                                    </div>
-                                            @endif
-                                        @else
+                                        @if($meal->foodType == 'Bebida')
                                             <div class="col-12 col-lg-6 mt-lg-6 mt-3">
                                                 <label style="font-size: 16px; color: black;" class="font-weight-bold">Sabores: <i class="far fa-lemon text-warning ml-1" style="cursor:pointer;" title="Variações de sabor deste item"></i></label>
                                                 <textarea  id="" cols="30" rows="4" class="form-control" style="resize: none;" readonly>{{ $meal->tastes }}</textarea>
@@ -123,14 +93,17 @@
                                             <label style="font-size: 16px; color: black;" class="font-weight-bold">Descrição: <i class="far fa-keyboard text-dark ml-1" style="cursor:pointer;" title="Descrição do item apresentada ao cliente"></i></label>
                                             <textarea  id="" cols="30" rows="4" class="form-control" style="resize: none;" readonly>{{ $meal->description }}.</textarea>
                                         </div>
+
+                                        <div class="col-12 col-lg-4 mt-lg-4 mt-3">
+                                            <label style="font-size: 16px; color: black;" class="font-weight-bold">Nota de avaliação <i class="fas fa-star text-warning ml-1" style="cursor:pointer;" title="Nota média com base nas avaliações dos clientes"></i></label>
+                                            <input type="text" value="{{ round($meal->finalGrade, 1) }}" class="form-control w-100" title="{{ $meal->ratingAmount == null ? 'Este item ainda não tem' :  'Nota ' . round($meal->finalGrade, 1) . ' em ' . $meal->ratingAmount}} {{ $meal->ratingAmount == 1 ? 'avaliação' :  'avaliações'}}" readonly>
+                                        </div>
                                     </div>
 
 
                                     <button type="button" style="color: white" class="btn {{ $meal->status == 'Ativo' ? 'btn-danger' : 'btn-success' }} mt-5" data-toggle="modal" data-target="#toggleAdvert">{{ $meal->status == 'Ativo' ? 'Desativar anúncio' : 'Ativar anúncio' }}</button>
                                     <a href="{{ route('refeicoes.edit', $meal->id) }}" class="btn btn-primary float-right mt-5"><i class="fas fa-edit mr-2"></i>Editar dados cadastrais</a>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -143,8 +116,8 @@
     <div class="modal fade" id="toggleAdvert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle" style="color: black; margin-bottom: -30px;">Atenção!</h5>
+                <div class="modal-header" style="background-color: #343A40">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white; margin-bottom: -30px;">Atenção!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

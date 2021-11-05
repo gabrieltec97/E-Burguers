@@ -41,8 +41,8 @@
         </div>
 
         <div class="footertray">
-            <span class="badge badge-success">Voltar ao <br> cardápio</span>
-            <a href="{{ route('cardapio', $insert = true) }}"><img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja"></a>
+            <span class="badge badge-danger font-weight-bold" style="font-size: 12px">Voltar ao <br> cardápio</span>
+            <a href="{{ route('cardapio', $insert = true) }}"><img src="{{ asset('logo/cardapio.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja"></a>
         </div>
     </div>
 @endsection

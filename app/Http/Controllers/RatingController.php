@@ -53,6 +53,7 @@ class RatingController extends Controller
         foreach ($items as $item){
             $evaluate = DB::table('orders')
                 ->where('detached', 'like', '%'. $item->name . '%')
+                ->where('status', '=', 'Pedido Entregue')
                 ->where('idClient', '=', Auth::user()->id)
                 ->get()->toArray();
 

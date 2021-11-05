@@ -1,5 +1,5 @@
 <div>
-    <table class="table table-hover table-bordered table-striped table-responsive-lg">
+    <table class="table table-striped table-bordered table-responsive-lg">
         <thead>
         <tr>
             <th scope="col" style="color: black; border-bottom: 2px solid  #bdbcbc;">Nome</th>

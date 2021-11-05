@@ -67,12 +67,12 @@ class CouponController extends Controller
             'couponName' => 'required|min:5|max:14',
             'expireDate' => 'required|date',
             'disccount' => 'required',
-            'disccountRule' => 'required|min:3|max:6'
+            'disccountRule' => 'required|min:3|max:7'
         ];
 
         $messages = [
             'couponName.required' => 'Por favor, insira o nome do cupom',
-            'couponName.min' => 'O nome do cupom deve conter no mínimo 5 caracteres',
+            'couponName.min' => 'O nome do cupom deve conter no mínimo 7 caracteres',
             'disccountRule.min' => 'O valor do cupom deve conter no mínimo 3 caracteres',
             'couponName.max' => 'O nome do cupom não pode ter mais de 14 caracteres',
             'expireDate.required' => 'Por favor, insira a data de expiração',
@@ -142,7 +142,7 @@ class CouponController extends Controller
             'couponName' => 'required|min:5|max:14',
             'expireDate' => 'required|date',
             'disccount' => 'required',
-            'disccountRule' => 'required|max:5'
+            'disccountRule' => 'required|max:7'
 
         ];
 
@@ -154,7 +154,7 @@ class CouponController extends Controller
             'expireDate.date' => 'Data inválida! Insira uma data correta',
             'disccount.required' => 'Por favor, insira o descondo a ser aplicado',
             'disccountRule.required' => 'Por favor, insira a regra de desconto',
-            'disccountRule.max' => 'Este campo só pode ter no máximo 5 caracteres'
+            'disccountRule.max' => 'Este campo só pode ter no máximo 7 caracteres'
         ];
 
         $request->validate($rules, $messages);

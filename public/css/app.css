@@ -11111,6 +11111,10 @@ a.text-dark:focus {
         margin-top: 10px;
     }
 
+    .btn-mobile{
+        display: none;
+    }
+
     .img-no-food{
         height: 400px;
     }
@@ -11207,6 +11211,10 @@ a.text-dark:focus {
 @media (max-width: 900px) {
     .tipopedido{
         height: 230px;
+    }
+
+    .btn-desktop{
+        display: none;
     }
 
     .prep-image{

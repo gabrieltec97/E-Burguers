@@ -821,7 +821,7 @@ $(".tipoRef").on("change", function () {
         $('.tastes').fadeIn('slow');
         $(".comb").addClass('col-md-8');
 
-    }else if ($(this).val() == 'Hamburguer'){
+    }else if ($(this).val() == 'Pizza'){
 
         $('.tastes').fadeOut('slow')
         $(".igr").fadeIn('slow');
@@ -918,7 +918,7 @@ $(".valor-item-add-edit").on('keyup', function (){
 $(".valor-item-add").mask('000.00', {reverse: true});
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .send-asset, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .send-asset, .cadastrar-ref, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){
@@ -928,7 +928,12 @@ $(".adicionar-bandeja, .send-asset, .send-aval, .edit-item-add, .cadastrar-item-
       $('.cadastrar-cupom').text('Salvar alterações');
       $('.cadastrar-funcionario').html('<i class="fas fa-user-plus mr-2"></i>Cadastrar funcionário');
       $('.cadastrar-item-add').html('<i class="fas fa-plus mr-2"></i>Cadastrar');
-  }, 3000)
+  }, 3000);
+
+  setTimeout(function(){
+      $(".close-here").click();
+      $(".close-here").click();
+  }, 1000);
 });
 
 $(".edit-extras-items").on('click', function (){

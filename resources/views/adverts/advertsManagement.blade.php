@@ -10,42 +10,39 @@
         <div class="row">
             <div class="col-12 mb-5">
                 @if(session('msg-2'))
-                    <div class="alert alert-success alerta-sucesso-ref alert-dismissible fade show" role="alert">
-                        <span class="font-weight-bold">Tudo certo!</span> {{ session('msg-2') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Tudo certo!',
+                            text: 'O item foi cadastrado e já está disponível no cardápio',
+                            showCancelButton: false,
+                            showConfirmButton: true,
+                        });
+                    </script>
                 @endif
 
                     @if(session('msg'))
-                        <div class="alert alert-danger alerta-sucesso-user alert-dismissible fade show" role="alert">
-                            <span class="font-weight-bold">Feito! </span>{{ session('msg') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                        <script>
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Tudo certo!',
+                                text: 'Item deletado com sucesso.',
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                            });
+                        </script>
                     @endif
                 <div class="card">
                     <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: #17B3DF;">Refeições cadastradas</div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12 col-lg-6">
                                 <input type="checkbox" style="width: 16px; height: 16px;" class="form-check-input ml-1 travarAvaliacoes" data-toggle="modal" data-target="#modalTrava" id="travarAval" name="travarAval" {{ $rate == "Sim" ? 'checked' : '' }}>
                                 <label for="travarAval" class="ml-4 font-weight-bold" style="color: black; cursor: pointer;  margin-top: 2px;"> Habilitar avaliações</label><br>
                             </div>
 
-                            <div class="col-6 mb-2 d-flex justify-content-end">
-                                <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" title="Aqui você poderá fazer cadastros" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-plus"></i>
-                                        Novo
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                        <li><button class="dropdown-item" type="button"><i class="fas fa-hamburger text-primary mr-2"></i><a class="font-weight-bold" href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none;">Nova refeição</a></button></li>
-                                        <li><button class="dropdown-item" type="button"><i class="fas fa-plus-square text-success mr-2"></i><a class="font-weight-bold text-success" href="{{ route('itensAdicionais.index') }}" title="Itens em que o cliente paga a mais para adicionar no sanduíche." style="font-size: 15px; text-decoration: none;">Novo item adicional</a></button></li>
-                                    </ul>
-                                </div>
+                            <div class="col-12 col-lg-6 mb-2 d-flex justify-content-lg-end">
+                                <button type="button" class="btn btn-primary"><i class="fas fa-pizza-slice text-white mr-2"></i><a href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none; color: white">Novo item</a></button>
                             </div>
                         </div>
 

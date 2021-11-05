@@ -75,7 +75,7 @@
                                <div class="card-body">
                                   <div class="container-fluid">
                                       <div class="row">
-                                          <div class="col-12 d-flex justify-content-center col-lg-6">
+                                          <div class="col-12 col-lg-6 d-flex justify-content-center">
                                               <img src="{{ asset('logo/reviews.png') }}" class="img-aval" alt="">
                                           </div>
 
@@ -83,9 +83,12 @@
                                               <h2 class="text-center">Obrigado pela sua avaliação</h2>
                                               <span class="text-center" style="font-size: 15px">Você avaliou todos os itens pedidos até o momento e também avaliou o estabelecimento. Obrigado pela ajuda!</span>
                                               <br>
-                                              <button class="btn btn-primary mt-3 mt-lg-1 offset-4" data-toggle="modal" data-target="#modalAvaliar"><i class="fa fa-star text-warning"></i> Avaliar novamente</button>
+                                              <button class="btn btn-primary mt-lg-1 offset-4 btn-desktop" data-toggle="modal" data-target="#modalAvaliar"><i class="fa fa-star text-warning"></i> Avaliar novamente</button>
                                           </div>
 
+                                          <div class="col-12 d-flex justify-content-center mt-3">
+                                              <button class="btn btn-primary mt-lg-1 btn-mobile" data-toggle="modal" data-target="#modalAvaliar"><i class="fa fa-star text-warning"></i> Avaliar novamente</button>
+                                          </div>
                                       </div>
                                   </div>
                                </div>
@@ -204,8 +207,8 @@
                                            <div class="modal fade" id="modalAvaliacao{{$item[0]}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                <div class="modal-dialog modal-dialog-centered" role="document">
                                                    <div class="modal-content">
-                                                       <div class="modal-header">
-                                                           <h5 class="modal-title" id="exampleModalLongTitle">Que nota você daria para esta pizza?</h5>
+                                                       <div class="modal-header" style="background-color: #343a40">
+                                                           <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Que nota você daria para esta pizza?</h5>
                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                <span aria-hidden="true">&times;</span>
                                                            </button>
