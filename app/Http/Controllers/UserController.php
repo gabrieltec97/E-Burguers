@@ -109,6 +109,50 @@ class UserController extends Controller
         return view('User.newEmployee', compact('places'));
     }
 
+    public function login()
+    {
+
+        $districts = deliver::all();
+
+        return view('clientUser.clientLogin', compact('districts'));
+    }
+
+    public function newClientUser(Request $request)
+    {
+        $rules = [
+            'clientName' => 'required|min:3',
+            'clientSurname' => 'required|min:3',
+            'clientAdNumber' => 'required',
+            'clientNumber' => 'required|min:10',
+            'clientAddress' => 'required|min:5',
+            'district' => 'required',
+            'refPoint' => 'required|min:5',
+            'clientEmail' => 'required',
+            'clientPassword' => 'required|min:5'
+        ];
+
+        $messages = [
+            'clientName.required' => 'Por favor, insira seu nome.',
+            'clientName.min' => 'Por favor, insira um nome com no mínimo 3 letras.',
+            'clientSurname.required' => 'Por favor, insira seu sobrenome.',
+            'clientSurname.min' => 'Por favor, insira um sobrenome com no mínimo 3 letras.',
+            'refPoint.required' => 'Por favor, insira um ponto de referência com no mínimo 5 letras.',
+            'refPoint.min' => 'Por favor, insira o número de identificação da residência.',
+            'clientAdNumber.required' => 'Por favor, insira o número de identificação da residência.',
+            'clientAddress.required' => 'Por favor, insira seu endereço.',
+            'clientAddress.min' => 'Por favor, insira um endereço com no mínimo 5 letras.',
+            'clientNumber.required' => 'Por favor, insira seu número de telefone.',
+            'clientNumber.min' => 'Por favor, insira um número válido (ddd) + número.',
+            'clientEmail.required' => 'Por favor, insira seu e-mail.',
+            'clientEmail.min' => 'Por favor, insira um e-mail válido email@provedor.com',
+            'clientPassword.required' => 'Por favor, insira sua senha.',
+            'clientPassword.min' => 'Por favor, insira uma senha de pelo menos 5 dígitos',
+            'district.required' => 'Por favor, selecione o bairro a ser entregue.'
+        ];
+
+        $request->validate($rules, $messages);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -126,20 +170,22 @@ class UserController extends Controller
             'empSurname' => 'required|min:3',
             'empPhone' => 'required|min:10',
             'empAddress' => 'required|min:5',
-            'empWorkingTime' => 'required',
-            'district' => 'required'
+            'district' => 'required',
+            'adNumber' => 'required',
+            'refPoint' => 'required'
 
         ];
 
         $messages = [
             'empName.required' => 'Por favor, insira o nome do funcionário',
+            'refPoint.required' => 'Por favor, insira o ponto de referência',
+            'adNumber.required' => 'Por favor, insira o número de identificação da residência.',
             'empName.min' => 'O nome do funcionário deve conter no mínimo 3 caracteres',
             'empSurname.required' => 'Por favor, insira o sobrenome do funcionário',
             'empSurname.min' => 'O sobrenome do funcionário deve conter no mínimo 5 caracteres',
             'empPhone.required' => 'Insira o número de telefone do funcionário.',
             'empPhone.min' => 'Você inseriu um formato inválido de telefone do funcionário',
             'empAddress.min' => 'Você inseriu um endereço muito curto, caso esteja correto, preencha com xxxx',
-            'empWorkingTime.required' => 'Por favor, insira o horário de trabalho do funcionário',
             'district.required' => 'Por favor, selecione o bairro a ser entregue.'
         ];
 
@@ -161,8 +207,9 @@ class UserController extends Controller
         $user->phone = $request->empPhone;
         $user->fixedPhone = $request->empFixedPhone;
         $user->address = $request->empAddress;
+        $user->adNumber = $request->adNumber;
+        $user->refPoint = $request->refPoint;
         $user->district = $request->district;
-        $user->workingTime = $request->empWorkingTime;
         $user->email = $request->empEmail;
         $user->password = bcrypt($request->empPassword);
 
@@ -215,29 +262,36 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
-            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
-        }
+//        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+//            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+//        }
 
         $rules = [
             'empName' => 'required|min:3',
-            'empSurname' => 'required|min:5',
-            'empAddress' => 'required|min:5',
+            'empEmail' => 'required|min:8',
+            'empSurname' => 'required|min:3',
             'empPhone' => 'required|min:10',
-            'empWorkingTime' => 'required|min:12',
+            'empAddress' => 'required|min:5',
+            'district' => 'required',
+            'adNumber' => 'required',
+            'refPoint' => 'required'
+
         ];
 
         $messages = [
-            'empName.required' => 'Por favor, insira o nome do funcionário.',
-            'empSurname.required' => 'Por favor, insira o sobrenome do funcionário.',
-            'empSurname.min' => 'O sobrenome do funcionário deve conter no mínimo 5 caracteres.',
-            'empName.min' => 'O nome do funcionário deve conter no mínimo 4 caracteres.',
-            'empAddress.min' => 'O endereço do funcionário deve conter no mínimo 4 caracteres.',
-            'empAddress.required' => 'Por favor, insira o endereço do funcionário.',
-            'empPhone.required' => 'Por favor, insira o número de contato.',
-            'empPhone.min' => 'Por favor, insira um número válido.',
-            'empWorkingTime.required' => 'Por favor, insira o horário de trabalho do funcionário.',
-            'empWorkingTime.min' => 'Por favor, insira um horário de trabalho correto.'
+            'empName.required' => 'Por favor, insira o nome do corretamente',
+            'empEmail.required' => 'Por favor, insira o e-mail do corretamente',
+            'empAddress.required' => 'Por favor, insira o endereço do corretamente',
+            'refPoint.required' => 'Por favor, insira o ponto de referência',
+            'empName.min' => 'O nome deve conter no mínimo 3 caracteres',
+            'empSurname.required' => 'Por favor, insira o sobrenome do corretamente',
+            'adNumber.required' => 'Por favor, número de identificação da residência',
+            'empSurname.min' => 'O sobrenome  deve conter no mínimo 5 caracteres',
+            'empEmail.min' => 'O e-mail  deve conter no mínimo 8 caracteres',
+            'empPhone.required' => 'Insira o número de telefone do corretamente.',
+            'empPhone.min' => 'Você inseriu um formato inválido de telefone.',
+            'empAddress.min' => 'Você inseriu um endereço muito curto, caso esteja correto, preencha com xxxx',
+            'district.required' => 'Por favor, selecione o bairro a ser entregue.'
         ];
 
         $request->validate($rules, $messages);
@@ -254,7 +308,8 @@ class UserController extends Controller
         $user->phone = $request->empPhone;
         $user->fixedPhone = $request->empFixedPhone;
         $user->address = $request->empAddress;
-        $user->workingTime = $request->empWorkingTime;
+        $user->refPoint = $request->refPoint;
+        $user->adNumber = $request->adNumber;
         $user->district = $request->district;
         $user->email = $request->empEmail;
         $user->save();
@@ -264,7 +319,13 @@ class UserController extends Controller
             $userPassword->save();
         }
 
-        return redirect()->route('usuario.show', $id)->with('msg', 'Dados alterados com sucesso!');
+        if(Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            return redirect()->route('usuario.show', $id)->with('msg', 'Dados alterados com sucesso!');
+        }else{
+            return redirect()->back()->with('msg', 'Dados alterados com sucesso!');
+        }
+
+
     }
 
     /**

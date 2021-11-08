@@ -77,7 +77,6 @@ $(document).ready(() => {
             $("#couponApply").submit();
         }else{
             $(".aplicar-cupom").html('<p>Aplicar cupom</p>')
-            console.log($(".cupomDesconto").val())
         }
     });
 

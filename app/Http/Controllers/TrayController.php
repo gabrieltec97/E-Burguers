@@ -222,7 +222,7 @@ class TrayController extends Controller
                 $auxItems->foodType = $item->foodType;
 
                 if (isset($requirements)){
-                    $auxItems->extras = $item->name . ": " .$requirements;
+                    $auxItems->extras = $item->name;
                 }
 
                 $auxItems->nameExtra = $addItems;
@@ -246,7 +246,7 @@ class TrayController extends Controller
                 $itemWithoutExtras->foodType = $item->foodType;
 
                 if (isset($request['ingredients'])){
-                    $itemWithoutExtras->item = $item->name . ': ' . $requirements;
+                    $itemWithoutExtras->item = $item->name;
                 }else{
                     $itemWithoutExtras->item = $item->name;
                 }
@@ -321,7 +321,7 @@ class TrayController extends Controller
                 $auxItems->foodType = $item->foodType;
 
                 if (isset($requirements)) {
-                    $auxItems->extras = $item->name . ": " . $requirements;
+                    $auxItems->extras = $item->name;
                 }
 
                 $auxItems->nameExtra = $addItems;
@@ -337,7 +337,7 @@ class TrayController extends Controller
                 $itemWithoutExtras->foodType = $item->foodType;
 
                 if (isset($request['ingredients'])){
-                    $itemWithoutExtras->item = $item->name . ': ' . $requirements;
+                    $itemWithoutExtras->item = $item->name;
                 }else{
                     $itemWithoutExtras->item = $item->name;
                 }

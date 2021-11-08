@@ -47,7 +47,11 @@
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="font-weight-bold" style="color: black">Endereço</label>
                                         <input type="text" class="form-control" value="{{ $user['address'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
+                                    </div>
 
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Ponto de referência</label>
+                                        <input type="text" class="form-control" value="{{ $user['refPoint'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">
@@ -57,9 +61,8 @@
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">
-                                        <label class="font-weight-bold" style="color: black">Horário de serviço</label>
-                                        <input type="text" class="form-control empHour" value="{{ $user['workingTime'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
-
+                                        <label class="font-weight-bold" style="color: black">Nº da residência</label>
+                                        <input type="text" class="form-control" name="adNumber" value="{{ $user['adNumber'] }}" title="Dados disponíveis apenas para visualização" style="cursor: not-allowed" readonly>
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">

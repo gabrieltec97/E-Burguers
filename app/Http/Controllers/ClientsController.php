@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\deliver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class ClientsController extends Controller
 {
@@ -18,8 +21,21 @@ class ClientsController extends Controller
 
     public function myData()
     {
-//        $data =
-        return view('clientUser.clientData');
+        if (Auth::user()->hasPermissionTo('Pedidos (Comum)') or Auth::user()->hasPermissionTo('Pedidos (Híbrido)') or Auth::user()->hasPermissionTo('Em Preparo')){
+
+            if (Auth::user()->hasPermissionTo('Dashboard')){
+                $user = 'administrador';
+            }else{
+                $user = 'funcionario';
+            }
+        }else{
+            $user = 'cliente';
+        }
+
+        $data = Auth::user()->toArray();
+        $neighboor = deliver::all();
+
+        return view('clientUser.clientData', compact('user', 'data', 'neighboor'));
     }
 
 

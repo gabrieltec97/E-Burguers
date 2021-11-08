@@ -145,13 +145,13 @@ class OrdersController extends Controller
                 $tray->payingMethod = $request->formaPagamento;
             }
             if ($request->entrega == 'Entregaemcasa'){
-                $tray->address = $client[0]->address;
+                $tray->address = $client[0]->address . ' ,' . $client[0]->adNumber;
                 $diffPlace = 'Nao';
             }else{
                 if ($request->pontoRef != ''){
                     $currentDistrict = $request->diffDistrict;
                     if ($tray->address == null){
-                        $tray->address = $request->localEntrega. '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                        $tray->address = $request->localEntrega. ' ,' . $request->adNumber. '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
                         $diffPlace = 'Sim';
                     }else{
                         $tray->address = $request->localEntrega;
@@ -159,7 +159,7 @@ class OrdersController extends Controller
                     }
                 }else{
                     if ($tray->address == null){
-                        $tray->address = $request->localEntrega . '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                        $tray->address = $request->localEntrega . ' ,' . $request->adNumber. '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
                         $diffPlace = 'Sim';
                     }else{
                         $tray->address = $request->localEntrega;
@@ -301,7 +301,6 @@ class OrdersController extends Controller
         if (isset($updOrder[0]['comboItem'])){
             $newOrder->comboItem = $updOrder[0]['comboItem'];
         }
-
 
         $newOrder->clientComments = $updOrder[0]['clientComments'];
         $newOrder->deliverWay = $updOrder[0]['deliverWay'];

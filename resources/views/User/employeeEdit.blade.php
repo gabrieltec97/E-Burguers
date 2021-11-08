@@ -55,12 +55,33 @@
                                             </div>
                                         @endif
                                     </div>
+
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="font-weight-bold" style="color: black;">Endereço</label>
                                         <input type="text" class="form-control enderecoFuncionario {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="empAddress" value="{{ $user->address }}" required>
                                         @if($errors->has('empAddress'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empAddress') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black;">Ponto de referência</label>
+                                        <input type="text" class="form-control refPoint {{ ($errors->has('refPoint') ? 'is-invalid' : '') }}" name="refPoint" value="{{ $user->refPoint }}" required>
+                                        @if($errors->has('refPoint'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('refPoint') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Nº da residência</label>
+                                        <input type="text" class="form-control adNumber {{ ($errors->has('adNumber') ? 'is-invalid' : '') }}" name="adNumber" value="{{ $user->adNumber }}" required>
+                                        @if($errors->has('adNumber'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('adNumber') }}</span>
                                             </div>
                                         @endif
                                     </div>
@@ -75,16 +96,6 @@
                                             <option value="FORA DA ÁREA DE ENTREGAS" {{ $user->district == 'FORA DA ÁREA DE ENTREGAS' ? 'selected' : '' }}>FORA DA ÁREA DE ENTREGAS</option>
                                         </select>
 
-                                    </div>
-
-                                    <div class="col-12 mt-3 col-md-4">
-                                        <label class="font-weight-bold" style="color: black;">Horário de serviço</label>
-                                        <input type="text" class="form-control horarioFuncionario {{ ($errors->has('empWorkingTime') ? 'is-invalid' : '') }}" name="empWorkingTime" value="{{ $user->workingTime }}" required>
-                                        @if($errors->has('empWorkingTime'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('empWorkingTime') }}</span>
-                                            </div>
-                                        @endif
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">
@@ -119,6 +130,18 @@
                                                         <p class="font-weight-bold text-center" style="color: black">Nome do funcionário</p>
                                                         <p class="text-center" style="color: black;">Nome anterior: <span class="text-danger">{{ $user->name }}</span></p>
                                                         <p class="text-center" style="color: black;">Novo nome: <span class="novo-nome text-success"></span></p>
+                                                    </div>
+
+                                                    <div class="col-6 div-refPoint" hidden>
+                                                        <p class="font-weight-bold text-center" style="color: black">Ponto de referência</p>
+                                                        <p class="text-center" style="color: black;">Nome anterior: <span class="text-danger">{{ $user->refPoint }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo nome: <span class="novo-refPoint text-success"></span></p>
+                                                    </div>
+
+                                                    <div class="col-6 div-adNumber" hidden>
+                                                        <p class="font-weight-bold text-center" style="color: black">Nº da residência</p>
+                                                        <p class="text-center" style="color: black;">Nome anterior: <span class="text-danger">{{ $user->adNumber }}</span></p>
+                                                        <p class="text-center" style="color: black;">Novo nome: <span class="novo-adNumber text-success"></span></p>
                                                     </div>
 
                                                     <div class="col-6 div-email-func" hidden>
@@ -156,25 +179,6 @@
                                                         <p class="text-center" style="color: black;">Endereço anterior: <span class="text-danger">{{ $user->address }}</span></p>
                                                         <p class="text-center" style="color: black;">Novo endereço: <span class="novo-endereco text-success"></span></p>
                                                     </div>
-
-                                                    <div class="col-6 div-cargo-func" hidden>
-                                                        <p class="font-weight-bold text-center" style="color: black">Cargo</p>
-                                                        <p class="text-center" style="color: black;">Cargo anterior: <span class="text-danger">{{ $user->occupation }}</span></p>
-                                                        <p class="text-center" style="color: black;">Novo cargo: <span class="novo-cargo text-success"></span></p>
-                                                    </div>
-
-                                                    <div class="col-6 div-perfilUsuario-func" hidden>
-                                                        <p class="font-weight-bold text-center" style="color: black">Perfil de usuário</p>
-                                                        <p class="text-center" style="color: black;">Anterior: <span class="text-danger">{{ $user->profile }}</span></p>
-                                                        <p class="text-center" style="color: black;">Novo: <span class="perfil-usuario text-success"></span></p>
-                                                    </div>
-
-                                                    <div class="col-6 div-horárioServico-func" hidden>
-                                                        <p class="font-weight-bold text-center" style="color: black">Horário de serviço</p>
-                                                        <p class="text-center" style="color: black;">Horário anterior: <span class="text-danger">{{ $user->workingTime }}</span></p>
-                                                        <p class="text-center" style="color: black;">Novo horário: <span class="horario-servico text-success"></span></p>
-                                                    </div>
-
 
                                                     <div class="col-12 mt-4 div-senha-func" hidden>
                                                         <p class="font-weight-bold text-center"><span class="senha-do-func text-danger"></span></p>

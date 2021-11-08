@@ -358,12 +358,13 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     const telFunc = $(".telFuncionario").val();
     const fixoFunc =  $(".fixoFuncionario").val();
     const enderecoFunc =  $(".enderecoFuncionario").val();
-    const horarioFunc =  $(".horarioFuncionario").val();
     const profileFunc =  $(".profileFuncionario").val();
+    const refPoint =  $(".refPoint").val();
+    const adNumber =  $(".adNumber").val();
 
     $(".salvar-alteracoes-func").on("click", function () {
 
-        if(bairroFunc == $(".userDistrict").val() && emailFunc == $(".empEmail2").val() && nomeFunc == $(".nome-funcionario").val() && sobrenomeFunc == $(".sobrenome-funcionario").val() && telFunc == $(".telFuncionario").val() && fixoFunc == $(".fixoFuncionario").val() && enderecoFunc == $(".enderecoFuncionario").val() && horarioFunc == $(".horarioFuncionario").val() && profileFunc == $(".profileFuncionario").val() && $(".senhaFuncionario").val() == ''){
+        if(bairroFunc == $(".userDistrict").val() && refPoint == $(".refPoint").val() && adNumber == $(".adNumber").val() && emailFunc == $(".empEmail2").val() && nomeFunc == $(".nome-funcionario").val() && sobrenomeFunc == $(".sobrenome-funcionario").val() && telFunc == $(".telFuncionario").val() && fixoFunc == $(".fixoFuncionario").val() && enderecoFunc == $(".enderecoFuncionario").val() && profileFunc == $(".profileFuncionario").val() && $(".senhaFuncionario").val() == ''){
 
             $(".func-mudancas").text("Você não efetuou nenhuma alteração.");
             $(".func-mudancas").css('text-align', 'center');
@@ -381,6 +382,20 @@ $(".btn-cadastrar-refeicao").on("click", function () {
             $(".novo-nome").text($(".nome-funcionario").val());
         }else{
             $(".div-nome-func").attr('hidden', 'true');
+        }
+
+        if(refPoint != $(".refPoint").val()){
+            $(".div-refPoint").removeAttr('hidden', 'true');
+            $(".novo-refPoint").text($(".refPoint").val());
+        }else{
+            $(".div-refPoint").attr('hidden', 'true');
+        }
+
+        if(adNumber != $(".adNumber").val()){
+            $(".div-adNumber").removeAttr('hidden', 'true');
+            $(".novo-adNumber").text($(".adNumber").val());
+        }else{
+            $(".div-adNumber").attr('hidden', 'true');
         }
 
         if(emailFunc != $(".empEmail2").val()){
@@ -918,14 +933,14 @@ $(".valor-item-add-edit").on('keyup', function (){
 $(".valor-item-add").mask('000.00', {reverse: true});
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .send-asset, .cadastrar-ref, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){
       $('.cadastrar-taxa').text('Cadastrar');
       $('.send-asset').text('Enviar avaliação');
       $('.cadastrar-cupom').text('Cadastrar cupom');
-      $('.cadastrar-cupom').text('Salvar alterações');
+      $('.cadastrar-cupom, .salvar-alt-client').text('Salvar alterações');
       $('.cadastrar-funcionario').html('<i class="fas fa-user-plus mr-2"></i>Cadastrar funcionário');
       $('.cadastrar-item-add').html('<i class="fas fa-plus mr-2"></i>Cadastrar');
   }, 3000);

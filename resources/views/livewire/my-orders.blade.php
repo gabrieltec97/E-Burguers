@@ -30,6 +30,19 @@
                                     <td style="font-size: 16px">{{ $ord->day }}</td>
                                 </tr>
 
+                                <?php
+                                $count = strlen($ord->totalValue);
+
+                                if ($count == 4 && $ord->totalValue > 10){
+                                    $price = $ord->totalValue . '0';
+                                }elseif ($count == 2){
+                                    $price = $ord->totalValue. '.' . '00';
+                                }
+                                else{
+                                    $price = $ord->totalValue;
+                                }
+                                ?>
+
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModalCenter{{ $ord->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog  modal-lg" role="document">
@@ -76,7 +89,7 @@
                                                             <span style="font-size: 16px">Comentários: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $ord->comments != '' ? $ord->comments : 'Sem comentários adicionados.' }}</span></span><br>
 
                                                             <span style="font-size: 16px">Data: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $ord->day }} - {{ $ord->hour }}</span></span><br>
-                                                            <span style="font-size: 16px">Valor total: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $ord->totalValue }}</span></span>
+                                                            <span style="font-size: 16px">Valor total: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $price }}</span></span>
 
                                                         </div>
                                                     </div>

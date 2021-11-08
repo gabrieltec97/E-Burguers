@@ -11111,6 +11111,10 @@ a.text-dark:focus {
         margin-top: 10px;
     }
 
+    .navbar-login{
+        opacity: 0.8;
+    }
+
     .btn-mobile{
         display: none;
     }

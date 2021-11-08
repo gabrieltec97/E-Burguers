@@ -20,8 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('fixedPhone')->nullable();
             $table->string('address');
+            $table->string('refPoint');
+            $table->string('adNumber');
             $table->string('district');
-            $table->string('workingTime');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('itemsRated')->nullable();

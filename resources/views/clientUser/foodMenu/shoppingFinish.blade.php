@@ -65,13 +65,13 @@
                                             @if($diffSend != null)
                                               @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
                                                   <div class="col-12 mt-4">
-                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-removebg-preview.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
+                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
                                                       <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                   </div>
 
                                               @elseif($diffSend[1] != null)
-                                                  <div class="col-12 mt-4">
-                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money-removebg-preview.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
+                                                  <div class="col-12 col-lg-6 mt-4">
+                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
                                                       <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
                                                   </div>
                                               @endif
@@ -106,7 +106,7 @@
                                                 </div>
 
                                                 <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                    <label class="font-weight-bold" style="color:black; font-size: 18px">Ponto de referência</label>
+                                                    <label class="font-weight-bold" style="color:black; font-size: 18px">Ponto de referênci</label>
                                                     <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
                                                 </div>
                                             @endif
@@ -138,12 +138,12 @@
                                                     @if($diffSend != null)
                                                         @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
                                                             <div class="col-12 mt-4">
-                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-removebg-preview.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
+                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
                                                                 <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                             </div>
                                                         @elseif($diffSend[1] != null)
                                                             <div class="col-12 mt-4">
-                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money-removebg-preview.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
+                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
                                                                 <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
                                                             </div>
                                                         @endif
@@ -189,28 +189,28 @@
 
 {{--                                                Verificando se o cupom foi inserido em um local diferente.    --}}
                                                 @if($diffSend != null)
-                                                    <div class="col-12 col-lg-6 local-entrega">
+                                                    <div class="col-12 col-lg-6 local-entrega mt-3 mt-lg-0">
                                                         <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
                                                         <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $diffSend[0] }}" title="Local inserido junto com cupom.">
                                                     </div>
 
                                                     @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
-                                                      <div class="col-6 mt-4">
-                                                          <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-removebg-preview.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
+                                                      <div class="col-12 col-lg-6 mt-4">
+                                                          <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
                                                           <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                       </div>
 
-                                                      <div class="col-6 mt-4">
-                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local</button>
+                                                      <div class="col-12 col-lg-6 mt-lg-4 mt-2">
+                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local / Pagamento</button>
                                                       </div>
                                                     @elseif($diffSend[1] != null)
-                                                      <div class="col-6 mt-4">
-                                                          <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money-removebg-preview.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
-                                                          <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
+                                                      <div class="col-12 col-lg-6 mt-4">
+                                                          <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
+                                                          <h5 class="mt-3">Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
                                                       </div>
 
-                                                      <div class="col-6 mt-4">
-                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local</button>
+                                                      <div class="col-12 col-lg-6 mt-4">
+                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local / Pagamento</button>
                                                       </div>
                                                     @endif
                                                 @else
@@ -227,6 +227,11 @@
                                                         <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
                                                         <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
                                                     </div>
+
+                                                        <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
+                                                            <label class="font-weight-bold" style="color: black;font-size: 18px">Nº da residência</label>
+                                                            <input type="text" class="form-control pontoRef" name="adNumber" placeholder="Dê mais detalhes sobre a localização.">
+                                                        </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
                                                         <label class="font-weight-bold" style="color: black; font-size: 18px">Bairro</label>
@@ -301,18 +306,18 @@
                                         <div class="modal fade" id="exampleModalCentercompra" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Tudo certo!</h5>
+                                                    <div class="modal-header" style="background-color: #343a40">
+                                                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle" style="color: white">Tudo certo!</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <span class="font-weight-bold text-muted">Pedido anotado. Deseja pedir algo mais?</span>
+                                                        <span class="font-weight-bold" style="color: black">Deseja confirmar o pedido? Ele será registrado e começará a ser preparado.</span>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-danger font-weight-bold mais-pedidos">Sim, ir ao cardápio</button>
-                                                        <button type="submit" class="btn btn-primary font-weight-bold cadastrar-pedido-agora">Não, pode trazer meu pedido</button>
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Voltar</button>
+                                                        <button type="submit" class="btn btn-success cadastrar-pedido-agora"><i class="fa fa-check"></i> Confirmar pedido</button>
                                                     </div>
                                                 </div>
                                             </div>

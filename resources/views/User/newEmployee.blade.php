@@ -67,6 +67,26 @@
                                     </div>
 
                                     <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Nº da residência</label>
+                                        <input type="text" class="form-control {{ ($errors->has('adNumber') ? 'is-invalid' : '') }}" name="adNumber" value="{{ old('adNumber') }}" required>
+                                        @if($errors->has('adNumber'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('adNumber') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
+                                        <label class="font-weight-bold" style="color: black">Ponto de referência</label>
+                                        <input type="text" class="form-control {{ ($errors->has('refPoint') ? 'is-invalid' : '') }}" name="refPoint" value="{{ old('refPoint') }}" required>
+                                        @if($errors->has('refPoint'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('refPoint') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-12 mt-3 col-md-4">
                                         <label class="font-weight-bold" style="color: black">Bairro (Modo cliente)</label>
                                         <select class="form-control {{ ($errors->has('district') ? 'is-invalid' : '') }}" name="district" required>
                                             <option value="" selected hidden>Selecione</option>
@@ -79,16 +99,6 @@
                                         @if($errors->has('bairro'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('bairro') }}</span>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-12 mt-3 col-md-4">
-                                        <label class="font-weight-bold" style="color: black">Horário de serviço</label>
-                                        <input type="text" placeholder="xx:xx - xx:xx" class="form-control empHour {{ ($errors->has('empWorkingTime') ? 'is-invalid' : '') }}" name="empWorkingTime" value="{{ old('empWorkingTime') }}" required>
-                                         @if($errors->has('empWorkingTime'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('empWorkingTime') }}</span>
                                             </div>
                                         @endif
                                     </div>
