@@ -151,6 +151,19 @@ class UserController extends Controller
         ];
 
         $request->validate($rules, $messages);
+
+        $emails = DB::table('users')
+            ->select('email')
+            ->get()->toArray();
+
+
+        foreach ($emails as $email){
+            if ($request->clientEmail == $email->email){
+                return redirect()->back()->withInput()->with('msg-error', 'error');
+            }
+        }
+
+        return redirect()->back()->with('msg', 'success');
     }
 
     /**
