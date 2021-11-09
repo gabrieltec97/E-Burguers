@@ -117,55 +117,6 @@ class UserController extends Controller
         return view('clientUser.clientLogin', compact('districts'));
     }
 
-    public function newClientUser(Request $request)
-    {
-        $rules = [
-            'clientName' => 'required|min:3',
-            'clientSurname' => 'required|min:3',
-            'clientAdNumber' => 'required',
-            'clientNumber' => 'required|min:10',
-            'clientAddress' => 'required|min:5',
-            'district' => 'required',
-            'refPoint' => 'required|min:5',
-            'clientEmail' => 'required',
-            'clientPassword' => 'required|min:5'
-        ];
-
-        $messages = [
-            'clientName.required' => 'Por favor, insira seu nome.',
-            'clientName.min' => 'Por favor, insira um nome com no mínimo 3 letras.',
-            'clientSurname.required' => 'Por favor, insira seu sobrenome.',
-            'clientSurname.min' => 'Por favor, insira um sobrenome com no mínimo 3 letras.',
-            'refPoint.required' => 'Por favor, insira um ponto de referência com no mínimo 5 letras.',
-            'refPoint.min' => 'Por favor, insira o número de identificação da residência.',
-            'clientAdNumber.required' => 'Por favor, insira o número de identificação da residência.',
-            'clientAddress.required' => 'Por favor, insira seu endereço.',
-            'clientAddress.min' => 'Por favor, insira um endereço com no mínimo 5 letras.',
-            'clientNumber.required' => 'Por favor, insira seu número de telefone.',
-            'clientNumber.min' => 'Por favor, insira um número válido (ddd) + número.',
-            'clientEmail.required' => 'Por favor, insira seu e-mail.',
-            'clientEmail.min' => 'Por favor, insira um e-mail válido email@provedor.com',
-            'clientPassword.required' => 'Por favor, insira sua senha.',
-            'clientPassword.min' => 'Por favor, insira uma senha de pelo menos 5 dígitos',
-            'district.required' => 'Por favor, selecione o bairro a ser entregue.'
-        ];
-
-        $request->validate($rules, $messages);
-
-        $emails = DB::table('users')
-            ->select('email')
-            ->get()->toArray();
-
-
-        foreach ($emails as $email){
-            if ($request->clientEmail == $email->email){
-                return redirect()->back()->withInput()->with('msg-error', 'error');
-            }
-        }
-
-        return redirect()->back()->with('msg', 'success');
-    }
-
     /**
      * Store a newly created resource in storage.
      *

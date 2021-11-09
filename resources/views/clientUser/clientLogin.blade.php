@@ -131,65 +131,77 @@
 
                 <div class="col-12 col-lg-6 mt-4 mt-lg-0">
                     <div class="card" style="border: none;">
-                        <div class="card-header bg-primary"><span class="text-white font-weight-bold">Ainda não tenho cadastro.</span></div>
+                        <div class="card-header bg-primary font-weight-bold" style="color: white">Cadastre-se, é rapidinho!</div>
 
                         <div class="card-body">
-                            <div class="container-fluid">
-                                <form action="{{ route('newClientUser') }}" method="post" class="form-group">
-                                    @csrf
+                            <form method="POST" action="{{ route('register') }}">
+                                @csrf
+
+                                <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-12 col-lg-6">
-                                            <label for="nome" class="font-weight-bold">Nome</label>
-                                            <input type="text" class="form-control {{ ($errors->has('clientName') ? 'is-invalid' : '') }}" value="{{ old('clientName') }}" placeholder="Apenas seu nome" name="clientName" required>
-                                            @if($errors->has('clientName'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('clientName') }}</span>
-                                            </div>
-                                        @endif
+                                            <label for="name" class="font-weight-bold">{{ __('Name') }}</label>
+
+                                            <input id="name" type="text" placeholder="Apenas seu nome" class="form-control w-100 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus required>
+
+                                            @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
 
-                                        <div class="col-12 col-lg-6 mt-2 mt-lg-0">
-                                            <label for="nome" class="font-weight-bold">Sobrenome</label>
-                                            <input type="text" class="form-control {{ ($errors->has('clientSurname') ? 'is-invalid' : '') }}" value="{{ old('clientSurname') }}" name="clientSurname" required>
-                                            @if($errors->has('clientSurname'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('clientSurname') }}</span>
-                                            </div>
-                                        @endif
+                                        <div class="col-12 col-lg-6">
+                                            <label for="name" class="font-weight-bold">{{ __('Sobrenome') }}</label>
+
+                                            <input id="sobrenome" type="text" class="form-control w-100 @error('sobrenome') is-invalid @enderror" name="sobrenome" value="{{ old('sobrenome') }}" autocomplete="sobrenome" autofocus required>
+
+                                            @error('sobrenome')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
 
-                                        <div class="col-12 col-lg-9 mt-2">
-                                            <label for="nome" class="font-weight-bold">Endereço</label>
-                                            <input type="text" class="form-control {{ ($errors->has('clientAddress') ? 'is-invalid' : '') }}" value="{{ old('clientAddress') }}" placeholder="Nome da rua onde serão entregues os pedidos" name="clientAddress" required>
-                                            @if($errors->has('clientAddress'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('clientAddress') }}</span>
-                                            </div>
-                                        @endif
+                                        <div class="col-12 mt-2 col-lg-9">
+                                            <label for="name" class="font-weight-bold">{{ __('Endereço') }}</label>
+
+                                            <input id="name" type="text" placeholder="O local onde será entregue o pedido." class="form-control w-100 @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" autocomplete="address" autofocus required>
+
+                                            @error('address')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
 
-                                        <div class="col-12 col-lg-3 mt-2">
-                                            <label for="nome" class="font-weight-bold">Nº</label>
-                                            <input type="number" class="form-control {{ ($errors->has('clientAdNumber') ? 'is-invalid' : '') }}" value="{{ old('clientAdNumber') }}" name="clientAdNumber" required>
-                                            @if($errors->has('clientAdNumber'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('clientAdNumber') }}</span>
-                                            </div>
-                                        @endif
+                                        <div class="col-12 mt-2 col-lg-3">
+                                            <label for="name" class="font-weight-bold">{{ __('Nº') }}</label>
+
+                                            <input id="adNumber" type="number" class="form-control w-100 @error('adNumber') is-invalid @enderror" name="adNumber" value="{{ old('adNumber') }}" autocomplete="adNumber" autofocus required>
+
+                                            @error('adNumber')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
 
                                         <div class="col-12 mt-2">
-                                            <label for="nome" class="font-weight-bold">Ponto de referência</label>
-                                            <input type="text" class="form-control {{ ($errors->has('refPoint') ? 'is-invalid' : '') }}" value="{{ old('refPoint') }}" placeholder="Um local próximo ao que será entregue o pedido." name="refPoint" required>
-                                            @if($errors->has('refPoint'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('refPoint') }}</span>
-                                            </div>
-                                        @endif
+                                            <label for="name" class="font-weight-bold">{{ __('Ponto de referência') }}</label>
+
+                                            <input id="refPoint" type="text" class="form-control w-100 @error('refPoint') is-invalid @enderror" name="refPoint" value="{{ old('refPoint') }}" autocomplete="refPoint" autofocus required>
+
+                                            @error('refPoint')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
 
-                                        <div class="col-12 col-lg-6 mt-2">
-                                            <label for="nome" class="font-weight-bold">Bairro</label>
+                                        <div class="col-12 mt-2 col-lg-6">
+                                            <label for="name" class="font-weight-bold">{{ __('Bairro') }}</label>
+
                                             <select name="district" class="form-control">
                                                 @foreach($districts as $d => $value)
                                                     <option value="{{ $value->name }}" {{ old('district') == $value->name ? 'selected' : ''}}>{{ $value->name }}</option>
@@ -197,42 +209,50 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-12 col-lg-6 mt-2">
-                                            <label for="nome" class="font-weight-bold">Telefone</label>
-                                            <input type="number" class="form-control {{ ($errors->has('clientNumber') ? 'is-invalid' : '') }}" value="{{ old('clientNumber') }}" placeholder="(ddd) numero" name="clientNumber" required>
-                                            @if($errors->has('clientNumber'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('clientNumber') }}</span>
-                                            </div>
-                                        @endif
+                                        <div class="col-12 mt-2 col-lg-6">
+                                            <label for="name" class="font-weight-bold">{{ __('Telefone') }}</label>
+
+                                            <input id="phone" type="text" placeholder="(ddd) número" class="form-control w-100 @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" autocomplete="phone" autofocus required>
+
+                                            @error('phone')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
 
-                                        <div class="col-12 col-lg-6 mt-2">
-                                            <label for="nome" class="font-weight-bold">E-mail</label>
-                                            <input type="email" placeholder="E-mail para login" class="form-control {{ ($errors->has('clientEmail') ? 'is-invalid' : '') }}" value="{{ old('clientEmail') }}" name="clientEmail" required>
-                                            @if($errors->has('clientEmail'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('clientEmail') }}</span>
-                                            </div>
-                                        @endif
+                                        <div class="col-12 mt-2 col-lg-6">
+                                            <label for="name" class="font-weight-bold">{{ __('E-mail') }}</label>
+
+                                            <input id="email" type="text" class="form-control w-100 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus required>
+
+                                            @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
 
-                                        <div class="col-12 col-lg-6 mt-2">
-                                            <label for="nome" class="font-weight-bold">Senha</label>
-                                            <input type="password" class="form-control {{ ($errors->has('clientPassword') ? 'is-invalid' : '') }}" value="{{ old('clientPassword') }}" name="clientPassword" required>
-                                            @if($errors->has('clientPassword'))
-                                            <div class="invalid-feedback">
-                                                <span class="font-weight-bold"> {{ $errors->first('clientPassword') }}</span>
-                                            </div>
-                                        @endif
+                                        <div class="col-12 mt-2 col-lg-6">
+                                            <label for="name" class="font-weight-bold">{{ __('Senha') }}</label>
+
+                                            <input id="password" type="password" class="form-control w-100 @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" autocomplete="password" autofocus required>
+
+                                            @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
 
-                                        <div class="col-12 d-flex justify-content-end mt-4" style="margin-bottom: -20px">
-                                            <button type="submit" class="btn btn-primary cadastro-cliente"><i class="fas fa-pizza-slice mr-1"></i>Cadastrar-se</button>
+                                        <div class="col-12 mt-3" style="margin-bottom: -10px">
+                                            <button type="submit" class="btn btn-primary float-right">
+                                                {{ __('Register') }}
+                                            </button>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

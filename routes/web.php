@@ -44,8 +44,6 @@ Route::get('/meusCupons', 'CouponController@myCoupons')->name('meusCupons')->mid
 
 Route::get('/entrar', 'UserController@login')->name('entrar');
 
-Route::post('/novoUser', 'UserController@newClientUser')->name('newClientUser');
-
 //Rotas de combo.
 Route::get('/hamburguer', 'TrayController@orderComboHamburguer')->name('comboHamburguer')->middleware('auth');
 
