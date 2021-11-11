@@ -1,96 +1,151 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Scripts -->
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js" integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Pizzaria Megatonne</title>
 
-        <title>Laravel</title>
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <!-- Styles -->
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e656fe6405.js" crossorigin="anonymous"></script>
+</head>
+<body>
 
-            .full-height {
-                height: 100vh;
-            }
+<section id="section1" class="mb-lg-4" style="background-image: url({{ asset('logo/pi.jpg') }}); height: 530px; background-size: cover;">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+        <nav class="navbar navbar-expand-lg navbar-light nav-start">
+            <button class="btn d-lg-none" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Página Inicial <span class="sr-only">(current)</span></a>
+                    </li>
 
-            .position-ref {
-                position: relative;
-            }
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Cardápio</a>
+                    </li>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Como chegar</a>
+                    </li>
 
-            .content {
-                text-align: center;
-            }
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Pedir Online</a>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+                    <button class="btn pedido-desktop" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
+                </span>
+            </div>
+        </nav>
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+        <div class="carousel-inner carousel-principal">
+            <div class="carousel-item">
+                <img class="d-block w-100 img-carousel" src="{{ asset('logo/post39.jpg') }}"  alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100 img-carousel" src="{{ asset('logo/PIZZA (6).jpg') }}" alt="Third slide">
+            </div>
+            <div class="carousel-item active">
+                <img class="d-block w-100 img-carousel" src="{{ asset('logo/PIZZA (1).jpg') }}">
             </div>
         </div>
-    </body>
+
+    </div>
+</section>
+
+<span style="font-size: 48px;" class="cardapio-ap">Confira o nosso cardápio!</span>
+
+<section id="section2">
+    <div class="container d-flex justify-content-center">
+        <div class="slider owl-carousel mt-4">
+            @foreach($foods as $food)
+                <div class="card">
+                    <form action="{{ route('adicionarItem', $food->id) }}">
+                        <div class="">
+                            <img src="{{asset($food->picture)}}" class="img-card">
+                        </div>
+
+                        <div class="content mt-2">
+                            <div class="title"><h4>{{ $food->name }}</h4></div>
+                            <div class="sub-title text-danger">R$ {{ $food->value }}</div>
+                           <div class="container">
+                               <p>{{ $food->description }}</p>
+                               <div class="btn d-flex justify-content-center">
+                                   <button class="adtray">Pedir Agora</button>
+                               </div>
+                           </div>
+                        </div>
+                    </form>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <div class="container d-flex justify-content-center">
+        <div class="slider owl-carousel mt-5">
+            @foreach($drinks as $drink)
+                <div class="card">
+                        <div class="">
+                            <img src="{{asset($drink->picture)}}" class="img-card">
+                        </div>
+
+                        <div class="content mt-2">
+                            <div class="title"><h4>{{ $drink->name }}</h4></div>
+                            <div class="sub-title text-danger">R$ {{ $drink->value }}</div>
+                            <div class="container">
+                                <p>{{ $drink->description }}</p>
+                                <div class="btn d-flex justify-content-center">
+                                    <button class="adtray">Pedir Agora</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+
+<section id="section3" style="background-color: #1f2029">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-lg-4">
+                <p class="text-white">testeee</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(".slider").owlCarousel({
+        loop:true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        autoplayHoverpause: true,
+    })
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="{{asset('js/jquery.js')}}"></script>
+</body>
 </html>

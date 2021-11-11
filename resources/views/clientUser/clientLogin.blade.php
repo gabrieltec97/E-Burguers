@@ -151,10 +151,10 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 mt-2 mt-lg-0 col-lg-6">
                                             <label for="name" class="font-weight-bold">{{ __('Sobrenome') }}</label>
 
-                                            <input id="sobrenome" type="text" class="form-control w-100 @error('sobrenome') is-invalid @enderror" name="sobrenome" value="{{ old('sobrenome') }}" autocomplete="sobrenome" autofocus required>
+                                            <input id="sobrenome" type="text" placeholder="Seus sobrenomes" class="form-control w-100 @error('sobrenome') is-invalid @enderror" name="sobrenome" value="{{ old('sobrenome') }}" autocomplete="sobrenome" autofocus required>
 
                                             @error('sobrenome')
                                             <span class="invalid-feedback" role="alert">
@@ -166,7 +166,7 @@
                                         <div class="col-12 mt-2 col-lg-9">
                                             <label for="name" class="font-weight-bold">{{ __('Endereço') }}</label>
 
-                                            <input id="name" type="text" placeholder="O local onde será entregue o pedido." class="form-control w-100 @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" autocomplete="address" autofocus required>
+                                            <input id="address" type="text" placeholder="O local onde será entregue o pedido." class="form-control w-100 @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" autocomplete="address" autofocus required>
 
                                             @error('address')
                                             <span class="invalid-feedback" role="alert">
@@ -190,7 +190,7 @@
                                         <div class="col-12 mt-2">
                                             <label for="name" class="font-weight-bold">{{ __('Ponto de referência') }}</label>
 
-                                            <input id="refPoint" type="text" class="form-control w-100 @error('refPoint') is-invalid @enderror" name="refPoint" value="{{ old('refPoint') }}" autocomplete="refPoint" autofocus required>
+                                            <input id="refPoint" type="text" placeholder="Um local próximo ao seu endereço" class="form-control w-100 @error('refPoint') is-invalid @enderror" name="refPoint" value="{{ old('refPoint') }}" autocomplete="refPoint" autofocus required>
 
                                             @error('refPoint')
                                             <span class="invalid-feedback" role="alert">

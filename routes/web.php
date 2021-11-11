@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $foods = \App\Adverts::where('foodType', 'Pizza')->get();
+    $drinks = \App\Adverts::where('foodType', 'Bebida')->get();
+
+    $rate = DB::table('lock_rating')
+        ->get();
+
+
+    return view('welcome', compact('foods', 'rate', 'drinks'));
 })->name('welcome');
 
 Route::resource('/pedidos', 'OrdersController')->middleware('auth');
