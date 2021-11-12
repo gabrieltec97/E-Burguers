@@ -33,19 +33,19 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Página Inicial <span class="sr-only">(current)</span></a>
+                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: white;">Página Inicial <span class="sr-only">(current)</span></a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Cardápio</a>
+                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: white;">Cardápio</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Como chegar</a>
+                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: white;">Como chegar</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Pedir Online</a>
+                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: white;">Pedir Online</a>
                 </li>
             </ul>
             <span class="navbar-text">
@@ -73,36 +73,37 @@
 
 <section id="section2">
 
-    <span style="font-size: 48px;" class="cardapio-dsk">Confira o nosso cardápio!</span>
-    <div class="container d-flex justify-content-center">
-        <div class="slider owl-carousel mt-4">
-            @foreach($foods as $food)
-                <div class="card">
-                    <form action="{{ route('adicionarItem', $food->id) }}">
-                        <div class="">
-                            <img src="{{asset($food->picture)}}" class="img-card">
-                        </div>
+    <div class="desktopCardapio">
+        <span style="font-size: 48px;" class="cardapio-dsk">Confira o nosso cardápio!</span>
+        <div class="container d-flex justify-content-center">
+            <div class="slider owl-carousel mt-4">
+                @foreach($foods as $food)
+                    <div class="card">
+                        <form action="{{ route('adicionarItem', $food->id) }}">
+                            <div class="">
+                                <img src="{{asset($food->picture)}}" class="img-card">
+                            </div>
 
-                        <div class="content mt-2">
-                            <div class="title"><h4>{{ $food->name }}</h4></div>
-                            <div class="sub-title text-danger">R$ {{ $food->value }}</div>
-                           <div class="container">
-                               <p>{{ $food->description }}</p>
-                               <div class="btn d-flex justify-content-center">
-                                   <button class="adtray">Pedir Agora</button>
-                               </div>
-                           </div>
-                        </div>
-                    </form>
-                </div>
-            @endforeach
+                            <div class="content mt-2">
+                                <div class="title"><h4>{{ $food->name }}</h4></div>
+                                <div class="sub-title text-danger">R$ {{ $food->value }}</div>
+                                <div class="container">
+                                    <p>{{ $food->description }}</p>
+                                    <div class="btn d-flex justify-content-center">
+                                        <button class="adtray">Pedir Agora</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
         </div>
-    </div>
 
-    <div class="container d-flex justify-content-center">
-        <div class="slider owl-carousel mt-5">
-            @foreach($drinks as $drink)
-                <div class="card">
+        <div class="container d-flex justify-content-center">
+            <div class="slider owl-carousel mt-5">
+                @foreach($drinks as $drink)
+                    <div class="card">
                         <div class="">
                             <img src="{{asset($drink->picture)}}" class="img-card">
                         </div>
@@ -117,8 +118,79 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-cardapio">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="{{ asset('logo/PIZZA (1).jpg') }}" alt="First slide">
                 </div>
-            @endforeach
+                @foreach($foods2 as $food)
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{{ asset($food->picture) }}" alt="Second slide">
+
+                    <div class="bg-white">
+                        <h5 class="bg-white pt-2 text-center font-weight-bold" style="color: black">{{ $food->name }}</h5>
+                        <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span>
+                        <br>
+                        <button class="btn btn-danger mb-2 mt-2">Pedir Agora</button>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="4">
+    <div class="container-fluid my-4">
+        <div class="row">
+            <div class="col-12">
+                <h2>Receba seu pedido com conforto</h2>
+            </div>
+            
+            <div class="col-12 col-lg-4 mb-1 mb-lg-0">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h3 class="card-title">Formas de Retirada</h3>
+                        <p class="card-subtitle mb-2 text-muted" style="font-size: 15px; margin-top: -13px">Como receber seu pedido</p>
+                        <p class="card-text" style="font-size: 15px;">Você pode pedir e receber sua pizza no conforto de sua residência, ou se preferir, vir buscar conosco.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 my-3 my-lg-0">
+                <div class="card" style="width: 100%">
+                    <div class="card-body">
+                        <h3 class="card-title">Como pagar</h3>
+                        <p class="card-subtitle mb-2 text-muted" style="font-size: 15px; margin-top: -13px">Direto com o entregador</p>
+                        <p class="card-text" style="font-size: 15px;">Você poderá pagar ao entregador no dinheiro ou cartão de crédito/débito: MasterCard, Elo, Visa.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 my-1 my-lg-0">
+                <div class="card" style="width: 100%">
+                    <div class="card-body">
+                        <h3 class="card-title">Tempo de entrega</h3>
+                        <p class="card-subtitle mb-2 text-muted" style="font-size: 15px; margin-top: -13px">De acordo com o bairro</p>
+                        <p class="card-text" style="font-size: 15px;">O tempo médio de entrega é de 30 min, podendo chegar até 1 hora em bairros mais distantes.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -127,8 +199,23 @@
 <section id="section3" style="background-color: #1f2029">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-12 col-lg-4 mt-2 mt-lg-0">
+                <p class="text-white addressPlace">Av. Ministro Fernando Costa, 28.</p>
+            </div>
+
             <div class="col-12 col-lg-4">
-                <p class="text-white">testeee</p>
+                <p class="text-white wppNumber"><i class="fab fa-whatsapp text-success mr-2" style="font-size: 22px;"></i> (21) 99798-4597</p>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <?php
+                   $today = getdate();
+                ?>
+                <p class="text-white deliveryName" style="font-size: 15px"><a href="#">Sistema E-Pedidos Delivery</a></p>
+            </div>
+
+            <div class="col-12 mt-lg-3">
+                <p class="text-white copyRights" style="margin-top: -15px; font-size: 15px">{{ $today['year'] }} Todos os direitos reservados <i class="far fa-copyright ml-1"></i></p>
             </div>
         </div>
     </div>

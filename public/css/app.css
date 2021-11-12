@@ -11106,6 +11106,10 @@ a.text-dark:focus {
         height: 400px;
     }
 
+    .mobile-cardapio{
+        display: none;
+    }
+
     .circle {
         margin-left: 95px;
         margin-top: 10px;
@@ -11230,6 +11234,15 @@ a.text-dark:focus {
     #section2{
         margin-top: 0px;
     }
+
+    .wppNumber, .addressPlace, .deliveryName{
+        margin-top: 15px
+    }
+
+    .copyRights{
+        margin-top: 30px;
+        margin-bottom: 1px;
+    }
 }
 
 @media (max-width: 800px){
@@ -11242,9 +11255,19 @@ a.text-dark:focus {
     }
 }
 
+@media (max-width: 500px){
+    .desktopCardapio{
+        display: none;
+    }
+}
+
 @media (min-width: 700px) and (max-width: 1100px){
     .img-carousel{
         height: 600px;
+    }
+
+    .mobile-cardapio{
+        display: none;
     }
 
     #section2{
@@ -11259,6 +11282,14 @@ a.text-dark:focus {
 
     .cardapio-dsk{
         display: none;
+    }
+
+    .copyRights{
+        margin-bottom: 10px;
+    }
+
+    .wppNumber{
+        margin-top: -15px
     }
 
     .nav-start{
@@ -11427,7 +11458,6 @@ a.text-dark:focus {
 
 
 /*Configuração do slider da página principal*/
-
 .slider{
     max-width: 1150px;
     display: flex;
@@ -11492,7 +11522,6 @@ html, body{
 }
 
 @media (max-width: 900px){
-
     .img-card{
         height: 100px;
     }

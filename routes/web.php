@@ -18,12 +18,13 @@ Route::get('/', function () {
 
     $foods = \App\Adverts::where('foodType', 'Pizza')->get();
     $drinks = \App\Adverts::where('foodType', 'Bebida')->get();
+    $foods2 = \App\Adverts::all();
 
-    $rate = DB::table('lock_rating')
-        ->get();
+//    $rate = DB::table('lock_rating')
+//        ->get();
 
 
-    return view('welcome', compact('foods', 'rate', 'drinks'));
+    return view('welcome', compact('foods', 'drinks', 'foods2'));
 })->name('welcome');
 
 Route::resource('/pedidos', 'OrdersController')->middleware('auth');
