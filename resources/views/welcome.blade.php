@@ -23,38 +23,38 @@
 </head>
 <body>
 
-<section id="section1" class="mb-lg-4" style="background-image: url({{ asset('logo/pi.jpg') }}); height: 530px; background-size: cover;">
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+<section id="section1" style="background-image: url({{ asset('logo/pi.jpg') }}); height: 530px; background-size: cover;">
 
-        <nav class="navbar navbar-expand-lg navbar-light nav-start">
-            <button class="btn d-lg-none" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Página Inicial <span class="sr-only">(current)</span></a>
-                    </li>
+    <nav class="navbar navbar-expand-lg nav-start">
+        <button class="btn d-lg-none" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars" style="color: whitesmoke"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Página Inicial <span class="sr-only">(current)</span></a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Cardápio</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Cardápio</a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Como chegar</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Como chegar</a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Pedir Online</a>
-                    </li>
-                </ul>
-                <span class="navbar-text">
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: #e0e0e0;">Pedir Online</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
                     <button class="btn pedido-desktop" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
                 </span>
-            </div>
-        </nav>
+        </div>
+    </nav>
 
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner carousel-principal">
             <div class="carousel-item">
                 <img class="d-block w-100 img-carousel" src="{{ asset('logo/post39.jpg') }}"  alt="Second slide">
@@ -66,13 +66,14 @@
                 <img class="d-block w-100 img-carousel" src="{{ asset('logo/PIZZA (1).jpg') }}">
             </div>
         </div>
-
     </div>
+
+    <span class="cardapio-mble">Confira o nosso cardápio!</span>
 </section>
 
-<span style="font-size: 48px;" class="cardapio-ap">Confira o nosso cardápio!</span>
-
 <section id="section2">
+
+    <span style="font-size: 48px;" class="cardapio-dsk">Confira o nosso cardápio!</span>
     <div class="container d-flex justify-content-center">
         <div class="slider owl-carousel mt-4">
             @foreach($foods as $food)

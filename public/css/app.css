@@ -11211,10 +11211,6 @@ a.text-dark:focus {
         display: none;
     }
 
-    .img-carousel{
-        height: 550px;
-    }
-
     .nav-start{
         margin-bottom: -5px;
     }
@@ -11222,11 +11218,47 @@ a.text-dark:focus {
     .carousel-principal{
         display: none;
     }
+
+    #section2{
+        margin-top: -150px;
+    }
+
+    .cardapio-mble{
+        display: none;
+    }
+
+    #section2{
+        margin-top: 0px;
+    }
+}
+
+@media (max-width: 800px){
+    .cardapio-mble{
+        font-size: 40px;
+    }
+
+    #section2{
+        margin-top: 60px;
+    }
+}
+
+@media (min-width: 700px) and (max-width: 1100px){
+    .img-carousel{
+        height: 600px;
+    }
+
+    #section2{
+        margin-top: 170px;
+    }
 }
 
 @media (max-width: 900px) {
     .tipopedido{
         height: 230px;
+    }
+
+    .cardapio-dsk{
+        display: none;
     }
 
     .nav-start{
