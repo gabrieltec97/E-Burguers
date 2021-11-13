@@ -26,7 +26,7 @@
 <section id="section1" style="background-image: url({{ asset('logo/pi.jpg') }}); height: 530px; background-size: cover;">
 
     <nav class="navbar navbar-expand-lg nav-start">
-        <button class="btn d-lg-none" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
+        <button onclick="scrollMobile()" class="btn d-lg-none" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars" style="color: whitesmoke"></i>
         </button>
@@ -49,7 +49,7 @@
                 </li>
             </ul>
             <span class="navbar-text">
-                    <button class="btn pedido-desktop" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
+                    <button onclick="scrollPedir()" class="btn pedido-desktop" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
                 </span>
         </div>
     </nav>
@@ -68,15 +68,19 @@
         </div>
     </div>
 
-    <span class="cardapio-mble">Confira o nosso cardápio!</span>
+    <div class="container d-flex justify-content-center">
+        <span class="cardapio-mble text-center">Confira o nosso cardápio!</span>
+    </div>
 </section>
 
 <section id="section2">
 
     <div class="desktopCardapio">
-        <span style="font-size: 48px;" class="cardapio-dsk">Confira o nosso cardápio!</span>
         <div class="container d-flex justify-content-center">
-            <div class="slider owl-carousel mt-4">
+            <span style="font-size: 48px;" class="cardapio-dsk">Confira o nosso cardápio!</span>
+        </div>
+        <div class="container d-flex justify-content-center">
+            <div id="pedir" class="slider owl-carousel mt-4">
                 @foreach($foods as $food)
                     <div class="card">
                         <form action="{{ route('adicionarItem', $food->id) }}">
@@ -85,8 +89,8 @@
                             </div>
 
                             <div class="content mt-2">
-                                <div class="title"><h4>{{ $food->name }}</h4></div>
-                                <div class="sub-title text-danger">R$ {{ $food->value }}</div>
+                                <div class="title text-center"><h4>{{ $food->name }}</h4></div>
+                                <div class="sub-title text-danger text-center">R$ {{ $food->value }}</div>
                                 <div class="container">
                                     <p>{{ $food->description }}</p>
                                     <div class="btn d-flex justify-content-center">
@@ -109,8 +113,8 @@
                         </div>
 
                         <div class="content mt-2">
-                            <div class="title"><h4>{{ $drink->name }}</h4></div>
-                            <div class="sub-title text-danger">R$ {{ $drink->value }}</div>
+                            <div class="title text-center"><h4>{{ $drink->name }}</h4></div>
+                            <div class="sub-title text-danger text-center">R$ {{ $drink->value }}</div>
                             <div class="container">
                                 <p>{{ $drink->description }}</p>
                                 <div class="btn d-flex justify-content-center">
@@ -124,7 +128,7 @@
         </div>
     </div>
 
-    <div class="mobile-cardapio">
+    <div id="pedirMobile" class="mobile-cardapio">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -132,13 +136,15 @@
                 </div>
                 @foreach($foods2 as $food)
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="{{ asset($food->picture) }}" alt="Second slide">
+                    <img class="d-block w-100" src="{{ asset($food->picture) }}" style="height: 350px" alt="Second slide">
 
                     <div class="bg-white">
                         <h5 class="bg-white pt-2 text-center font-weight-bold" style="color: black">{{ $food->name }}</h5>
-                        <span class="text-danger font-weight-bold">R$ {{ $food->value }}</span>
+                        <p class="text-danger font-weight-bold text-center">R$ {{ $food->value }}</p>
                         <br>
-                        <button class="btn btn-danger mb-2 mt-2">Pedir Agora</button>
+                        <div class="container d-flex justify-content-center" style="margin-top: -35px">
+                            <button class="btn btn-danger mb-2 mt-2">Pedir Agora</button>
+                        </div>
                     </div>
                 </div>
                 @endforeach
@@ -156,12 +162,12 @@
 </section>
 
 <section id="4">
-    <div class="container-fluid my-4">
+    <div class="container my-4">
         <div class="row">
-            <div class="col-12">
-                <h2>Receba seu pedido com conforto</h2>
+            <div class="col-12 mb-lg-4">
+                <p class="sec4 text-center">Receba seu pedido com conforto</p>
             </div>
-            
+
             <div class="col-12 col-lg-4 mb-1 mb-lg-0">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
@@ -199,22 +205,22 @@
 <section id="section3" style="background-color: #1f2029">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-lg-4 mt-2 mt-lg-0">
+            <div class="col-12 col-lg-4 mt-2 mt-lg-0 d-flex justify-content-center">
                 <p class="text-white addressPlace">Av. Ministro Fernando Costa, 28.</p>
             </div>
 
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-4 d-flex justify-content-center">
                 <p class="text-white wppNumber"><i class="fab fa-whatsapp text-success mr-2" style="font-size: 22px;"></i> (21) 99798-4597</p>
             </div>
 
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-4 d-flex justify-content-center">
                 <?php
                    $today = getdate();
                 ?>
                 <p class="text-white deliveryName" style="font-size: 15px"><a href="#">Sistema E-Pedidos Delivery</a></p>
             </div>
 
-            <div class="col-12 mt-lg-3">
+            <div class="col-12 mt-lg-3 d-flex justify-content-center">
                 <p class="text-white copyRights" style="margin-top: -15px; font-size: 15px">{{ $today['year'] }} Todos os direitos reservados <i class="far fa-copyright ml-1"></i></p>
             </div>
         </div>
@@ -229,6 +235,22 @@
         autoplayTimeout: 4000,
         autoplayHoverpause: true,
     })
+</script>
+
+<script>
+    function scrollPedir(){
+        $('html, body').animate({
+            scrollTop: $("#pedir").offset().top
+        }, 700);
+    }
+</script>
+
+<script>
+    function scrollMobile(){
+        $('html, body').animate({
+            scrollTop: $("#pedirMobile").offset().top
+        }, 700);
+    }
 </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

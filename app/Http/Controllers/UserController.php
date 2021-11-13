@@ -117,6 +117,10 @@ class UserController extends Controller
         return view('clientUser.clientLogin', compact('districts'));
     }
 
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
     /**
      * Store a newly created resource in storage.
      *

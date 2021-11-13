@@ -11106,6 +11106,12 @@ a.text-dark:focus {
         height: 400px;
     }
 
+    .sec4{
+        font-size: 45px;
+        margin-bottom: -10px;
+        margin-top: -15px;
+    }
+
     .mobile-cardapio{
         display: none;
     }
@@ -11288,6 +11294,10 @@ a.text-dark:focus {
         margin-bottom: 10px;
     }
 
+    .sec4{
+        font-size: 35px;
+    }
+
     .wppNumber{
         margin-top: -15px
     }
@@ -11466,7 +11476,7 @@ a.text-dark:focus {
 html, body{
     /*display: grid;*/
     height: 100%;
-    text-align: center;
+    /*text-align: center;*/
     background: #f2f2f2;
 }
 
