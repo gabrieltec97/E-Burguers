@@ -43,7 +43,7 @@ class HomeController extends Controller
                     throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
                 }
             }else{
-                return redirect()->route('tipoPedido');
+                return redirect('cardapio/1');
             }
         }
 

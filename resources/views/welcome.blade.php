@@ -26,18 +26,14 @@
 <section id="section1" style="background-image: url({{ asset('logo/pi.jpg') }}); height: 530px; background-size: cover;">
 
     <nav class="navbar navbar-expand-lg nav-start">
-        <button onclick="scrollMobile()" class="btn d-lg-none" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
+        <button onclick="scrollMobile()" class="btn d-lg-none btn-pedMobile" style="background-color: #eebd0f; color: white;">Fazer Pedido</button>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars" style="color: whitesmoke"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: white;">Página Inicial <span class="sr-only">(current)</span></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: white;">Cardápio</a>
+                    <a class="nav-link font-weight-bold" onclick="hybridScroll()" style="font-size: 17px; cursor:pointer; color: white;">Cardápio</a>
                 </li>
 
                 <li class="nav-item">
@@ -45,7 +41,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: white;">Pedir Online</a>
+                    <a class="nav-link font-weight-bold" href="{{ route('entrar') }}" style="font-size: 17px; color: white;">Pedir Online</a>
                 </li>
             </ul>
             <span class="navbar-text">
@@ -82,7 +78,6 @@
         <div class="container d-flex justify-content-center">
             <div id="pedir" class="slider owl-carousel mt-4">
                 @foreach($foods as $food)
-                    <form action="{{ route('adicionarItem', $food->id) }}">
                     <div class="card">
                             <div class="">
                                 <img src="{{asset($food->picture)}}" class="img-card">
@@ -93,12 +88,11 @@
                                 <div class="container">
                                     <p>{{ $food->description }}</p>
                                     <div class="btn d-flex justify-content-center">
-                                        <button type="submit" class="adtray">Pedir Agora</button>
+                                        <a href="{{ route('entrar') }}" class="adtray">Pedir Agora</a>
                                     </div>
                                 </div>
                             </div>
                     </div>
-                    </form>
                 @endforeach
             </div>
         </div>
@@ -106,7 +100,6 @@
         <div class="container d-flex justify-content-center">
             <div class="slider owl-carousel mt-5">
                 @foreach($drinks as $drink)
-                    <form action="{{ route('adicionarItem', $drink->id) }}">
                     <div class="card">
                         <div class="">
                             <img src="{{asset($drink->picture)}}" class="img-card">
@@ -118,12 +111,11 @@
                             <div class="container">
                                 <p>{{ $drink->description }}</p>
                                 <div class="btn d-flex justify-content-center">
-                                    <button type="submit" class="adtray">Pedir Agora</button>
+                                    <a href="{{ route('entrar') }}" class="adtray">Pedir Agora</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </form>
                 @endforeach
             </div>
         </div>
@@ -137,7 +129,6 @@
                 </div>
                 @foreach($foods2 as $food)
                 <div class="carousel-item">
-                    <form action="{{ route('adicionarItem', $food->id) }}">
                     <img class="d-block w-100" src="{{ asset($food->picture) }}" style="height: 350px" alt="Second slide">
 
                     <div class="bg-white">
@@ -145,11 +136,10 @@
                         <p class="text-danger font-weight-bold text-center">R$ {{ $food->value }}</p>
                         <br>
                         <div class="container d-flex justify-content-center" style="margin-top: -35px">
-                            <button type="submit" class="btn btn-danger mb-2 mt-2">Pedir Agora</button>
+                            <a href="{{ route('entrar') }}" class="btn btn-danger mb-2 mt-2">Pedir Agora</a>
                         </div>
                     </div>
                 </div>
-                    </form>
                 @endforeach
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -164,7 +154,7 @@
     </div>
 </section>
 
-<section id="4" style="background-color: #1EC5E2">
+<section id="4" style="background-color: #6dd5e7">
     <div class="container pb-4">
         <div class="row">
             <div class="col-12 mb-lg-4">
@@ -247,6 +237,17 @@
     }
 </script>
 
+<script>
+    function hybridScroll(){
+        if ($("#pedirMobile").is(':hidden') == true){
+            scrollPedir();
+        }else{
+            scrollMobile();
+        }
+    }
+</script>
+
+
 <!-- Modal -->
 <div class="modal fade" id="modalhowtogo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -264,12 +265,12 @@
                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.545328821416!2d-43.703330085404374!3d-22.745134937840113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x995688b1bd9abb%3A0x283073f79234598c!2sAv.%20Min.%20Fernando%20Costa%20-%20Boa%20Esperan%C3%A7a%2C%20Serop%C3%A9dica%20-%20RJ%2C%2023890-000!5e0!3m2!1spt-BR!2sbr!4v1636850225910!5m2!1spt-BR!2sbr" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                        </div>
 
-                       <div class="col-12">
-                           <hr>
-                       </div>
+{{--                       <div class="col-12">--}}
+{{--                           <hr>--}}
+{{--                       </div>--}}
 
-                       <div class="col-12 number-modal">
-                            <h5 class="text-center">(21) 99758-2608</h5>
+                       <div class="col-12 mt-2 number-modal d-flex justify-content-center">
+                            <a href="tel:(21)997582608" style="font-size: 16px">(21) 99758-2608 (ligar)</a>
                        </div>
                    </div>
                </div>
@@ -281,6 +282,23 @@
         </div>
     </div>
 </div>
+
+@if($deliveryStatus[0]->status == 'Fechado')
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'O delivery está fechado no momento!',
+            text: '{{ $deliveryStatus[0]->message != null ? $deliveryStatus[0]->message : 'Encerramos nosso horário de funcionamento.'}}',
+            showCancelButton: false,
+            showConfirmButton: true,
+        })
+
+        $(".fechar").on('click', function (){
+            Swal.close()
+        })
+    </script>
+@endif
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
