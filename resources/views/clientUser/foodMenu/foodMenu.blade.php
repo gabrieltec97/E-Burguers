@@ -122,8 +122,8 @@
                                                 <div class="col-12">
                                                     @if($deliveryStatus[0]->status != 'Fechado')
                                                         @if($food->status == 'Ativo')
-                                                            @if($food->foodType == 'Hamburguer')
-                                                            <button type="button" value="{{ session('scroll') }}" class="btn btn-primary text-white personalizar-session" data-toggle="modal" data-target="#multiCollapseExample{{$food->id}}">Personalizar</button>
+                                                            @if($food->foodType == 'Pizza')
+                                                            <button type="button" value="{{ session('scroll') }}" class="personalizar-session" hidden></button>
                                                             <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
                                                             @else
                                                                 <button type="submit" class="btn btn-success adicionar-bandeja text-white" style="margin-left: -22px;" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>

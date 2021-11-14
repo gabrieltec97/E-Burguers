@@ -23,6 +23,12 @@ Route::get('/', function () {
     return view('welcome', compact('foods', 'drinks', 'foods2'));
 })->name('welcome');
 
+Route::get('/cardapio', function () {
+
+    return redirect()->route('welcome');
+
+})->name('cardapioRedirect');
+
 Route::resource('/pedidos', 'OrdersController')->middleware('auth');
 
 Route::resource('/clientes', 'ClientsController')->middleware('auth');

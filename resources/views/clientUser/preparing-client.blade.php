@@ -184,13 +184,20 @@
                                 <hr>
                             </div>
 
-                            <div class="col-12 mt-1">
+                            @if($order[0]->deliverWay == 'Retirada no restaurante')
+                                <div class="col-12 buscar-pedido">
+                                    <h4 class="text-center">Busque seu pedido aqui</h4>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.6704914203574!2d-43.7088024854045!3d-22.7404856376743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x995685c8faaaab%3A0x5047cf2b0e723cdb!2sChurrascaria%20e%20Pizzaria%20Espa%C3%A7o%20Grill!5e0!3m2!1spt-BR!2sbr!4v1636857936567!5m2!1spt-BR!2sbr" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    <hr>
+                                </div>
+                            @endif
+                            <div class="col-12 mt-1 info-pedidos">
                                 <span style="font-size: 15px; font-weight: bold">Pedido nº:</span><span> #{{ $order[0]->id }}</span> <br>
                                 <span style="font-size: 15px; font-weight: bold">Itens:</span><span> {{ $order[0]->detached }}</span> <br>
                                 <span style="font-size: 15px; font-weight: bold">Método de pagamento:</span><span> {{ $order[0]->payingMethod }}</span><br>
                                 <span style="font-size: 15px; font-weight: bold">Forma de entrega:</span><span> {{ $order[0]->deliverWay }}</span><br>
                                 <span style="font-size: 15px; font-weight: bold">Data:</span><span> {{ $order[0]->day }} - {{ $order[0]->hour }}</span><br>
-                                <span style="font-size: 15px; font-weight: bold">Valor: R$ </span><span class="text-primary"> {{ $price }}</span><br>
+                                <span style="font-size: 15px; font-weight: bold">Valor: </span>R$<span class="text-primary"> {{ $price }}</span><br>
                                 @if($order[0]->deliverWay != 'Retirada no restaurante')
                                     <span style="font-size: 15px; font-weight: bold">Entregar em:</span> <span> {{ $order[0]->address }} - {{ $order[0]->district }}</span><br>
                                 @endif
@@ -200,6 +207,10 @@
                                 @if($order[0]->usedCoupon != null)
                                     <span style="font-size: 15px; font-weight: bold">Cupom:</span> <span> {{ $order[0]->usedCoupon }}</span><br>
                                 @endif
+                            </div>
+
+                            <div class="col-6 infoPedidos2" hidden>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.6704914203574!2d-43.7088024854045!3d-22.7404856376743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x995685c8faaaab%3A0x5047cf2b0e723cdb!2sChurrascaria%20e%20Pizzaria%20Espa%C3%A7o%20Grill!5e0!3m2!1spt-BR!2sbr!4v1636857936567!5m2!1spt-BR!2sbr" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                             </div>
                         </div>
                     </div>

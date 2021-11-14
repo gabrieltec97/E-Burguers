@@ -82,6 +82,7 @@
         <div class="container d-flex justify-content-center">
             <div id="pedir" class="slider owl-carousel mt-4">
                 @foreach($foods as $food)
+                    <form action="{{ route('adicionarItem', $food->id) }}">
                     <div class="card">
                             <div class="">
                                 <img src="{{asset($food->picture)}}" class="img-card">
@@ -92,11 +93,12 @@
                                 <div class="container">
                                     <p>{{ $food->description }}</p>
                                     <div class="btn d-flex justify-content-center">
-                                        <a href="{{ route('entrar') }}" class="adtray">Pedir Agora</a>
+                                        <button type="submit" class="adtray">Pedir Agora</button>
                                     </div>
                                 </div>
                             </div>
                     </div>
+                    </form>
                 @endforeach
             </div>
         </div>
@@ -104,6 +106,7 @@
         <div class="container d-flex justify-content-center">
             <div class="slider owl-carousel mt-5">
                 @foreach($drinks as $drink)
+                    <form action="{{ route('adicionarItem', $drink->id) }}">
                     <div class="card">
                         <div class="">
                             <img src="{{asset($drink->picture)}}" class="img-card">
@@ -115,11 +118,12 @@
                             <div class="container">
                                 <p>{{ $drink->description }}</p>
                                 <div class="btn d-flex justify-content-center">
-                                    <a href="{{ route('entrar') }}" class="adtray">Pedir Agora</a>
+                                    <button type="submit" class="adtray">Pedir Agora</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </form>
                 @endforeach
             </div>
         </div>
@@ -133,6 +137,7 @@
                 </div>
                 @foreach($foods2 as $food)
                 <div class="carousel-item">
+                    <form action="{{ route('adicionarItem', $food->id) }}">
                     <img class="d-block w-100" src="{{ asset($food->picture) }}" style="height: 350px" alt="Second slide">
 
                     <div class="bg-white">
@@ -140,10 +145,11 @@
                         <p class="text-danger font-weight-bold text-center">R$ {{ $food->value }}</p>
                         <br>
                         <div class="container d-flex justify-content-center" style="margin-top: -35px">
-                            <a href="{{ route('entrar') }}" class="btn btn-danger mb-2 mt-2">Pedir Agora</a>
+                            <button type="submit" class="btn btn-danger mb-2 mt-2">Pedir Agora</button>
                         </div>
                     </div>
                 </div>
+                    </form>
                 @endforeach
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

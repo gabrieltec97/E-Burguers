@@ -135,9 +135,11 @@ $(document).ready(() => {
                             $(".et1, .et2, .et5").css('background', '#d4f5d4');
                             $(".et5, .et2").removeClass('text-secondary');
                             $(".iet5, .iet2").addClass('text-success');
-                            $(".preparing, .li-cancelamento, .footer-info").attr('hidden', 'true');
+                            $(".info-pedidos").removeClass('col-12');
+                            $(".info-pedidos").addClass('col-6');
+                            $(".preparing, .li-cancelamento, .footer-info, .buscar-pedido").attr('hidden', 'true');
                             $(".iet2").attr('hidden', 'true');
-                            $("#takeThere, .iet2ready, .routegps, .page-wrapper, .et2, .footerinfo, .rotaEntrega").removeAttr('hidden', 'true');
+                            $("#takeThere, .iet2ready, .routegps, .page-wrapper, .et2, .footerinfo, .rotaEntrega, .infoPedidos2").removeAttr('hidden', 'true');
                             $(".message-take").text('Seu pedido já está pronto, e como você escolheu a opção de retirada no balcão,basta você vir aqui buscar seu pedido.');
                             $(".title-take").text('Venha buscar seu pedido');
 
