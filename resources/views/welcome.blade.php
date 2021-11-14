@@ -41,7 +41,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href="#" style="font-size: 17px; color: white;">Como chegar</a>
+                    <a class="nav-link font-weight-bold" data-toggle="modal" data-target="#modalhowtogo"style="cursor: pointer; font-size: 17px; color: white;">Como chegar</a>
                 </li>
 
                 <li class="nav-item">
@@ -83,22 +83,19 @@
             <div id="pedir" class="slider owl-carousel mt-4">
                 @foreach($foods as $food)
                     <div class="card">
-                        <form action="{{ route('adicionarItem', $food->id) }}">
                             <div class="">
                                 <img src="{{asset($food->picture)}}" class="img-card">
                             </div>
-
                             <div class="content mt-2">
                                 <div class="title text-center"><h4>{{ $food->name }}</h4></div>
                                 <div class="sub-title text-danger text-center">R$ {{ $food->value }}</div>
                                 <div class="container">
                                     <p>{{ $food->description }}</p>
                                     <div class="btn d-flex justify-content-center">
-                                        <button class="adtray">Pedir Agora</button>
+                                        <a href="{{ route('entrar') }}" class="adtray">Pedir Agora</a>
                                     </div>
                                 </div>
                             </div>
-                        </form>
                     </div>
                 @endforeach
             </div>
@@ -118,7 +115,7 @@
                             <div class="container">
                                 <p>{{ $drink->description }}</p>
                                 <div class="btn d-flex justify-content-center">
-                                    <button class="adtray">Pedir Agora</button>
+                                    <a href="{{ route('entrar') }}" class="adtray">Pedir Agora</a>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +140,7 @@
                         <p class="text-danger font-weight-bold text-center">R$ {{ $food->value }}</p>
                         <br>
                         <div class="container d-flex justify-content-center" style="margin-top: -35px">
-                            <button class="btn btn-danger mb-2 mt-2">Pedir Agora</button>
+                            <a href="{{ route('entrar') }}" class="btn btn-danger mb-2 mt-2">Pedir Agora</a>
                         </div>
                     </div>
                 </div>
@@ -161,18 +158,18 @@
     </div>
 </section>
 
-<section id="4">
-    <div class="container my-4">
+<section id="4" style="background-color: #1EC5E2">
+    <div class="container pb-4">
         <div class="row">
             <div class="col-12 mb-lg-4">
-                <p class="sec4 text-center">Receba seu pedido com conforto</p>
+                <p class="sec4 text-center mt-2 text-white">Receba seu pedido com conforto</p>
             </div>
 
-            <div class="col-12 col-lg-4 mb-1 mb-lg-0">
+            <div class="col-12 col-lg-4 mb-lg-0">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <h3 class="card-title">Formas de Retirada</h3>
-                        <p class="card-subtitle mb-2 text-muted" style="font-size: 15px; margin-top: -13px">Como receber seu pedido</p>
+                        <h3 class="card-title text-center">Formas de Retirada</h3>
+                        <p class="card-subtitle mb-2 text-muted text-center" style="font-size: 15px; margin-top: -13px">Como receber seu pedido</p>
                         <p class="card-text" style="font-size: 15px;">Você pode pedir e receber sua pizza no conforto de sua residência, ou se preferir, vir buscar conosco.</p>
                     </div>
                 </div>
@@ -181,8 +178,8 @@
             <div class="col-12 col-lg-4 my-3 my-lg-0">
                 <div class="card" style="width: 100%">
                     <div class="card-body">
-                        <h3 class="card-title">Como pagar</h3>
-                        <p class="card-subtitle mb-2 text-muted" style="font-size: 15px; margin-top: -13px">Direto com o entregador</p>
+                        <h3 class="text-center card-title">Como pagar</h3>
+                        <p class="card-subtitle mb-2 text-center text-muted" style="font-size: 15px; margin-top: -13px">Direto com o entregador</p>
                         <p class="card-text" style="font-size: 15px;">Você poderá pagar ao entregador no dinheiro ou cartão de crédito/débito: MasterCard, Elo, Visa.</p>
                     </div>
                 </div>
@@ -191,8 +188,8 @@
             <div class="col-12 col-lg-4 my-1 my-lg-0">
                 <div class="card" style="width: 100%">
                     <div class="card-body">
-                        <h3 class="card-title">Tempo de entrega</h3>
-                        <p class="card-subtitle mb-2 text-muted" style="font-size: 15px; margin-top: -13px">De acordo com o bairro</p>
+                        <h3 class="text-center card-title">Tempo de entrega</h3>
+                        <p class="card-subtitle mb-2 text-center text-muted" style="font-size: 15px; margin-top: -13px">De acordo com o bairro</p>
                         <p class="card-text" style="font-size: 15px;">O tempo médio de entrega é de 30 min, podendo chegar até 1 hora em bairros mais distantes.</p>
                     </div>
                 </div>
@@ -201,26 +198,17 @@
     </div>
 </section>
 
-
 <section id="section3" style="background-color: #1f2029">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-lg-4 mt-2 mt-lg-0 d-flex justify-content-center">
-                <p class="text-white addressPlace">Av. Ministro Fernando Costa, 28.</p>
-            </div>
-
-            <div class="col-12 col-lg-4 d-flex justify-content-center">
-                <p class="text-white wppNumber"><i class="fab fa-whatsapp text-success mr-2" style="font-size: 22px;"></i> (21) 99798-4597</p>
-            </div>
-
-            <div class="col-12 col-lg-4 d-flex justify-content-center">
-                <?php
-                   $today = getdate();
-                ?>
-                <p class="text-white deliveryName" style="font-size: 15px"><a href="#">Sistema E-Pedidos Delivery</a></p>
+            <div class="col-12 mt-3">
+                <p class="text-white text-center desktopRotulo" style="font-size: 15px"><a href="#">Sistema E-Pedidos Delivery</a></p>
             </div>
 
             <div class="col-12 mt-lg-3 d-flex justify-content-center">
+                <?php
+                $today = getdate();
+                ?>
                 <p class="text-white copyRights" style="margin-top: -15px; font-size: 15px">{{ $today['year'] }} Todos os direitos reservados <i class="far fa-copyright ml-1"></i></p>
             </div>
         </div>
@@ -252,6 +240,41 @@
         }, 700);
     }
 </script>
+
+<!-- Modal -->
+<div class="modal fade" id="modalhowtogo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Como chegar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <div class="container-fluid">
+                   <div class="row">
+                       <div class="col-12">
+                           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.545328821416!2d-43.703330085404374!3d-22.745134937840113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x995688b1bd9abb%3A0x283073f79234598c!2sAv.%20Min.%20Fernando%20Costa%20-%20Boa%20Esperan%C3%A7a%2C%20Serop%C3%A9dica%20-%20RJ%2C%2023890-000!5e0!3m2!1spt-BR!2sbr!4v1636850225910!5m2!1spt-BR!2sbr" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                       </div>
+
+                       <div class="col-12">
+                           <hr>
+                       </div>
+
+                       <div class="col-12 number-modal">
+                            <h5 class="text-center">(21) 99758-2608</h5>
+                       </div>
+                   </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success"><i class="fab fa-whatsapp mr-2"></i>Mensagem WhatsApp</button>
+                <button type="button" class="btn btn-primary"><i class="fas fa-map-marker-alt mr-2"></i> Abrir no GPS</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

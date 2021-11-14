@@ -20,10 +20,6 @@ Route::get('/', function () {
     $drinks = \App\Adverts::where('foodType', 'Bebida')->get();
     $foods2 = \App\Adverts::all();
 
-//    $rate = DB::table('lock_rating')
-//        ->get();
-
-
     return view('welcome', compact('foods', 'drinks', 'foods2'));
 })->name('welcome');
 

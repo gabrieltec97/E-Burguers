@@ -11106,6 +11106,14 @@ a.text-dark:focus {
         height: 400px;
     }
 
+    .desktopRotulo{
+        margin-bottom: 5px;
+    }
+
+    .addressPlace, .wppNumber, .deliveryName{
+        display: none;
+    }
+
     .sec4{
         font-size: 45px;
         margin-bottom: -10px;
@@ -11404,6 +11412,10 @@ a.text-dark:focus {
         bottom: 10px;
     }
 
+    .deliveryName{
+        margin-bottom: 0;
+    }
+
     .select-sabor{
       margin-left: -20px;
     }
@@ -11458,6 +11470,10 @@ a.text-dark:focus {
 
 .success {
     border: 3px dashed #08B3F6;
+}
+
+.number-modal{
+    margin-bottom: -10px;
 }
 
 @keyframes spin {
