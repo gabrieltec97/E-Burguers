@@ -50,7 +50,7 @@
 
                                 <div class="col-12 mt-3 mt-md-0 col-md-4">
                                     <label style="color: black;" class="font-weight-bold">Telefone(fixo)</label>
-                                    <input type="text" class="form-control {{ ($errors->has('empFixedPhone') ? 'is-invalid' : '') }}" name="empFixedPhone" value="{{ $user != 'funcionario' ? $data['fixedPhone'] : ''}}" required>
+                                    <input type="text" class="form-control {{ ($errors->has('empFixedPhone') ? 'is-invalid' : '') }}" name="empFixedPhone" value="{{ $user != 'funcionario' ? $data['fixedPhone'] : ''}}">
                                     @if($errors->has('empFixedPhone'))
                                         <div class="invalid-feedback">
                                             <span class="font-weight-bold"> {{ $errors->first('empFixedPhone') }}</span>

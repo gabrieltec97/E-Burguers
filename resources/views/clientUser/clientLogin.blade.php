@@ -142,7 +142,7 @@
                                         <div class="col-12 col-lg-6">
                                             <label for="name" class="font-weight-bold">{{ __('Name') }}</label>
 
-                                            <input id="name" type="text" placeholder="Apenas seu nome" class="form-control w-100 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus required>
+                                            <input id="name" type="text" placeholder="Nome e sobrenome" class="form-control w-100 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus required>
 
                                             @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -152,11 +152,11 @@
                                         </div>
 
                                         <div class="col-12 mt-2 mt-lg-0 col-lg-6">
-                                            <label for="name" class="font-weight-bold">{{ __('Sobrenome') }}</label>
+                                            <label for="name" class="font-weight-bold">{{ __('Telefone') }}</label>
 
-                                            <input id="sobrenome" type="text" placeholder="Seus sobrenomes" class="form-control w-100 @error('sobrenome') is-invalid @enderror" name="sobrenome" value="{{ old('sobrenome') }}" autocomplete="sobrenome" autofocus required>
+                                            <input id="phone" type="text" placeholder="(ddd) número" class="form-control w-100 @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" autocomplete="phone" min="9" max="12" autofocus required>
 
-                                            @error('sobrenome')
+                                            @error('phone')
                                             <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                                 </span>
@@ -178,7 +178,7 @@
                                         <div class="col-12 mt-2 col-lg-3">
                                             <label for="name" class="font-weight-bold">{{ __('Nº') }}</label>
 
-                                            <input id="adNumber" type="number" class="form-control w-100 @error('adNumber') is-invalid @enderror" name="adNumber" value="{{ old('adNumber') }}" autocomplete="adNumber" autofocus required>
+                                            <input id="adNumber" type="number" placeholder="Número da residência" class="form-control w-100 @error('adNumber') is-invalid @enderror" name="adNumber" value="{{ old('adNumber') }}" autocomplete="adNumber" autofocus required>
 
                                             @error('adNumber')
                                             <span class="invalid-feedback" role="alert">
@@ -187,7 +187,17 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 mt-2">
+                                        <div class="col-12 mt-2 col-lg-5">
+                                            <label for="name" class="font-weight-bold">{{ __('Bairro') }}</label>
+
+                                            <select name="district" class="form-control">
+                                                @foreach($districts as $d => $value)
+                                                    <option value="{{ $value->name }}" {{ old('district') == $value->name ? 'selected' : ''}}>{{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-12 col-lg-7 mt-2">
                                             <label for="name" class="font-weight-bold">{{ __('Ponto de referência') }}</label>
 
                                             <input id="refPoint" type="text" placeholder="Um local próximo ao seu endereço" class="form-control w-100 @error('refPoint') is-invalid @enderror" name="refPoint" value="{{ old('refPoint') }}" autocomplete="refPoint" autofocus required>
@@ -199,27 +209,6 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 mt-2 col-lg-6">
-                                            <label for="name" class="font-weight-bold">{{ __('Bairro') }}</label>
-
-                                            <select name="district" class="form-control">
-                                                @foreach($districts as $d => $value)
-                                                    <option value="{{ $value->name }}" {{ old('district') == $value->name ? 'selected' : ''}}>{{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="col-12 mt-2 col-lg-6">
-                                            <label for="name" class="font-weight-bold">{{ __('Telefone') }}</label>
-
-                                            <input id="phone" type="text" placeholder="(ddd) número" class="form-control w-100 @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" autocomplete="phone" autofocus required>
-
-                                            @error('phone')
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
 
                                         <div class="col-12 mt-2 col-lg-6">
                                             <label for="name" class="font-weight-bold">{{ __('E-mail') }}</label>

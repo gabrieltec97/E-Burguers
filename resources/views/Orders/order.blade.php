@@ -18,8 +18,9 @@
                                 </div>
 
                                 <div class="col-12 mt-4 col-lg-5 mt-lg-0">
-                                    <label class=" mt-1" style="color: black">Id: {{ $order->id }}</label><br>
+                                    <label class="font-weight-bold mt-1" style="color: black">Id: {{ $order->id }}</label><br>
                                     <label class="font-weight-bold" style="color: black; font-size: 17px;">Cliente: <span class="font-weight-normal" style="font-size: 16px">{{ $order->clientName }}</span></label><br>
+                                    <label class="font-weight-bold" style="color: black; font-size: 17px;">Contato: <span class="font-weight-normal" style="font-size: 16px">{{ $order->userPhone }}</span></label><br>
                                     <label class="font-weight-bold" style="color: black; font-size: 17px;">Data do pedido: <span class="font-weight-normal" style="font-size: 16px">{{ $order->day }}, {{ $order->hour }}</span></label><br>
                                     <label {{ $order->status == 'Cancelado' ? 'text-danger' : 'text-success'}} class="font-weight-bold" style="color: black; font-size: 17px">Status: <span class="font-weight-normal {{ $order->status == 'Cancelado' ? 'text-danger' : 'text-success' }}" style="font-size: 16px">{{ $order->status }}</span></label><br>
                                     <label class="font-weight-bold" style="color: black; font-size: 17px;">Tipo de pedido: <span class="font-weight-normal" style="font-size: 16px">{{ $order->orderType }}</span></label><br>

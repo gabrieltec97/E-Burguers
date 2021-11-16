@@ -77,7 +77,7 @@
         @endif
 
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 mb-4 mb-lg-0 col-md-6">
                 <div class="card">
                     <div class="card-header bg-info font-weight-bold" style="font-size: 25px; color: white">Novo local atendido</div>
                     <div class="card-body">
@@ -117,7 +117,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped table-responsive">
                                         <thead>
                                         <tr>
                                             <th scope="col" style="color: black">Id</th>

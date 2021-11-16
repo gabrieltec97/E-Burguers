@@ -6,7 +6,7 @@
                     <div class="card-header font-weight-bold text-white bg-dark" style="font-size: 25px;">Meus pedidos - {{ count($countOrders) }} {{ count($countOrders) > 1 ? 'pedidos' : 'pedido' }}</div>
 
                     <div class="card-body first-table">
-                        <table class="table table-bordered table-hover table-responsive-lg">
+                        <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th scope="col">Número do pedido</th>
@@ -114,5 +114,4 @@
             </div>
         </div>
     </div>
-
 </div>

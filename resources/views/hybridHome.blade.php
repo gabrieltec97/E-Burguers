@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="card-body">
-                        <table class="table table-bordered table-hover table-striped table-responsive-lg">
+                        <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th scope="col" style="color: #2f2f2f">Id</th>

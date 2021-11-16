@@ -28,7 +28,7 @@
         @endif
 
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 mb-4 mb-lg-0 col-md-6">
                 <div class="card">
                     <div class="card-header bg-primary font-weight-bold" style="font-size: 25px; color: white;">
                         @if($status[0]->status == 'Aberto')
@@ -79,8 +79,8 @@
                                         <div class="modal fade" id="editmsg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Edição da mensagem de emergência</h5>
+                                                    <div class="modal-header bg-dark">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Edição da mensagem de emergência</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>

@@ -345,6 +345,10 @@
                         </div>
                 @endif
             </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-success">Como chegar</button>
+            </div>
         </div>
     </div>
 @endif

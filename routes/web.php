@@ -58,7 +58,7 @@ Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido')->middl
 
 Route::get('/meusCupons', 'CouponController@myCoupons')->name('meusCupons')->middleware('auth');
 
-Route::get('/entrar', 'UserController@login')->name('entrar');
+Route::get('/entrar', 'LoginController@login')->name('entrar');
 
 //Rotas de combo.
 Route::get('/hamburguer', 'TrayController@orderComboHamburguer')->name('comboHamburguer')->middleware('auth');
@@ -112,7 +112,8 @@ Route::get('/meusDados', 'ClientsController@myData')->name('meusDados')->middlew
 
 Route::get('/meusPedidos', 'OrdersController@clientsOrders')->name('meusPedidos')->middleware('auth');
 
-Route::get('/gerenciamento', 'UserController@management')->name('gerenciamento')->middleware('auth');
+
+Route::get('/gerenciamento-de-usuarios', 'UserController@userManagement')->name('gerenciamento')->middleware('auth');
 
 Route::get('/toggleAdvert/{id}', 'menuController@toggleAdvert')->name('toggleAdvert')->middleware('auth');
 

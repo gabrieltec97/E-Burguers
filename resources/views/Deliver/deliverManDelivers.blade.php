@@ -14,18 +14,18 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered table-responsive">
                                         <thead>
                                         <tr>
                                             @foreach($count as $c)
-                                                <th scope="col">{{ $c[1] }}</th>
+                                                <th scope="col" style="color: black">{{ $c[1] }}</th>
                                             @endforeach
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
                                             @foreach($count as $c)
-                                                <td>{{ $c[2] }}</td>
+                                                <td style="color: black">{{ $c[2] }}</td>
                                             @endforeach
                                         </tr>
 

@@ -11107,7 +11107,7 @@ a.text-dark:focus {
     }
 
     .desktopRotulo{
-        margin-bottom: 5px;
+        margin-bottom: -3px;
     }
 
     .addressPlace, .wppNumber, .deliveryName{

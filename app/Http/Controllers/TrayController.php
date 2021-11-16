@@ -1397,7 +1397,7 @@ class TrayController extends Controller
         }
 
         if (isset($user->id)){
-            $address = DB::table('users')->select('address')->where('id', '=', $user->id)->get()->toArray();
+            $address = DB::table('users')->select('address', 'adNumber')->where('id', '=', $user->id)->get()->toArray();
         }
 
         $diffSend = null;
@@ -1600,7 +1600,7 @@ class TrayController extends Controller
         }
 
         if(isset($items) && isset($address[0]->address)){
-            $sendAddress = $address[0]->address;
+            $sendAddress = $address[0]->address . ', ' .$address[0]->adNumber;
 
             if (isset($pendings)){
 
@@ -1637,7 +1637,7 @@ class TrayController extends Controller
         }
 
         elseif (isset($address[0]->address)){
-            $sendAddress = $address[0]->address;
+            $sendAddress = $address[0]->address . ', ' .$address[0]->adNumber;
 
             if (isset($pendings)){
                 if ($customs == null){

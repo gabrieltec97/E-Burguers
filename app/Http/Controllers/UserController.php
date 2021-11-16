@@ -29,9 +29,9 @@ class UserController extends Controller
         return view('User.user', compact('myUser'));
     }
 
-    public function management()
+    public function userManagement()
     {
-//        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+        //        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
 //            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
 //        }
 
@@ -109,18 +109,6 @@ class UserController extends Controller
         return view('User.newEmployee', compact('places'));
     }
 
-    public function login()
-    {
-
-        $districts = deliver::all();
-
-        return view('clientUser.clientLogin', compact('districts'));
-    }
-
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
     /**
      * Store a newly created resource in storage.
      *
