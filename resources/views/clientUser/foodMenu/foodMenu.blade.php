@@ -5,10 +5,6 @@
     Cardápio
 @endsection
 
-<?php
-
-?>
-
 @section('content')
 
     <div class="container-fluid mt-5">
@@ -16,6 +12,17 @@
             <div class="col-lg-12 mt-4 col-sm-12">
                 <h1 class="titulo-cardapio text-center mb-4">Preparamos um cardápio especial para você!</h1>
                 <hr>
+            </div>
+
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item font-weight-bold text-primary complete-all" style="cursor: pointer" onclick="completeAll()">Cardápio completo</li>
+                        <li class="breadcrumb-item just-pizzas" style="cursor: pointer" onclick="justPizzas()">Apenas Pizzas</li>
+                        <li class="breadcrumb-item just-drinks" style="cursor: pointer" onclick="justDrinks()">Apenas Bebidas</li>
+                        <li class="breadcrumb-item just-desserts" style="cursor: pointer" onclick="justDesserts()">Apenas Sobremesas</li>
+                    </ol>
+                </nav>
             </div>
 
             @if(isset($tray))
@@ -130,7 +137,7 @@
                                                             @endif
 
                                                         @else
-                                                            <label class="text-danger font-weight-bold">Este item está temporariamente indisponível.</label>
+                                                            <label class="text-danger font-weight-bold mt-2" style="margin-left: -20px">Este item está temporariamente indisponível.</label>
                                                         @endif
                                                     @endif
                                                 </div>
@@ -138,81 +145,270 @@
                                         </div>
                                     </div>
                                 </div>
+                            </form>
+                            </div>
+                        @endforeach
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="multiCollapseExample{{$food->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-dark">
-                                                <h5 class="modal-title" style="color: white" id="exampleModalLongTitle">Personalize seu sanduíche</h5>
-                                                <button type="button" class="close" style="color: white" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                            @foreach($pizzas as $pizza)
+                                <div class="col-12 mt-lg-3 col-lg-4 div-pizzas" id="addPizza{{ $pizza->id }}">
+                                    <form action="{{ route('adicionarItem', $pizza->id) }}">
+
+                                        <div class="card card-cardapio">
+                                            <div class="card-header bg-dark">
+                                                <span class="text-white">{{ $pizza->name }} -</span>  <span class="text-danger font-weight-bold">R$ {{ $pizza->value }}</span>
                                             </div>
-                                            <div class="modal-body bg-light">
+                                            <div class="card-body">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <div class="col-12 d-flex justify-content-center">
-                                                            <img class="card-img-top img-personaliza" style="border-radius: 10px;" src="{{ asset($food->picture) }}">
-                                                        </div>
-
-
-
-                                                        @if($food->extras != null)
-                                                            <div class="col-12">
-                                                                @if($rate != "Não")
-                                                                    @if($food->ratingAmount == 1)
-                                                                        <p style="color: black" class="font-weight-bold mt-3 float-right"><i class="fas fa-star text-warning"></i> {{ $food->ratingAmount }} avaliação</p>
-                                                                    @elseif($food->ratingAmount > 1)
-                                                                        <p style="color: black" class="font-weight-bold mt-3 float-right"><i class="fas fa-star text-warning"></i> {{ $food->ratingAmount }} avaliações</p>
-                                                                    @endif
-                                                                @endif
-
-                                                            <hr class="mt-5">
-                                                            </div>
-                                                        @endif
-
                                                         <div class="col-4">
-                                                            @foreach(explode(',', $food->ingredients) as $ing)
-                                                                <div>
-                                                                    <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $ing }}" checked>
-                                                                    <label for="{{ $ing }}" class="ml-4 form-check-label font-weight-bold" style="color: black;">{{ $ing }}</label>
-                                                                </div>
-                                                            @endforeach
+                                                            <img class="card-img-top img-item" src="{{ asset($pizza->picture) }}">
                                                         </div>
 
-                                                        <div class="col-7">
-                                                            @if($food->extras != null)
-                                                                @foreach($food->extras as $e)
-                                                                    <div>
-                                                                        <input class="ml-1 form-check-input" type="checkbox" id="{{ $e }}" name="extras[]" value="{{ $e }}">
-                                                                        <label for="{{ $e }}" class="ml-4 form-check-label font-weight-bold">{{ $e }}</label>
-                                                                    </div>
-                                                                @endforeach
+                                                        <div class="col-8">
+                                                            <span class="fooddesc">{{ $pizza->description }}</span>
+                                                        </div>
+
+                                                        <div class="col-6 starsrate">
+                                                            @if($rate != "Não")
+                                                                @if($pizza->finalGrade == 1)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($pizza->finalGrade > 1 && $pizza->finalGrade < 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($pizza->finalGrade == 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($pizza->finalGrade > 2 && $pizza->finalGrade < 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($pizza->finalGrade == 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($pizza->finalGrade > 3 && $pizza->finalGrade < 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($pizza->finalGrade == 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($pizza->finalGrade > 4 && $pizza->finalGrade < 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($pizza->finalGrade == 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @endif
                                                             @endif
                                                         </div>
 
+                                                        <div class="col-12">
+                                                            @if($deliveryStatus[0]->status != 'Fechado')
+                                                                @if($pizza->status == 'Ativo')
+                                                                    @if($pizza->foodType == 'Pizza')
+                                                                        <button type="button" value="{{ session('scroll') }}" class="personalizar-session" hidden></button>
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addPizza" value="addPizza{{ $pizza->id }}">Adicionar à bandeja</button>
+                                                                    @else
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" style="margin-left: -22px;" name="addPizza" value="addPizza{{ $pizza->id }}">Adicionar à bandeja</button>
+                                                                    @endif
+
+                                                                @else
+                                                                    <label class="text-danger font-weight-bold mt-2" style="margin-left: -20px">Este item está temporariamente indisponível.</label>
+                                                                @endif
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                @if($deliveryStatus[0]->status != 'Fechado')
-                                                    @if($food->status == 'Ativo')
-                                                        <button type="button" class="btn btn-danger mt-1" data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" style="margin-top: 2px;" class="btn btn-success adicionar-bandeja text-white" name="addTray" value="addTray{{ $food->id }}">Adicionar à bandeja</button>
-                                                    @else
-                                                        <label class="text-danger font-weight-bold">Este item está temporariamente indisponível.</label>
-                                                    @endif
-                                                @endif
+                                        </div>
+                                    </form>
+                                </div>
+                            @endforeach
+
+                            @foreach($drinks as $drink)
+                                <div class="col-12 mt-lg-3 col-lg-4 div-drinks" id="addDrink{{ $drink->id }}">
+                                    <form action="{{ route('adicionarItem', $drink->id) }}">
+
+                                        <div class="card card-cardapio">
+                                            <div class="card-header bg-dark">
+                                                <span class="text-white">{{ $drink->name }} -</span>  <span class="text-danger font-weight-bold">R$ {{ $drink->value }}</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <img class="card-img-top img-item" src="{{ asset($drink->picture) }}">
+                                                        </div>
+
+                                                        <div class="col-8">
+                                                            <span class="fooddesc">{{ $drink->description }}</span>
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            @if($deliveryStatus[0]->status != 'Fechado')
+                                                                @if($drink->status == 'Ativo')
+                                                                    @if($drink->foodType == 'Bebida')
+                                                                        <button type="button" value="{{ session('scroll') }}" class="personalizar-session" hidden></button>
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addDrink" value="addDrink{{ $drink->id }}">Adicionar à bandeja</button>
+                                                                    @else
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" style="margin-left: -22px;" name="addDrink" value="addDrink{{ $drink->id }}">Adicionar à bandeja</button>
+                                                                    @endif
+
+                                                                @else
+                                                                    <label class="text-danger font-weight-bold mt-2" style="margin-left: -20px">Este item está temporariamente indisponível.</label>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            </div>
+                            @endforeach
 
-                            </form>
-                        @endforeach
+                        @if($drinks == null)
+                            <div class="col-12 d-flex justify-content-center">
+                                <h3>Sem bebidas cadastradas</h3>
+                            </div>
+                        @endif
+
+                            @foreach($desserts as $dessert)
+                                <div class="col-12 mt-lg-3 col-lg-4 div-desserts" id="addDessert{{ $dessert->id }}">
+                                    <form action="{{ route('adicionarItem', $dessert->id) }}">
+
+                                        <div class="card card-cardapio">
+                                            <div class="card-header bg-dark">
+                                                <span class="text-white">{{ $dessert->name }} -</span>  <span class="text-danger font-weight-bold">R$ {{ $dessert->value }}</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <img class="card-img-top img-item" src="{{ asset($dessert->picture) }}">
+                                                        </div>
+
+                                                        <div class="col-8">
+                                                            <span class="fooddesc">{{ $dessert->description }}</span>
+                                                        </div>
+
+                                                        <div class="col-6 starsrate">
+                                                            @if($rate != "Não")
+                                                                @if($dessert->finalGrade == 1)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($dessert->finalGrade > 1 && $dessert->finalGrade < 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($dessert->finalGrade == 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($dessert->finalGrade > 2 && $dessert->finalGrade < 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($dessert->finalGrade == 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($dessert->finalGrade > 3 && $dessert->finalGrade < 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($dessert->finalGrade == 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($dessert->finalGrade > 4 && $dessert->finalGrade < 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($dessert->finalGrade == 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$dessert->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            @if($deliveryStatus[0]->status != 'Fechado')
+                                                                @if($dessert->status == 'Ativo')
+                                                                    @if($dessert->foodType == 'Sobremesa')
+                                                                        <button type="button" value="{{ session('scroll') }}" class="personalizar-session" hidden></button>
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addDessert" value="addDessert{{ $dessert->id }}">Adicionar à bandeja</button>
+                                                                    @else
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" style="margin-left: -22px;" name="addDessert" value="addDessert{{ $dessert->id }}">Adicionar à bandeja</button>
+                                                                    @endif
+
+                                                                @else
+                                                                    <label class="text-danger font-weight-bold mt-2" style="margin-left: -20px">Este item está temporariamente indisponível.</label>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endforeach
+
+                            @if($desserts == null)
+                                <div class="col-12 d-flex justify-content-center">
+                                    <h3 class="d-none no-desserts">Sem sobremesas cadastradas</h3>
+                                </div>
+                            @endif
                     </div>
+
+
                 </div>
             </div>
 
@@ -373,6 +569,7 @@
 
     </div>
 
+
     @if(isset($insert))
         @if($insert == 'added')
 
@@ -445,10 +642,11 @@
             </script>
         @endif
 
-
     @if(session('scroll'))
        <script>
            var scrollar = $(".personalizar-session").val();
+
+            console.log(scrollar)
 
            setTimeout(function (){
                $('html, body').animate({
@@ -457,4 +655,70 @@
            }, 250)
        </script>
     @endif
+
+    <script>
+        function justPizzas(){
+            $(".div-food, .div-drinks, .div-desserts").hide('slow');
+            setTimeout(function (){
+                $(".div-pizzas").show('slow');
+            },700);
+
+            $(".just-pizzas").addClass('font-weight-bold');
+            $(".just-pizzas").addClass('text-primary');
+            $(".complete-all").removeClass('font-weight-bold');
+            $(".complete-all").removeClass('text-primary');
+            $(".just-drinks").removeClass('font-weight-bold');
+            $(".just-drinks").removeClass('text-primary');
+            $(".just-desserts").removeClass('font-weight-bold');
+            $(".just-desserts").removeClass('text-primary');
+        }
+
+        function justDrinks(){
+            $(".div-food, .div-pizzas, .div-desserts").hide('slow');
+            setTimeout(function (){
+                $(".div-drinks").show('slow');
+            },700);
+
+            $(".just-drinks").addClass('font-weight-bold');
+            $(".just-drinks").addClass('text-primary');
+            $(".complete-all").removeClass('font-weight-bold');
+            $(".complete-all").removeClass('text-primary');
+            $(".just-pizzas").removeClass('font-weight-bold');
+            $(".just-pizzas").removeClass('text-primary');
+            $(".just-desserts").removeClass('font-weight-bold');
+            $(".just-desserts").removeClass('text-primary');
+        }
+
+        function justDesserts(){
+            $(".div-food, .div-pizzas, .div-drinks").hide('slow');
+            setTimeout(function (){
+                $(".div-desserts").show('slow');
+            },700);
+
+            $(".just-desserts").addClass('font-weight-bold');
+            $(".just-desserts").addClass('text-primary');
+            $(".complete-all").removeClass('font-weight-bold');
+            $(".complete-all").removeClass('text-primary');
+            $(".just-pizzas").removeClass('font-weight-bold');
+            $(".just-pizzas").removeClass('text-primary');
+            $(".just-drinks").removeClass('font-weight-bold');
+            $(".just-drinks").removeClass('text-primary');
+        }
+
+        function completeAll(){
+            $(".div-desserts, .div-pizzas, .div-drinks").hide('slow');
+            setTimeout(function (){
+                $(".div-food").show('slow');
+            },700);
+
+            $(".complete-all").addClass('font-weight-bold');
+            $(".complete-all").addClass('text-primary');
+            $(".just-desserts").removeClass('font-weight-bold');
+            $(".just-desserts").removeClass('text-primary');
+            $(".just-pizzas").removeClass('font-weight-bold');
+            $(".just-pizzas").removeClass('text-primary');
+            $(".just-drinks").removeClass('font-weight-bold');
+            $(".just-drinks").removeClass('text-primary');
+        }
+    </script>
 @endsection

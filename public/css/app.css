@@ -11110,6 +11110,10 @@ a.text-dark:focus {
         margin-bottom: -3px;
     }
 
+    .card-cardapio{
+        height: 310px;
+    }
+
     .addressPlace, .wppNumber, .deliveryName{
         display: none;
     }
@@ -11175,7 +11179,7 @@ a.text-dark:focus {
 
     .adicionar-bandeja{
         margin-top: 15px;
-        margin-left: -17px;
+        margin-left: -22px;
     }
 
     .select-sabor{
@@ -11292,6 +11296,10 @@ a.text-dark:focus {
 @media (max-width: 900px) {
     .tipopedido{
         height: 230px;
+    }
+
+    .fixo{
+        display: none;
     }
 
     .cardapio-dsk{
@@ -11422,6 +11430,7 @@ a.text-dark:focus {
 
     .adicionar-bandeja{
         margin-top: 15px;
+        margin-left: -22px;
     }
 
     .circle {

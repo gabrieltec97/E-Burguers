@@ -137,6 +137,17 @@ class TrayController extends Controller
 
     public function freeOrder(Request $request, $id)
     {
+        //Capturando de qual card veio o item para fazer o scroll corretamente.
+        if ($request->addTray != ''){
+            $scroll = $request->addTray;
+        }else if ($request->addPizza != ''){
+            $scroll = $request->addPizza;
+        }else if ($request->addDrink != ''){
+            $scroll = $request->addDrink;
+        }else if ($request->addDessert != ''){
+            $scroll = $request->addDessert;
+        }
+
         $user = Auth::user()->id;
         $item = Adverts::find($id);
 
@@ -262,7 +273,7 @@ class TrayController extends Controller
                 $itemWithoutExtras->save();
             }
 
-            return redirect()->route('cardapio', $insert = 'added')->with('scroll', $request->addTray);
+            return redirect()->route('cardapio', $insert = 'added')->with('scroll', $scroll);
 
         }else{
 
@@ -364,7 +375,7 @@ class TrayController extends Controller
 
             $order->save();
 
-            return redirect()->route('cardapio', $insert = 'added')->with('scroll', $request->addTray);
+            return redirect()->route('cardapio', $insert = 'added')->with('scroll', $scroll);
         }
     }
 

@@ -1,7 +1,9 @@
 $(function () {
 
-// Ajuste de imagem de usuário no menu lateral.
 
+    $(".div-pizzas, .div-drinks, .div-desserts").hide();
+
+// Ajuste de imagem de usuário no menu lateral.
 $(".div-img-user").hide();
 
 $(".hamburger").click(function () {

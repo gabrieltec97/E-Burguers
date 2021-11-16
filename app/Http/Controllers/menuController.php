@@ -95,12 +95,24 @@ class menuController extends Controller
             $rate = "Não";
         }
 
+        $pizzas = DB::table('adverts')
+            ->where('foodType', '=', 'Pizza')
+            ->get()->toArray();
+
+        $drinks = DB::table('adverts')
+            ->where('foodType', '=', 'Bebida')
+            ->get()->toArray();
+
+        $desserts = DB::table('adverts')
+        ->where('foodType', '=', 'Sobremesa')
+        ->get()->toArray();
+
         if(isset($tray[0]->id)){
 
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'coupons', 'deliveryStatus', 'insert', 'rate', 'tray', 'items', 'val', 'itemWExtras'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'coupons', 'deliveryStatus', 'insert', 'rate', 'tray', 'items', 'val', 'itemWExtras', 'pizzas', 'drinks', 'desserts'));
         }else{
 
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'coupons', 'deliveryStatus', 'rate', 'insert', 'rate'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'coupons', 'deliveryStatus', 'rate', 'insert', 'rate', 'pizzas', 'drinks', 'desserts'));
         }
     }
 
