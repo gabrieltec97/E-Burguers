@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 col-sm-12">
                 <div class="card mb-4">
@@ -14,7 +14,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12 col-lg-4">
-                                    <img src="{{ asset('logo/burger-5284886_1280.jpg') }}" class="mt-2 img-fluid" style="border-radius: 5px;">
+                                    <img src="{{ asset('logo/undraw_Chef_cu0r.svg') }}" class="mt-2 img-fluid" style="border-radius: 5px;">
                                 </div>
 
                                 <div class="col-12 mt-4 col-lg-5 mt-lg-0">
@@ -34,7 +34,23 @@
                                         <label class="font-weight-bold" style="color: black">Cupom utilizado: {{ $order->usedCoupon }}</label>
                                     @endif
 
-                                    <label class="font-weight-bold text-success" style="color: black; font-size: 17px;">Valor total: <span class="font-weight-normal" style="font-size: 16px; color: black">R$ {{ $order->totalValue }}</span></label>
+                                    <?php
+
+                                        $count = strlen($order->totalValue);
+
+                                        if ($count == 4 && $order->totalValue > 10){
+                                            $price = $order->totalValue . '0';
+                                        }elseif ($count == 2){
+                                            $price = $order->totalValue. '.' . '00';
+                                        }
+                                        else{
+                                            $price = $order->totalValue;
+                                        }
+
+
+                                    ?>
+
+                                    <label class="font-weight-bold text-success" style="color: black; font-size: 17px;">Valor total: <span class="font-weight-normal" style="font-size: 16px; color: black">R$ {{ $price }}</span></label>
                                 </div>
 
                                 <div class="col-12 hr-order">

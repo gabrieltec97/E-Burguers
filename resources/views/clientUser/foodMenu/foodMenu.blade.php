@@ -412,6 +412,23 @@
                 </div>
             </div>
 
+            <?php
+            if (isset($val)){
+                $count = strlen($val[0]['totalValue']);
+
+                if ($count == 4 && $val[0]['totalValue'] > 10){
+                    $price = $val[0]['totalValue'] . '0';
+                }elseif ($count == 2){
+                    $price = $val[0]['totalValue']. '.' . '00';
+                }
+                else{
+                    $price = $val[0]['totalValue'];
+                }
+            }else{
+                $price = 0;
+            }
+            ?>
+
             <div class="col-3">
                 <div class="card fixo">
                     <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> {{ $deliveryStatus[0]->status == 'Fechado' ? 'Delivery fechado :(' : 'Seu pedido está assim'}}</div>
@@ -450,7 +467,7 @@
                                 </div>
                                 @endif
                             <div>
-                                <span class="float-right">Valor atual: <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
+                                <span class="float-right">Valor atual: <span class="text-success">{{ $price }}</span></span>
                             </div>
 
                             <div class="mt-3">
@@ -482,7 +499,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="card-body">
-                                @if($deliveryStatus[0]->status == 'Fechado')
+
+                            @if($deliveryStatus[0]->status == 'Fechado')
                                     inserir imagem de delivery fechado
                                 @else
                                     <ol>
@@ -509,7 +527,7 @@
                                     @if(isset($val) && $val[0]['totalValue'] > 0)
                                         <hr>
                                         <div>
-                                            <span class="float-right">Valor atual: R$ <span class="text-success">{{ $val[0]['totalValue'] }}</span></span>
+                                            <span class="float-right">Valor atual: R$ <span class="text-success">{{ $price }}</span></span>
                                         </div>
 
                                         <div class="mt-3">
@@ -542,23 +560,6 @@
                     </div>
                 </div>
             </div>
-
-            <?php
-            if (isset($val)){
-                $count = strlen($val[0]['totalValue']);
-
-                if ($count == 4 && $val[0]['totalValue'] > 10){
-                    $price = $val[0]['totalValue'] . '0';
-                }elseif ($count == 2){
-                    $price = $val[0]['totalValue']. '.' . '00';
-                }
-                else{
-                    $price = $val[0]['totalValue'];
-                }
-            }else{
-                $price = 0;
-            }
-            ?>
 
             <div class="col-12 d-flex justify-content-end">
                 <div class="footertray">
@@ -642,20 +643,6 @@
             </script>
         @endif
 
-    @if(session('scroll'))
-       <script>
-           var scrollar = $(".personalizar-session").val();
-
-            console.log(scrollar)
-
-           setTimeout(function (){
-               $('html, body').animate({
-                   scrollTop: $("#"+ scrollar).offset().top
-               }, 800);
-           }, 250)
-       </script>
-    @endif
-
     <script>
         function justPizzas(){
             $(".div-food, .div-drinks, .div-desserts").hide('slow');
@@ -721,4 +708,24 @@
             $(".just-drinks").removeClass('text-primary');
         }
     </script>
+
+        @if(session('scroll'))
+            <script>
+                var scrollar = $(".personalizar-session").val();
+
+                if (scrollar.includes('addPizza') == true){
+                    justPizzas();
+                }else if (scrollar.includes('addDrink') == true){
+                    justDrinks();
+                }else if (scrollar.includes('addDesserts') == true){
+                    justDesserts();
+                }
+
+                setTimeout(function (){
+                    $('html, body').animate({
+                        scrollTop: $("#"+ scrollar).offset().top
+                    }, 800);
+                }, 1000)
+            </script>
+    @endif
 @endsection

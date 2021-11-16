@@ -307,7 +307,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header" style="background-color: #343a40">
-                                                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle" style="color: white">Tudo certo!</h5>
+                                                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle" style="color: white">Quase lá!</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>

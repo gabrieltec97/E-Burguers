@@ -56,25 +56,12 @@
                                             <div class="modal-body">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <div class="col-12 col-md-6 d-flex justify-content-center">
-                                                            @if($ord->orderType == "Avulso")
-                                                                <img src="{{ asset('logo/pizza.png') }}" class="img-pedido" alt="hamburguer">
-                                                            @elseif($ord->orderType == "Combo")
-                                                                <img src="{{ asset('logo/comida-rapida.png') }}" style="width: 250px; height: 250px;"  alt="hamburguer">
-                                                            @endif
-                                                        </div>
 
-                                                        <div class="col-12 col-md-6">
+                                                        <div class="col-12">
                                                             <h2 class="titulo-cardapio mt-3 mt-md-0 text-center">Pedido {{$ord->id}}</h2>
                                                             <hr>
 
-                                                            <span style="font-size: 16px">Itens: <span class="text-primary font-weight-normal" style="font-size: 15px">
-                                                               @if($ord->orderType == "Avulso")
-                                                                        {{ $ord->detached }}
-                                                                    @elseif($ord->orderType == "Combo")
-                                                                        {{ $ord->hamburguer }}, {{ $ord->fries }}, {{ $ord->drinks }}
-                                                                    @endif
-                                                           </span>
+                                                            <span style="font-size: 16px">Itens: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $ord->detached }}</span>
                                                        </span><br>
                                                             <span style="font-size: 16px">Método de pagamento: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $ord->payingMethod }}</span></span><br>
                                                             <span style="font-size: 16px">Método de entrega: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $ord->deliverWay }}</span></span><br>
@@ -89,7 +76,7 @@
                                                             <span style="font-size: 16px">Comentários: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $ord->comments != '' ? $ord->comments : 'Sem comentários adicionados.' }}</span></span><br>
 
                                                             <span style="font-size: 16px">Data: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $ord->day }} - {{ $ord->hour }}</span></span><br>
-                                                            <span style="font-size: 16px">Valor total: <span class="text-primary font-weight-normal" style="font-size: 15px">{{ $price }}</span></span>
+                                                            <span style="font-size: 16px">Valor total: <span class="text-primary font-weight-normal" style="font-size: 15px">R$ {{ $price }}</span></span>
 
                                                         </div>
                                                     </div>
