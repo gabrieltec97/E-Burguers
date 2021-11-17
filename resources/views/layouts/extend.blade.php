@@ -296,11 +296,12 @@
                                 </a>
                             @endcan
 
+                            @can('Entregadores')
                             <a class="dropdown-item mt-2" href="{{ route('entregadores.index') }}">
                                 <img src="{{ asset('logo/delivery-man.png') }}" title="Enviar ao cliente" style="width: 18px; height: 18px; cursor: pointer; margin-top: 1px" alt="Enviar ao cliente">
                                 <span class="font-weight-bold ml-1">Entregadores</span>
                             </a>
-
+                            @endcan
                             <a class="dropdown-item mt-2" href="cardapio/1">
                                 <img src="{{ asset('logo/pedir.png') }}" title="Enviar ao cliente" style="width: 18px; height: 18px; cursor: pointer; margin-top: 1px" alt="Enviar ao cliente">
                                 <span class="font-weight-bold ml-1">Fazer Pedido</span>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Adverts;
 use App\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,44 @@ class PreparingController extends Controller
         $idUser = Auth::user()->id;
         $order = DB::table('orders')->where('idClient', '=', $idUser)->where('status', '!=', 'Pedido Entregue')->where('status', '!=', 'Cancelado')->get()->toArray();
 
+        $items = Adverts::all()->where('foodType', '<>', 'Bebida');
+        $eval = \App\User::find(Auth::user()->id);
+        $eval = explode(',', $eval->itemsRated);
+        $itensToEvaluate = array();
+
+        foreach ($items as $item){
+            $evaluate = DB::table('orders')
+                ->where('detached', 'like', '%'. $item->name . '%')
+                ->where('status', '=', 'Pedido Entregue')
+                ->where('idClient', '=', Auth::user()->id)
+                ->get()->toArray();
+
+            if (count($evaluate) != ''){
+                array_push($itensToEvaluate, [$item->id, $item->name, $item->picture]);
+            }
+        }
+
+        foreach ($eval as $ev){
+            foreach ($itensToEvaluate as $i => $value){
+                if ($ev == $value[0]){
+                    unset($itensToEvaluate[$i]);
+                }
+            }
+        }
+
+        $rated = DB::table('ratings')
+            ->where('idUser', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        $orders = DB::table('orders')
+            ->where('idClient', '=', Auth::user()->id)
+            ->get();
+
+        $rated = [
+            'rated' => count($rated),
+            'ordered' => count($orders)
+        ];
+
         if (isset($order[0])){
             if ($order[0]->status != 'Pendente'){
                 if (session('duplicated')){
@@ -24,28 +63,28 @@ class PreparingController extends Controller
                         $orderStatus = $order[0]->status;
                         $orderDeliver = $order[0]->deliverWay;
 
-                        return view('clientUser.preparing-client', compact('order', 'orderStatus', 'orderDeliver', 'idUser'))->with('duplicated', ' ');
+                        return view('clientUser.preparing-client', compact('order', 'rated', 'itensToEvaluate', 'orderStatus', 'orderDeliver', 'idUser'))->with('duplicated', ' ');
                     }
                     else {
                         $void = 'void';
-                        return view('clientUser.preparing-client', compact('void'))->with('duplicated', ' ');
+                        return view('clientUser.preparing-client', compact('void', 'rated', 'itensToEvaluate'))->with('duplicated', ' ');
                     }
                 }else {
                     if (isset($order[0])) {
                         $orderStatus = $order[0]->status;
                         $orderDeliver = $order[0]->deliverWay;
 
-                        return view('clientUser.preparing-client', compact('order', 'orderStatus', 'orderDeliver', 'idUser'));
+                        return view('clientUser.preparing-client', compact('order', 'rated', 'itensToEvaluate', 'orderStatus', 'orderDeliver', 'idUser'));
                     } else {
                         $void = 'void';
-                        return view('clientUser.preparing-client', compact('void'));
+                        return view('clientUser.preparing-client', compact('void', 'rated', 'itensToEvaluate'));
                     }
                 }
             }else{
-                return view('clientUser.preparing-client');
+                return view('clientUser.preparing-client', compact('rated', 'itensToEvaluate'));
             }
         }else{
-            return view('clientUser.preparing-client');
+            return view('clientUser.preparing-client', compact('rated', 'itensToEvaluate'));
         }
 
     }
@@ -55,7 +94,7 @@ class PreparingController extends Controller
         $idUser = Auth::user()->id;
         $dados = DB::table('orders')->select('id', 'hour', 'status', 'deliverWay')
             ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue'")
-            ->where('idClient', '=', $idUser)->get()->toArray();
+            ->where('idClient',  '=', $idUser)->get()->toArray();
 
         return $dados;
     }

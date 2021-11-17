@@ -4,6 +4,7 @@
         <tr>
             <th scope="col" style="color: black">Nota <i class="fas fa-star text-warning"></i></th>
             <th scope="col" style="color: black">Comentário</th>
+            <th scope="col" style="color: black">Cliente</th>
         </tr>
         </thead>
         <tbody>
@@ -11,6 +12,7 @@
             <tr>
                 <td style="color: rgba(0,0,0,0.73);">{{ $r->ratingGrade }}</td>
                 <td style="color: rgba(0,0,0,0.73);">{{ $r->comments }}</td>
+                <td style="color: rgba(0,0,0,0.73);">{{ $r->client }}</td>
             </tr>
         @endforeach
         </tbody>

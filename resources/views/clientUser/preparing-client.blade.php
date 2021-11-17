@@ -371,7 +371,49 @@
     </script>
 @endif
 
+    @if($rated['ordered'] != 0)
+        @if(count($itensToEvaluate) != 0)
+            @if(isset($order))
+            <script>
+                setTimeout(function(){
+                    Swal.fire({
+                        html: 'Enquanto seu pedido é preparado, você poderia avaliar como foram os outros pedidos?',
+                        icon: 'question',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        html:
+                            '<a href="{{ route('avaliacoes') }}" class="btn btn-success mt-2">Avaliar</a>' +
+                            '<button type="button" class="btn btn-danger mt-2 ml-4 fechar">Fechar</button>'
+                    })
 
+                    $(".fechar").on('click', function (){
+                        Swal.close()
+                    });
+
+                    setTimeout(function(){
+                        $(".fechar").click();
+                    }, 30000);
+                }, 35000);
+            </script>
+            @else
+                <script>
+                    Swal.fire({
+                        title: 'Por favor, você poderia avaliar como foram os outros pedidos?',
+                        icon: 'question',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        html:
+                            '<a href="{{ route('avaliacoes') }}" class="btn btn-success mt-2">Avaliar</a>' +
+                            '<button type="button" class="btn btn-danger mt-2 ml-4 fechar">Fechar</button>'
+                    })
+
+                    $(".fechar").on('click', function (){
+                        Swal.close()
+                    })
+                </script>
+            @endif
+        @endif
+    @endif
 
 @if(session('duplicated'))
     <script>

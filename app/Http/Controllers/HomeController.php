@@ -35,7 +35,7 @@ class HomeController extends Controller
             if (isset($role['roles'][0])){
                 $role = $role['roles'][0]['name'];
 
-                if ($role == 'Atendente Híbrido'){
+                    if ($role == 'Atendente Híbrido'){
                     return redirect()->route('hybridHome');
                 }elseif('Cozinheiro'){
                     return redirect()->route('emPreparo');

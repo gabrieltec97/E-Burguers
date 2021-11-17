@@ -83,11 +83,11 @@
                                               <h2 class="text-center">Obrigado pela sua avaliação</h2>
                                               <span class="text-center" style="font-size: 15px">Você avaliou todos os itens pedidos até o momento e também avaliou o estabelecimento. Obrigado pela ajuda!</span>
                                               <br>
-                                              <button class="btn btn-primary mt-lg-1 offset-4 btn-desktop" data-toggle="modal" data-target="#modalAvaliar"><i class="fa fa-star text-warning"></i> Avaliar novamente</button>
+                                              <button class="btn btn-primary mt-lg-1 offset-4 btn-desktop" onclick="getClick()" data-toggle="modal" data-target="#modalAvaliar"><i class="fa fa-star text-warning"></i> Avaliar novamente</button>
                                           </div>
 
                                           <div class="col-12 d-flex justify-content-center mt-3">
-                                              <button class="btn btn-primary mt-lg-1 btn-mobile" data-toggle="modal" data-target="#modalAvaliar"><i class="fa fa-star text-warning"></i> Avaliar novamente</button>
+                                              <button class="btn btn-primary mt-lg-1 btn-mobile" onclick="getClick()" data-toggle="modal" data-target="#modalAvaliar"><i class="fa fa-star text-warning"></i> Avaliar novamente</button>
                                           </div>
                                       </div>
                                   </div>
@@ -310,6 +310,26 @@
                 timer: 12000,
                 timerProgressBar: true
             })
+        </script>
+    @endif
+
+    @if(count($order) > 0)
+        <script>
+
+            let click = 'Nao'
+
+            function getClick(){
+                click = 'Sim';
+            }
+            setTimeout(function() {
+                if (click == 'Nao'){
+                    window.location.href = "{{ route('preparo.index') }}";
+                }
+            }, 5000);
+
+            if ($(".btn-desktop").clicked){
+                console.log('clicou');
+            }
         </script>
     @endif
 @endsection

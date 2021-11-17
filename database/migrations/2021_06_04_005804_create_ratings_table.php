@@ -17,6 +17,7 @@ class CreateRatingsTable extends Migration
             $table->id();
             $table->string('idUser');
             $table->string('ratingGrade');
+            $table->string('client');
             $table->string('comments')->nullable();
             $table->timestamps();
         });

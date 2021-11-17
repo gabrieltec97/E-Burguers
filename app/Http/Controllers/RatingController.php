@@ -83,7 +83,10 @@ class RatingController extends Controller
             'ordered' => count($orders)
         ];
 
-        return view('Assessments.ItemsEvaluate', compact('itensToEvaluate', 'rated'));
+        $idUser = Auth::user()->id;
+        $order = DB::table('orders')->where('idClient', '=', $idUser)->where('status', '!=', 'Pedido Entregue')->where('status', '!=', 'Cancelado')->get()->toArray();
+
+        return view('Assessments.ItemsEvaluate', compact('itensToEvaluate', 'rated', 'order'));
     }
 
     public function sendRating(Request $request, $id)
@@ -138,6 +141,7 @@ class RatingController extends Controller
             $rate->idUser = Auth::user()->id;
             $rate->ratingGrade = $request->radio1;
             $rate->comments = $request->opiniao;
+            $rate->client = Auth::user()->name . ' '. Auth::user()->surname;
 
             $rate->save();
         }else{
