@@ -179,9 +179,12 @@
                                        <hr class="hr-mobile">
                                        <h2 class="text-center">Para fazer uma avaliação, primeiro você precisa fazer um pedido.</h2>
                                        <br>
-                                       <a href="{{ route('tipoPedido') }}" class="btn btn-primary mt-lg-1 offset-5">Pedir agora</a>
+                                       <a href="{{ route('tipoPedido') }}" class="btn btn-primary mt-lg-1 offset-5 pedir-desktop">Pedir agora</a>
                                    </div>
 
+                                   <div class="col-12 d-flex justify-content-center">
+                                       <a href="{{ route('tipoPedido') }}" class="btn btn-primary pedir-mobile mt-lg-1">Pedir agora</a>
+                                   </div>
                                </div>
                            </div>
                        </div>
@@ -198,7 +201,7 @@
                                    <div class="row">
                                        @foreach($itensToEvaluate as $item)
                                            <div class="col-12 col-lg-3">
-                                               <img src="{{ asset($item[2]) }}" class="img-check" style="margin-left: auto; margin-right: auto; border-radius: 5px">
+                                               <img src="{{ asset($item[2]) }}" class="img-check img-fluid" style="margin-left: auto; margin-right: auto; border-radius: 5px">
                                                <label for="{{ $item[1] }}" class="mt-3">{{ $item[1] }}</label><br>
                                                <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalAvaliacao{{$item[0]}}">Avaliar</button>
                                            </div>
@@ -208,7 +211,7 @@
                                                <div class="modal-dialog modal-dialog-centered" role="document">
                                                    <div class="modal-content">
                                                        <div class="modal-header" style="background-color: #343a40">
-                                                           <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Que nota você daria para esta pizza?</h5>
+                                                           <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Qual nota você daria para esta pizza?</h5>
                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                <span aria-hidden="true">&times;</span>
                                                            </button>
@@ -313,7 +316,7 @@
         </script>
     @endif
 
-    @if(count($order) > 0)
+    @if(count($order) > 0 && $rated['rated'] != 0)
         <script>
 
             let click = 'Nao'
@@ -326,10 +329,6 @@
                     window.location.href = "{{ route('preparo.index') }}";
                 }
             }, 5000);
-
-            if ($(".btn-desktop").clicked){
-                console.log('clicou');
-            }
         </script>
     @endif
 @endsection

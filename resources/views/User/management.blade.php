@@ -62,7 +62,7 @@
                             <tr>
                                 <th scope="col" style="color: black;">Nome</th>
                                 <th scope="col" style="color: black;">Telefone</th>
-                                <th scope="col" style="color: black;">Horário de serviço</th>
+                                <th scope="col" style="color: black;">E-mail</th>
                                 <th scope="col" style="color: black;">Perfis de usuário</th>
                             </tr>
                             </thead>
@@ -71,7 +71,7 @@
                                 <tr>
                                     <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->name }} {{ $employee->surname }}</a></td>
                                     <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->phone }} </a></td>
-                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->workingTime }} </a></td>
+                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->email }} </a></td>
                                     <td><a href="{{ route('userRoles', ['user' => $employee->id]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Configurar perfil</a></td>
                                 </tr>
                             @endforeach

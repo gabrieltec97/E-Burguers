@@ -39,7 +39,7 @@ Route::resource('/clientes', 'ClientsController')->middleware('auth');
 
 Route::resource('/usuario', 'UserController')->middleware('auth');
 
-Route::resource('/preparo', 'PreparingController')->middleware('auth');
+    Route::resource('/preparo', 'PreparingController')->middleware('auth');
 
 Route::resource('/cupons', 'CouponController')->middleware('auth');
 

@@ -377,7 +377,7 @@
             <script>
                 setTimeout(function(){
                     Swal.fire({
-                        html: 'Enquanto seu pedido é preparado, você poderia avaliar como foram os outros pedidos?',
+                        title: 'Enquanto seu pedido é preparado, você poderia avaliar como foram os outros pedidos?',
                         icon: 'question',
                         showCancelButton: false,
                         showConfirmButton: false,
@@ -398,7 +398,7 @@
             @else
                 <script>
                     Swal.fire({
-                        title: 'Por favor, você poderia avaliar como foram os outros pedidos?',
+                        title: 'Por favor, você poderia avaliar como foi seu pedido?',
                         icon: 'question',
                         showCancelButton: false,
                         showConfirmButton: false,

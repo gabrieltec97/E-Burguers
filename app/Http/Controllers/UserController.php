@@ -45,7 +45,7 @@ class UserController extends Controller
                     ['id'=> 1, 'lock' => "Sim", 'lockAuth' => 'Sim', 'password' => '7sPa)@x%p,aXbzX?E48X\Z=CD']);
         }
 
-        $employees = User::all();
+        $employees = User::where('type', 'Employee')->get();
 
         return view('User.management', compact('employees'));
     }
@@ -166,6 +166,7 @@ class UserController extends Controller
         $user->adNumber = $request->adNumber;
         $user->refPoint = $request->refPoint;
         $user->district = $request->district;
+        $user->type = 'Employee';
         $user->email = $request->empEmail;
         $user->password = bcrypt($request->empPassword);
 

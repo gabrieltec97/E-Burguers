@@ -11114,7 +11114,7 @@ a.text-dark:focus {
         height: 310px;
     }
 
-    .addressPlace, .wppNumber, .deliveryName{
+    .addressPlace, .wppNumber, .deliveryName, .pedir-mobile{
         display: none;
     }
 
@@ -11298,7 +11298,8 @@ a.text-dark:focus {
         height: 230px;
     }
 
-    .fixo{
+
+    .fixo, .pedir-desktop{
         display: none;
     }
 
