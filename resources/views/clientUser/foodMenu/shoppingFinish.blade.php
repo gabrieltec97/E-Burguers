@@ -22,7 +22,7 @@
                                         @csrf
                                         <div class="row">
                                             <div class="col-12 col-lg-6 div-forma-retirada">
-                                                <label class="font-weight-bold" style="font-size: 18px">Forma de retirada</label>
+                                                <label class="font-weight-bold" style="font-size: 18px">Forma de retirada (Escolha)</label>
                                                 <select name="formaRetirada" class="form-control forma-entrega">
                                                     @if(isset($pendings))
                                                         <option value="{{ $pendings }}">{{ $pendings }}</option>
@@ -106,7 +106,7 @@
                                                 </div>
 
                                                 <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                    <label class="font-weight-bold" style="color:black; font-size: 18px">Ponto de referênci</label>
+                                                    <label class="font-weight-bold" style="color:black; font-size: 18px">Ponto de referência</label>
                                                     <input type="text" class="form-control pontoRef" name="pontoRef" placeholder="Dê mais detalhes sobre a localização.">
                                                 </div>
                                             @endif
@@ -230,7 +230,7 @@
 
                                                         <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
                                                             <label class="font-weight-bold" style="color: black;font-size: 18px">Nº da residência</label>
-                                                            <input type="text" class="form-control pontoRef" name="adNumber" placeholder="Dê mais detalhes sobre a localização.">
+                                                            <input type="text" class="form-control adDeliver" name="adNumber" placeholder="Dê mais detalhes sobre a localização.">
                                                         </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
@@ -261,7 +261,7 @@
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 val-entregue">
                                                         <label class="font-weight-bold" style="color: black;font-size: 18px">Valor entregue</label>
-                                                        <input type="number" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
+                                                        <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
                                                         <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                         <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
                                                     </div>
@@ -643,6 +643,7 @@
                                         <input name="diffEnd" class="diffEnd" hidden>
                                         <input name="newPrice" class="newPrice" hidden>
                                         <input name="refPoint" class="refPoint" hidden>
+                                        <input name="adSend" class="adSend" hidden>
                                         <input name="district" class="district" hidden>
                                         <input name="deliverType" class="deliverType" hidden>
                                         <input name="payingMethod" class="payingMethod" hidden>

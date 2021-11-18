@@ -346,9 +346,11 @@
                 @endif
             </div>
 
+            @if($order[0]->deliverWay == 'Retirada no restaurante')
             <div class="modal-footer">
                 <button class="btn btn-success">Como chegar</button>
             </div>
+            @endif
         </div>
     </div>
 @endif

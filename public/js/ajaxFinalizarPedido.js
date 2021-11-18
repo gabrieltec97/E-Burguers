@@ -66,6 +66,7 @@ $(document).ready(() => {
     $(".aplicar-cupom").on('click', function(e){
         e.preventDefault();
         $(".diffEnd").val($(".end-entrega").val());
+        $(".adSend").val($(".adDeliver").val());
         $(".newPrice").val($(".total-val").text());
         $(".refPoint").val($(".pontoRef").val());
         $(".district").val($(".entregaDiff").val());

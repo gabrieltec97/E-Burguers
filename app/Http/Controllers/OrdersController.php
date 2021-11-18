@@ -168,7 +168,11 @@ class OrdersController extends Controller
 
                 }
             }
-            $tray->payingValue = $request->valEntregue;
+
+            if ($tray->payingValue == null){
+                $tray->payingValue = $request->valEntregue;
+            }
+
             $tray->clientComments = $request->obs;
 
             if ($request->formaRetirada == 'Retirada no restaurante'){
@@ -312,6 +316,7 @@ class OrdersController extends Controller
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->usedCoupon = $updOrder[0]['disccountUsed'];
         $newOrder->address = $updOrder[0]['address'];
+        $newOrder->payingValue = $updOrder[0]['payingValue'];
         if ($diffPlace == 'Nao'){
          $newOrder->district = $currentDistrict;
         }
@@ -326,7 +331,6 @@ class OrdersController extends Controller
         if($itemTwo != null){
             $newOrder->extras = 'Sim';
         }
-        $newOrder->payingValue = $updOrder[0]['payingValue'];
 
         if (isset($request->pedir)) {
             $newOrder->status = 'Pendente';

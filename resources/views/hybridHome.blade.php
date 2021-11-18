@@ -149,12 +149,12 @@
                                                         <span style="color: black; font-size: 16px" class="ml-2 text-success">Valor total:</span> <span style="color: black; font-size: 16px">R$ {{ $price }}</span>
 
                                                         @if($reg->payingMethod == 'Dinheiro')
-                                                            <span style="color: black; font-size: 17px" class="ml-2 text-primary">Troco para: </span> <span style="color: black; font-size: 16px">R$ {{ $reg->payingValue }}</span><br>
+                                                           <br><span style="color: black; font-size: 17px; margin-left: 0px;" class="text-success">Troco para: </span> <span style="color: black; font-size: 16px">R$ {{ $reg->payingValue }}</span><br>
                                                         @else
-                                                            <br><span style="color: black; font-size: 17px">{{ $reg->payingMethod }}</span><br>
+                                                                <br><span style="color: black; margin-top: 20px;; font-size: 17px" class="text-success">Pagamento em: </span><span style="color: black; font-size: 17px">{{ $reg->payingMethod }}</span><br>
                                                         @endif
 
-                                                        <span style="color: black; margin-top: 20px;; font-size: 17px">Cliente:</span> <span style="color: black; font-size: 16px" class="text-primary">{{ $reg->clientName }}</span> <br>
+                                                        <span style="color: black; margin-top: 20px;; font-size: 17px" class="text-primary">Cliente:</span> <span style="color: black; font-size: 16px">{{ $reg->clientName }}</span> <br>
 
                                                         @if($reg->deliverWay == 'Entrega em domicílio')
                                                             <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }}  {{ $reg->district != null ? '-' . $reg->district : $reg->district}}</span> <br>
@@ -164,7 +164,7 @@
                                                            @endif
                                                         @endif
 
-                                                        <span style="color: black; font-size: 17px" class="text-success">Telefone do cliente: </span><span style="color: black; font-size: 16px">{{ $reg->userPhone }} </span> <br>
+                                                        <span style="color: black; font-size: 17px" class="text-primary">Telefone do cliente: </span><span style="color: black; font-size: 16px">{{ $reg->userPhone }} </span> <br>
 
 
                                                         @if($reg->deliverMan != null)
