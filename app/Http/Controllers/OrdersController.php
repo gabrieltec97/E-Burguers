@@ -98,7 +98,6 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-
         //Verificando se o delivery continua aberto.
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
@@ -315,10 +314,18 @@ class OrdersController extends Controller
         $newOrder->monthDay =  date("d");
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->usedCoupon = $updOrder[0]['disccountUsed'];
-        $newOrder->address = $updOrder[0]['address'];
         $newOrder->payingValue = $updOrder[0]['payingValue'];
         if ($diffPlace == 'Nao'){
          $newOrder->district = $currentDistrict;
+
+         if (count($going) == 0){
+             $newOrder->address = $updOrder[0]['address'];
+         }else{
+             $newOrder->address = $updOrder[0]['address']. ' - ' . $currentDistrict;
+         }
+
+        }else{
+            $newOrder->address = $updOrder[0]['address'];
         }
 
 

@@ -157,7 +157,7 @@
                                                         <span style="color: black; margin-top: 20px;; font-size: 17px" class="text-primary">Cliente:</span> <span style="color: black; font-size: 16px">{{ $reg->clientName }}</span> <br>
 
                                                         @if($reg->deliverWay == 'Entrega em domicílio')
-                                                            <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }}  {{ $reg->district != null ? '-' . $reg->district : $reg->district}}</span> <br>
+                                                            <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }} </span> <br>
 
                                                            @if($reg->district == null)
                                                                     <br>
