@@ -319,15 +319,22 @@ class OrdersController extends Controller
          $newOrder->district = $currentDistrict;
 
          if (count($going) == 0){
-             $newOrder->address = $updOrder[0]['address'];
+             //Verificando se possui a palavra bairro.
+             $position = strpos($updOrder[0]['address'], 'Bairro');
+
+             if ($position == true){
+                 $newOrder->address = $updOrder[0]['address'];
+             }else{
+                 $newOrder->address = $updOrder[0]['address'] . ' - ' . $currentDistrict;
+             }
+
          }else{
-             $newOrder->address = $updOrder[0]['address']. ' - ' . $currentDistrict;
+             $newOrder->address = $updOrder[0]['address'];
          }
 
         }else{
             $newOrder->address = $updOrder[0]['address'];
         }
-
 
         if($updOrder[0]['deliverWay'] == "Retirada no restaurante"){
             $newOrder->payingMethod = 'Pagamento no restaurante';

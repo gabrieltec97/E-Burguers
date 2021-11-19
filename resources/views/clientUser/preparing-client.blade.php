@@ -199,7 +199,7 @@
                                 <span style="font-size: 15px; font-weight: bold">Data:</span><span> {{ $order[0]->day }} - {{ $order[0]->hour }}</span><br>
                                 <span style="font-size: 15px; font-weight: bold">Valor: </span>R$<span class="text-primary"> {{ $price }}</span><br>
                                 @if($order[0]->deliverWay != 'Retirada no restaurante')
-                                    <span style="font-size: 15px; font-weight: bold">Entregar em:</span> <span> {{ $order[0]->address }} - {{ $order[0]->district }}</span><br>
+                                    <span style="font-size: 15px; font-weight: bold">Entregar em:</span> <span> {{ $order[0]->address }}</span><br>
                                 @endif
                                 @if($order[0]->comments != null)
                                     <span style="font-size: 15px; font-weight: bold">Comentários:</span> <span> {{ $order[0]->comments }}</span><br>

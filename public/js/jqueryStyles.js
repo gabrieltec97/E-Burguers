@@ -835,6 +835,7 @@ $(".tipoRef").on("change", function () {
     if ($(this).val() == 'Bebida'){
         $(".igr").fadeOut('slow');
         $(".itr").fadeOut('slow');
+        $(".sizes").fadeOut('slow');
         $('.tastes').fadeIn('slow');
         $(".comb").addClass('col-md-8');
 
@@ -843,6 +844,7 @@ $(".tipoRef").on("change", function () {
         $('.tastes').fadeOut('slow')
         $(".igr").fadeIn('slow');
         $(".itr").fadeIn('slow');
+        $(".sizes").fadeIn('slow');
         $(".comb").removeClass('col-md-8');
         $(".comb").fadeIn('slow');
         $(".combPart").fadeIn('slow');
@@ -861,6 +863,7 @@ $(".tipoRef").on("change", function () {
         $(".igr").fadeOut('slow');
         $(".itr").fadeOut('slow');
         $(".tastes").fadeOut('slow');
+        $(".sizes").fadeOut('slow');
         $(".comb").fadeOut('slow');
         $(".combPart").fadeOut('slow');
 

@@ -71,6 +71,23 @@
                                         <label class="text-primary font-weight-bold mt-2 verifica-ingredientes" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
                                     </div>
 
+                                    <div class="col-12 col-lg-4 mt-3 sizes">
+                                        <label class="font-weight-bold" style="color: black;">Tamanhos</label>
+                                        <br>
+                                        <input type="checkbox" class="form-check-input ml-1" value="Pequeno" name="extras[]">
+                                        <label class="form-check-label ml-4" for="Pequeno">Pequeno</label><br>
+                                        <input type="checkbox" class="form-check-input ml-1" value="Médio" name="extras[]">
+                                        <label class="form-check-label ml-4" for="Médio">Médio</label><br>
+                                        <input type="checkbox" class="form-check-input ml-1" value="Grande" name="extras[]">
+                                        <label class="form-check-label ml-4" for="Grande">Grande</label><br>
+                                        <input type="checkbox" class="form-check-input ml-1" value="Gigante" name="extras[]">
+                                        <label class="form-check-label ml-4" for="Gigante">Gigante</label><br>
+                                        <input type="checkbox" class="form-check-input ml-1" value="Familia" name="extras[]">
+                                        <label class="form-check-label ml-4" for="Familia">Família</label><br>
+                                    </div>
+
+
+
                                     <div class="col-12 mt-3">
                                         <label style="color: black;" class="font-weight-bold">Descrição</label>
                                         <textarea name="mealDescription" title="Breve texto que informa as características da refeição. Mínimo 70 e máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}">{{ old('mealDescription') }}</textarea>
