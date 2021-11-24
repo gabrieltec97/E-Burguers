@@ -66,24 +66,6 @@
         @endcan
 
         <!-- Nav Item - Charts -->
-        @can('Pedidos (Comum)')
-        <li class="nav-item" title="Gerencie os pedidos em andamento">
-            <a class="nav-link" href="{{ route('home') }}">
-                <img src="{{ asset('logo/orders.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
-                <span class="font-weight-bold" style="color: white; font-size: 11px">Pedidos em andamento</span></a>
-        </li>
-        @endcan
-
-        <!-- Nav Item - Charts -->
-        @can('Em Preparo')
-        <li class="nav-item" title="Pedidos para a equipe de cozinha preparar">
-            <a class="nav-link" href="{{ route('emPreparo') }}">
-                <img src="{{ asset('logo/cook.png') }}" style="width: 29px; height: 29px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedidos para preparo">
-                <span class="font-weight-bold" style="color: white; font-size: 11px">Para preparo</span></a>
-        </li>
-        @endcan
-
-        <!-- Nav Item - Charts -->
         @can('Histórico de Pedidos')
         <li class="nav-item" title="Veja detalhadamente cada pedido cadastrado">
             <a class="nav-link" href="{{ route('historicoPedidos') }}">
@@ -324,12 +306,10 @@
             </nav>
             <!-- End of Topbar -->
 
+
+        @yield('content')
             <!-- Begin Page Content -->
-            <div class="container-fluid">
 
-            @yield('content')
-
-            </div>
             <!-- /.container-fluid -->
 
         </div>

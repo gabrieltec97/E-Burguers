@@ -664,17 +664,6 @@ $(".forma-pagamento").on("change", function () {
 });
 
 //Verificação de troco.
-
-    $(".verifica-troco").hide();
-
-$(".troco").on("click", function () {
-    $(".verifica-troco").fadeIn('slow');
-
-    setTimeout(function () {
-        $(".verifica-troco").fadeOut('slow');
-    }, 8000)
-});
-
 $(".bairro-entrega").hide();
 
 //Verificação de entrega
@@ -835,7 +824,6 @@ $(".tipoRef").on("change", function () {
     if ($(this).val() == 'Bebida'){
         $(".igr").fadeOut('slow');
         $(".itr").fadeOut('slow');
-        $(".sizes").fadeOut('slow');
         $('.tastes').fadeIn('slow');
         $(".comb").addClass('col-md-8');
 
@@ -844,7 +832,6 @@ $(".tipoRef").on("change", function () {
         $('.tastes').fadeOut('slow')
         $(".igr").fadeIn('slow');
         $(".itr").fadeIn('slow');
-        $(".sizes").fadeIn('slow');
         $(".comb").removeClass('col-md-8');
         $(".comb").fadeIn('slow');
         $(".combPart").fadeIn('slow');
@@ -863,7 +850,6 @@ $(".tipoRef").on("change", function () {
         $(".igr").fadeOut('slow');
         $(".itr").fadeOut('slow');
         $(".tastes").fadeOut('slow');
-        $(".sizes").fadeOut('slow');
         $(".comb").fadeOut('slow');
         $(".combPart").fadeOut('slow');
 
@@ -943,6 +929,7 @@ $(".adicionar-bandeja, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-av
 
   setTimeout(function (){
       $('.cadastrar-taxa').text('Cadastrar');
+      $('.cadastrar-ref').text('Cadastrar refeição');
       $('.send-asset').text('Enviar avaliação');
       $('.cadastrar-cupom').text('Cadastrar cupom');
       $('.cadastrar-cupom, .salvar-alt-client').text('Salvar alterações');
@@ -958,6 +945,17 @@ $(".adicionar-bandeja, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-av
 
 $(".edit-extras-items").on('click', function (){
     $("#modalDeItens").modal('close');
+});
+
+//Escondendo botão de cupom.
+$(".aplicar-cupom").hide();
+$(".cupomDesconto").keyup(function (){
+    let size = $(this).val();
+    if (size.length != 0){
+        $(".aplicar-cupom").fadeIn('slow');
+    }else{
+        $(".aplicar-cupom").fadeOut('slow');
+    }
 });
 
 });

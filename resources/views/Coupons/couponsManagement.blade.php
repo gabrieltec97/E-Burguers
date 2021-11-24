@@ -127,7 +127,7 @@
                     <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: #17B3DF;">Cupons ativos</div>
 
                     <div class="card-body">
-                        <table class="table table-responsive table-bordered">
+                        <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th scope="col" style="color: black">Cupom</th>

@@ -81,7 +81,6 @@
                 <div class="card">
                     <div class="card-header bg-info font-weight-bold" style="font-size: 25px; color: white">Novo local atendido</div>
                     <div class="card-body">
-                        <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
                                     <form action="{{ route('locaisDeEntrega.store') }}" method="post">
@@ -105,7 +104,6 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -114,13 +112,11 @@
                 <div class="card">
                     <div class="card-header bg-info font-weight-bold" style="font-size: 25px; color: white">Lista de bairros atendidos</div>
                     <div class="card-body">
-                        <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
-                                    <table class="table table-striped table-responsive">
+                                    <table class="table table-striped table-bordered">
                                         <thead>
                                         <tr>
-                                            <th scope="col" style="color: black">Id</th>
                                             <th scope="col" style="color: black">Nome</th>
                                             <th scope="col" style="color: black">Valor</th>
                                             <th scope="col" style="color: black">Tratativas</th>
@@ -129,7 +125,6 @@
                                         <tbody>
                                         @foreach($places as $place => $data)
                                             <tr style="cursor: pointer">
-                                                <td>{{ $data->id }}</td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->price }}</td>
                                                 <td>
@@ -203,7 +198,6 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

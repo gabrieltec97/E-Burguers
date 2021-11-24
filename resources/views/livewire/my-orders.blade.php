@@ -92,7 +92,7 @@
                             </tbody>
                         </table>
 
-                        <div class="d-flex justify-content-center mt-2">
+                        <div class="col-12 d-flex justify-content-center mt-2">
                             {{ $orders->links('livewire.pagination') }}
                         </div>
 

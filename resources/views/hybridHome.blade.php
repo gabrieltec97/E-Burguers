@@ -7,68 +7,66 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid" style="padding: 0px 0px;">
 
-        <div class="col-12">
-            @if(session('msg'))
-                <script>
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'O pedido foi enviado para preparo!',
-                        position: 'top-end',
-                        toast: true,
-                        showConfirmButton: false,
-                        timer: 5000,
-                        timerProgressBar: true
-                    })
-                </script>
-            @endif
+    <div class="col-12">
+        @if(session('msg'))
+            <script>
+                Swal.fire({
+                    icon: 'info',
+                    title: 'O pedido foi enviado para preparo!',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+            </script>
+        @endif
 
-                @if(session('msg-prep'))
-                    <script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: '{{ session('msg-prep') }}',
-                            position: 'top-end',
-                            toast: true,
-                            showConfirmButton: false,
-                            timer: 10000,
-                            timerProgressBar: true
-                        })
-                    </script>
-                @endif
+        @if(session('msg-prep'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ session('msg-prep') }}',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 10000,
+                    timerProgressBar: true
+                })
+            </script>
+        @endif
 
-                @if(session('msg-venda'))
-                    <script>
-                        Swal.fire({
-                            title: 'Muito beeeem!',
-                            text: 'O pedido foi entregue, parabéns à todos pelo empenho!',
-                            imageUrl: 'https://localhost/E-Pedidos/public/logo/congrats.gif',
-                            imageWidth: 400,
-                            imageHeight: 200,
-                            imageAlt: 'Parabéns pelo empenho!',
-                            showConfirmButton: false,
-                            timer: 6000,
-                            timerProgressBar: true
-                        })
-                    </script>
-                @endif
+        @if(session('msg-venda'))
+            <script>
+                Swal.fire({
+                    title: 'Muito beeeem!',
+                    text: 'O pedido foi entregue, parabéns à todos pelo empenho!',
+                    imageUrl: 'https://localhost/E-Pedidos/public/logo/congrats.gif',
+                    imageWidth: 400,
+                    imageHeight: 200,
+                    imageAlt: 'Parabéns pelo empenho!',
+                    showConfirmButton: false,
+                    timer: 6000,
+                    timerProgressBar: true
+                })
+            </script>
+        @endif
 
-            @if(session('msg-2'))
-                    <script>
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Pedido cancelado com sucesso!',
-                            position: 'top-end',
-                            toast: true,
-                            showConfirmButton: false,
-                            timer: 5000,
-                            timerProgressBar: true
-                        })
-                    </script>
-            @endif
+        @if(session('msg-2'))
+            <script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Pedido cancelado com sucesso!',
+                    position: 'top-end',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+            </script>
+        @endif
 
-        <div class="row">
             <div class="col-12 mt-lg-0">
                 <div class="card">
                     <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: #1FBEE1">
@@ -127,7 +125,7 @@
                                     }
                                     ?>
 
-                                        <!-- Modal -->
+                                    <!-- Modal -->
                                         <div class="modal fade" id="modalSend{{$reg->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -149,9 +147,9 @@
                                                         <span style="color: black; font-size: 16px" class="ml-2 text-success">Valor total:</span> <span style="color: black; font-size: 16px">R$ {{ $price }}</span>
 
                                                         @if($reg->payingMethod == 'Dinheiro')
-                                                           <br><span style="color: black; font-size: 17px; margin-left: 0px;" class="text-success">Troco para: </span> <span style="color: black; font-size: 16px">R$ {{ $reg->payingValue }}</span><br>
+                                                            <br><span style="color: black; font-size: 17px; margin-left: 0px;" class="text-success">Troco para: </span> <span style="color: black; font-size: 16px">R$ {{ $reg->payingValue }}</span><br>
                                                         @else
-                                                                <br><span style="color: black; margin-top: 20px;; font-size: 17px" class="text-success">Pagamento em: </span><span style="color: black; font-size: 17px">{{ $reg->payingMethod }}</span><br>
+                                                            <br><span style="color: black; margin-top: 20px;; font-size: 17px" class="text-success">Pagamento em: </span><span style="color: black; font-size: 17px">{{ $reg->payingMethod }}</span><br>
                                                         @endif
 
                                                         <span style="color: black; margin-top: 20px;; font-size: 17px" class="text-primary">Cliente:</span> <span style="color: black; font-size: 16px">{{ $reg->clientName }}</span> <br>
@@ -159,9 +157,9 @@
                                                         @if($reg->deliverWay == 'Entrega em domicílio')
                                                             <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }} </span> <br>
 
-                                                           @if($reg->district == null)
-                                                                    <br>
-                                                           @endif
+                                                            @if($reg->district == null)
+                                                                <br>
+                                                            @endif
                                                         @endif
 
                                                         <span style="color: black; font-size: 17px" class="text-primary">Telefone do cliente: </span><span style="color: black; font-size: 16px">{{ $reg->userPhone }} </span> <br>
@@ -252,8 +250,8 @@
                     </table>
             </div>
 
-            </div>
-        </div>
+
+    </div>
 
     <select class="countHybrid" hidden>
         <option value="{{ count($count) }}"></option>

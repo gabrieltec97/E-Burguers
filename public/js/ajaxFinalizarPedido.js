@@ -22,8 +22,18 @@ $(document).ready(() => {
 
                     }else{
                         let totalValue = data[0][0];
+                        let count = totalValue.length;
+                        let price = 0;
 
-                        $(".total-val").text(totalValue);
+                        if (count == 4 && totalValue > 10){
+                            price = totalValue + '0';
+                        }else if(count == 2){
+                            price = totalValue + '00';
+                        }else{
+                            price = totalValue;
+                        }
+
+                        $(".total-val").text(price);
                     }
                 });
 

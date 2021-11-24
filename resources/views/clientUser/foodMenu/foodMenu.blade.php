@@ -270,6 +270,18 @@
                                                             <span class="fooddesc">{{ $drink->description }}</span>
                                                         </div>
 
+                                                        <div class="col-12 mt-3">
+                                                            @if($drink->foodType == 'Bebida')
+                                                                @if($drink->tastes != '')
+                                                                    <select name="sabor" class="mb-1 form-control select-sabor" title="Selecione um sabor" style="width: 100%;cursor: pointer; ">
+                                                                        @foreach(explode(',', $drink->tastes) as $taste)
+                                                                            <option value="{{ $taste }}">{{ $taste }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+
                                                         <div class="col-12">
                                                             @if($deliveryStatus[0]->status != 'Fechado')
                                                                 @if($drink->status == 'Ativo')
@@ -292,12 +304,6 @@
                                     </form>
                                 </div>
                             @endforeach
-
-                        @if($drinks == null)
-                            <div class="col-12 d-flex justify-content-center">
-                                <h3>Sem bebidas cadastradas</h3>
-                            </div>
-                        @endif
 
                             @foreach($desserts as $dessert)
                                 <div class="col-12 mt-lg-3 col-lg-4 div-desserts" id="addDessert{{ $dessert->id }}">
@@ -402,8 +408,32 @@
                             @endforeach
 
                             @if($desserts == null)
+                                <div class="col-12">
+                                    <h3 class="d-none no-desserts text-center">Sem sobremesas cadastradas...</h3>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-center mt-4">
+                                    <i class="far fa-frown text-info d-none no-desserts" style="font-size: 128px;"></i>
+                                </div>
+                            @endif
+
+                            @if($drinks == null)
                                 <div class="col-12 d-flex justify-content-center">
-                                    <h3 class="d-none no-desserts">Sem sobremesas cadastradas</h3>
+                                    <h3 class="d-none no-drinks">Sem bebidas cadastradas...</h3>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-center mt-4">
+                                    <i class="far fa-frown text-info d-none no-drinks" style="font-size: 128px;"></i>
+                                </div>
+                            @endif
+
+                            @if($pizzas == null)
+                                <div class="col-12 d-flex justify-content-center">
+                                    <h3 class="d-none no-pizzas">Sem pizzas cadastradas...</h3>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-center mt-4">
+                                    <i class="far fa-frown text-info d-none no-pizzas" style="font-size: 128px;"></i>
                                 </div>
                             @endif
                     </div>
@@ -416,7 +446,7 @@
             if (isset($val)){
                 $count = strlen($val[0]['totalValue']);
 
-                if ($count == 4 && $val[0]['totalValue'] > 10){
+                if ($count == 4 && $val[0]['totalValue'] > 10 or $count == 3){
                     $price = $val[0]['totalValue'] . '0';
                 }elseif ($count == 2){
                     $price = $val[0]['totalValue']. '.' . '00';
@@ -467,7 +497,7 @@
                                 </div>
                                 @endif
                             <div>
-                                <span class="float-right">Valor atual: <span class="text-success">{{ $price }}</span></span>
+                                <span class="float-right">Valor atual: <span class="text-success">R$ {{ $price }}</span></span>
                             </div>
 
                             <div class="mt-3">
@@ -527,7 +557,7 @@
                                     @if(isset($val) && $val[0]['totalValue'] > 0)
                                         <hr>
                                         <div>
-                                            <span class="float-right">Valor atual: R$ <span class="text-success">{{ $price }}</span></span>
+                                            <span class="float-right">Valor atual: R$ <span class="text-success">R$ {{ $price }}</span></span>
                                         </div>
 
                                         <div class="mt-3">
@@ -570,10 +600,24 @@
 
     </div>
 
+        @if(session('msg'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true,
+                });
 
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Item removido do pedido!'
+                })
+            </script>
+        @endif
     @if(isset($insert))
         @if($insert == 'added')
-
         @if(session('msg'))
          <script>
              const Toast = Swal.mixin({
@@ -626,6 +670,24 @@
         @endif
     @endif
 
+        @if(session('msg-cancel'))
+
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 12000,
+                    timerProgressBar: true,
+                })
+
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Seu pedido foi cancelado, mas fique à vontade para fazer novos pedidos, ok?'
+                })
+            </script>
+        @endif
+
         @if(session('msg-dstv'))
             <script>
                 const Toast = Swal.mixin({
@@ -643,8 +705,22 @@
             </script>
         @endif
 
+        <input type="text" value="{{ count($desserts) }}" class="dest" hidden>
+        <input type="text" value="{{ count($pizzas) }}" class="pzzs" hidden>
+        <input type="text" value="{{ count($drinks) }}" class="dks" hidden>
+
     <script>
         function justPizzas(){
+
+            let pizzas = $(".pzzs").val();
+
+            if (pizzas == 0){
+                $(".no-pizzas").removeClass('d-none', 'true');
+            }
+
+            $(".no-desserts").addClass('d-none', 'true');
+            $(".no-drinks").addClass('d-none', 'true');
+
             $(".div-food, .div-drinks, .div-desserts").hide('slow');
             setTimeout(function (){
                 $(".div-pizzas").show('slow');
@@ -661,6 +737,16 @@
         }
 
         function justDrinks(){
+
+            let drinks = $(".dks").val();
+
+            if (drinks == 0){
+                $(".no-drinks").removeClass('d-none', 'true');
+            }
+
+            $(".no-pizzas").addClass('d-none', 'true');
+            $(".no-desserts").addClass('d-none', 'true');
+
             $(".div-food, .div-pizzas, .div-desserts").hide('slow');
             setTimeout(function (){
                 $(".div-drinks").show('slow');
@@ -677,6 +763,16 @@
         }
 
         function justDesserts(){
+
+            let desserts = $(".dest").val();
+
+            if (desserts == 0){
+                $(".no-desserts").removeClass('d-none', 'true');
+            }
+
+            $(".no-pizzas").addClass('d-none', 'true');
+            $(".no-drinks").addClass('d-none', 'true');
+
             $(".div-food, .div-pizzas, .div-drinks").hide('slow');
             setTimeout(function (){
                 $(".div-desserts").show('slow');
@@ -693,6 +789,11 @@
         }
 
         function completeAll(){
+
+            $(".no-pizzas").addClass('d-none', 'true');
+            $(".no-drinks").addClass('d-none', 'true');
+            $(".no-desserts").addClass('d-none', 'true');
+
             $(".div-desserts, .div-pizzas, .div-drinks").hide('slow');
             setTimeout(function (){
                 $(".div-food").show('slow');

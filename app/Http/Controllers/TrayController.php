@@ -1953,29 +1953,13 @@ class TrayController extends Controller
                 ->delete();
         }
 
-//        //Deletando coluna da tabela caso ela esteja vazia.
-//        $updTray = Auth::user()->userOrderTray()->get()->first()->toArray();
-//
-//        if ($updTray['totalValue'] == 0){
-//            DB::table('trays')
-//                ->where('id', '=', $order['id'])
-//                ->delete();
-//
-//            return redirect(route('minhaBandeja.index'))->with('msg', '.');
-//        }
+        //Deletando coluna da tabela caso ela esteja vazia.
+        $updTray = Auth::user()->userOrderTray()->get()->first()->toArray();
 
-        $checkItems = DB::table('trays')
-            ->select('id','hamburguer', 'portion', 'drinks')
-            ->where('idClient', '=', Auth::user()->id)
-            ->get()->toArray();
-
-        $checkItemWithoutExtras = DB::table('item_without_extras')
-            ->select('itemName')
-            ->where('idOrder', '=', $checkItems[0]->id)
-            ->get()->toArray();
-
-        if (count($checkItems) == 1 && count($checkItemWithoutExtras) == 0){
-            return redirect()->route('tipoPedido');
+        if ($updTray['totalValue'] == 0){
+            DB::table('trays')
+                ->where('id', '=', $order['id'])
+                ->delete();
         }
 
         return redirect()->back()->with('msg', '.');

@@ -41,7 +41,7 @@
                                         @if($meal->foodType == 'Bebida')
                                             <div class="col-12 mt-3 col-md-6">
                                                 <label style="color: black;" class="font-weight-bold">Sabores</label>
-                                                <input type="text" value="{{ $meal->tastes }}" class="form-control sabores-edit" placeholder="Exemplo:Uva,Morango,Laranja" title="Insira-os separando por vírgula e sem dar espaços." name="sabores" required>
+                                                <input type="text" value="{{ $meal->tastes }}" class="form-control sabores-edit" placeholder="Exemplo:Uva,Morango,Laranja" title="Insira-os separando por vírgula e sem dar espaços." name="sabores">
                                                 <label class="text-danger mt-2 verifica-ingredientes font-weight-bold" style="font-size: 13.7px">Insira-os com a primeira letra maiúscula, separando por vírgulas e sem dar espaços.</label>
                                                 @if($errors->has('tastes'))
                                                     <div class="invalid-feedback">
@@ -64,7 +64,7 @@
                                     </div>
 
                                     <div class="col-12  col-md-4">
-                                        <label class="text-muted font-weight-bold">Foto (Opcional)</label>
+                                        <label class="font-weight-bold" style="color: black">Foto (Alterar)</label>
                                         <input type="file" name="advPhoto" accept=".png, .jpg, .jpeg, .gif">
                                     </div>
                                 </div>

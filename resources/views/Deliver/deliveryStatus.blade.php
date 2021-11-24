@@ -38,7 +38,6 @@
                         @endif
                     </div>
                     <div class="card-body">
-                        <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
                                     <form id="changeStatus" action="{{ route('changeDeliveryStatus') }}" method="post">
@@ -54,7 +53,6 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -63,7 +61,6 @@
                 <div class="card">
                     <div class="card-header bg-primary font-weight-bold" style="font-size: 25px; color: white">Mensagem de feedback</div>
                     <div class="card-body">
-                        <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
                                     @if($status[0]->status == 'Fechado' && $status[0]->message != null)
@@ -100,7 +97,6 @@
                                         </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

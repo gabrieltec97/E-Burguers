@@ -37,6 +37,14 @@
                         </div>
                     </div>
                 @endforeach
+
+                @if(count($coupons) == 0)
+                    <h3 class="text-center">Poxa, nenhum cupom cadastrado...</h3>
+
+                    <div class="col-12 d-flex justify-content-center">
+                        <i class="fas fa-ticket-alt text-info" style="font-size: 58px"></i>
+                    </div>
+                @endif
             </div>
         </div>
 

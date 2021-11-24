@@ -201,11 +201,14 @@ class menuController extends Controller
         $advert->name = $request->mealName;
         $advert->value = $request->mealValue;
         $advert->foodType = $request->tipoRef;
-        $advert->tastes = $request->sabores;
 
-        if(isset($_POST['combo'])){
-            $advert->combo = $_POST['combo'];
+        if ($request->tipoRef == 'Bebida'){
+            $advert->tastes = $request->sabores;
         }
+
+//        if(isset($_POST['combo'])){
+//            $advert->combo = $_POST['combo'];
+//        }
 
         $advert->description = $request->mealDescription;
         $advert->status = 'Ativo';
@@ -225,7 +228,7 @@ class menuController extends Controller
             File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
             $advert->picture = 'imagens/img'.$number.'.'.$extension;
         }else{
-            $advert->picture = 'logo/hamburguer.jpg';
+            $advert->picture = 'logo/pizza.jpg';
         }
 
         $advert->save();

@@ -437,7 +437,7 @@ class OrdersController extends Controller
                 ->get()->toArray();
 
             if ($verifyOrder == null){
-                return redirect()->route('tipoPedido')->with('msg-cancel',
+                return redirect('/cardapio/1')->with('msg-cancel',
                     ' ');
             }else{
                 return redirect()->back()->with('msg-cancel',
@@ -538,7 +538,7 @@ class OrdersController extends Controller
                 ->get()->toArray();
 
             if ($verifyOrder == null){
-                return redirect()->route('tipoPedido')->with('msg-cancel',
+                return redirect('/cardapio/1')->with('msg-cancel',
                 ' ');
             }else{
                 return redirect()->back()->with('msg-cancel',

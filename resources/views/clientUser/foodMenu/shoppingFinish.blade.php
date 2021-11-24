@@ -90,8 +90,7 @@
                                             <div class="col-12 col-lg-6 mt-4 val-entregue">
                                                 <label class="font-weight-bold text-mutd" style="color:black;font-size: 18px">Valor entregue</label>
                                                 <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
-                                                <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
-                                                <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
+                                                <span class="text-danger verifica-val-troco" style="font-size: 15px">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                             </div>
                                             @endif
 
@@ -162,13 +161,12 @@
                                                         <div class="col-12 col-lg-6 mt-4 val-entregue">
                                                             <label class="font-weight-bold" style="color:black; font-size: 18px">Valor entregue</label>
                                                             <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
-                                                            <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
-                                                            <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
+                                                            <span class="text-danger verifica-val-troco" style="font-size: 15px">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                         </div>
                                                     @endif
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                        <label class="font-weight-bold" style="color: blackfont-size: 18px">Bairro</label>
+                                                        <label class="font-weight-bold" style="color: black; font-size: 18px">Bairro</label>
                                                         <select class="form-control entregaDiff" name="diffDistrict">
                                                             <option value="" selected hidden>Selecione</option>
                                                             @foreach($places as $place)
@@ -262,8 +260,7 @@
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 val-entregue">
                                                         <label class="font-weight-bold" style="color: black;font-size: 18px">Valor entregue</label>
                                                         <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
-                                                        <span class="text-danger font-weight-bold verifica-val-troco">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
-                                                        <span class="text-primary font-weight-bold verifica-troco">Informe o valor que você pagará no ato da compra para que possamos calcular o troco (Caso necessário).</span>
+                                                        <span class="text-danger verifica-val-troco" style="font-size: 15px">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                     </div>
                                                 @endif
                                                     @if(isset($exist[0]))
@@ -432,7 +429,7 @@
                             @endif
                             <div class="card">
                                 <div class="card-header bg-danger">
-                                    <h5 class="font-weight-bold text-white" style="margin-bottom: -1px"><i class="fas fa-hamburger mr-2"></i>Itens e cupom</h5>
+                                    <h5 class="font-weight-bold text-white" style="margin-bottom: -1px">Itens e cupom</h5>
                                 </div>
                                 <div class="card-body">
 
@@ -441,7 +438,7 @@
                                         <?php
                                         $count = strlen($myOrder['totalValue']);
 
-                                        if ($count == 4 && $myOrder['totalValue'] > 10){
+                                        if ($count == 4 && $myOrder['totalValue'] > 10 or $count == 3){
                                             $price = $myOrder['totalValue'] . '0';
                                         }elseif ($count == 2){
                                             $price = $myOrder['totalValue']. '.' . '00';
@@ -452,10 +449,10 @@
                                         ?>
 
                                         <label class="font-weight-bold" style="font-size: 18px; color: black;">Valor total:</label>
-                                        <span class="text-success font-weight-bold total-val" style="font-size: 18px">{{ $price }}</span>
+                                        <span class="text-success total-val" style="font-size: 17px">{{ $price }}</span>
                                     </div>
 
-                                   <div class="col-12 mb-lg-5">
+                                   <div class="col-12 mb-lg-3">
                                        <!-- Button trigger modal -->
                                        <a style="font-size: 16px; color: red; cursor: pointer;" data-toggle="modal" data-target="#modalDeItens">
                                            <i class="fas fa-utensils mr-2"></i>Ver itens do pedido.
@@ -467,7 +464,7 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-danger">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Meus itens da bandeja.</h5>
+                                                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Meus itens da bandeja</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -649,7 +646,7 @@
                                         <input name="payingMethod" class="payingMethod" hidden>
                                         <input name="payingValue" class="payingValue" hidden>
                                         <div class="col-12 div-cupom">
-                                            <label class="font-weight-bold text-muted" style="font-size: 18px">Cupom de desconto
+                                            <label class="font-weight-bold mt-2 mt-lg-0" style="font-size: 18px; color: black">Cupom de desconto
 
                                             </label>
                                             <input type="text" autocomplete="off" class="form-control cupomDesconto" name="cupomDesconto"
@@ -667,7 +664,7 @@
                                         </div>
 
                                         <div class="col-12 d-flex justify-content-end">
-                                            <button type="submit"  class="btn btn-primary font-weight-bold mt-2 aplicar-cupom"
+                                            <button type="submit"  class="btn btn-primary font-weight-bold mt-3 aplicar-cupom"
                                                     @if(session('msg-success') or $myOrder['disccountUsed'] != null)
                                                     hidden
                                                 @endif
@@ -717,7 +714,7 @@
 
     <div class="col-12 d-flex justify-content-end">
         <div class="footertray">
-            <span class="badge badge-success">R$ {{ $price }}</span>
+            <span class="badge badge-success">{{ $price }}</span>
             <img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja" data-toggle="modal" data-target="#modalDeItens">
         </div>
     </div>

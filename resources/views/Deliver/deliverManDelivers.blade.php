@@ -11,7 +11,6 @@
                 <div class="card">
                     <div class="card-header bg-info font-weight-bold" style="font-size: 25px; color: white">{{ $deliveryMan->name }} - Entregas</div>
                     <div class="card-body">
-                        <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
                                     <table class="table table-bordered table-responsive-lg">
@@ -37,7 +36,6 @@
                                     <span class="font-weight-bold" style="color: black">Total: <span class="font-weight-normal">{{ $total == 1 ? $total . ' entrega.' : $total . ' entregas.' }}</span> </span>
                                 </div>
                             </div>
-                    </div>
                 </div>
             </div>
         </div>
