@@ -1956,10 +1956,22 @@ class TrayController extends Controller
         //Deletando coluna da tabela caso ela esteja vazia.
         $updTray = Auth::user()->userOrderTray()->get()->first()->toArray();
 
+        $checkItems = DB::table('item_without_extras')
+            ->where('idOrder', '=', $updTray['id'])
+            ->get()->toArray();
+
         if ($updTray['totalValue'] == 0){
             DB::table('trays')
                 ->where('id', '=', $order['id'])
                 ->delete();
+        }
+
+        if (count($checkItems) == 0){
+            DB::table('trays')
+                ->where('id', '=', $updTray['id'])
+                ->delete();
+
+            return redirect('/cardapio/1')->with('msg', '.');;
         }
 
         return redirect()->back()->with('msg', '.');

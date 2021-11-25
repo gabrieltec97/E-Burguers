@@ -123,6 +123,8 @@ Route::post('/changeDeliveryStatus', 'deliverController@changeStatus')->name('ch
 
 Route::post('/editDeliveryStatus', 'deliverController@editStatus')->name('editDeliveryStatus')->middleware('auth');
 
+Route::post('/workingTime', 'deliverController@workingTime')->name('workingTime')->middleware('auth');
+
 Route::get('/financeiro', 'FinancialController@index')->name('financeiro')->middleware('auth');
 
 Route::get('/dashboard', 'FinancialController@dashboard')->name('dashboard')->middleware('auth');

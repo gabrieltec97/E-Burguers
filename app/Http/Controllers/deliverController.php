@@ -37,7 +37,10 @@ class deliverController extends Controller
             ->where('id', '=', 1)
             ->get()->toArray();
 
-        return view('Deliver.deliveryStatus', compact('status'));
+        $workingTime = DB::table('working_time')
+            ->get()->toArray();
+
+        return view('Deliver.deliveryStatus', compact('status', 'workingTime'));
     }
 
     public function changeStatus(Request $request)
@@ -57,6 +60,35 @@ class deliverController extends Controller
             ->update(['status' => $status, 'message' => $request->feedback]);
 
         return redirect()->back()->with('msg', '.');
+    }
+
+    public function workingTime(Request $request)
+    {
+
+       if (strlen($request->openHour) < 5 or strlen($request->closeHour) < 5){
+           return redirect()->back()->with('msg-invalid', '. ');
+       }
+
+        if ($request->openHour < $request->closeHour){
+
+            $check = DB::table('working_time')
+                ->get()->toArray();
+
+            //Verificando se há horário cadastrado.
+            if (count($check) != 0){
+                DB::table('working_time')
+                    ->where('id', '=', '1')
+                    ->update(['openHour' => $request->openHour, 'closeHour' => $request->closeHour]);
+            }else{
+                DB::table('working_time')
+                    ->insert(['openHour' => $request->openHour, 'closeHour' => $request->closeHour, 'id' => '1']);
+            }
+
+            return redirect()->back()->with('msg-success', '. ');
+
+        }else{
+            return redirect()->back()->with('msg-error', '. ');
+        }
     }
 
     /**

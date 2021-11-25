@@ -448,7 +448,7 @@
                                         }
                                         ?>
 
-                                        <label class="font-weight-bold" style="font-size: 18px; color: black;">Valor total:</label>
+                                        <label class="font-weight-bold" style="font-size: 18px; color: black;">Valor total: <span class="text-success font-weight-normal">R$</span> </label>
                                         <span class="text-success total-val" style="font-size: 17px">{{ $price }}</span>
                                     </div>
 
@@ -472,118 +472,7 @@
                                                 <div class="modal-body">
                                                     <div class="col-12">
                                                         <ul>
-                                                            @if($myOrder['orderType'] == 'Combo')
-                                                                @if(isset($myOrder['hamburguer']))
-                                                                    <form action="{{ route('minhaBandeja.destroy', $food = $myOrder['comboItem']) }}" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <li class="font-weight-bold" style="position: relative; right: 20px">{{ $myOrder['comboItem'] }} <button type="submit" class="removeItem ml-1" title="Remover item" style="border: none; background: none;"><i class="fas fa-times text-danger"></i></button></li>
-                                                                    </form>
 
-                                                                    <div style="margin-top: -13px">
-                                                                        @if(isset($myOrder['extras']))
-                                                                            <ol>
-                                                                                @foreach(explode(', ', $myOrder['extras']) as $extra)
-                                                                                    <li class="font-weight-bold mt-1">{{$extra}}
-                                                                                        <button class="removeItem ml-1 edit-extras-items" title="Editar itens extras" data-toggle="modal" data-target="#editarExtrasCombo"><i class="fas fa-edit text-primary" style="font-size: 16px"></i></button></li>
-                                                                                @endforeach
-                                                                            </ol>
-
-                                                                            <form action="{{ route('editarComboExtras') }}">
-                                                                                @csrf
-
-                                                                                <div class="modal fade" id="editarExtrasCombo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Edição de itens adicionais</h5>
-                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                                </button>
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <div class="container-fluid">
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-6">
-                                                                                                            <img src="{{ asset($myOrder['image']) }}" style="border-radius: 4px" class="img-fluid" alt="">
-                                                                                                        </div>
-
-                                                                                                        <div class="col-6">
-
-                                                                                                            @foreach($addons as $addon)
-                                                                                                                <div>
-                                                                                                                    <input class="ml-1 form-check-input" type="checkbox" id="ing" name="ingredients[]" value="{{ $addon }}"
-
-                                                                                                                           @foreach(explode(', ', $myOrder['extras']) as $extra)
-                                                                                                                           @if($extra == $addon)
-                                                                                                                           checked
-                                                                                                                        @endif
-                                                                                                                        @endforeach
-
-                                                                                                                    >
-                                                                                                                    <span class="font-weight-bold ml-4 form-check-label" style="color: black;">{{ $addon }}</span>
-                                                                                                                </div>
-                                                                                                            @endforeach
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">Fechar</button>
-                                                                                                <button type="submit" class="btn btn-success font-weight-bold">Salvar alterações</button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </form>
-                                                                        @endif
-                                                                    </div>
-
-                                                                @else
-                                                                    <li style="position: relative; right: 20px"><a href="{{ route('minhaBandeja.index') }}" class="text-danger font-weight-bold">Escolha um hambúrguer</a></li>
-                                                                @endif
-
-
-                                                                @if(isset($myOrder['portion']))
-                                                                    <form action="{{ route('minhaBandeja.destroy', $food = $myOrder['portion']) }}" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <li class="font-weight-bold" style="position: relative; right: 20px">{{ $myOrder['portion'] }} <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
-                                                                    </form>
-                                                                @else
-                                                                    <li style="position: relative; right: 20px"><a href="{{ route('minhaBandeja.index') }}" class="text-danger font-weight-bold">Escolha uma porção</a></li>
-                                                                @endif
-
-                                                                @if(isset($myOrder['drinks']))
-                                                                    <form action="{{ route('minhaBandeja.destroy', $food = $myOrder['drinks']) }}" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <li class="font-weight-bold" style="position: relative; right: 20px">{{ $myOrder['drinks'] }} <button type="submit" class="removeItem ml-1" title="Remover item"><i class="fas fa-times text-danger"></i></button></li>
-
-                                                                    </form>
-                                                                @else
-                                                                    <li style="position: relative; right: 20px"><a href="{{ route('minhaBandeja.index') }}" class="text-danger font-weight-bold">Escolha uma bebida</a></li>
-                                                                @endif
-
-
-                                                            @elseif($myOrder['orderType'] == 'Avulso')
-
-                                                                @if(isset($customs))
-                                                                    @foreach($customs as $key => $val)
-                                                                        <form action="{{ route('removeCustomizado', $id = $val->id) }}" method="post">
-                                                                            @csrf
-                                                                            <li style="position: relative; right: 20px; font-size: 15px">{{ $val->Item }} <button type="submit" class="fas fa-times text-danger removeItem" style="border: none; background: none; cursor: pointer;" title="Remover item"></button></li>
-                                                                            @if($val->nameExtra != '')
-                                                                                <ul>
-                                                                                    <li style="position: relative; right: 20px; font-size: 15px">{{ $val->nameExtra }}
-                                                                                        <a href="{{ route('minhaBandeja.index') }}" class="removeItem ml-1" title="Editar itens extras"><i class="fas fa-edit text-primary" style="font-size: 16px"></i></a></li>
-                                                                                </ul>
-                                                                            @endif
-                                                                        </form>
-                                                                    @endforeach
-
-{{--                                                                    <hr>--}}
-                                                                @endif
 
                                                                 @if(isset($items))
                                                                     @foreach($items as $key => $value)
@@ -599,7 +488,6 @@
                                                                     @endforeach
 
                                                                 @endif
-                                                            @endif
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -714,7 +602,8 @@
 
     <div class="col-12 d-flex justify-content-end">
         <div class="footertray">
-            <span class="badge badge-success">{{ $price }}</span>
+
+            <span class="badge badge-success">R$ <span class="total-val">{{ $price }}</span></span>
             <img src="{{ asset('logo/bandeja-de-comida.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Minha bandeja" data-toggle="modal" data-target="#modalDeItens">
         </div>
     </div>

@@ -49,10 +49,44 @@
                                         @endif
 
                                         <button type="button" class="btn btn-success w-100 mt-4" onclick="verificaMudança()">{{ $status[0]->status == "Fechado" ? "Abrir delivery" : "Fechar delivery" }}</button>
-
                                     </form>
+
+                                    <button type="button" data-toggle="modal" data-target="#modalHorario" class="btn btn-primary w-100 mt-4"><i class="fas fa-clock mr-1"></i> Horário de funcionamento</button>
                                 </div>
                             </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalHorario" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #343A40">
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Horário de funcionamento</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('workingTime') }}" method="post">
+                                @csrf
+                            <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <label style="color: black">Horário de abertura</label><br>
+                                        <input type="text" class="form-control horarioFuncionamento" value="{{ $workingTime[0]->openHour }}" name="openHour" required>
+                                    </div>
+
+                                    <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+                                        <label style="color: black">Horário de Fechamento</label>
+                                        <input type="text" class="form-control horarioFuncionamento" value="{{ $workingTime[0]->closeHour }}" name="closeHour" required>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+                            <button type="submit" class="btn btn-success cad-horario">Salvar</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -128,6 +162,43 @@
             });
             }
     </script>
+
+    @if(session('msg-error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Ops... Horário não cadastrado.',
+                text: 'O horário de abertura deve ser inferior ao horário de fechamento.',
+                showConfirmButton: true,
+                timer: 10000
+            });
+        </script>
+    @endif
+
+    @if(session('msg-invalid'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Ops... Horário não cadastrado',
+                text: 'Você inseriu um formato inválido de horário. Certifique-se que está inserindo um horário com quatro números. Ex. 18:30',
+                showConfirmButton: true,
+                timer: 20000
+            });
+        </script>
+    @endif
+
+    @if(session('msg-success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Tudo certo!',
+                text: 'Horário cadastrado com sucesso!',
+                showConfirmButton: true,
+                timer: 5000
+            });
+        </script>
+    @endif
+
 @endsection
 
 

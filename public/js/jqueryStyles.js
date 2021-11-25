@@ -1,10 +1,11 @@
 $(function () {
-
-
     $(".div-pizzas, .div-drinks, .div-desserts").hide();
 
 // Ajuste de imagem de usuário no menu lateral.
 $(".div-img-user").hide();
+
+//Mascara de horário de funcionamento
+$(".horarioFuncionamento").mask('00:00');
 
 $(".hamburger").click(function () {
 
@@ -349,7 +350,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
 
     $(".telFuncionario").mask('(00) 00000-0000');
     $(".fixoFuncionario").mask('(00) 0000-0000');
-    $(".horarioFuncionario").mask('00:00 - 00:00');
     $(".profileFuncionario").attr('readonly', 'true');
     $(".profileFuncionario").css('cursor', 'not-allowed');
 
@@ -923,8 +923,23 @@ $(".valor-item-add-edit").on('keyup', function (){
 
 $(".valor-item-add").mask('000.00', {reverse: true});
 
+    $(".edit-extras-items").on('click', function (){
+        $("#modalDeItens").modal('close');
+    });
+
+//Escondendo botão de cupom.
+    $(".aplicar-cupom").hide();
+    $(".cupomDesconto").keyup(function (){
+        let size = $(this).val();
+        if (size.length != 0){
+            $(".aplicar-cupom").fadeIn('slow');
+        }else{
+            $(".aplicar-cupom").fadeOut('slow');
+        }
+    });
+
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .cad-horario, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){
@@ -932,6 +947,7 @@ $(".adicionar-bandeja, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-av
       $('.cadastrar-ref').text('Cadastrar refeição');
       $('.send-asset').text('Enviar avaliação');
       $('.cadastrar-cupom').text('Cadastrar cupom');
+      $('.cad-horario').text('Salvar');
       $('.cadastrar-cupom, .salvar-alt-client').text('Salvar alterações');
       $('.cadastrar-funcionario').html('<i class="fas fa-user-plus mr-2"></i>Cadastrar funcionário');
       $('.cadastrar-item-add').html('<i class="fas fa-plus mr-2"></i>Cadastrar');
@@ -941,21 +957,6 @@ $(".adicionar-bandeja, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-av
       $(".close-here").click();
       $(".close-here").click();
   }, 1000);
-});
-
-$(".edit-extras-items").on('click', function (){
-    $("#modalDeItens").modal('close');
-});
-
-//Escondendo botão de cupom.
-$(".aplicar-cupom").hide();
-$(".cupomDesconto").keyup(function (){
-    let size = $(this).val();
-    if (size.length != 0){
-        $(".aplicar-cupom").fadeIn('slow');
-    }else{
-        $(".aplicar-cupom").fadeOut('slow');
-    }
 });
 
 });

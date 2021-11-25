@@ -4,6 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('logo/icon.png') }}">
+    <?php
+    //Verificando se o delivery está aberto.
+    $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+    ?>
+
+    @if($deliveryStatus[0]->status == 'Aberto')
+        <meta name="theme-color" content="#00e676">
+    @else
+        <meta name="theme-color" content="#e3342f">
+    @endif
 
     <!-- Scripts -->
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>

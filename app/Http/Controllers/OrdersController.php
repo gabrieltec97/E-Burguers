@@ -600,10 +600,10 @@ class OrdersController extends Controller
 
             if (isset($items)){
                 return redirect()->back()->with('msg-prep',
-                    'Pedido disponível para equipe da cozinha. Mas atenção que os pedidos ' . $items . ' são para o mesmo endereço, ok?');
+                    'Pedido em preparo. Mas atenção que os pedidos ' . $items . ' são para o mesmo endereço, ok?');
             }else{
                 return redirect()->back()->with('msg',
-                    'Pedido disponível para equipe da cozinha.');
+                    'Pedido em preparo.');
             }
 
         }else if($acao == 'Pedido Entregue'){

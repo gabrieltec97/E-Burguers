@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#E3342F">
+
     <!-- Scripts -->
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
     <title>@yield('title')</title>
