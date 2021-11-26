@@ -7,6 +7,35 @@
 
 @section('content')
 
+    <?php
+
+    $close = \Illuminate\Support\Facades\DB::table('working_time')
+        ->where('id', '=', '1')
+        ->get()->toArray();
+
+    $deliveryStatus = DB::table('delivery_status')
+        ->where('id', '=', 1)
+        ->get()->toArray();
+
+    $hour = date('H' . ':' . 'i');
+
+    //    Fechando delivery
+    if ($close[0]->closeHour <= $hour){
+
+        if ($deliveryStatus[0]->status == 'Aberto'){
+            DB::table('delivery_status')
+                ->update(['status' => 'Fechado']);
+
+            DB::table('trays')->truncate();
+            DB::table('item_without_extras')->truncate();
+        }
+    }
+
+    $deliveryStatus = DB::table('delivery_status')
+        ->where('id', '=', 1)
+        ->get()->toArray();
+    ?>
+
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-lg-12 mt-4 col-sm-12">
@@ -461,11 +490,11 @@
 
             <div class="col-3">
                 <div class="card fixo">
-                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> {{ $deliveryStatus[0]->status == 'Fechado' ? 'Delivery fechado :(' : 'Seu pedido está assim'}}</div>
+                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> {{ $deliveryStatus[0]->status == 'Fechado' ? 'Delivery fechado' : 'Seu pedido está assim'}}</div>
 
                     <div class="card-body">
                         @if($deliveryStatus[0]->status == 'Fechado')
-                            inserir imagem de delivery fechado
+                            <p>O delivery está fechado no momento.</p>
                         @else
                         <ol>
                             @if(isset($items))
@@ -531,7 +560,7 @@
                             <div class="card-body">
 
                             @if($deliveryStatus[0]->status == 'Fechado')
-                                    inserir imagem de delivery fechado
+                                    <p>O delivery está fechado no momento.</p>
                                 @else
                                     <ol>
                                         @if(isset($items))
@@ -650,7 +679,7 @@
                })
            </script>
        @else
-
+    @if($deliveryStatus[0]->status != 'Fechado')
     <script>
         const Toast = Swal.mixin({
             toast: true,
@@ -665,6 +694,7 @@
             title: 'Item adicionado ao pedido!'
         })
     </script>
+        @endif
         @endif
         @endif
         @endif
@@ -701,6 +731,22 @@
                 Toast.fire({
                     icon: 'error',
                     title: 'Desculpe, mas o item {{ session('msg-dstv') }} não está mais disponível.'
+                })
+            </script>
+        @endif
+
+        @if($deliveryStatus[0]->status == 'Fechado')
+            <script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'O delivery está fechado no momento!',
+                    text: '{{ $deliveryStatus[0]->message != null ? $deliveryStatus[0]->message : 'Encerramos nosso horário de funcionamento.'}}',
+                    showCancelButton: false,
+                    showConfirmButton: true,
+                })
+
+                $(".fechar").on('click', function (){
+                    Swal.close()
                 })
             </script>
         @endif

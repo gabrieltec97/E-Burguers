@@ -20,11 +20,7 @@ Route::get('/', function () {
     $drinks = \App\Adverts::where('foodType', 'Bebida')->get();
     $foods2 = \App\Adverts::all();
 
-    //Verificando se o delivery está aberto.
-    $deliveryStatus = DB::table('delivery_status')->select('status', 'message')->where('id', '=', 1)->get()->toArray();
-
-
-    return view('welcome', compact('foods', 'drinks', 'foods2', 'deliveryStatus'));
+    return view('welcome', compact('foods', 'drinks', 'foods2'));
 })->name('welcome');
 
 Route::get('/cardapio', function () {

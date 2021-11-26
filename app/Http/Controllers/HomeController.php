@@ -78,6 +78,29 @@ class HomeController extends Controller
 
     public function hybridHome()
     {
+        //Verificando delivery fechado.
+        $close = DB::table('working_time')
+            ->where('id', '=', '1')
+            ->get()->toArray();
+
+        $deliveryStatus = DB::table('delivery_status')
+            ->where('id', '=', 1)
+            ->get()->toArray();
+
+        $hour = date('H' . ':' . 'i');
+
+        //Fechando delivery
+        if ($close[0]->closeHour <= $hour){
+
+            if ($deliveryStatus[0]->status == 'Aberto'){
+                DB::table('delivery_status')
+                    ->update(['status' => 'Fechado']);
+
+                DB::table('trays')->truncate();
+                DB::table('item_without_extras')->truncate();
+            }
+        }
+
         if(!Auth::user()->hasPermissionTo('Pedidos (Híbrido)')){
             return redirect()->route('home');
         }

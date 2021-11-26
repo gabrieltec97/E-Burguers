@@ -1270,6 +1270,7 @@ class TrayController extends Controller
 
     public function reviewAndFinish()
     {
+
         $user = Auth::user();
         $checkCurrent = $user->userOrderTray()->get()->toArray();
         $places = deliver::all();

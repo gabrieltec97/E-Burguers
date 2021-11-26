@@ -23,6 +23,35 @@
 </head>
 <body>
 
+<?php
+
+$close = \Illuminate\Support\Facades\DB::table('working_time')
+    ->where('id', '=', '1')
+    ->get()->toArray();
+
+$deliveryStatus = DB::table('delivery_status')
+    ->where('id', '=', 1)
+    ->get()->toArray();
+
+$hour = date('H' . ':' . 'i');
+
+//Fechando delivery
+if ($close[0]->closeHour <= $hour){
+
+    if ($deliveryStatus[0]->status == 'Aberto'){
+        DB::table('delivery_status')
+            ->update(['status' => 'Fechado']);
+
+        DB::table('trays')->truncate();
+        DB::table('item_without_extras')->truncate();
+    }
+}
+
+$deliveryStatus = DB::table('delivery_status')
+    ->where('id', '=', 1)
+    ->get()->toArray();
+?>
+
 <section id="section1" style="background-image: url({{ asset('logo/pi.jpg') }}); height: 530px; background-size: cover;">
 
     <nav class="navbar navbar-expand-lg nav-start">
@@ -282,6 +311,8 @@
         </div>
     </div>
 </div>
+
+
 
 @if($deliveryStatus[0]->status == 'Fechado')
     <script>
