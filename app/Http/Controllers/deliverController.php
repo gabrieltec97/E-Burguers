@@ -65,30 +65,24 @@ class deliverController extends Controller
     public function workingTime(Request $request)
     {
 
-       if (strlen($request->openHour) < 5 or strlen($request->closeHour) < 5){
+       if (strlen($request->closeHour) < 5){
            return redirect()->back()->with('msg-invalid', '. ');
        }
 
-        if ($request->openHour < $request->closeHour){
+        $check = DB::table('working_time')
+            ->get()->toArray();
 
-            $check = DB::table('working_time')
-                ->get()->toArray();
-
-            //Verificando se há horário cadastrado.
-            if (count($check) != 0){
-                DB::table('working_time')
-                    ->where('id', '=', '1')
-                    ->update(['openHour' => $request->openHour, 'closeHour' => $request->closeHour]);
-            }else{
-                DB::table('working_time')
-                    ->insert(['openHour' => $request->openHour, 'closeHour' => $request->closeHour, 'id' => '1']);
-            }
-
-            return redirect()->back()->with('msg-success', '. ');
-
+        //Verificando se há horário cadastrado.
+        if (count($check) != 0){
+            DB::table('working_time')
+                ->where('id', '=', '1')
+                ->update(['closeHour' => $request->closeHour]);
         }else{
-            return redirect()->back()->with('msg-error', '. ');
+            DB::table('working_time')
+                ->insert(['closeHour' => $request->closeHour, 'id' => '1']);
         }
+
+        return redirect()->back()->with('msg-success', '. ');
     }
 
     /**

@@ -319,7 +319,7 @@ $deliveryStatus = DB::table('delivery_status')
         Swal.fire({
             icon: 'warning',
             title: 'O delivery está fechado no momento!',
-            text: '{{ $deliveryStatus[0]->message != null ? $deliveryStatus[0]->message : 'Encerramos nosso horário de funcionamento.'}}',
+            text: '{{ $deliveryStatus[0]->message != null ? $deliveryStatus[0]->message : 'Abriremos em breve para receber seu pedido.'}}',
             showCancelButton: false,
             showConfirmButton: true,
         })
