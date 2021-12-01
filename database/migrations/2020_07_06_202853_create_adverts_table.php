@@ -19,7 +19,9 @@ class CreateAdvertsTable extends Migration
             $table->string('value');
             $table->string('foodType');
             $table->string('status');
+            $table->string('description');
             $table->string('tastes')->nullable();
+            $table->string('totalSale')->nullable();
             $table->string('picture')->nullable();
             $table->string('ratingGrade')->nullable();
             $table->string('ratingAmount')->nullable();

@@ -64,7 +64,43 @@ class HomeController extends Controller
 
         $response = curl_exec($ch);
 
-        return redirect()->route('hybridHome');
+        return redirect()->back();
+    }
+
+    public function sendDeliverNotification()
+    {
+        $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+
+        $SERVER_API_KEY = 'AAAAHIi2o5k:APA91bHdaXkFScDzR2XLGOoaOBXiAFmzbQ5rmbZ7mkl4MQ3X5WLERQoT_qwQconUBPAEFtjLnk92o_RqpXnbAIDiZEEUpIJ9XKL2NFBHXivrixLuZaT-gZ0XLfWe5t2k9IDoS9VVnlF-';
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => 'Nova entrega a fazer.',
+                "body" => 'Você tem um novo pedido para entrega!',
+                "content_available" => true,
+                "priority" => "high",
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
+
+        return redirect()->back();
     }
 
     public function sendCancelNotification(Request $request)
@@ -100,7 +136,7 @@ class HomeController extends Controller
 
         $response = curl_exec($ch);
 
-        return redirect()->route('hybridHome');
+        return redirect()->back();
     }
 
     /**
@@ -160,28 +196,28 @@ class HomeController extends Controller
 
     public function hybridHome()
     {
-//        //Verificando delivery fechado.
-//        $close = DB::table('working_time')
-//            ->where('id', '=', '1')
-//            ->get()->toArray();
-//
-//        $deliveryStatus = DB::table('delivery_status')
-//            ->where('id', '=', 1)
-//            ->get()->toArray();
-//
-//        $hour = date('H' . ':' . 'i');
-//
-//        //Fechando delivery
-//        if ($close[0]->closeHour <= $hour){
-//
-//            if ($deliveryStatus[0]->status == 'Aberto'){
-//                DB::table('delivery_status')
-//                    ->update(['status' => 'Fechado']);
-//
-//                DB::table('trays')->truncate();
-//                DB::table('item_without_extras')->truncate();
-//            }
-//        }
+        //Verificando delivery fechado.
+        $close = DB::table('working_time')
+            ->where('id', '=', '1')
+            ->get()->toArray();
+
+        $deliveryStatus = DB::table('delivery_status')
+            ->where('id', '=', 1)
+            ->get()->toArray();
+
+        $hour = date('H' . ':' . 'i');
+
+        //Fechando delivery
+        if ($close[0]->closeHour <= $hour){
+
+            if ($deliveryStatus[0]->status == 'Aberto'){
+                DB::table('delivery_status')
+                    ->update(['status' => 'Fechado']);
+
+                DB::table('trays')->truncate();
+                DB::table('item_without_extras')->truncate();
+            }
+        }
 
         if(!Auth::user()->hasPermissionTo('Pedidos (Híbrido)')){
             return redirect()->route('home');
@@ -190,7 +226,28 @@ class HomeController extends Controller
         $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
         $count = DB::table('orders')->where('status', '=', 'Pedido registrado')->orwhere('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get();
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-        $deliveryMen = DeliveryMan::all();
+
+        //Capturando dados dos entregadores
+        $roleId = DB::table('roles')
+            ->select('id')
+            ->where('name', '=', 'Entregador')
+            ->get()->toArray();
+
+        $userIds = DB::table('model_has_roles')
+            ->select('model_id')
+            ->where('role_id', '=', $roleId[0]->id)
+            ->get()->toArray();
+
+        $deliveryMen = array();
+
+        foreach ($userIds as $u => $user){
+            $delivery = DB::table('users')
+                ->select('name', 'surname', 'id')
+                ->where('id', '=', $user->model_id)
+                ->get()->toArray();
+
+            array_push($deliveryMen, $delivery);
+        }
 
         return view('hybridHome', compact('registered', 'count', 'deliveryStatus', 'deliveryMen'));
     }
@@ -209,6 +266,23 @@ class HomeController extends Controller
             ->get()->toArray();
 
         return $hybridData;
+    }
+
+    public function deliverTaking()
+    {
+        $user = DB::table('users')
+            ->select('name', 'surname')
+            ->where('id', '=', Auth::user()->id)
+            ->get()->toArray();
+
+        $user = $user[0]->name . ' ' . $user[0]->surname;
+
+        $deliverData = DB::table('orders')->select('id', 'hour', 'status')
+            ->where('status', '=', 'Em rota de entrega')
+            ->where('deliverMan', '=', $user)
+            ->get()->toArray();
+
+        return $deliverData;
     }
 
     public function getPrepare()

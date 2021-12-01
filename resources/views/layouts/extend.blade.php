@@ -76,6 +76,14 @@
         </li>
         @endcan
 
+        @can('Entregas')
+            <li class="nav-item" title="Painel com informações resumidas sobre as vendas">
+                <a class="nav-link" href="{{ route('entregas') }}">
+                    <img src="{{ asset('logo/scooter.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
+                    <span class="font-weight-bold teste-span" style="color: white; font-size: 11px">Entregas</span></a>
+            </li>
+        @endcan
+
         <!-- Nav Item - Charts -->
         @can('Histórico de Pedidos')
         <li class="nav-item" title="Veja detalhadamente cada pedido cadastrado">
@@ -289,19 +297,13 @@
                                 </a>
                             @endcan
 
-                            @can('Entregadores')
-                            <a class="dropdown-item mt-2" href="{{ route('entregadores.index') }}">
-                                <img src="{{ asset('logo/delivery-man.png') }}" title="Enviar ao cliente" style="width: 18px; height: 18px; cursor: pointer; margin-top: 1px" alt="Enviar ao cliente">
-                                <span class="font-weight-bold ml-1">Entregadores</span>
-                            </a>
-                            @endcan
                             <a class="dropdown-item mt-2" href="cardapio/1">
                                 <img src="{{ asset('logo/pedir.png') }}" title="Enviar ao cliente" style="width: 18px; height: 18px; cursor: pointer; margin-top: 1px" alt="Enviar ao cliente">
                                 <span class="font-weight-bold ml-1">Fazer Pedido</span>
                             </a>
 
                             <a class="dropdown-item mt-2">
-                                <button type="submit" onclick="initFirebaseMessagingRegistration()" class="font-weight-bold" style="border: none; background: none;"><i class="fas fa-bell mr-2"></i>Notificações</button>
+                                <button onclick="initFirebaseMessagingRegistration()" class="font-weight-bold" style="border: none; background: none; margin-left: -5px"><i class="fas fa-bell mr-2"></i>Notificações</button>
                             </a>
 
                             <div class="dropdown-divider"></div>

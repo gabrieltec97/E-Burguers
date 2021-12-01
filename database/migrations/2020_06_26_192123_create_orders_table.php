@@ -19,11 +19,9 @@ class CreateOrdersTable extends Migration
             $table->longText('clientName');
             $table->string('status');
             $table->string('orderType');
+            $table->string('userPhone');
             $table->longText('detached')->nullable();
             $table->string('comboItem')->nullable();
-            $table->string('hamburguer')->nullable();
-            $table->string('fries')->nullable();
-            $table->string('drinks')->nullable();
             $table->longText('comments')->nullable();
             $table->longText('clientComments')->nullable();
             $table->string('deliverWay')->nullable();

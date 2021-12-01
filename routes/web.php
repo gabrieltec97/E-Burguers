@@ -47,8 +47,6 @@ Route::resource('/itensAdicionais', 'ExtrasController')->middleware('auth');
 
 Route::resource('/locaisDeEntrega', 'deliverController')->middleware('auth');
 
-Route::resource('/entregadores', 'DeliveryManController')->middleware('auth');
-
 //Rotas de cliente.
 Route::get('/tipoPedido', 'TrayController@orderType')->name('tipoPedido')->middleware('auth');
 
@@ -115,6 +113,8 @@ Route::get('/toggleAdvert/{id}', 'menuController@toggleAdvert')->name('toggleAdv
 
 Route::get('/delivery', 'deliverController@deliveryStatus')->name('delivery')->middleware('auth');
 
+Route::get('/entregas', 'DeliveryManController@orders')->name('entregas')->middleware('auth');
+
 Route::post('/changeDeliveryStatus', 'deliverController@changeStatus')->name('changeDeliveryStatus')->middleware('auth');
 
 Route::post('/editDeliveryStatus', 'deliverController@editStatus')->name('editDeliveryStatus')->middleware('auth');
@@ -178,6 +178,8 @@ Route::get('/dados', 'HomeController@getData')->name('dados')->middleware('auth'
 
 Route::get('/hybridTaking', 'HomeController@hybrid')->name('hybridTaking')->middleware('auth');
 
+Route::get('/deliverTaking', 'HomeController@deliverTaking')->name('deliverTaking')->middleware('auth');
+
 //Rotas Ajax.
 Route::get('/ajaxpreparo', 'HomeController@getPrepare')->name('prepajax');
 
@@ -196,6 +198,8 @@ Route::get('/verificarFrete', 'TrayController@verificaFrete')->name('verificarFr
 Route::post('/save-token', 'HomeController@saveToken')->name('save-token');
 
 Route::post('/send-notification', 'HomeController@sendNotification')->name('send.notification');
+
+Route::post('/send-deliverNotification', 'HomeController@sendDeliverNotification')->name('send.deliverNotification');
 
 Route::post('/send-cancelnotification', 'HomeController@sendCancelNotification')->name('send.cancelnotification');
 

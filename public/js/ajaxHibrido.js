@@ -1,11 +1,5 @@
 $(document).ready(() => {
 
-    function mostrarNotificacao2(){
-        const notificacao2 = new Notification("Pedido cancelado!", {
-            body: 'Poxa, infelizmente houve um cancelamento de pedido.'
-        });
-    }
-
     setInterval(function () {
 
         $.ajax({type: 'GET',
@@ -25,6 +19,7 @@ $(document).ready(() => {
                     playAudio3();
 
                     if (Notification.permission === "granted"){
+                        var notification = new Notification("Você tem um novo pedido");
 
                         setTimeout(function (){
                             $("#showNotif").submit();
@@ -34,6 +29,8 @@ $(document).ready(() => {
                         Notification.requestPermission().then(permission => {
 
                             if (permission === "granted"){
+                                var notification = new Notification("Você tem um novo pedido");
+
                                 setTimeout(function (){
                                     $("#showNotif").submit();
                                 }, 1000);
@@ -44,18 +41,24 @@ $(document).ready(() => {
                 }else if (valorAnterior > valorAtual){
 
                     if (Notification.permission === "granted"){
-                        mostrarNotificacao2();
+
+                        var notification = new Notification("Pedido cancelado!");
+
+                        setTimeout(function (){
+                            $("#showCancelotif").submit();
+                        }, 1000);
+
                     }else if(Notification.permission !== 'denied'){
                         Notification.requestPermission().then(permission => {
                             if (permission === "granted"){
-                                mostrarNotificacao2();
+                                var notification = new Notification("Pedido cancelado!");
+
+                                setTimeout(function (){
+                                    $("#showCancelotif").submit();
+                                }, 1000);
                             }
                         })
                     }
-
-                    setTimeout(function (){
-                        location.reload();
-                    }, 800);
                 }
             },
             error: function(erro){console.log(erro)}})

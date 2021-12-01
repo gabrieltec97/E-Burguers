@@ -611,7 +611,7 @@ class FinancialController extends Controller
 
         array_multisort(array_column($sale,'1'),SORT_DESC, $sale);
 
-        if (isset($sale[0])){
+        if (isset($sale[0]) && isset($sale[1]) && isset($sale[2]) && isset($sale[3])){
             $chart2 = new Grafico();
 
             $chart2->labels([$sale[0][0], $sale[1][0], $sale[2][0], $sale[3][0]]);
@@ -624,7 +624,7 @@ class FinancialController extends Controller
             ]);
         }
 
-        if (isset($sale[0])){
+        if (isset($sale[0]) && isset($sale[1]) && isset($sale[2]) && isset($sale[3])){
             return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
         }else{
             return view('Financial.dashboard', compact('chart',  'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
