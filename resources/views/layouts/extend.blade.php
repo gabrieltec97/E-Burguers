@@ -63,7 +63,7 @@
         <li class="nav-item" title="Painel com informações resumidas sobre as vendas">
             <a class="nav-link" href="{{ route('dashboard') }}">
                 <img src="{{ asset('logo/teste.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
-                <span class="font-weight-bold" style="color: white; font-size: 11px">Dashboard</span></a>
+                <span class="font-weight-bold teste-span" style="color: white; font-size: 11px">Dashboard</span></a>
         </li>
         @endcan
 
@@ -300,6 +300,10 @@
                                 <span class="font-weight-bold ml-1">Fazer Pedido</span>
                             </a>
 
+                            <a class="dropdown-item mt-2">
+                                <button type="submit" onclick="initFirebaseMessagingRegistration()" class="font-weight-bold" style="border: none; background: none;"><i class="fas fa-bell mr-2"></i>Notificações</button>
+                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
@@ -373,4 +377,50 @@
     @endif
 @endif
 
+<form action="{{ route('save-token') }}" id="formNotif" method="POST" hidden>
+    @csrf
+    <input class="tokenbutton" name="tokenButton">
+</form>
+
+<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
+<script>
+
+    var firebaseConfig = {
+        apiKey: "AIzaSyCC8EuiKS7xvy1qRGSrXI2cw20cfpSjsVY",
+        authDomain: "push-notification-3fb99.firebaseapp.com",
+        projectId: "push-notification-3fb99",
+        storageBucket: "push-notification-3fb99.appspot.com",
+        messagingSenderId: "122552755097",
+        appId: "1:122552755097:web:3b66bc5762a5326a1b6908",
+        measurementId: "G-T52QCGV357"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    function initFirebaseMessagingRegistration() {
+        messaging
+            .requestPermission()
+            .then(function () {
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                // console.log(token);
+                $(".tokenbutton").val(token);
+                $("#formNotif").submit();
+
+            }).catch(function (err) {
+            console.log('User Chat Token Error'+ err);
+        });
+    }
+
+    messaging.onMessage(function(payload) {
+        const noteTitle = payload.notification.title;
+        const noteOptions = {
+            body: payload.notification.body,
+            icon: payload.notification.icon,
+        };
+        new Notification(noteTitle, noteOptions);
+    });
+</script>
 </html>

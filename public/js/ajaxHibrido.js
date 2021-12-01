@@ -1,11 +1,5 @@
 $(document).ready(() => {
 
-    function mostrarNotificacao(){
-        const notificacao = new Notification("Hey! Temos um novo pedido.", {
-            body: 'Um novo pedido foi cadastrado, confira!'
-        });
-    }
-
     function mostrarNotificacao2(){
         const notificacao2 = new Notification("Pedido cancelado!", {
             body: 'Poxa, infelizmente houve um cancelamento de pedido.'
@@ -31,19 +25,21 @@ $(document).ready(() => {
                     playAudio3();
 
                     if (Notification.permission === "granted"){
-                        mostrarNotificacao();
+
+                        setTimeout(function (){
+                            $("#showNotif").submit();
+                        }, 1000);
+
                     }else if(Notification.permission !== 'denied'){
                         Notification.requestPermission().then(permission => {
+
                             if (permission === "granted"){
-                                mostrarNotificacao();
+                                setTimeout(function (){
+                                    $("#showNotif").submit();
+                                }, 1000);
                             }
                         })
                     }
-
-                    setTimeout(function (){
-                        location.reload();
-                    }, 800);
-
 
                 }else if (valorAnterior > valorAtual){
 

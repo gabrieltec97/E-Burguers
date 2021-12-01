@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DeliveryMan;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,87 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    //Envio de notificações.
+    public function saveToken(Request $request)
+    {
+        DB::table('users')
+            ->where('id', '=', Auth::user()->id)
+            ->update(['device_token'=>$request->tokenButton]);
+        return $request->tokenButton;
+    }
+
+    public function sendNotification(Request $request)
+    {
+        $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+
+        $SERVER_API_KEY = 'AAAAHIi2o5k:APA91bHdaXkFScDzR2XLGOoaOBXiAFmzbQ5rmbZ7mkl4MQ3X5WLERQoT_qwQconUBPAEFtjLnk92o_RqpXnbAIDiZEEUpIJ9XKL2NFBHXivrixLuZaT-gZ0XLfWe5t2k9IDoS9VVnlF-';
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => 'Novo pedido',
+                "body" => 'Você tem um novo pedido!',
+                "content_available" => true,
+                "priority" => "high",
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
+
+        return redirect()->route('hybridHome');
+    }
+
+    public function sendCancelNotification(Request $request)
+    {
+        $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+
+        $SERVER_API_KEY = 'AAAAHIi2o5k:APA91bHdaXkFScDzR2XLGOoaOBXiAFmzbQ5rmbZ7mkl4MQ3X5WLERQoT_qwQconUBPAEFtjLnk92o_RqpXnbAIDiZEEUpIJ9XKL2NFBHXivrixLuZaT-gZ0XLfWe5t2k9IDoS9VVnlF-';
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => 'Pedido cancelado',
+                "body" => 'Infelizmente houve um cancelamento de pedido.',
+                "content_available" => true,
+                "priority" => "high",
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
+
+        return redirect()->route('hybridHome');
     }
 
     /**
@@ -78,28 +160,28 @@ class HomeController extends Controller
 
     public function hybridHome()
     {
-        //Verificando delivery fechado.
-        $close = DB::table('working_time')
-            ->where('id', '=', '1')
-            ->get()->toArray();
-
-        $deliveryStatus = DB::table('delivery_status')
-            ->where('id', '=', 1)
-            ->get()->toArray();
-
-        $hour = date('H' . ':' . 'i');
-
-        //Fechando delivery
-        if ($close[0]->closeHour <= $hour){
-
-            if ($deliveryStatus[0]->status == 'Aberto'){
-                DB::table('delivery_status')
-                    ->update(['status' => 'Fechado']);
-
-                DB::table('trays')->truncate();
-                DB::table('item_without_extras')->truncate();
-            }
-        }
+//        //Verificando delivery fechado.
+//        $close = DB::table('working_time')
+//            ->where('id', '=', '1')
+//            ->get()->toArray();
+//
+//        $deliveryStatus = DB::table('delivery_status')
+//            ->where('id', '=', 1)
+//            ->get()->toArray();
+//
+//        $hour = date('H' . ':' . 'i');
+//
+//        //Fechando delivery
+//        if ($close[0]->closeHour <= $hour){
+//
+//            if ($deliveryStatus[0]->status == 'Aberto'){
+//                DB::table('delivery_status')
+//                    ->update(['status' => 'Fechado']);
+//
+//                DB::table('trays')->truncate();
+//                DB::table('item_without_extras')->truncate();
+//            }
+//        }
 
         if(!Auth::user()->hasPermissionTo('Pedidos (Híbrido)')){
             return redirect()->route('home');

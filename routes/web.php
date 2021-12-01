@@ -190,3 +190,12 @@ Route::get('/buscaPedidos', 'LiveSearch@action')->name('buscaPedidos');
 Route::get('/pedidoCliente', 'PreparingController@clientOrder')->name('pedidoCliente');
 
 Route::get('/verificarFrete', 'TrayController@verificaFrete')->name('verificarFrete');
+
+//Rotas de notificações
+
+Route::post('/save-token', 'HomeController@saveToken')->name('save-token');
+
+Route::post('/send-notification', 'HomeController@sendNotification')->name('send.notification');
+
+Route::post('/send-cancelnotification', 'HomeController@sendCancelNotification')->name('send.cancelnotification');
+

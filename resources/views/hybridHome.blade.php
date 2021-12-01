@@ -68,6 +68,7 @@
         @endif
 
             <div class="col-12 mt-lg-0">
+                <button onclick="notifyMe()">Notifique me!</button>
                 <div class="card">
                     <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: #1FBEE1">
                         <span style="color: white;" class="font-weight-bold em-andamento">Pedidos em andamento</span>
@@ -390,6 +391,42 @@
             })
         </script>
     @endif
+
+    <script>
+        function notifyMe() {
+            // Verifica se o browser suporta notificações
+            if (!("Notification" in window)) {
+                alert("Este browser não suporta notificações");
+            }
+
+            // Let's check whether notification permissions have already been granted
+            else if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                var notification = new Notification("Você tem um novo pedido.");
+            }
+
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function (permission) {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                        var notification = new Notification("Você tem um novo pedido");
+                    }
+                });
+            }
+
+            // At last, if the user has denied notifications, and you
+            // want to be respectful there is no need to bother them any more.
+        }
+    </script>
+
+    <form action="{{ route('send.notification') }}" id="showNotif" method="POST" hidden>
+        @csrf
+    </form>
+
+    <form action="{{ route('send.cancelnotification') }}" id="showNotif" method="POST" hidden>
+        @csrf
+    </form>
 @endsection
 
 
