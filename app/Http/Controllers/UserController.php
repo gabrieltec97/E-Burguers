@@ -187,9 +187,56 @@ class UserController extends Controller
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
-        $user = User::find($id)->toArray();
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        $thisMonth = strftime('%B');
+        $thisYear = strftime('%Y');
 
-        return view('User.userData', compact('user'));
+        $user = User::find($id)->toArray();
+        $userName = $user['name'] . ' ' . $user['surname'];
+
+        //Verificando se o usuário é um entregador.
+        $usertype = DB::table('model_has_roles')
+            ->select('role_id')
+            ->where('model_id', '=', $id)
+            ->get()->toArray();
+
+        if ($usertype == ''){
+            return redirect()->back();
+        }
+
+        $checkDeliveryMan = DB::table('roles')
+            ->select('name')
+            ->where('id', '=', $usertype[0]->role_id)
+            ->get()->toArray();
+
+        if ($checkDeliveryMan[0]->name == 'Entregador'){
+
+            $district = deliver::all();
+            $count = 0;
+            $details = array();
+
+            foreach ($district as $d => $district){
+
+                $orders = DB::table('orders')
+                    ->select('id')
+                    ->where('status', '=', 'Pedido Entregue')
+                    ->where('deliverMan', '=', $userName)
+                    ->where('district', '=', $district->name)
+                    ->where('month', '=', $thisMonth)
+                    ->where('year', '=', $thisYear)
+                    ->get()->toArray();
+
+                $count += count($orders);
+                array_push($details, ['bairro' => $district->name, 'total' => count($orders)]);
+            }
+
+            return view('User.userData', compact('user', 'count', 'details'));
+        }else{
+            return view('User.userData', compact('user'));
+        }
+
+
     }
 
     /**

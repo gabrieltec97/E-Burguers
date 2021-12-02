@@ -167,11 +167,11 @@
                                         </div>
                                     </div>
 
-                                    <form id="finishedOrder{{ $reg->id }}" action="{{ route('alterarStatus', ['id' => $reg->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                    <form id="finishedOrder{{ $reg->id }}" action="{{ route('entregadorAlteraStatus', ['id' => $reg->id, 'acao' => 'Pedido Entregue', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                         @csrf
                                     </form>
 
-                                    <form id="formCancel{{ $reg->id }}" action="{{route('alterarStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
+                                    <form id="formCancel{{ $reg->id }}" action="{{route('entregadorAlteraStatus', ['id' => $reg->id, 'acao' => 'Cancelado', 'remetente' => 'atendente', 'idCliente' => 'whatever']) }}" method="post">
                                         @csrf
                                     </form>
 

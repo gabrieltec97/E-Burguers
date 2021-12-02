@@ -97,6 +97,8 @@ Route::post('/removerCupom/{couponName}', 'TrayController@couponRemove')->name('
 //Rotas de alteração de status dos pedidos.
 Route::post('/alterarStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@changeStatus')->name('alterarStatus')->middleware('auth');
 
+Route::post('/entregadorAlteraStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@delivererChangeStatus')->name('entregadorAlteraStatus')->middleware('auth');
+
 Route::post('/clinteAlteraStatus/{id}/{acao}/{remetente}/{idCliente}', 'OrdersController@clientChangesStatus')->name('clienteAlteraStatus')->middleware('auth');
 
 //Rotas de gerenciamento.

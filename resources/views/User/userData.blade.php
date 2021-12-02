@@ -71,17 +71,61 @@
                                     </div>
 
                                     <div class="col-12 mt-4 d-flex justify-content-end">
+                                        @if(isset($details))
+                                            <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#modalEntregasFeitas">Entregas realizadas</button>
+                                        @endif
                                         <a href="{{ route('usuario.edit', $user['id']) }}" class="btn btn-primary">Editar cadastro</a>
                                     </div>
                                 </div>
                         </div>
                     </div>
 
-                                </div>
-                        </div>
+                     </div>
+            </div>
             </div>
         </div>
     </div>
+
+    @if(isset($count) && isset($details))
+    <!-- Modal -->
+    <div class="modal fade" id="modalEntregasFeitas" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #343a40">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">{{ $user['name']. ' ' . $user['surname']}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            @foreach($details as $dt => $val)
+                                <th scope="col" style="color: black; font-weight: normal">{{ $val['bairro'] }}</th>
+                            @endforeach
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            @foreach($details as $dt => $val)
+                                <td style="color: black; font-weight: normal">{{ $val['total'] }}</td>
+                            @endforeach
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="col-12" style="margin-bottom: -27px">
+                        <p class="text-right" style="color: black; margin-right: -12px;">Total este mês: {{ $count == 1 ? $count . ' entrega feita' : $count . ' entregas feitas' }}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection
 
 

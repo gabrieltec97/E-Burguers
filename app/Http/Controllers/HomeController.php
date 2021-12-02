@@ -155,8 +155,10 @@ class HomeController extends Controller
 
                     if ($role == 'Atendente Híbrido'){
                     return redirect()->route('hybridHome');
-                }elseif('Cozinheiro'){
+                }elseif($role == 'Cozinheiro'){
                     return redirect()->route('emPreparo');
+                }elseif($role == 'Entregador'){
+                        return redirect()->route('entregas');
                 }else{
                     throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
                 }

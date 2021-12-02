@@ -98,6 +98,9 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+        //Bairro diferente do cadastrado.
+        $updatedDiffDistrict = $request->diffDistrict;
+
         //Verificando se o delivery continua aberto.
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
@@ -224,7 +227,7 @@ class OrdersController extends Controller
                 $format = strstr($result, ":");
                 $format = trim($format, ':');
                 $format = trim($format);
-                $currentDistrict = $format;
+                $thisClientDistrict = $format;
 
                 $tray->deliverWay = $going[0]->deliverWay;
                 if ($tray->payingMethod == null){
@@ -315,8 +318,14 @@ class OrdersController extends Controller
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->usedCoupon = $updOrder[0]['disccountUsed'];
         $newOrder->payingValue = $updOrder[0]['payingValue'];
+
+        if ($updatedDiffDistrict != ''){
+            $newOrder->district = $updatedDiffDistrict;
+        }else{
+            $newOrder->district = $thisClientDistrict;
+        }
+
         if ($diffPlace == 'Nao'){
-         $newOrder->district = $currentDistrict;
 
          if (count($going) == 0){
              //Verificando se possui a palavra bairro.
@@ -478,6 +487,55 @@ class OrdersController extends Controller
                 'Pedido disponível para equipe da cozinha.');
 
         }else if($acao == 'Pedido Entregue'){
+            $order->status = $acao;
+            $order->save();
+
+            return redirect()->back()->with('msg-venda',
+                ' ');
+        }
+    }
+
+    public function delivererChangeStatus(Request $request, $id, $acao, $remetente, $idCliente)
+    {
+        if(!Auth::user()->hasPermissionTo('Entregas')){
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
+        $order = Orders::find($id);
+
+        //Cancelamento por parte do cliente.
+        if ($remetente == 'cliente'){
+
+            $order->status = $acao;
+            $order->save();
+
+            $verifyOrder = DB::table('orders')
+                ->where('idClient', '=', $idCliente)
+                ->where('status', '=', 'Pedido registrado')
+                ->orWhere('status', '=', 'Em preparo')
+                ->orWhere('status', '=', 'Pronto')
+                ->orWhere('status', '=', 'Em rota de entrega')
+                ->orWhere('status', '=', 'Pronto para ser retirado no restaurante')
+                ->get()->toArray();
+
+            if ($verifyOrder == null){
+                return redirect()->back();
+            }else{
+                return redirect()->back()->with('msg-cancel',
+                    ' ');
+            }
+        }
+
+        //Cancelamento por parte do entregador.
+        if($acao == 'Cancelado' && $remetente == 'atendente'){
+
+            $order->status = $acao;
+            $order->save();
+
+            return redirect()->back()->with('msg-2',
+                'Pedido cancelado com sucesso!');
+
+        }elseif($acao == 'Pedido Entregue'){
             $order->status = $acao;
             $order->save();
 

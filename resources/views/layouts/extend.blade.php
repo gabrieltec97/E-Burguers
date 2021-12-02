@@ -199,53 +199,7 @@
                         $total = 0;
                     }
 
-
                     ?>
-
-                    <li>
-                        <i class="fas fa-bell dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 27px; color: black">
-                            <span class="badge bg-primary text-white">
-                               @if($total == 10 or $total == 20)
-                                   1
-                               @elseif($total == 30)
-                                2
-                                @elseif($total == 0)
-                                   0
-                               @endif
-                            </span>
-                        </i>
-
-                        <div style="margin-right: 125px" class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="dropdownMenuLink">
-                            @if($total == 30 or $total == 10)
-                            <p style="cursor: pointer;
-                            @if($total == 30)
-                                margin-top: 10px;
-                            @else
-                                margin:auto;
-                            @endif
-                                " class="dropdown-item">
-                               <b>Existem pedidos registrados aguardando serem <span class="text-danger">preparados</span>.</b>
-                            </p>
-                            @endif
-                                @if($total == 30)
-                                    <hr>
-                                @endif
-                            @if($total == 30 or $total == 20)
-                            <p style="cursor: pointer;
-                            @if($total == 30)
-                                margin-top: 10px;
-                            @else
-                                margin:auto;
-                            @endif    " class="dropdown-item">
-                              <b>Existem pedidos prontos aguardando serem <span class="text-info">enviados</span>.</b>
-                            </p>
-                            @endif
-
-                            @if($total == 0)
-                                    <p style="cursor: pointer; margin:auto;" class="dropdown-item"><b><span class="text-success">Ok</span>, nenhum pedido para preparo ou envio.</b></p>
-                            @endif
-                        </div>
-                    </li>
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
 
