@@ -69,9 +69,13 @@
 
             <div class="col-12 mt-lg-0">
                 <div class="card">
-                    <div class="card-header font-weight-bold text-white" style="font-size: 18px; background: #1FBEE1">
+                    <div class="card-header font-weight-bold text-white" style="font-size: 17px; background: #1FBEE1">
                         <span style="color: white;" class="font-weight-bold em-andamento">Pedidos em andamento</span>
-                        <span class="badge float-lg-right mt-lg-2" style="background: rgba(0,0,0,0.7);">{{count($count)}}</span>
+                        <i class="fas fa-bell float-lg-right mt-lg-2" onclick="registered()" style="color: white; cursor: pointer">
+                            <span class="badge bg-primary text-white">{{count($registrado)}}</span>
+                            <button value="{{ count($registrado) }}" class="totalregistrado" hidden></button>
+                        </i>
+
                     </div>
 
                     <div class="card-body">
@@ -398,6 +402,33 @@
     <form action="{{ route('send.cancelnotification') }}" id="showCancelotif" method="POST" hidden>
         @csrf
     </form>
+
+    <script>
+
+        let total = parseInt($(".totalregistrado").val());
+
+        let retorno = 'a';
+        if (total > 1){
+            retorno = 'Existem ' + total + ' pedidos registrados aguardando preparo';
+        }else if(total == 1){
+            retorno = 'Existe ' + total + ' pedido registrado aguardando preparo';
+        }else if(total == 0){
+            retorno = 'Não existem pedidos registrados aguardando preparo';
+        }
+
+        function registered(){
+
+            Swal.fire({
+                icon: 'info',
+                title: 'Pedidos a preparar',
+                text: retorno,
+                showCancelButton: false,
+                showConfirmButton: true,
+                timer: 9000,
+                timerProgressBar: true,
+            });
+        }
+    </script>
 @endsection
 
 

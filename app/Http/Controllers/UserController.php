@@ -120,7 +120,7 @@ class UserController extends Controller
             $user->syncRoles(null);
         }
 
-        return redirect()->route('userRoles', ['user' => $user->id]);
+        return redirect()->route('gerenciamento');
     }
 
 

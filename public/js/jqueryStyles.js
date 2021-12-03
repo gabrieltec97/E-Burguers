@@ -4,6 +4,9 @@ $(function () {
 // Ajuste de imagem de usuário no menu lateral.
 $(".div-img-user").hide();
 
+//Verificação de itens vendidos e cancelados hoje.
+$(".vendidos, .pedidos-cancelados").hide();
+
 //Mascara de horário de funcionamento
 $(".horarioFuncionamento").mask('00:00');
 
@@ -231,9 +234,18 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
     var dateToday = new Date();
 
     if (dateToday.getMonth() < 9){
-        dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + '0'+ dateToday.getDate();
+        if (dateToday.getDate() < 9){
+            dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + '0'+ dateToday.getDate();
+        }else{
+            dateToday = dateToday.getFullYear() + '-' + '0'+ (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
+        }
+
     }else{
-        dateToday = dateToday.getFullYear() + '-' + (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
+        if (dateToday.getDate() < 9){
+            dateToday = dateToday.getFullYear() + '-' + (dateToday.getMonth() + 1) + '-' + '0'+ dateToday.getDate();
+        }else{
+            dateToday = dateToday.getFullYear() + '-' + (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
+        }
     }
 
     //Verificando data de novo cupom.

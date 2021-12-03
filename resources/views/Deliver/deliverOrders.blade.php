@@ -188,7 +188,7 @@
             @endforeach
             @else
                 <tr>
-                    <td align="center" colspan="6">Nenhum pedido cadastrado ainda.</td>
+                    <td align="center" colspan="6">Nenhum pedido a ser enviado.</td>
                 </tr>
                 @endif
                 </tbody>

@@ -46,7 +46,7 @@ $(document).ready(() => {
 
                     if (Notification.permission === "granted"){
 
-                        var notification = new Notification("Pedido cancelado!");
+                        var notification = new Notification("Ei, temos uma alteração de pedido. Veja nas vendas ou cancelados.");
 
                         setTimeout(function (){
                             $("#showCancelotif").submit();
@@ -55,7 +55,7 @@ $(document).ready(() => {
                     }else if(Notification.permission !== 'denied'){
                         Notification.requestPermission().then(permission => {
                             if (permission === "granted"){
-                                var notification = new Notification("Pedido cancelado!");
+                                var notification = new Notification("Ei, temos uma alteração de pedido. Veja nas vendas ou cancelados.");
 
                                 setTimeout(function (){
                                     $("#showCancelotif").submit();

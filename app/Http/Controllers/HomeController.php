@@ -113,8 +113,8 @@ class HomeController extends Controller
         $data = [
             "registration_ids" => $firebaseToken,
             "notification" => [
-                "title" => 'Pedido cancelado',
-                "body" => 'Infelizmente houve um cancelamento de pedido.',
+                "title" => 'Ei, temos uma alteração de pedido.',
+                "body" => 'Veja na aba de informações se o pedido foi entregue ou cancelado.',
                 "content_available" => true,
                 "priority" => "high",
             ]
@@ -252,7 +252,9 @@ class HomeController extends Controller
             array_push($deliveryMen, $delivery);
         }
 
-        return view('hybridHome', compact('registered', 'count', 'deliveryStatus', 'deliveryMen'));
+        $registrado = DB::table('orders')->select('id')->where('status', '=', 'Pedido registrado')->get()->toArray();
+
+        return view('hybridHome', compact('registered', 'count', 'deliveryStatus', 'deliveryMen', 'registrado'));
     }
 
     public function getData()
