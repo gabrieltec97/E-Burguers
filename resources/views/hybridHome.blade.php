@@ -429,6 +429,203 @@
             });
         }
     </script>
+
+    <?php
+    setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    date_default_timezone_set('America/Sao_Paulo');
+    $thisMonth = strftime('%B');
+    $thisYear = strftime('%Y');
+    $thisDay = strftime('%d');
+
+    $cancelled = \Illuminate\Support\Facades\DB::table('orders')
+        ->where('status', '=', 'Cancelado')
+        ->where('monthDay', '=', $thisDay)
+        ->where('month', '=', $thisMonth)
+        ->where('year', '=', $thisYear)
+        ->get()->toArray();
+
+    $countCancelled = count($cancelled);
+
+    $sold = \Illuminate\Support\Facades\DB::table('orders')
+        ->where('status', '=', 'Pedido Entregue')
+        ->where('monthDay', '=', $thisDay)
+        ->where('month', '=', $thisMonth)
+        ->where('year', '=', $thisYear)
+        ->get()->toArray();
+
+    $countSold = count($sold);
+    ?>
+
+    <div class="col-12 d-flex justify-content-end">
+        <div class="footerinfo" style="margin-right: -5px">
+            <span class="badge badge-danger footer-info ml-1" style="cursor:pointer;" data-toggle="modal" data-target="#exampleModalLong">{{ $countCancelled }}</span>
+            <img src="{{ asset('logo/informacoes.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Informações do pedido" class="footer-info" data-toggle="modal" data-target="#exampleModalLong">
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #343a40">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Pedidos de hoje</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cancelados">
+                        <h4 class="text-center mb-3" style="color: black">Cancelamentos hoje:
+
+                            @if($countCancelled == 0)
+                                <span class="text-success">{{ $countCancelled }}</span>
+                            @else
+                                <span class="text-danger">{{ $countCancelled }}</span>
+                            @endif
+                        </h4>
+
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                            <tr>
+                                <th scope="col" style="color: black; font-weight: normal; font-size: 17.5px">#Id</th>
+                                <th scope="col" style="color: black; font-weight: normal; font-size: 17.5px">Itens</th>
+                                <th scope="col" style="color: black; font-weight: normal; font-size: 17.5px">Cliente</th>
+                                <th scope="col" style="color: black; font-weight: normal; font-size: 17.5px">Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($cancelled as $val)
+
+                                <?php
+                                $count = strlen($val->totalValue);
+
+                                if ($count == 4 && $val->totalValue > 10 or $count == 3){
+                                    $price = $val->totalValue . '0';
+                                }elseif ($count == 2){
+                                    $price = $val->totalValue. '.' . '00';
+                                }
+                                else{
+                                    $price = $val->totalValue;
+                                }
+                                ?>
+
+
+                                <tr>
+                                    <td style="color: black">{{ $val->id }}</td>
+                                    <td style="color: black">{{ $val->detached }}</td>
+                                    <td style="color: black">{{ $val->clientName }}</td>
+                                    <td style="color: black">{{ $price }}</td>
+                                </tr>
+                            @endforeach
+
+                            @if($countCancelled == 0)
+                                <tr>
+
+                                    <td align="center" colspan="6">
+                                        <img src="{{ asset('logo/celebrating.png') }}" style="height: 70px; width: 80px" alt="">
+                                        <br>
+                                        <br>
+                                        <p style="margin-bottom: -5px">Nenhum pedido cancelado hoje.</p>
+                                    </td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="vendidos">
+                        <h4 class="text-center mb-3" style="color: black">Vendas de hoje:
+
+                            @if($countSold == 0)
+                                <span class="text-danger">{{ $countSold }}</span>
+                            @else
+                                <span class="text-success">{{ $countSold }}</span>
+                            @endif
+
+                        </h4>
+
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                            <tr>
+                                <th scope="col" style="color: black">#Id</th>
+                                <th scope="col" style="color: black">Itens</th>
+                                <th scope="col" style="color: black">Cliente</th>
+                                <th scope="col" style="color: black">Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($sold as $val)
+
+                                <?php
+                                $count = strlen($val->totalValue);
+
+                                if ($count == 4 && $val->totalValue > 10 or $count == 3){
+                                    $price = $val->totalValue . '0';
+                                }elseif ($count == 2){
+                                    $price = $val->totalValue. '.' . '00';
+                                }
+                                else{
+                                    $price = $val->totalValue;
+                                }
+                                ?>
+
+
+                                <tr>
+                                    <td style="color: black">{{ $val->id }}</td>
+                                    <td style="color: black">{{ $val->detached }}</td>
+                                    <td style="color: black">{{ $val->clientName }}</td>
+                                    <td style="color: black">{{ $price }}</td>
+                                </tr>
+                            @endforeach
+
+                            @if($countSold == 0)
+                                <tr>
+                                    <td align="center" colspan="6">Nenhuma venda realizada ainda.</td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-danger mr-2 pedidos-cancelados" onclick="cancelledToday()">Ver pedidos cancelados</button>
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-success mt-2 vendas-concluidas" onclick="soldToday()">Ver vendas concluídas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function soldToday(){
+            $(".vendas-concluidas").on('click', function (){
+                $(".cancelados").hide('slow');
+                $(".vendas-concluidas").hide('slow');
+                $(".pedidos-cancelados").show('slow');
+                $(".vendidos").show('slow');
+            })
+        }
+
+        function cancelledToday(){
+
+            $(".pedidos-cancelados").on('click', function (){
+                $(".vendidos").hide('slow');
+                $(".pedidos-cancelados").hide('slow');
+                $(".cancelados").show('slow');
+                $(".vendas-concluidas").show('slow');
+            })
+        }
+    </script>
 @endsection
 
 

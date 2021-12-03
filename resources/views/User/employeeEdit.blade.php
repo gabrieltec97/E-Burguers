@@ -18,7 +18,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <label class="font-weight-bold" style="color: black;">Nome</label>
-                                        <input type="text" class="form-control nome-funcionario {{ ($errors->has('empName') ? 'is-invalid' : '') }}" name="empName" value="{{ $user->name }}" required>
+                                        <input type="text" class="form-control nome-funcionario {{ ($errors->has('empName') ? 'is-invalid' : '') }}" name="empName" value="{{ $user->name }}">
                                         @if($errors->has('empName'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empName') }}</span>
@@ -28,7 +28,7 @@
 
                                     <div class="col-12 mt-3 mt-md-0 col-md-4">
                                         <label class="font-weight-bold" style="color: black;">Sobrenome(s)</label>
-                                        <input type="text" class="form-control sobrenome-funcionario {{ ($errors->has('empSurname') ? 'is-invalid' : '') }}" value="{{ $user->surname }}" name="empSurname" required>
+                                        <input type="text" class="form-control sobrenome-funcionario {{ ($errors->has('empSurname') ? 'is-invalid' : '') }}" value="{{ $user->surname }}" name="empSurname">
                                         @if($errors->has('empSurname'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empSurname') }}</span>
@@ -38,7 +38,7 @@
 
                                     <div class="col-12 mt-3 mt-md-0 col-md-4">
                                         <label class="font-weight-bold" style="color: black;">Telefone</label>
-                                        <input type="tel" class="form-control telFuncionario {{ ($errors->has('empPhone') ? 'is-invalid' : '') }}" value="{{ $user->phone }}" name="empPhone" required>
+                                        <input type="tel" class="form-control telFuncionario {{ ($errors->has('empPhone') ? 'is-invalid' : '') }}" value="{{ $user->phone }}" name="empPhone">
                                         @if($errors->has('empPhone'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empPhone') }}</span>
@@ -58,7 +58,7 @@
 
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="font-weight-bold" style="color: black;">Endereço</label>
-                                        <input type="text" class="form-control enderecoFuncionario {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="empAddress" value="{{ $user->address }}" required>
+                                        <input type="text" class="form-control enderecoFuncionario {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="empAddress" value="{{ $user->address }}">
                                         @if($errors->has('empAddress'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('empAddress') }}</span>
@@ -68,7 +68,7 @@
 
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="font-weight-bold" style="color: black;">Ponto de referência</label>
-                                        <input type="text" class="form-control refPoint {{ ($errors->has('refPoint') ? 'is-invalid' : '') }}" name="refPoint" value="{{ $user->refPoint }}" required>
+                                        <input type="text" class="form-control refPoint {{ ($errors->has('refPoint') ? 'is-invalid' : '') }}" name="refPoint" value="{{ $user->refPoint }}">
                                         @if($errors->has('refPoint'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('refPoint') }}</span>
@@ -78,7 +78,7 @@
 
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="font-weight-bold" style="color: black">Nº da residência</label>
-                                        <input type="text" class="form-control adNumber {{ ($errors->has('adNumber') ? 'is-invalid' : '') }}" name="adNumber" value="{{ $user->adNumber }}" required>
+                                        <input type="text" class="form-control adNumber {{ ($errors->has('adNumber') ? 'is-invalid' : '') }}" name="adNumber" value="{{ $user->adNumber }}">
                                         @if($errors->has('adNumber'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('adNumber') }}</span>
@@ -88,7 +88,7 @@
 
                                     <div class="col-12 mt-3 col-md-4">
                                         <label class="font-weight-bold" style="color: black">Bairro (Modo cliente)</label>
-                                        <select class="form-control userDistrict" name="district" required>
+                                        <select class="form-control userDistrict" name="district">
                                             <option value="" selected hidden>Selecione</option>
                                             @foreach($places as $place)
                                                 <option value="{{ $place->name }}" {{ $user->district == $place->name ? 'selected' : '' }}>{{ $place->name }}</option>
@@ -226,7 +226,7 @@
                       </span>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary close-here" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-danger deletar-func">Deletar</button>
                     </div>
                 </div>

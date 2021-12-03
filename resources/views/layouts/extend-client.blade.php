@@ -93,8 +93,8 @@
                 }
             }
          ?>
-                <a href="{{ route('minhaBandeja.index') }}"><i class="fas fa-shopping-cart carrinho text-white">
-                <span class="badge badge-secondary"><span class="text-white valor-carrinho"><?= $count ?></span></span></i></a>
+                <i class="fas fa-shopping-cart carrinho text-white">
+                <span class="badge badge-secondary"><span class="text-white valor-carrinho"><?= $count ?></span></span></i>
         </span>
 
         <div>

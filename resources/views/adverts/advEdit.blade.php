@@ -20,7 +20,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <label style="color: black;" class="font-weight-bold">Nome</label>
-                                        <input type="text" class="form-control nome-refeicao-edit {{ ($errors->has('mealName') ? 'is-invalid' : '') }}" value="{{ $meal->name }}" title="Nome que identifica a refeição" name="mealName" required>
+                                        <input type="text" class="form-control nome-refeicao-edit {{ ($errors->has('mealName') ? 'is-invalid' : '') }}" value="{{ $meal->name }}" title="Nome que identifica a refeição" name="mealName">
                                         @if($errors->has('mealName'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('mealName') }}</span>
@@ -30,7 +30,7 @@
 
                                     <div class="col-12 mt-3 mt-md-0 col-md-4">
                                         <label style="color: black;" class="font-weight-bold">Valor</label>
-                                        <input type="text" class="form-control valorRefeicao-edit {{ ($errors->has('mealValue') ? 'is-invalid' : '') }}" value="{{ $meal->value }}" title="Valor a ser pago pela refeição" name="mealValue" required>
+                                        <input type="text" class="form-control valorRefeicao-edit {{ ($errors->has('mealValue') ? 'is-invalid' : '') }}" value="{{ $meal->value }}" title="Valor a ser pago pela refeição" name="mealValue">
                                         @if($errors->has('mealValue'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('mealValue') }}</span>
@@ -53,7 +53,7 @@
 
                                     <div class="col-12 mt-3">
                                         <label style="color: black;" class="font-weight-bold">Descrição</label>
-                                        <textarea name="mealDescription" title="Breve texto que informa as características da refeição. O texto deve conter no mínimo 70 e no máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao-edit {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}" required> {{$meal->description}}</textarea>
+                                        <textarea name="mealDescription" title="Breve texto que informa as características da refeição. O texto deve conter no mínimo 70 e no máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao-edit {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}"> {{$meal->description}}</textarea>
                                         <label class="text-primary font-weight-bold mt-2 total-char">Total de caracteres: <span class="contagem font-weight-bolder"></span></label><br>
                                         <label class="text-primary font-weight-bold lbl-alerta">A descrição deve conter no mínimo 70 e no máximo 96 caracteres.</label>
                                         @if($errors->has('mealDescription'))

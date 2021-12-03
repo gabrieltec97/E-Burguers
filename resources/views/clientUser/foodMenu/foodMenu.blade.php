@@ -522,7 +522,7 @@
                                 @if(count($coupons) > 0)
                                 <div class="col-12 mb-2">
                                     <img src="{{ asset('logo/cupom.png') }}" style="width: 17px; height: 17px; margin-bottom: 5px" alt="">
-                                    <a href="{{ route('meusCupons') }}" style="text-decoration: none;">Você pode inserir um cupom (Ver)</a>
+                                    <a href="{{ route('meusCupons') }}" style="text-decoration: none;">Veja nossos cupons disponíveis aqui.</a>
                                 </div>
                                 @endif
                             <div>
@@ -609,7 +609,7 @@
                         @if(count($coupons) > 0)
                             <div class="col-12 mb-2 ml-3">
                                 <img src="{{ asset('logo/cupom.png') }}" style="width: 17px; height: 17px; margin-bottom: 5px" alt="">
-                                <a href="{{ route('meusCupons') }}" style="text-decoration: none;">Você pode inserir um cupom (Ver cupom)</a>
+                                <a href="{{ route('meusCupons') }}" style="text-decoration: none;">Veja nossos cupons disponíveis aqui</a>
                             </div>
                         @endif
 

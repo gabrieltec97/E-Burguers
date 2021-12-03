@@ -957,6 +957,7 @@ $(".adicionar-bandeja, .cad-horario, .send-asset, .cadastrar-ref, .salvar-alt-cl
   setTimeout(function (){
       $('.cadastrar-taxa').text('Cadastrar');
       $('.cadastrar-ref').text('Cadastrar refeição');
+      $('.botao-salvar').text('Salvar alterações');
       $('.send-asset').text('Enviar avaliação');
       $('.cadastrar-cupom').text('Cadastrar cupom');
       $('.cad-horario').text('Salvar');

@@ -27,7 +27,7 @@
                                 </div>
 
                                 <div class="col-4 mb-4">
-                                    <span>Você terá direito a <span class="text-success">{{ $coupon->disccount }}</span> nos pedidos acima de <span class="text-danger">{{ $coupon->disccountRule }}</span></span>
+                                    <span>Você terá direito a <span class="text-success">{{ $coupon->disccount }}</span> nos pedidos acima de <span class="text-danger">{{ $coupon->disccountRule }}</span> caso não tenha usado este cupom anteriormente.</span>
                                 </div>
 
                                 @if(count($coupons) > 1)

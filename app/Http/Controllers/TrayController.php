@@ -1891,6 +1891,7 @@ class TrayController extends Controller
 
     public function detached($key)
     {
+
         //Verificando se o delivery continua aberto.
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
@@ -1916,8 +1917,11 @@ class TrayController extends Controller
         //Verificando o uso de cupom e se bate com o preço atual.
         if ($order['disccountUsed'] != null){
 
+            $usedCoupon = explode('|', $order['disccountUsed']);
+            $usedCoupon = rtrim($usedCoupon[0]);
+
             $rule = DB::table('coupons')
-                ->where('name', '=', $order['disccountUsed'])
+                ->where('name', '=', $usedCoupon)
                 ->get()->toArray();
 
             if ($totalValue < $rule[0]->disccountRule){

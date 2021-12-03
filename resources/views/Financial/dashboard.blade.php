@@ -30,6 +30,34 @@
                 </div>
             </div>
 
+            <?php
+
+            if ($totalValueToday > 0){
+                $pieces = explode('.', $totalValueToday);
+
+                $pieces = strlen($pieces[0]);
+            }else{
+                $pieces = 0;
+            }
+
+            $count2 = strlen($totalValueToday);
+
+            if ($count2 == 4 && $totalValueToday > 10){
+                $price = $totalValueToday . '0';
+            }elseif ($count2 == 2){
+                $price = $totalValueToday. '.' . '00';
+            }elseif($count2 == 5 && $pieces == 3){
+                $price = $totalValueToday. '0';
+            }elseif($count2 == 3){
+                $price = $totalValueToday . '0';
+            }elseif($pieces > 3){
+                $price = $totalValueToday . '0';
+            }
+            else{
+                $price = $totalValueToday;
+            }
+            ?>
+
             <div class="col-12 mt-3 mt-lg-0 col-lg-3">
                 <div class="card border-left-success shadow h-100 py-2 card-dash2">
                     <div class="card-body">
@@ -37,7 +65,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Total arrecadado hoje</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">R${{$totalValueToday}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">R${{ $price }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -64,6 +92,34 @@
                 </div>
             </div>
 
+            <?php
+
+            if ($totalValue > 0){
+                $pieces = explode('.', $totalValue);
+
+                $pieces = strlen($pieces[0]);
+            }else{
+                $pieces = 0;
+            }
+
+            $count2 = strlen($totalValue);
+
+            if ($count2 == 4 && $totalValue > 10){
+                $totalPrice = $totalValue . '0';
+            }elseif ($count2 == 2){
+                $totalPrice = $totalValue. '.' . '00';
+            }elseif($count2 == 5 && $pieces == 3){
+                $totalPrice = $totalValue. '0';
+            }elseif($count2 == 3){
+                $totalPrice = $totalValue . '0';
+            }elseif($pieces > 3){
+                $totalPrice = $totalValue . '0';
+            }
+            else{
+                $totalPrice = $totalValue;
+            }
+            ?>
+
             <div class="col-12 mt-3 mt-lg-0 col-lg-3">
                 <div class="card border-left-primary shadow h-100 py-2 card-dash4">
                     <div class="card-body">
@@ -71,7 +127,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     Total arrecadado este mês</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">R${{ $totalValue }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">R${{ $totalPrice }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-hand-holding-usd fa-2x text-gray-300"></i>
