@@ -28,7 +28,8 @@ class HomeController extends Controller
         DB::table('users')
             ->where('id', '=', Auth::user()->id)
             ->update(['device_token'=>$request->tokenButton]);
-        return $request->tokenButton;
+
+        return redirect()->back();
     }
 
     public function sendNotification(Request $request)
@@ -281,7 +282,7 @@ class HomeController extends Controller
 
         $deliverData = DB::table('orders')->select('id', 'hour', 'status')
             ->where('status', '=', 'Em rota de entrega')
-            ->where('deliverMan', '=', $user)
+            ->where('deliverMan', 'like', '%'.$user . '%')
             ->get()->toArray();
 
         return $deliverData;

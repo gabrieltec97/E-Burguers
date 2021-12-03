@@ -22,12 +22,12 @@ class DeliveryManController extends Controller
 
         $registered = DB::table('orders')
             ->where('status', '=', 'Em rota de entrega')
-            ->where('deliverMan', '=', $user)
+            ->where('deliverMan', 'like', '%'.$user . '%')
             ->get();
 
         $count = DB::table('orders')
             ->where('status', '=', 'Em rota de entrega')
-            ->where('deliverMan', '=', $user)
+            ->where('deliverMan', 'like', '%'.$user . '%')
             ->get();
 
         return view('Deliver.deliverOrders', compact('registered', 'count'));

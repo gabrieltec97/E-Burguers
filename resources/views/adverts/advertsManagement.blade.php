@@ -17,9 +17,39 @@
                             text: 'O item foi cadastrado e já está disponível no cardápio',
                             showCancelButton: false,
                             showConfirmButton: true,
+                            timer: 5000,
+                            timerProgressBar: true,
                         });
                     </script>
                 @endif
+
+                    @if(session('msg-lock'))
+                        <script>
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Avaliações ocultas',
+                                text: '{{ session('msg-lock') }}',
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                timer: 9000,
+                                timerProgressBar: true,
+                            });
+                        </script>
+                    @endif
+
+                    @if(session('msg-show'))
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Tudo certo!',
+                                text: '{{ session('msg-show') }}',
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                timer: 5000,
+                                timerProgressBar: true,
+                            });
+                        </script>
+                    @endif
 
                     @if(session('msg'))
                         <script>
@@ -29,6 +59,8 @@
                                 text: 'Item deletado com sucesso.',
                                 showCancelButton: false,
                                 showConfirmButton: true,
+                                timer: 5000,
+                                timerProgressBar: true,
                             });
                         </script>
                     @endif

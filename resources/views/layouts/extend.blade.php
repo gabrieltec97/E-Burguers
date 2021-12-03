@@ -179,30 +179,17 @@
                     $total = 0;
                     $registrado = \Illuminate\Support\Facades\DB::select("SELECT COUNT(*) as retorno from orders WHERE status = 'Pedido registrado'");
                     $registrado = $registrado[0]->retorno;
-
-                    $pronto = \Illuminate\Support\Facades\DB::select("SELECT COUNT(*) as pronto from orders WHERE status = 'Pronto'");
-                    $pronto = $pronto[0]->pronto;
-
-                    if ($registrado != 0){
-                        $total = 10;
-                    }
-
-                    if($pronto != 0){
-                        $total = 20;
-                    }
-
-                    if($pronto != 0 && $registrado != 0){
-                        $total = 30;
-                    }
-
-                    if($pronto == 0 && $registrado == 0){
-                        $total = 0;
-                    }
-
                     ?>
+
+                        <li>
+                            <i class="fas fa-bell" onclick="registered()" style="margin-top: 27px; color: black; cursor: pointer">
+                                <span class="badge bg-primary text-white">{{ $registrado }}</span>
+                                <button value="{{ $registrado }}" class="totalregistrado" hidden></button>
+                            </i>
+                        </li>
+
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
-
                         <a class="nav-link dropdown-toggle" style="color: black" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?php
                             date_default_timezone_set('America/Sao_Paulo');
@@ -379,4 +366,32 @@
         new Notification(noteTitle, noteOptions);
     });
 </script>
+
+
+<script>
+
+    let total = parseInt($(".totalregistrado").val());
+    let retorno = 'a';
+    if (total > 1){
+        retorno = 'Existem ' + total + ' pedidos registrados aguardando preparo';
+    }else if(total == 1){
+        retorno = 'Existe ' + total + ' pedido registrado aguardando preparo';
+    }else if(total == 0){
+        retorno = 'Não existem pedidos registrados aguardando preparo';
+    }
+
+    function registered(){
+
+        Swal.fire({
+            icon: 'info',
+            title: 'Pedidos a preparar',
+            text: retorno,
+            showCancelButton: false,
+            showConfirmButton: true,
+            timer: 9000,
+            timerProgressBar: true,
+        });
+    }
+</script>
+
 </html>

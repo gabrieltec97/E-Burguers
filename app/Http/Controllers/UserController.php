@@ -45,9 +45,31 @@ class UserController extends Controller
                     ['id'=> 1, 'lock' => "Sim", 'lockAuth' => 'Sim', 'password' => '7sPa)@x%p,aXbzX?E48X\Z=CD']);
         }
 
-        $employees = User::where('type', 'Employee')->get();
+        $employees = User::where('type', 'Employee')->get()->toArray();
+        $occup = array();
 
-        return view('User.management', compact('employees'));
+        foreach ($employees as $e => $employee){
+
+            $usertype = DB::table('model_has_roles')
+                ->select('role_id')
+                ->where('model_id', '=', $employee['id'])
+                ->get()->toArray();
+
+            if (isset($usertype[0])){
+                $checkOccupation = DB::table('roles')
+                    ->select('name')
+                    ->where('id', '=', $usertype[0]->role_id)
+                    ->get()->toArray();
+
+                array_push($occup, ['occupation' => $checkOccupation[0]->name, 'id' => $employee['id']]);
+            }else{
+                array_push($occup, ['occupation' => 'Perfil não configurado', 'id' => $employee['id']]);
+            }
+
+
+        }
+
+        return view('User.management', compact('employees', 'occup'));
     }
 
     /**
@@ -60,6 +82,10 @@ class UserController extends Controller
     public function roles($user)
     {
         $user = User::where('id', $user)->first();
+
+        if ($user->id == 1){
+            return redirect()->route('gerenciamento');
+        }
 
         $roles = Role::all();
 
@@ -187,6 +213,10 @@ class UserController extends Controller
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
+        if ($id == 1){
+            return redirect()->route('gerenciamento');
+        }
+
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
         $thisMonth = strftime('%B');
@@ -201,42 +231,40 @@ class UserController extends Controller
             ->where('model_id', '=', $id)
             ->get()->toArray();
 
-        if ($usertype == ''){
-            return redirect()->back();
-        }
+        if (isset($usertype[0])){
+            $checkDeliveryMan = DB::table('roles')
+                ->select('name')
+                ->where('id', '=', $usertype[0]->role_id)
+                ->get()->toArray();
 
-        $checkDeliveryMan = DB::table('roles')
-            ->select('name')
-            ->where('id', '=', $usertype[0]->role_id)
-            ->get()->toArray();
+            if ($checkDeliveryMan[0]->name == 'Entregador'){
 
-        if ($checkDeliveryMan[0]->name == 'Entregador'){
+                $district = deliver::all();
+                $count = 0;
+                $details = array();
 
-            $district = deliver::all();
-            $count = 0;
-            $details = array();
+                foreach ($district as $d => $district){
 
-            foreach ($district as $d => $district){
+                    $orders = DB::table('orders')
+                        ->select('id')
+                        ->where('status', '=', 'Pedido Entregue')
+                        ->where('deliverMan', '=', $userName)
+                        ->where('district', '=', $district->name)
+                        ->where('month', '=', $thisMonth)
+                        ->where('year', '=', $thisYear)
+                        ->get()->toArray();
 
-                $orders = DB::table('orders')
-                    ->select('id')
-                    ->where('status', '=', 'Pedido Entregue')
-                    ->where('deliverMan', '=', $userName)
-                    ->where('district', '=', $district->name)
-                    ->where('month', '=', $thisMonth)
-                    ->where('year', '=', $thisYear)
-                    ->get()->toArray();
+                    $count += count($orders);
+                    array_push($details, ['bairro' => $district->name, 'total' => count($orders)]);
+                }
 
-                $count += count($orders);
-                array_push($details, ['bairro' => $district->name, 'total' => count($orders)]);
+                return view('User.userData', compact('user', 'count', 'details'));
+            }else{
+                return view('User.userData', compact('user'));
             }
-
-            return view('User.userData', compact('user', 'count', 'details'));
         }else{
             return view('User.userData', compact('user'));
         }
-
-
     }
 
     /**
@@ -342,6 +370,10 @@ class UserController extends Controller
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
+
+        if ($id == 1){
+            return redirect()->route('gerenciamento');
         }
 
         if ($id == Auth::user()->id){

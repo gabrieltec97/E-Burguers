@@ -131,6 +131,9 @@ class OrdersController extends Controller
             ->get()->toArray();
 
         $currentDistrict = $client[0]->district;
+        if ($request->diffDistrict == ''){
+            $thisClientDistrict = $client[0]->district;
+        }
 
         $districtPrice = $districtPrice[0]->price;
 
@@ -147,13 +150,13 @@ class OrdersController extends Controller
                 $tray->payingMethod = $request->formaPagamento;
             }
             if ($request->entrega == 'Entregaemcasa'){
-                $tray->address = $client[0]->address . ' ,' . $client[0]->adNumber;
+                $tray->address = $client[0]->address . ' ,' . $client[0]->adNumber . '. Ponto de referência: ' . $client[0]->refPoint;
                 $diffPlace = 'Nao';
             }else{
                 if ($request->pontoRef != ''){
                     $currentDistrict = $request->diffDistrict;
                     if ($tray->address == null){
-                        $tray->address = $request->localEntrega. ' ,' . $request->adNumber. '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                        $tray->address = $request->localEntrega. ' ,' . $request->adNumber. '. Bairro: '. $request->diffDistrict .'. Ponto de referência: ' . $request->pontoRef;
                         $diffPlace = 'Sim';
                     }else{
                         $tray->address = $request->localEntrega;
@@ -161,7 +164,7 @@ class OrdersController extends Controller
                     }
                 }else{
                     if ($tray->address == null){
-                        $tray->address = $request->localEntrega . ' ,' . $request->adNumber. '. Bairro: '. $request->diffDistrict .' Ponto de referência: ' . $request->pontoRef;
+                        $tray->address = $request->localEntrega . ' ,' . $request->adNumber. '. Bairro: '. $request->diffDistrict .'. Ponto de referência: ' . $request->pontoRef;
                         $diffPlace = 'Sim';
                     }else{
                         $tray->address = $request->localEntrega;

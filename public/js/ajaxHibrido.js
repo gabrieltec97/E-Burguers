@@ -38,6 +38,10 @@ $(document).ready(() => {
                         })
                     }
 
+                    setTimeout(function (){
+                        location.reload();
+                    }, 1000);
+
                 }else if (valorAnterior > valorAtual){
 
                     if (Notification.permission === "granted"){
@@ -59,6 +63,10 @@ $(document).ready(() => {
                             }
                         })
                     }
+
+                    setTimeout(function (){
+                        location.reload();
+                    }, 1000);
                 }
             },
             error: function(erro){console.log(erro)}})

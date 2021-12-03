@@ -62,17 +62,28 @@
                             <tr>
                                 <th scope="col" style="color: black;">Nome</th>
                                 <th scope="col" style="color: black;">Telefone</th>
-                                <th scope="col" style="color: black;">E-mail</th>
-                                <th scope="col" style="color: black;">Perfis de usuário</th>
+                                <th scope="col" style="color: black;">Perfil de usuário</th>
+                                <th scope="col" style="color: black;">Configurações</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($employees as $employee)
+                            @foreach($employees as $e => $employee)
                                 <tr>
-                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->name }} {{ $employee->surname }}</a></td>
-                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->phone }} </a></td>
-                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee->id) }}">{{ $employee->email }} </a></td>
-                                    <td><a href="{{ route('userRoles', ['user' => $employee->id]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Configurar perfil</a></td>
+                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee['id']) }}">{{ $employee['name'] }} {{ $employee['surname'] }}</a></td>
+                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee['id']) }}">{{ $employee['phone'] }} </a></td>
+                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee['id']) }}">
+                                        @foreach($occup as $oc)
+
+                                            @if($oc['id'] == $employee['id'])
+                                                {{ $oc['occupation'] }}
+                                            @endif
+                                        @endforeach</a></td>
+
+                                    @if($employee['id'] == 1)
+                                        <td class="text-danger">Não é possível alterar este login</td>
+                                    @else
+                                    <td><a href="{{ route('userRoles', ['user' => $employee['id']]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Configurar perfil</a></td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

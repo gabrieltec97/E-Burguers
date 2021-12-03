@@ -124,15 +124,14 @@ class menuController extends Controller
                     'lock' => 'Não'
                 ]);
 
-            return redirect()->back()->with('msg', 'As avaliações não aparecerão para os clientes!');
+            return redirect()->back()->with('msg-lock', 'As avaliações não aparecerão para os clientes!');
         }else{
-            echo 'altere';
             DB::table('lock_rating')
                 ->update([
                     'lock' => 'Sim'
                 ]);
 
-            return redirect()->back()->with('msg-2', 'As avaliações aparecerão para os clientes!');
+            return redirect()->back()->with('msg-show', 'As avaliações aparecerão para os clientes!');
         }
     }
 

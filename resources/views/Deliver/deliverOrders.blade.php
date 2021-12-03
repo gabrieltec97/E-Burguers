@@ -135,7 +135,7 @@
                                                     <span style="color: black; margin-top: 20px;; font-size: 17px" class="text-primary">Cliente:</span> <span style="color: black; font-size: 16px">{{ $reg->clientName }}</span> <br>
 
                                                     @if($reg->deliverWay == 'Entrega em domicílio')
-                                                        <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }} </span> <br>
+                                                        <span style="font-size: 17px" class="text-primary">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }} </span> <br>
 
                                                         @if($reg->district == null)
                                                             <br>
@@ -289,6 +289,9 @@
                             tocar3.play();
                         }
 
+                        console.log(valorAnterior)
+                        console.log(valorAtual)
+
                         if (valorAnterior < valorAtual){
                             playAudio3();
 
@@ -312,27 +315,13 @@
                                 })
                             }
 
+                            setTimeout(function (){
+                                location.reload();
+                            }, 1000);
+
                         }else if (valorAnterior > valorAtual){
 
-                            if (Notification.permission === "granted"){
-
-                                var notification = new Notification("Pedido cancelado!");
-
-                                setTimeout(function (){
-                                    $("#showCancelotif").submit();
-                                }, 1000);
-
-                            }else if(Notification.permission !== 'denied'){
-                                Notification.requestPermission().then(permission => {
-                                    if (permission === "granted"){
-                                        var notification = new Notification("Pedido cancelado!");
-
-                                        setTimeout(function (){
-                                            $("#showCancelotif").submit();
-                                        }, 1000);
-                                    }
-                                })
-                            }
+                            location.reload();
                         }
                     },
                     error: function(erro){console.log(erro)}})

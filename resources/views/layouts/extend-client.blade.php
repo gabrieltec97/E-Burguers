@@ -47,10 +47,7 @@
                 <a href="{{ route('meusCupons') }}" style="color: white" class="nav-item nav-link menu-items">Cupons</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('pedidosPendentes') }}" style="color: white" class="nav-item nav-link menu-items">Pedidos pendentes</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('meusPedidos') }}" style="color: white" class="nav-item nav-link menu-items">Histórico de pedidos</a>
+                <a href="{{ route('meusPedidos') }}" style="color: white" class="nav-item nav-link menu-items">Meus pedidos</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('avaliacoes') }}" style="color: white" class="nav-item nav-link menu-items">Avaliações</a>
