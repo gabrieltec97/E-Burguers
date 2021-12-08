@@ -205,10 +205,6 @@ class menuController extends Controller
             $advert->tastes = $request->sabores;
         }
 
-//        if(isset($_POST['combo'])){
-//            $advert->combo = $_POST['combo'];
-//        }
-
         $advert->description = $request->mealDescription;
         $advert->status = 'Ativo';
 

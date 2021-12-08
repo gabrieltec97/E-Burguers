@@ -31,7 +31,8 @@ class UserController extends Controller
 
     public function userManagement()
     {
-        //        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+//        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+//            return redirect()->route('home');
 //            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
 //        }
 
@@ -127,6 +128,7 @@ class UserController extends Controller
     public function create()
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            return redirect()->route('home');
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
@@ -144,6 +146,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            return redirect()->route('home');
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
@@ -181,7 +184,6 @@ class UserController extends Controller
             }
         }
 
-
         $user = new User();
 
         $user->name = $request->empName;
@@ -210,6 +212,7 @@ class UserController extends Controller
     public function show($id)
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            return redirect()->route('home');
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
@@ -276,6 +279,7 @@ class UserController extends Controller
     public function edit($id)
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            return redirect()->route('home');
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 
@@ -294,9 +298,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
-//            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
-//        }
+        if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            return redirect()->route('home');
+            throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
+        }
 
         $rules = [
             'empName' => 'required|min:3',
@@ -369,6 +374,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         if(!Auth::user()->hasPermissionTo('Gerenciamento de Usuários')){
+            return redirect()->route('home');
             throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
         }
 

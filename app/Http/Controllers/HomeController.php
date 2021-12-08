@@ -12,11 +12,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -154,7 +150,7 @@ class HomeController extends Controller
             if (isset($role['roles'][0])){
                 $role = $role['roles'][0]['name'];
 
-                    if ($role == 'Atendente Híbrido'){
+                    if ($role == 'Atendente Híbrido' or $role == 'Administrador'){
                     return redirect()->route('hybridHome');
                 }elseif($role == 'Cozinheiro'){
                     return redirect()->route('emPreparo');
@@ -200,6 +196,15 @@ class HomeController extends Controller
     public function hybridHome()
     {
         //Verificando delivery fechado.
+        $close = DB::table('working_time')
+            ->where('id', '=', '1')
+            ->get()->toArray();
+
+        if ($close == null){
+            DB::table('working_time')
+                ->insert(['closeHour' => '00:00', 'id' => '1']);
+        }
+
         $close = DB::table('working_time')
             ->where('id', '=', '1')
             ->get()->toArray();

@@ -13,6 +13,8 @@
                     icon: 'success',
                     title: 'Tudo certo!',
                     text: '{{ $status[0]->status == 'Fechado' ? 'Delivery fechado com sucesso!' : 'Delivery aberto com sucesso!' }}',
+                    timer: 5000,
+                    timerProgressBar: true,
                 })
             </script>
         @endif
@@ -23,6 +25,8 @@
                     icon: 'success',
                     title: 'Tudo certo!',
                     text: 'Mensagem de emergência editada com sucesso!',
+                    timer: 5000,
+                    timerProgressBar: true,
                 })
             </script>
         @endif
@@ -165,7 +169,8 @@
                 title: 'Ops... Horário não cadastrado',
                 text: 'Você inseriu um formato inválido de horário. Certifique-se que está inserindo um horário com quatro números. Ex. 18:30',
                 showConfirmButton: true,
-                timer: 20000
+                timer: 20000,
+                timerProgressBar: true,
             });
         </script>
     @endif
@@ -177,7 +182,8 @@
                 title: 'Tudo certo!',
                 text: 'Horário cadastrado com sucesso!',
                 showConfirmButton: true,
-                timer: 5000
+                timer: 5000,
+                timerProgressBar: true,
             });
         </script>
     @endif

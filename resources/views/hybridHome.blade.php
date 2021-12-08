@@ -457,7 +457,7 @@
     ?>
 
     <div class="col-12 d-flex justify-content-end">
-        <div class="footerinfo" style="margin-right: -5px">
+        <div class="footerinfo" style="margin-right: -5px; position: fixed">
             <span class="badge badge-danger footer-info ml-1" style="cursor:pointer;" data-toggle="modal" data-target="#exampleModalLong">{{ $countCancelled }}</span>
             <img src="{{ asset('logo/informacoes.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Informações do pedido" class="footer-info" data-toggle="modal" data-target="#exampleModalLong">
         </div>
@@ -484,6 +484,17 @@
                             @endif
                         </h4>
 
+
+                            @if($countCancelled == 0)
+                            <div class="col-12 d-flex justify-content-center">
+                                        <img src="{{ asset('logo/celebrating.png') }}" style="height: 70px; width: 80px" alt="">
+                            </div>
+                            <div class="mb-4 mt-2">
+                                <p style="margin-bottom: -5px;" class="text-center">Nenhum pedido cancelado hoje.</p>
+                            </div>
+                            @endif
+
+                        @if($countCancelled != 0)
                         <table class="table table-bordered table-responsive">
                             <thead>
                             <tr>
@@ -517,20 +528,9 @@
                                     <td style="color: black">{{ $price }}</td>
                                 </tr>
                             @endforeach
-
-                            @if($countCancelled == 0)
-                                <tr>
-
-                                    <td align="center" colspan="6">
-                                        <img src="{{ asset('logo/celebrating.png') }}" style="height: 70px; width: 80px" alt="">
-                                        <br>
-                                        <br>
-                                        <p style="margin-bottom: -5px">Nenhum pedido cancelado hoje.</p>
-                                    </td>
-                                </tr>
-                            @endif
                             </tbody>
                         </table>
+                        @endif
                     </div>
 
                     <div class="vendidos">
@@ -544,6 +544,16 @@
 
                         </h4>
 
+                        @if($countSold == 0)
+                            <div class="col-12 d-flex justify-content-center">
+                                <img src="{{ asset('logo/dinner.png') }}" style="height: 90px; width: 80px" alt="">
+                            </div>
+                            <div class="mb-4 mt-2">
+                                <p style="margin-bottom: -5px;" class="text-center">Nenhum pedido entregue hoje.</p>
+                            </div>
+                        @endif
+
+                        @if($countSold != 0)
                         <table class="table table-bordered table-responsive">
                             <thead>
                             <tr>
@@ -585,6 +595,7 @@
                             @endif
                             </tbody>
                         </table>
+                        @endif
                     </div>
 
                     <div class="container-fluid">

@@ -11,11 +11,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CouponController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
@@ -46,17 +42,7 @@ class CouponController extends Controller
         return view('clientUser.clientCoupons', compact('coupons'));
     }
 
-    public function create()
-    {
-        //Não foi necessária a utilização, uma vez que se cria os cupons na mesma view que olha os que estão ativos.
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
@@ -109,12 +95,7 @@ class CouponController extends Controller
         return redirect(route('cupons.index'))->with('msg', '.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
@@ -125,13 +106,7 @@ class CouponController extends Controller
         return view ('Coupons.couponEditing', compact('coupon'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){
@@ -180,12 +155,7 @@ class CouponController extends Controller
         return redirect(route('cupons.index'))->with('msg-4', '.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         if(!Auth::user()->hasPermissionTo('Cupons')){

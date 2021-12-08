@@ -189,8 +189,6 @@ Route::get('/ajaxcozinha', 'HomeController@getKitchen')->name('cozjax');
 
 Route::get('/historicoPedidos', 'OrdersController@index')->name('historicoPedidos')->middleware('auth');;
 
-Route::get('/buscaPedidos', 'LiveSearch@action')->name('buscaPedidos');
-
 Route::get('/pedidoCliente', 'PreparingController@clientOrder')->name('pedidoCliente');
 
 Route::get('/verificarFrete', 'TrayController@verificaFrete')->name('verificarFrete');

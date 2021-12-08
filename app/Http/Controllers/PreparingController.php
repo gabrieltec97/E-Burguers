@@ -99,7 +99,6 @@ class PreparingController extends Controller
         return $dados;
     }
 
-
     public function toPrepare()
     {
         if(!Auth::user()->hasPermissionTo('Em Preparo')){
@@ -111,51 +110,7 @@ class PreparingController extends Controller
         return view('Preparing.preparing', compact('orders'));
     }
 
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         if(!Auth::user()->hasPermissionTo('Em Preparo')){
@@ -167,16 +122,5 @@ class PreparingController extends Controller
         $order->save();
 
         return redirect()->route('emPreparo')->with('msg', 'Obrigado por preparar mais esta refeição!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

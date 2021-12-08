@@ -15,7 +15,6 @@ class CreateWorkingTimeTable extends Migration
     {
         Schema::create('working_time', function (Blueprint $table) {
             $table->id();
-            $table->string('openHour')->nullable();
             $table->string('closeHour')->nullable();
             $table->timestamps();
         });
