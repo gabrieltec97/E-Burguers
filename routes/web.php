@@ -23,6 +23,15 @@ Route::get('/', function () {
     return view('welcome', compact('foods', 'drinks', 'foods2'));
 })->name('welcome');
 
+//Rotas de redefinição de senha.
+Route::post('/redefinir-senha', 'LoginController@resetPassword')->name('resetPassword');
+
+Route::get('/atualizar-senha', function (){
+    return view('auth.passwords.update');
+})->name('insertCode');
+
+Route::post('/redefinir', 'LoginController@updatePassword')->name('redefinir');
+
 Route::get('/cardapio', function () {
 
     return redirect()->route('welcome');

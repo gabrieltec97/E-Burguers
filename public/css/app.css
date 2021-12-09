@@ -11106,6 +11106,10 @@ a.text-dark:focus {
         height: 400px;
     }
 
+    .recover-card{
+        width: 450px;
+    }
+
     .desktopRotulo{
         margin-bottom: -3px;
     }
@@ -11297,7 +11301,6 @@ a.text-dark:focus {
     .tipopedido{
         height: 230px;
     }
-
 
     .fixo, .pedir-desktop{
         display: none;
