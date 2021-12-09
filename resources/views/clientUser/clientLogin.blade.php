@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -252,11 +253,23 @@
 </body>
 
 @if(session('msg'))
+
     <script>
         Swal.fire({
             icon: 'success',
             title: 'Parabéns, cadastro realizado!',
             text: 'Agora basta você entrar e escolher sua pizza!',
+        })
+    </script>
+@endif
+
+@if(session('msg-success'))
+
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Tudo certo!',
+            text: 'Senha alterada com sucesso!',
         })
     </script>
 @endif

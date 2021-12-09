@@ -26,21 +26,26 @@ class loginController extends Controller
         $code = 'RC'. rand(1000, 20000000);
 
         $check = DB::table('users')
-            ->select('name')
+            ->select('name', 'email')
             ->where('email', '=', $request->email)
             ->get()->toArray();
 
         if ($check == null){
             return redirect()->back()->with('msg-error', '.')->withInput();
         }else{
+
+            $email = $check[0]->email;
+
             DB::table('users')
-                ->where('email', '=', $request->email)
+                ->where('email', '=', $email)
                 ->update(['code' => $code]);
 
-            Mail::send('Mail.reset', ['name' => $check[0]->name], function ($m){
+            $email = $check[0]->email;
+
+            Mail::send('Mail.reset', ['name' => $check[0]->name, 'code' => $code], function ($m) use($email){
                 $m->from('contato@e-pedidosdelivery.online', 'E-Pedidos');
                 $m->subject('Redefinição de senha');
-                $m->to('gabrielphp20@gmail.com');
+                $m->to($email);
             });
 
             return redirect()->route('insertCode')->with('msg-send', '.');
@@ -49,13 +54,13 @@ class loginController extends Controller
 
     public function updatePassword(Request $request)
     {
-//        if (strlen($request->code) < 6){
-//            return redirect()->back()->with('msg-error', 'Este código não existe, ou foi digitado incorretamente.');
-//        }elseif(strlen($request->password) < 5 or strlen($request->confirm) < 5){
-//            return redirect()->back()->with('msg-error', 'Você digitou uma senha inválida. Use pelo menos 5 dígitos.');
-//        }elseif($request->password != $request->confirm){
-//            return redirect()->back()->with('msg-error', 'As senhas não conferem, digite novamente.');
-//        }
+        if (strlen($request->code) < 6){
+            return redirect()->back()->with('msg-error', 'Este código não existe, ou foi digitado incorretamente.');
+        }elseif(strlen($request->password) < 5 or strlen($request->confirm) < 5){
+            return redirect()->back()->with('msg-error', 'Você digitou uma senha inválida. Use pelo menos 5 dígitos.');
+        }elseif($request->password != $request->confirm){
+            return redirect()->back()->with('msg-error', 'As senhas não conferem, digite novamente.');
+        }
 
         $checkEmail = DB::table('users')
             ->select('code')
@@ -64,14 +69,14 @@ class loginController extends Controller
 
         if ($checkEmail == null){
             return redirect()->back()->with('msg-error', 'Este e-mail não está cadastrado em nossa base de dados.')->withInput();
-        }elseif($checkEmail[0]->code == null){
+        }elseif($checkEmail[0]->code == null or $checkEmail[0]->code != $request->code){
             return redirect()->back()->with('msg-error', 'Este código não existe, ou foi digitado incorretamente.')->withInput();
         }
 
         DB::table('users')
             ->where('email', '=', $request->email)
-            ->update(['password' => bcrypt($request->password)]);
+            ->update(['password' => bcrypt($request->password), 'code' => null]);
 
-        return redirect()->route('entrar')->with('msg', 'Senha alterada com sucesso!');
+        return redirect()->route('entrar')->with('msg-success', '.');
     }
 }

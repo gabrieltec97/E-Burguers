@@ -24,11 +24,11 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <input type="email" value="{{ old('email') }}" class="form-control w-100" name="email">
+                                    <input type="email" value="{{ old('email') }}" class="form-control w-100" name="email" required>
                                 </div>
 
                                 <div class="col-12 mt-3">
-                                    <button type="submit" class="btn btn-primary send-mail">Enviar e-mail de redefinição de senha</button>
+                                    <button type="submit" style="margin-bottom: -22px" class="btn btn-primary send-mail">Enviar e-mail de redefinição de senha</button>
                                 </div>
                             </div>
                         </form>

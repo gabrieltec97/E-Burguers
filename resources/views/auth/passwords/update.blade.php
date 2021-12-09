@@ -1,6 +1,7 @@
 @extends('layouts.app')
 <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 <script src="https://kit.fontawesome.com/e656fe6405.js" crossorigin="anonymous"></script>
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
 @section('content')
     <div class="container">
@@ -64,26 +65,29 @@
 
     @if(session('msg-send'))
         <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 12000,
-                timerProgressBar: true
-            })
-
-            Toast.fire({
+            Swal.fire({
+                title: 'Verifique seu e-mail',
+                text: 'Foi enviado um código para o seu e-mail. Caso não encontre-o, verifique na caixa de spam, ou aguarde 3 minutos.',
                 icon: 'success',
-                title: 'Foi enviado um código para o seu e-mail. Caso não encontre-o, verifique a caixa de spam de seu e-mail.'
+                confirmButtonColor: '#3085d6',
+                timer: 14000,
+                timerProgressBar: true,
+                confirmButtonText: 'Ok'
             })
         </script>
     @endif
 
     @if(session('msg-error'))
+
+        <button value="{{ session('msg-error') }}" class="msg-error" hidden></button>
+
         <script>
+
+            let msgError = $(".msg-error").val();
+
             Swal.fire({
                 title: 'Senha não alterada',
-                text: {{ session('msg-error') }},
+                text: msgError,
                 icon: 'error',
                 confirmButtonColor: '#3085d6',
                 timer: 12000,
