@@ -1,5 +1,6 @@
 <?php
 
+use App\Adverts;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +17,46 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $foods = \App\Adverts::where('foodType', 'Pizza')->get();
-    $drinks = \App\Adverts::where('foodType', 'Bebida')->get();
-    $foods2 = \App\Adverts::all();
+    $rate = DB::table('lock_rating')
+        ->get();
 
-    return view('welcome', compact('foods', 'drinks', 'foods2'));
+    if (isset($rate[0])){
+        $rate = $rate[0]->lock;
+    }else{
+        $rate = "Não";
+    }
+
+    $pizzas = DB::table('adverts')
+        ->where('foodType', '=', 'Pizza')
+        ->get()->toArray();
+
+    $drinks = DB::table('adverts')
+        ->where('foodType', '=', 'Bebida')
+        ->get()->toArray();
+
+    $desserts = DB::table('adverts')
+        ->where('foodType', '=', 'Sobremesa')
+        ->get()->toArray();
+
+    $foods = Adverts::all();
+
+    foreach ($foods as $food){
+        $foodFormat = explode(',', $food->extras);
+        $one = array();
+        foreach ($foodFormat as $t){
+            $extra = DB::table('extras')
+                ->select('namePrice')
+                ->where('name', '=', $t)
+                ->get()->toArray();
+
+            foreach ($extra as $ext){
+                array_push($one, $ext->namePrice);
+                $food->extras = $one;
+            }
+        }
+    }
+
+    return view('welcome', compact('pizzas', 'drinks', 'desserts', 'rate', 'foods'));
 })->name('welcome');
 
 //Rotas de redefinição de senha.

@@ -11106,6 +11106,10 @@ a.text-dark:focus {
         height: 400px;
     }
 
+    #section1{
+        height: 530px;
+    }
+
     .recover-card{
         width: 450px;
     }
@@ -11138,7 +11142,7 @@ a.text-dark:focus {
     }
 
     .navbar-login{
-        opacity: 0.8;
+        background-color: #c51f1a;
     }
 
     .btn-mobile{
@@ -11302,12 +11306,20 @@ a.text-dark:focus {
         height: 230px;
     }
 
+    .verifica-card{
+        margin-top: -40px;
+    }
+
     .fixo, .pedir-desktop{
         display: none;
     }
 
-    .cardapio-dsk{
-        display: none;
+    .mybreadcrumb{
+        background-color: #d02525;
+    }
+
+    .b-items{
+        color: white;
     }
 
     .copyRights{
@@ -11572,6 +11584,3 @@ html, body{
         height: 300px;
     }
 }
-
-
-

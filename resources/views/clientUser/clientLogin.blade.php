@@ -27,13 +27,15 @@
 <body style="background-image: url({{ asset('logo/mybg.jpg') }}); background-size: cover;">
 <div id="app">
 
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm navbar-login">
+    <nav class="navbar navbar-expand-md bg-danger shadow-sm navbar-login">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                <span class="text-white">
+                    Pizzaria Megatonne
+                </span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <i class="fas fa-bars text-white"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -47,7 +49,7 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: black">Página inicial</a>
+                            <a class="nav-link" href="#" style="color: white">Página inicial</a>
                         </li>
                     @else
                         <li class="nav-item dropdown">
