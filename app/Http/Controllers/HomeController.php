@@ -164,33 +164,7 @@ class HomeController extends Controller
             }
         }
 
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus == null){
-            DB::table('delivery_status')
-                ->insert(['id' => 1, 'status' => 'Fechado']);
-        }
-
-        //Permitindo mostrar as avaliações e inserindo senha de proteção à rota ACL.
-        $lock = DB::table('lock_rating')
-            ->get()->toArray();
-
-        if (count($lock) == 0){
-            DB::table('lock_rating')
-                ->insert(
-                    ['id'=> 1, 'lock' => "Sim", 'lockAuth' => 'Sim', 'password' => '7sPa)@x%p,aXbzX?E48X\Z=CD']);
-        }
-
-        $registered = DB::table('orders')->where('status', '=', 'Pedido registrado')->get()->toArray();
-        $prepare = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->orWhere('status', '=', 'Pedido registrado')->get()->toArray();
-        $total = DB::table('orders')->where('status', '=', 'Em preparo')->orWhere('status', '=', 'Pronto')->get()->toArray();
-        $prepareCount = DB::table('orders')->where('status', '=', 'Pronto')->get()->toArray();
-        $ready = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get()->toArray();
-        $totalReady = DB::table('orders')->where('status', '=', 'Em rota de entrega')->orWhere('status', '=', 'Pronto para ser retirado no restaurante')->get()->toArray();
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-        $deliverMen = DeliveryMan::all();
-
-        return view('home', compact('registered', 'deliverMen', 'deliveryStatus', 'prepare', 'ready', 'prepareCount', 'total', 'totalReady'));
+        return redirect()->back();
     }
 
     public function hybridHome()

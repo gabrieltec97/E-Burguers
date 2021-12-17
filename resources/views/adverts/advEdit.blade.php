@@ -108,21 +108,21 @@
         <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle">Atenção!</h5>
+                    <div class="modal-header" style="background-color: #343a40">
+                        <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle" style="color: white">Deletar item</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                      <span class="text-danger font-weight-bold">
+                      <h6 style="color: black;">
                         Você está deletando este anúncio, com isso ele não ficará mais disponível no cardápio e também não
                           poderá ser recuperado. Tem certeza que deseja prosseguir?
-                      </span>
+                      </h6>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success font-weight-bold" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger font-weight-bold">Deletar</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger delete-item">Deletar</button>
                     </div>
                 </div>
             </div>

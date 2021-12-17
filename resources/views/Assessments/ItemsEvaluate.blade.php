@@ -277,18 +277,6 @@
     <script>
         $(function() {
 
-            // $(document).on({
-            //     mouseover: function(event) {
-            //         $(this).find('.far').addClass('star-over');
-            //         $(this).prevAll().find('.far').addClass('star-over');
-            //     },
-            //     mouseleave: function(event) {
-            //         $(this).find('.far').removeClass('star-over');
-            //         $(this).prevAll().find('.far').removeClass('star-over');
-            //     }
-            // }, '.rate');
-
-
             $(document).on('click', '.rate', function() {
                 if ( !$(this).find('.star').hasClass('rate-active') ) {
                     $(this).siblings().find('.star').addClass('far').removeClass('fas rate-active');
@@ -310,7 +298,7 @@
                 position: 'top-end',
                 toast: true,
                 showConfirmButton: false,
-                timer: 12000,
+                timer: 6000,
                 timerProgressBar: true
             })
         </script>
@@ -328,7 +316,7 @@
                 if (click == 'Nao'){
                     window.location.href = "{{ route('preparo.index') }}";
                 }
-            }, 5000);
+            }, 3000);
         </script>
     @endif
 @endsection

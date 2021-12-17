@@ -30,12 +30,11 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <label style="color: black;" class="font-weight-bold">Tipo de refeição</label>
-                                        <select class="form-select tipoRef {{ ($errors->has('empAddress') ? 'is-invalid' : '') }}" name="tipoRef" required>
+                                        <select class="form-select tipoRef {{ ($errors->has('tipoRef') ? 'is-invalid' : '') }}" name="tipoRef" required>
                                             <option value="" selected hidden>Selecione</option>
-{{--                                            <option value="Acompanhamento" {{ old('empOccupation') == 'Administrador' ? 'selected' : '' }}>Porção</option>--}}
-                                            <option value="Bebida" {{ old('empOccupation') == 'Atendente' ? 'selected' : '' }}>Bebida</option>
-                                            <option value="Pizza" {{ old('empOccupation') == 'Cozinheiro' ? 'selected' : '' }}>Pizza</option>
-                                            <option value="Sobremesa" {{ old('empOccupation') == 'Garçom' ? 'selected' : '' }}>Sobremesa</option>
+                                            <option value="Bebida" {{ old('tipoRef') == 'Bebida' ? 'selected' : '' }}>Bebida</option>
+                                            <option value="Pizza" {{ old('tipoRef') == 'Pizza' ? 'selected' : '' }}>Pizza</option>
+                                            <option value="Sobremesa" {{ old('tipoRef') == 'Sobremesa' ? 'selected' : '' }}>Sobremesa</option>
                                         </select>
                                         @if($errors->has('empOccupation'))
                                             <div class="invalid-feedback">
@@ -68,12 +67,41 @@
                                         <label class="font-weight-bold" style="color: black;">Sabores</label>
                                         <br>
                                         <input type="text" class="form-control ingredientes" placeholder="Uva, Morango, Natural" name="sabores">
-                                        <label class="text-primary font-weight-bold mt-2 verifica-ingredientes" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
+                                        <label class="text-primary font-weight-bold mt-2 verifica-ingredientes {{ ($errors->has('sabores') ? 'is-invalid' : '') }}" value="{{ old('sabores') }}" style="font-size: 13.7px">Insira-os separando por vírgulas<span class="exemplo"> como no exemplo acima</span>.</label>
+                                        @if($errors->has('sabores'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('sabores') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-12 col-lg-4 mt-3 sizes">
+                                        <label class="font-weight-bold {{ ($errors->has('size') ? 'is-invalid' : '') }}" style="color: black;">Tamanho</label>
+                                        <br>
+                                        <select name="size" class="form-select">
+                                            <option value="Pequena" {{ old('size') == 'Pequena' ? 'selected' : '' }}>Pequena</option>
+                                            <option value="Média" {{ old('size') == 'Média' ? 'selected' : '' }}>Média</option>
+                                            <option value="Grande" {{ old('size') == 'Grande' ? 'selected' : '' }}>Grande</option>
+                                            <option value="Família" {{ old('size') == 'Família' ? 'selected' : '' }}>Família</option>
+                                            <option value="Gigante" {{ old('size') == 'Gigante' ? 'selected' : '' }}>Gigante</option>
+                                            <option value="Maracanã" {{ old('size') == 'Maracanã' ? 'selected' : '' }}>Maracanã</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 col-lg-4 mt-3 cmsizes">
+                                        <label class="font-weight-bold" style="color: black;">Tamanho da pizza (cm)</label>
+                                        <br>
+                                        <input type="number" class="form-control cmsize {{ ($errors->has('cmsize') ? 'is-invalid' : '') }}" value="{{ old('cmsize') }}" placeholder="Cm" name="cmsize">
+                                        @if($errors->has('cmsize'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('cmsize') }}</span>
+                                            </div>
+                                        @endif
                                     </div>
 
                                     <div class="col-12 mt-3">
                                         <label style="color: black;" class="font-weight-bold">Descrição</label>
-                                        <textarea name="mealDescription" title="Breve texto que informa as características da refeição. Mínimo 70 e máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}">{{ old('mealDescription') }}</textarea>
+                                        <textarea name="mealDescription" title="Breve texto que informa as características da refeição. Mínimo 70 e máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}">{{ old('mealDescription') }}Deliciosa pizza de [SABOR] com [TAMANHO]cm. Pizza [TAMANHO (PEQUENA, MÉDIA)] que serve X pedaços.</textarea>
                                         <label class="text-primary font-weight-bold mt-2 total-char">Total de caracteres: <span class="contagem font-weight-bolder"></span></label><br>
                                         <label class="text-primary font-weight-bold lbl-alerta">A descrição deve conter no mínimo 70 e no máximo 90 caracteres.</label>
                                         @if($errors->has('mealDescription'))
@@ -88,7 +116,6 @@
                                         <input type="file" name="advPhoto" accept=".png, .jpg, .jpeg, .gif">
                                     </div>
                                 </div>
-
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">

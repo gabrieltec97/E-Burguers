@@ -1,11 +1,11 @@
 $(function () {
-    $(".div-pizzas, .div-drinks, .div-desserts").hide();
 
 // Ajuste de imagem de usuário no menu lateral.
 $(".div-img-user").hide();
 
 //Verificação de itens vendidos e cancelados hoje.
 $(".vendidos, .pedidos-cancelados").hide();
+
 
 //Mascara de horário de funcionamento
 $(".horarioFuncionamento").mask('00:00');
@@ -16,7 +16,9 @@ $(".hamburger").click(function () {
         $(".div-img-user").toggle('medium');
     }, 300)
 
-})
+});
+
+    $(".div-pizzas, .div-drinks, .div-desserts, .div-medium-pizzas, .div-large-pizzas").hide();
 
 //Ajuste em carrinho do menu superior
 $(".hamburger-menu").on("click", function (){
@@ -139,35 +141,35 @@ $(".select-cargo").change(function () {
 
 $(".verificaPreco").hide();
 
-$(".impComboNao").on('click', function () {
-
-    if($(this).val() == 'Não'){
-        $(".valComboPromo").val('Esta refeição não participará do combo.');
-        $(".valComboPromo").attr('readonly', 'true');
-        $(".valComboPromo").css('cursor', 'not-allowed');
-        $(".verificaPreco").hide();
-    }
-})
-
-$(".impComboSim").on('click', function () {
-    $(".valComboPromo").val('');
-    $(".valComboPromo").removeAttr('readonly');
-    $(".valComboPromo").css('cursor', 'initial')
-})
-
+// $(".impComboNao").on('click', function () {
+//
+//     if($(this).val() == 'Não'){
+//         $(".valComboPromo").val('Esta refeição não participará do combo.');
+//         $(".valComboPromo").attr('readonly', 'true');
+//         $(".valComboPromo").css('cursor', 'not-allowed');
+//         $(".verificaPreco").hide();
+//     }
+// })
+//
+// $(".impComboSim").on('click', function () {
+//     $(".valComboPromo").val('');
+//     $(".valComboPromo").removeAttr('readonly');
+//     $(".valComboPromo").css('cursor', 'initial')
+// })
+//
     //Inserção de máscara de preço na view de cadastro de anuncio.
-    $(".valorRefeicao, .valComboPromo, .valComboPromo-edit, .taxaEntrega").keyup(function (){
+    $(".valorRefeicao, .taxaEntrega").keyup(function (){
         $(this).mask('000.00', {reverse: true});
     })
-
-$(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
-
-    if(parseInt($(".valComboPromo, .valComboPromo-edit").val()) >= parseInt($(".valorRefeicao, .valorRefeicao-edit").val())){
-        $(".verificaPreco").fadeIn('slow');
-    }else{
-        $(".verificaPreco").fadeOut('slow');
-    }
-});
+//
+// $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
+//
+//     if(parseInt($(".valComboPromo, .valComboPromo-edit").val()) >= parseInt($(".valorRefeicao, .valorRefeicao-edit").val())){
+//         $(".verificaPreco").fadeIn('slow');
+//     }else{
+//         $(".verificaPreco").fadeOut('slow');
+//     }
+// });
 
 //Colocando nome do cupom em maiúsculo.
 
@@ -286,9 +288,9 @@ $(".valComboPromo, .valComboPromo-edit").on('keyup', function () {
 
     $(".verifica-ingredientes").hide();
 
-    $(".valComboPromo, .nome-refeicao, .impComboSim, .impComboNao, .descricao, .valorRefeicao, .sabores-edit, .ingredientes-edit, .nome-refeicao-edit, .valorRefeicao-edi, .valComboPromo-edit, .descricao-edit").on("click", function (){
-        $(".verifica-ingredientes").fadeOut('slow');
-    })
+    // $(".valComboPromo, .nome-refeicao, .impComboSim, .impComboNao, .descricao, .valorRefeicao, .sabores-edit, .ingredientes-edit, .nome-refeicao-edit, .valorRefeicao-edi, .valComboPromo-edit, .descricao-edit").on("click", function (){
+    //     $(".verifica-ingredientes").fadeOut('slow');
+    // })
 
 $(".ingredientes, .ingredientes-edit, .sabores-edit").on("click", function () {
     $(".verifica-ingredientes").fadeIn('slow')
@@ -342,18 +344,18 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     $(".ingredientes2").text($(".ingredientes").val());
     $(".tipoRef2").text($(".tipoRef").val());
 
-    if($('input[name=combo]:checked', '.form-refeicao')){
-        var check = $('input[name=combo]:checked', '.form-refeicao').val()
-
-        $(".part-combo2").text(check);
-    }
-
-    if(check == 'Não'){
-        $(".p-valor-combo-2").hide();
-    }else{
-        $(".p-valor-combo-2").show();
-        $(".valor-combo2").text($(".valComboPromo").val());
-    }
+    // if($('input[name=combo]:checked', '.form-refeicao')){
+    //     var check = $('input[name=combo]:checked', '.form-refeicao').val()
+    //
+    //     $(".part-combo2").text(check);
+    // }
+    //
+    // if(check == 'Não'){
+    //     $(".p-valor-combo-2").hide();
+    // }else{
+    //     $(".p-valor-combo-2").show();
+    //     $(".valor-combo2").text($(".valComboPromo").val());
+    // }
 
     $(".descricao2").text($(".descricao").val());
 })
@@ -503,27 +505,27 @@ $(".btn-cadastrar-refeicao").on("click", function () {
         $(this).mask('000.00', {reverse: true});
     })
 
-    $(".valComboPromo-edit").on('keyup', function (){
-        $(this).mask('000.00', {reverse: true});
-    })
+    // $(".valComboPromo-edit").on('keyup', function (){
+    //     $(this).mask('000.00', {reverse: true});
+    // })
 
-    $(".impComboNao").on('click', function () {
-
-        if($(this).val() == 'Não'){
-            $(".valComboPromo-edit").val('Esta refeição não participará do combo.');
-            $(".valComboPromo-edit").attr('readonly', 'true');
-            $(".valComboPromo-edit").attr('title', 'Esta refeição não participará do combo.');
-            $(".valComboPromo-edit").css('cursor', 'not-allowed');
-            $(".verificaPreco").hide();
-        }
-    })
-
-    $(".impComboSim").on('click', function () {
-        $(".valComboPromo-edit").val('');
-        $(".valComboPromo-edit").removeAttr('readonly');
-        $(".valComboPromo-edit").attr('title', 'Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional.');
-        $(".valComboPromo-edit").css('cursor', 'initial')
-    });
+    // $(".impComboNao").on('click', function () {
+    //
+    //     if($(this).val() == 'Não'){
+    //         $(".valComboPromo-edit").val('Esta refeição não participará do combo.');
+    //         $(".valComboPromo-edit").attr('readonly', 'true');
+    //         $(".valComboPromo-edit").attr('title', 'Esta refeição não participará do combo.');
+    //         $(".valComboPromo-edit").css('cursor', 'not-allowed');
+    //         $(".verificaPreco").hide();
+    //     }
+    // })
+    //
+    // $(".impComboSim").on('click', function () {
+    //     $(".valComboPromo-edit").val('');
+    //     $(".valComboPromo-edit").removeAttr('readonly');
+    //     $(".valComboPromo-edit").attr('title', 'Se a refeição for fazer parte do combo, você deverá inserir um valor menor do que o valor dela fora do combo, assim fazendo um valor promocional.');
+    //     $(".valComboPromo-edit").css('cursor', 'initial')
+    // });
 
     $(".links-adverts").on('click', function (){
         console.log('click');
@@ -834,43 +836,21 @@ $(".forma-pagamento").on("change", function (){
 $(".tipoRef").on("change", function () {
 
     if ($(this).val() == 'Bebida'){
-        $(".igr").fadeOut('slow');
-        $(".itr").fadeOut('slow');
+        $(".sizes, .cmsizes").fadeOut('slow');
         $('.tastes').fadeIn('slow');
-        $(".comb").addClass('col-md-8');
 
     }else if ($(this).val() == 'Pizza'){
 
         $('.tastes').fadeOut('slow')
-        $(".igr").fadeIn('slow');
-        $(".itr").fadeIn('slow');
-        $(".comb").removeClass('col-md-8');
-        $(".comb").fadeIn('slow');
-        $(".combPart").fadeIn('slow');
-
-    }else if ($(this).val() == 'Acompanhamento'){
-
-        $(".igr").fadeOut('slow');
-        $(".itr").fadeOut('slow');
-        $(".tastes").fadeOut('slow');
-        $(".comb").addClass('col-md-8');
-        $(".comb").fadeIn('slow');
-        $(".combPart").fadeIn('slow');
+        $(".sizes, .cmsizes").fadeIn('slow');
 
     }else if ($(this).val('Sobremesa')){
 
-        $(".igr").fadeOut('slow');
-        $(".itr").fadeOut('slow');
+        $(".sizes, .cmsizes").fadeOut('slow');
         $(".tastes").fadeOut('slow');
-        $(".comb").fadeOut('slow');
-        $(".combPart").fadeOut('slow');
-
     }else{
         $(".igr").fadeIn('slow');
         $(".itr").fadeIn('slow');
-        $(".comb").removeClass('col-md-8');
-        $(".comb").fadeIn('slow');
-        $(".combPart").fadeIn('slow');
     }
 
 })
@@ -951,7 +931,7 @@ $(".valor-item-add").mask('000.00', {reverse: true});
     });
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .cad-horario, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .cad-horario, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .delete-item, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){

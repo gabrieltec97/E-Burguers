@@ -49,7 +49,7 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: white">Página inicial</a>
+                            <a class="nav-link" href="{{ route('welcome') }}" style="color: white">Página inicial</a>
                         </li>
                     @else
                         <li class="nav-item dropdown">
@@ -143,9 +143,9 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-12 col-lg-6">
-                                            <label for="name" class="font-weight-bold">{{ __('Name') }}</label>
+                                            <label for="name" class="font-weight-bold">Nome e sobrenome</label>
 
-                                            <input id="name" type="text" placeholder="Nome e sobrenome" class="form-control w-100 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus required>
+                                            <input id="name" type="text" placeholder="Nome e um sobrenome" class="form-control w-100 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus required>
 
                                             @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -166,10 +166,10 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 mt-2 col-lg-9">
+                                        <div class="col-12 mt-2 col-lg-6">
                                             <label for="name" class="font-weight-bold">{{ __('Endereço') }}</label>
 
-                                            <input id="address" type="text" placeholder="O local onde será entregue o pedido." class="form-control w-100 @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" autocomplete="address" autofocus required>
+                                            <input id="address" type="text" placeholder="O endereço onde será entregue." class="form-control w-100 @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" autocomplete="address" autofocus required>
 
                                             @error('address')
                                             <span class="invalid-feedback" role="alert">
@@ -178,10 +178,10 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 mt-2 col-lg-3">
-                                            <label for="name" class="font-weight-bold">{{ __('Nº') }}</label>
+                                        <div class="col-12 mt-2 col-lg-6">
+                                            <label for="name" class="font-weight-bold">Nº da residência (Complemento)</label>
 
-                                            <input id="adNumber" type="number" placeholder="Número da residência" class="form-control w-100 @error('adNumber') is-invalid @enderror" name="adNumber" value="{{ old('adNumber') }}" autocomplete="adNumber" autofocus required>
+                                            <input id="adNumber" type="text" placeholder="Número da residência" class="form-control w-100 @error('adNumber') is-invalid @enderror" name="adNumber" value="{{ old('adNumber') }}" autocomplete="adNumber" autofocus required>
 
                                             @error('adNumber')
                                             <span class="invalid-feedback" role="alert">

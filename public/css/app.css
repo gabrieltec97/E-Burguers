@@ -11106,6 +11106,10 @@ a.text-dark:focus {
         height: 400px;
     }
 
+    .opc-mobile{
+        display: none;
+    }
+
     #section1{
         height: 530px;
     }
@@ -11306,6 +11310,14 @@ a.text-dark:focus {
         height: 230px;
     }
 
+    .opc-desktop{
+        display: none;
+    }
+
+    .saudacao{
+        margin-left: -15px;
+    }
+
     .verifica-card{
         margin-top: -40px;
     }
@@ -11335,7 +11347,7 @@ a.text-dark:focus {
     }
 
     .nav-start{
-        background-color: #c51f1a;
+        background-color: #e11315;
     }
 
     #section1{

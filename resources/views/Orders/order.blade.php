@@ -25,6 +25,9 @@
                                     <label {{ $order->status == 'Cancelado' ? 'text-danger' : 'text-success'}} class="font-weight-bold" style="color: black; font-size: 17px">Status: <span class="font-weight-normal {{ $order->status == 'Cancelado' ? 'text-danger' : 'text-success' }}" style="font-size: 16px">{{ $order->status }}</span></label><br>
                                     <label class="font-weight-bold" style="color: black; font-size: 17px;">Tipo de pedido: <span class="font-weight-normal" style="font-size: 16px">{{ $order->orderType }}</span></label><br>
                                     <label class="font-weight-bold" style="color: black; font-size: 17px;">Tipo de entrega: <span class="font-weight-normal" style="font-size: 16px">{{ $order->deliverWay }}</span></label><br>
+                                    @if($order->deliverWay == 'Entrega em domicílio')
+                                        <label class="font-weight-bold" style="color: black; font-size: 17px;">Entregue em: <span class="font-weight-normal" style="font-size: 16px">{{ $order->address }}</span></label><br>
+                                    @endif
                                     <label class="font-weight-bold" style="color: black; font-size: 17px;">Método de pagamento: <span class="font-weight-normal" style="font-size: 16px">{{ $order->payingMethod }}</label><br>
                                     @if($order->deliverMan != null)
                                     <label class="font-weight-bold" style="color: black">Entregador: <span class="font-weight-normal">{{ $order->deliverMan }}</span></label><br>
@@ -77,8 +80,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 @endsection

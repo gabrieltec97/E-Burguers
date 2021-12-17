@@ -186,11 +186,11 @@
                             ?>
 
                             @if($hora >= 5 && $hora < 12)
-                                <span class="mr-2 d-none d-lg-inline small font-weight-bold" style="font-size: 15px; color: black">Bom dia, {{ $usuario }}</span>
+                                <span class="mr-2 font-weight-bold" style="font-size: 15px; color: black">Bom dia, {{ $usuario }}</span>
                             @elseif($hora >= 12 && $hora < 18)
-                                <span class="mr-2 d-none d-lg-inline small font-weight-bold" style="font-size: 15px; color: black"> Boa tarde, {{ $usuario }} &nbsp;</span>
+                                <span class="mr-2 font-weight-bold" style="font-size: 15px; color: black"> Boa tarde, {{ $usuario }} &nbsp;</span>
                             @else
-                                <span class="mr-2 d-none d-lg-inline small font-weight-bold" style="font-size: 15px; color: black">Boa noite, {{ $usuario }}</span>
+                                <span class="mr-2 font-weight-bold" style="font-size: 15px; color: black">Boa noite, {{ $usuario }}</span>
                             @endif
                                 <i class=" mb-2 fas fa-sort-down"></i>
                         </a>

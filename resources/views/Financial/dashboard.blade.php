@@ -95,9 +95,10 @@
             <?php
 
             if ($totalValue > 0){
-                $pieces = explode('.', $totalValue);
+                $vals = explode('.', $totalValue);
 
-                $pieces = strlen($pieces[0]);
+                $pieces = strlen($vals[0]);
+                $piecesAfter = strlen($vals[1]);
             }else{
                 $pieces = 0;
             }
@@ -112,8 +113,13 @@
                 $totalPrice = $totalValue. '0';
             }elseif($count2 == 3){
                 $totalPrice = $totalValue . '0';
-            }elseif($pieces > 3){
+            }elseif($pieces == 5  && $count2 >= 6 && $piecesAfter < 2){
                 $totalPrice = $totalValue . '0';
+            }elseif($pieces == 4  && $count2 >= 6 && $piecesAfter < 2){
+                $totalPrice = $totalValue . '0';
+            }
+            elseif($pieces > 3 && $count2 >= 6){
+                $totalPrice = $totalValue;
             }
             else{
                 $totalPrice = $totalValue;

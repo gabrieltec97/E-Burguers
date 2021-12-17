@@ -171,76 +171,76 @@ class TrayController extends Controller
         //Verificando se o usuário possui um pedido.
         $verifyOrder = Auth::user()->userOrderTray()->get()->first();
 
-        if(isset($request['ingredients'])){
-            $requirements = implode(', ', $request['ingredients']);
-        }
+//        if(isset($request['ingredients'])){
+//            $requirements = implode(', ', $request['ingredients']);
+//        }
 
         if ($verifyOrder == null){
 
-            if (isset ($request->extras)){
-
-                $order = new Tray();
-                $order->idClient = $user;
-                $order->orderType = "Avulso";
-                $order->day = date('d/m/Y');
-                $order->hour = date('H:i');
-
-                //Buscando acompanhamento.
-                $extras = [];
-                $valorNovo = 0;
-
-                foreach ($request->extras as $ex){
-                    $extra = DB::table('extras')
-                        ->select('name')
-                        ->where('namePrice', '=', $ex)
-                        ->get()->toArray();
-
-                    foreach ($extra as $e => $value){
-                        array_push($extras, $value);
-                    }
-                }
-
-                //Somando os valores dos itens adicionais
-                foreach ($request->extras as $exts){
-                    $vals = DB::table('extras')
-                        ->select('price')
-                        ->where('namePrice', '=', $exts)
-                        ->get()->toArray();
-
-                    foreach ($vals as $v => $vls){
-                        $valorNovo += doubleval($vls->price);
-                    }
-                }
-
-                //Ajustando o array que recebe os itens adicionais
-                $add = [];
-
-                foreach ($extras as $ext => $val){
-                    array_push($add, $val->name);
-                }
-
-                $addItems = implode(', ', $add);
-
-                $order->extras = $addItems;
-                $order->totalValue = $item->value + $valorNovo;
-                $order->valueWithoutDisccount = $item->value + $valorNovo;
-
-                $order->save();
-
-                $auxItems = new AuxiliarDetached();
-                $auxItems->item = $item->name;
-                $auxItems->idOrder = $order->id;
-                $auxItems->foodType = $item->foodType;
-
-                if (isset($requirements)){
-                    $auxItems->extras = $item->name;
-                }
-
-                $auxItems->nameExtra = $addItems;
-                $auxItems->valueWithExtras = $item->value + $valorNovo;
-                $auxItems->save();
-
-            }else{
+//            if (isset ($request->extras)){
+//
+//                $order = new Tray();
+//                $order->idClient = $user;
+//                $order->orderType = "Avulso";
+//                $order->day = date('d/m/Y');
+//                $order->hour = date('H:i');
+//
+//                //Buscando acompanhamento.
+//                $extras = [];
+//                $valorNovo = 0;
+//
+//                foreach ($request->extras as $ex){
+//                    $extra = DB::table('extras')
+//                        ->select('name')
+//                        ->where('namePrice', '=', $ex)
+//                        ->get()->toArray();
+//
+//                    foreach ($extra as $e => $value){
+//                        array_push($extras, $value);
+//                    }
+//                }
+//
+//                //Somando os valores dos itens adicionais
+//                foreach ($request->extras as $exts){
+//                    $vals = DB::table('extras')
+//                        ->select('price')
+//                        ->where('namePrice', '=', $exts)
+//                        ->get()->toArray();
+//
+//                    foreach ($vals as $v => $vls){
+//                        $valorNovo += doubleval($vls->price);
+//                    }
+//                }
+//
+//                //Ajustando o array que recebe os itens adicionais
+//                $add = [];
+//
+//                foreach ($extras as $ext => $val){
+//                    array_push($add, $val->name);
+//                }
+//
+//                $addItems = implode(', ', $add);
+//
+//                $order->extras = $addItems;
+//                $order->totalValue = $item->value + $valorNovo;
+//                $order->valueWithoutDisccount = $item->value + $valorNovo;
+//
+//                $order->save();
+//
+//                $auxItems = new AuxiliarDetached();
+//                $auxItems->item = $item->name;
+//                $auxItems->idOrder = $order->id;
+//                $auxItems->foodType = $item->foodType;
+//
+//                if (isset($requirements)){
+//                    $auxItems->extras = $item->name;
+//                }
+//
+//                $auxItems->nameExtra = $addItems;
+//                $auxItems->valueWithExtras = $item->value + $valorNovo;
+//                $auxItems->save();
+//
+//            }else{
 
                 //Inserindo itens sem extras.
                 $order = new Tray();
@@ -266,12 +266,12 @@ class TrayController extends Controller
                     $itemWithoutExtras->itemName = $item->name;
                 }else{
                     $itemWithoutExtras->itemName = $item->name;
-                    $itemWithoutExtras->item = $item->name . ' sabor: ' . $request->sabor;
+                    $itemWithoutExtras->item = $item->name . ' - Sabor: ' . $request->sabor;
                 }
 
                 $itemWithoutExtras->value = $item->value;
                 $itemWithoutExtras->save();
-            }
+//            }
 
             return redirect()->route('cardapio', $insert = 'added')->with('scroll', $scroll);
 
@@ -279,67 +279,67 @@ class TrayController extends Controller
 
             $order = Tray::find($verifyOrder->id);
 
-            if (isset ($request->extras)) {
-                //Buscando acompanhamento.
-                $extras = [];
-                $valorNovo = 0;
-
-                foreach ($request->extras as $ex) {
-                    $extra = DB::table('extras')
-                        ->select('name')
-                        ->where('namePrice', '=', $ex)
-                        ->get()->toArray();
-
-                    foreach ($extra as $e => $value) {
-                        array_push($extras, $value);
-                    }
-                }
-
-                //Somando os valores dos itens adicionais
-                foreach ($request->extras as $exts) {
-                    $vals = DB::table('extras')
-                        ->select('price')
-                        ->where('namePrice', '=', $exts)
-                        ->get()->toArray();
-
-                    foreach ($vals as $v => $vls) {
-                        $valorNovo += doubleval($vls->price);
-                    }
-                }
-
-                //Ajustando o array que recebe os itens adicionais
-
-                $add = [];
-
-                foreach ($extras as $ext => $val) {
-                    array_push($add, $val->name);
-                }
-
-                $addItems = implode(', ', $add);
-
-                $order->extras = $addItems;
-                if ($order->disccountUsed != null){
-                    $order->valueWithoutDisccount = $order->valueWithoutDisccount + $item->value + $valorNovo;
-                }else{
-                    $order->valueWithoutDisccount = $order->totalValue + $item->value + $valorNovo;
-                }
-                $order->totalValue = $order->totalValue + $item->value + $valorNovo;
-                $order->save();
-
-                $auxItems = new AuxiliarDetached();
-                $auxItems->item = $item->name;
-                $auxItems->idOrder = $order->id;
-                $auxItems->foodType = $item->foodType;
-
-                if (isset($requirements)) {
-                    $auxItems->extras = $item->name;
-                }
-
-                $auxItems->nameExtra = $addItems;
-                $auxItems->valueWithExtras = $item->value + $valorNovo;
-                $auxItems->save();
-
-            }else{
+//            if (isset ($request->extras)) {
+//                //Buscando acompanhamento.
+//                $extras = [];
+//                $valorNovo = 0;
+//
+//                foreach ($request->extras as $ex) {
+//                    $extra = DB::table('extras')
+//                        ->select('name')
+//                        ->where('namePrice', '=', $ex)
+//                        ->get()->toArray();
+//
+//                    foreach ($extra as $e => $value) {
+//                        array_push($extras, $value);
+//                    }
+//                }
+//
+//                //Somando os valores dos itens adicionais
+//                foreach ($request->extras as $exts) {
+//                    $vals = DB::table('extras')
+//                        ->select('price')
+//                        ->where('namePrice', '=', $exts)
+//                        ->get()->toArray();
+//
+//                    foreach ($vals as $v => $vls) {
+//                        $valorNovo += doubleval($vls->price);
+//                    }
+//                }
+//
+//                //Ajustando o array que recebe os itens adicionais
+//
+//                $add = [];
+//
+//                foreach ($extras as $ext => $val) {
+//                    array_push($add, $val->name);
+//                }
+//
+//                $addItems = implode(', ', $add);
+//
+//                $order->extras = $addItems;
+//                if ($order->disccountUsed != null){
+//                    $order->valueWithoutDisccount = $order->valueWithoutDisccount + $item->value + $valorNovo;
+//                }else{
+//                    $order->valueWithoutDisccount = $order->totalValue + $item->value + $valorNovo;
+//                }
+//                $order->totalValue = $order->totalValue + $item->value + $valorNovo;
+//                $order->save();
+//
+//                $auxItems = new AuxiliarDetached();
+//                $auxItems->item = $item->name;
+//                $auxItems->idOrder = $order->id;
+//                $auxItems->foodType = $item->foodType;
+//
+//                if (isset($requirements)) {
+//                    $auxItems->extras = $item->name;
+//                }
+//
+//                $auxItems->nameExtra = $addItems;
+//                $auxItems->valueWithExtras = $item->value + $valorNovo;
+//                $auxItems->save();
+//
+//            }else{
 
                 $updated = Tray::find($verifyOrder->id);
 
@@ -357,7 +357,7 @@ class TrayController extends Controller
                     $itemWithoutExtras->itemName = $item->name;
                 }else{
                     $itemWithoutExtras->itemName = $item->name;
-                    $itemWithoutExtras->item = $item->name . ' sabor: ' . $request->sabor;
+                    $itemWithoutExtras->item = $item->name . ' - Sabor: ' . $request->sabor;
                 }
 
                 $itemWithoutExtras->value = $item->value;
@@ -377,896 +377,896 @@ class TrayController extends Controller
 
             return redirect()->route('cardapio', $insert = 'added')->with('scroll', $scroll);
         }
-    }
-
-    public function addExtraItem(Request $request, $id)
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        //Verificando se o item está ativo.
-        $itemCheckStatus = DB::table('item_without_extras')
-            ->where('id', '=', $id)
-            ->get()->toArray();
-
-        $itemWExtrasValue = DB::table('item_without_extras')
-            ->where('itemName', '=', $itemCheckStatus[0]->itemName)
-            ->get()->toArray();
-
-        $itemWithExtrasValue = DB::table('auxiliar_detacheds')
-            ->where('Item', '=', $itemCheckStatus[0]->itemName)
-            ->get()->toArray();
-
-        $checkStatus = DB::table('adverts')
-            ->select('status')
-            ->where('name', '=', $itemCheckStatus[0]->itemName)
-            ->get()->toArray();
-
-        if ($checkStatus[0]->status == 'Inativo'){
-
-            //Abatendo de valor na tabela de pedidos.
-            $currentItemsVal = 0;
-
-            foreach ($itemWExtrasValue as $i){
-                $currentItemsVal += $i->value;
-            }
-
-            foreach ($itemWithExtrasValue as $iwt){
-                $currentItemsVal += $iwt->valueWithExtras;
-            }
-
-            $myTray = Tray::find($itemCheckStatus[0]->idOrder);
-            $myTray->totalValue -= $currentItemsVal;
-            $myTray->valueWithoutDisccount -= $currentItemsVal;
-
-            if ($myTray->valueWithoutDeliver != null){
-                $myTray->valueWithoutDeliver -= $currentItemsVal;
-            }
-
-            $myTray->extras = null;
-            $myTray->save();
-
-            //Deletando o item das duas tabelas.
-            DB::table('auxiliar_detacheds')
-                ->where('Item', '=', $itemCheckStatus[0]->itemName)
-                ->delete();
-
-            DB::table('item_without_extras')
-                ->where('itemName', '=', $itemCheckStatus[0]->itemName)
-                ->delete();
-
-            return redirect()->back()->with('msg-dstv', $itemCheckStatus[0]->itemName);
-        }
-
-       //Buscando os itens e os formatando para entrar na tabela.
-       $extras = array();
-       $price = 0;
-
-       foreach ($request->ingredients as $ingredient){
-
-           $query = DB::table('extras')
-               ->select('name', 'price')
-               ->where('namePrice', '=', $ingredient)
-               ->get()->toArray();
-
-           array_push($extras, $query[0]->name);
-           $price += $query[0]->price;
-       }
-
-       $extras = implode(', ', $extras);
-
-       $item = ItemWithoutExtras::find($id);
-
-       $newExtraItem = new AuxiliarDetached();
-       $newExtraItem->idOrder = $item->idOrder;
-       $newExtraItem->foodType = $item->foodType;
-       $newExtraItem->item = $item->itemName;
-       $newExtraItem->Extras = $item->item;
-       $newExtraItem->nameExtra = $extras;
-       $newExtraItem->valueWithExtras = $item->value + $price;
-       $newExtraItem->save();
-
-        $myOrder= Auth::user()->userOrderTray()->select('id', 'totalValue')->get()->first()->toArray();
-
-        DB::table('trays')
-            ->where('id', '=', $myOrder['id'])
-            ->update(['totalValue' => $myOrder['totalValue'] + $price]);
-
-        $item->delete();
-
-        return redirect()->back()->with('msg-2', ' ');
-
-    }
-
-    public function removePersonalized($id)
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        $personalized = AuxiliarDetached::find($id);
-        $order = Tray::find($personalized->idOrder);
-
-        $order->totalValue = $order->totalValue - $personalized->valueWithExtras;
-        $order->save();
-
-        $orderDelete = Tray::find($personalized->idOrder);
-
-        if ($orderDelete->totalValue == 0){
-            $orderDelete->delete();
-        }
-        $personalized->delete();
-
-        return redirect()->back()->with('msg', ' ');
-    }
-
-    public function editPersonalized(Request $req, $id)
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        //Verificando se o item está ativo.
-        $itemCheckStatus = DB::table('auxiliar_detacheds')
-            ->where('id', '=', $id)
-            ->get()->toArray();
-
-        $itemWExtrasValue = DB::table('auxiliar_detacheds')
-            ->where('Item', '=', $itemCheckStatus[0]->Item)
-            ->get()->toArray();
-
-        $itemWithoutExtrasValue = DB::table('item_without_extras')
-            ->where('itemName', '=', $itemCheckStatus[0]->Item)
-            ->get()->toArray();
-
-        $checkStatus = DB::table('adverts')
-            ->select('status')
-            ->where('name', '=', $itemCheckStatus[0]->Item)
-            ->get()->toArray();
-
-        if ($checkStatus[0]->status == 'Inativo'){
-
-            //Abatendo de valor na tabela de pedidos.
-            $currentItemsVal = 0;
-
-            foreach ($itemWExtrasValue as $i){
-                $currentItemsVal += $i->valueWithExtras;
-            }
-
-            foreach ($itemWithoutExtrasValue as $iwth){
-                $currentItemsVal += $iwth->value;
-            }
-
-            $myTray = Tray::find($itemCheckStatus[0]->idOrder);
-            $myTray->totalValue -= $currentItemsVal;
-            $myTray->valueWithoutDisccount -= $currentItemsVal;
-
-            if ($myTray->valueWithoutDeliver != null){
-                $myTray->valueWithoutDeliver -= $currentItemsVal;
-            }
-
-            $myTray->extras = null;
-            $myTray->save();
-
-            //Removendo-o das duas tabelas.
-            DB::table('auxiliar_detacheds')
-                ->where('Item', '=', $itemCheckStatus[0]->Item)
-                ->delete();
-
-            DB::table('item_without_extras')
-                ->where('ItemName', '=', $itemCheckStatus[0]->Item)
-                ->delete();
-
-            return redirect()->back()->with('msg-dstv', $itemCheckStatus[0]->Item);
-        }
-
-        $personalized = AuxiliarDetached::find($id);
-
-        //Recuperando o id do pedido com base no id do item personalizado.
-        $tray = DB::table('auxiliar_detacheds')->select('idOrder', 'valueWithExtras', 'nameExtra')
-            ->where('id', '=', $id)
-            ->get()->first();
-
-        $editTray = Tray::find($tray->idOrder);
-
-        //Recuperando o valor do produto.
-        $data = DB::table('adverts')->select('name','value')
-            ->where('name', '=', $personalized->Item)
-            ->get()->toArray();
-
-        //Recuperando o valor do adicional e somando com o item.
-        $value = $data[0]->value;
-        $val = 0;
-
-        if (isset($req->ingredients)) {
-            foreach ($req->ingredients as $ing) {
-                $v = DB::table('extras')->select('price')
-                    ->where('name', '=', $ing)
-                    ->get()->toArray();
-
-                foreach ($v as $item) {
-                    $val += $item->price;
-                }
-            }
-        }
-
-        if (isset($req->ingredients)){
-            $ingredients = implode(', ', $req->ingredients);
-        }
-
-        //Abatendo o preço com os itens removidos.
-
-        if ($val != 0){
-            $newValue = $value + $val;
-
-            $updateValue = $tray->valueWithExtras - $newValue;
-
-            $personalized->nameExtra = $ingredients;
-            $personalized->valueWithExtras = $newValue;
-            $editTray->totalValue = $editTray->totalValue - $updateValue;
-            $editTray->valueWithoutDisccount = $editTray->valueWithoutDisccount - $updateValue;
-        }else{
-
-            $oldExtras = explode(', ', $tray->nameExtra);
-
-            $updateValue = 0;
-
-            foreach ($oldExtras as $old){
-
-                $extra = DB::table('extras')->select('price')
-                    ->where('name', '=' ,$old)
-                    ->get()->toArray();
-
-                $updateValue += $extra[0]->price;
-            }
-
-//            $personalized->Extras = null;
-            $personalized->nameExtra = null;
-            $personalized->valueWithExtras = $value;
-            $editTray->totalValue = $editTray->totalValue - $updateValue;
-            $editTray->valueWithoutDisccount = $editTray->valueWithoutDisccount - $updateValue;
-        }
-
-        $personalized->save();
-        $editTray->save();
-
-        //Abatendo o preço na tabela de pedido.
-        $totalValue = $editTray->valueWithoutDisccount;
-
-        //Verificando o uso de cupom e se bate com o preço atual.
-        if ($editTray->disccountUsed != null){
-
-            $rule = DB::table('coupons')
-                ->where('name', '=', $editTray->disccountUsed)
-                ->get()->toArray();
-
-            if ($totalValue < $rule[0]->disccountRule){
-
-                DB::table('trays')
-                    ->where('id', '=',$editTray->id)
-                    ->update(['disccountUsed' => null, 'valueWithoutDisccount' => $totalValue, 'totalValue' => $totalValue, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
-
-                return redirect()->route('fimCompra')->with('msg-rem-cup', '.');
-            }
-        }
-
-        return redirect()->route('fimCompra')->with('msg-2', ' ');
-    }
-
-    public function editComboExtras(Request $request)
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        $verifyOrder = Auth::user()->userOrderTray()->get()->first();
-
-        if ($request->ingredients != null){
-            $extras = explode(', ', $verifyOrder->extras);
-
-            //Verificando quais itens não tem no array e capturando o preço deles.
-            $difference = array_diff($request->ingredients, $extras);
-            $price = 0;
-
-            if ($difference != null){
-
-                foreach ($difference as $dif){
-
-                    $item = DB::table('extras')
-                        ->select('price')
-                        ->where('name', '=', $dif)
-                        ->get()->toArray();
-
-                    $price += $item[0]->price;
-                }
-
-                $verifyOrder->totalValue = $verifyOrder->totalValue + $price;
-                $verifyOrder->valueWithoutDisccount  = $verifyOrder->valueWithoutDisccount  + $price;
-                $verifyOrder->extras = implode(', ', $request->ingredients);
-                $verifyOrder->save();
-
-                $check = Auth::user()->userOrderTray()->get()->first();
-
-                if ($check->disccountUsed != null){
-
-                    $rule = DB::table('coupons')
-                        ->where('name', '=', $check->disccountUsed)
-                        ->get()->toArray();
-
-                    if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
-
-                        DB::table('trays')
-                            ->where('id', '=', $check->id)
-                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
-
-                        return back()->with('msg-rem-cup', '.');
-                    }
-                }
-
-                return back();
-
-            }else{
-
-                $remove = array_diff($extras, $request->ingredients);
-
-                foreach ($remove as $rem){
-
-                    $item = DB::table('extras')
-                        ->select('price')
-                        ->where('name', '=', $rem)
-                        ->get()->toArray();
-
-                    $price += $item[0]->price;
-                }
-
-                $verifyOrder->totalValue = $verifyOrder->totalValue - $price;
-                $verifyOrder->valueWithoutDisccount = $verifyOrder->valueWithoutDisccount - $price;
-                $verifyOrder->extras = implode(', ', $request->ingredients);
-                $verifyOrder->save();
-
-                $check = Auth::user()->userOrderTray()->get()->first();
-
-                if ($check->disccountUsed != null){
-
-                    $rule = DB::table('coupons')
-                        ->where('name', '=', $check->disccountUsed)
-                        ->get()->toArray();
-
-                    if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
-
-                        DB::table('trays')
-                            ->where('id', '=', $check->id)
-                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
-
-                        return back()->with('msg-rem-cup', '.');
-                    }
-                }
-
-                return back();
-            }
-
-        } else{
-
-            $extras = $verifyOrder->extras;
-
-            $item = DB::table('extras')
-                ->select('price')
-                ->where('name', '=', $extras)
-                ->get()->toArray();
-
-
-            $verifyOrder->totalValue = $verifyOrder->totalValue - $item[0]->price;
-            $verifyOrder->valueWithoutDisccount = $verifyOrder->valueWithoutDisccount - $item[0]->price;
-            $verifyOrder->extras = null;
-            $verifyOrder->save();
-
-            $check = Auth::user()->userOrderTray()->get()->first();
-
-            if ($check->disccountUsed != null){
-
-                $rule = DB::table('coupons')
-                    ->where('name', '=', $check->disccountUsed)
-                    ->get()->toArray();
-
-                if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
-
-                    DB::table('trays')
-                        ->where('id', '=', $check->id)
-                        ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
-
-                    return back()->with('msg-rem-cup', '.');
-                }
-            }
-
-            return back();
-        }
-    }
-
-    public function orderComboHamburguer()
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        $foods = DB::table('adverts')
-            ->where('foodType', '=', 'hamburguer')
-            ->where('combo', '=', 'Sim')
-            ->get();
-
-        foreach ($foods as $food){
-            $foodFormat = explode(',', $food->extras);
-            $one = array();
-            foreach ($foodFormat as $t){
-                $extra = DB::table('extras')
-                    ->select('namePrice')
-                    ->where('name', '=', $t)
-                    ->get()->toArray();
-
-                foreach ($extra as $ext){
-                    array_push($one, $ext->namePrice);
-                    $food->extras = $one;
-                }
-            }
-        }
-
-        $rate = DB::table('lock_rating')
-            ->get();
-
-        if (isset($rate[0])){
-            $rate = $rate[0]->lock;
-        }else{
-            $rate = "Não";
-        }
-
-        return view('clientUser.foodMenu.hamburguer', compact('foods', 'rate'));
-    }
-
-    public function fries(Request $request, $id)
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        //Verificando se o item está ativo.
-        $checkStatus = DB::table('adverts')
-            ->select('status')
-            ->where('id', '=', $id)
-            ->get()->toArray();
-
-        if ($checkStatus[0]->status == 'Inativo'){
-            return redirect()->back()->with('msg-dstv', '.');
-        }
-
-        if (isset ($request->extras)){
-            //Buscando acompanhamento.
-            $extras = [];
-            $valorNovo = 0;
-
-            foreach ($request->extras as $ex){
-                $extra = DB::table('extras')
-                    ->select('name')
-                    ->where('namePrice', '=', $ex)
-                    ->get()->toArray();
-
-                foreach ($extra as $e => $value){
-                    array_push($extras, $value);
-                }
-            }
-
-            //Somando os valores dos itens adicionais
-            foreach ($request->extras as $exts){
-                $vals = DB::table('extras')
-                    ->select('price')
-                    ->where('namePrice', '=', $exts)
-                    ->get()->toArray();
-
-                foreach ($vals as $v => $vls){
-                    $valorNovo += doubleval($vls->price);
-                }
-            }
-
-            //Ajustando o array que recebe os itens adicionais
-            $add = [];
-
-            foreach ($extras as $ext => $val){
-                array_push($add, $val->name);
-            }
-
-            $addItems = implode(', ', $add);
-        }
-
-        $user = Auth::user()->id;
-        $hamburguer = Adverts::find($id);
-        $foods = DB::table('adverts')
-            ->where('foodType', '=', 'acompanhamento')
-            ->where('combo', '=', 'Sim')
-            ->get();
-
-        $verifyOrder = Auth::user()->userOrderTray()->get()->first();
-
-        if(isset($request['ingredients'])){
-            $requirements = implode(', ', $request['ingredients']);
-        }
-
-        $pending = DB::table('orders')
-            ->where('idClient', '=', $user)
-            ->where('status', '=', 'Pendente')
-            ->get();
-
-        $going = DB::table('orders')
-            ->select('status', 'deliverWay')
-            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
-            ->where('idClient', '=', $user)
-            ->get();
-
-        //Valor da entrega (frete).
-        if (count($pending) != 0){
-            $deliverValue = 0;
-        }elseif(count($going) != 0){
-            $deliverValue = 0;
-        }else{
-            $currentUser = User::find(Auth::user()->id);
-            $taxe = DB::table('delivers')
-                ->where('name', '=', $currentUser->district)
-                ->get()->toArray();
-
-            if ($taxe != null){
-                $deliverValue = $taxe[0]->price;
-            }else{
-                $deliverValue = 0;
-            }
-        }
-
-
-        //Evitando erro de cliente voltar a página até hamburguer quando tiver com outros itens na bandeja.
-        $verifyHamburguer = DB::table('trays')
-            ->select('comboItem', 'extras')
-            ->where('idClient', '=', $user)
-            ->get()->toArray();
-
-        if (isset($verifyHamburguer[0])){
-
-            //Encontrando o hamburguer e extras para fazer abatimento de preço.
-            if ($verifyHamburguer[0]->comboItem != null){
-                $myHamburguer = DB::table('adverts')
-                    ->select('comboValue')
-                    ->where('name', '=', $verifyHamburguer[0]->comboItem)
-                    ->get()->toArray();
-
-                $myHamburguer = $myHamburguer[0]->comboValue;
-            }
-
-            if ($verifyHamburguer[0]->extras != null){
-
-                $myExtras = explode(',', $verifyHamburguer[0]->extras);
-                $extrasVal = 0;
-
-                foreach ($myExtras as $ext){
-                    $extrasValue = DB::table('extras')
-                        ->select('price')
-                        ->where('name', '=', ltrim($ext))
-                        ->get()->toArray();
-
-                    $extrasVal += $extrasValue[0]->price;
-                }
-
-                if (isset($myHamburguer)){
-                    $myHamburguer += $extrasVal;
-                }
-            }
-        }
-
-        if ($verifyOrder == null){
-
-            $order = new Tray();
-            $order->idClient = $user;
-            $order->orderType = "Combo";
-            $order->day = date('d/m/Y');
-            $order->hour = date('H:i');
-            $order->image = $hamburguer->picture;
-            $order->hamburguer = $hamburguer->name . ': '. $requirements;
-            $order->comboItem = $hamburguer->name;
-
-            if (isset($request->extras)){
-                $order->extras = $addItems;
-                $order->totalValue = $hamburguer->comboValue + $valorNovo + $deliverValue;
-                $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $deliverValue;
-            }else{
-                $order->extras = null;
-                $order->totalValue = $hamburguer->comboValue + $deliverValue;
-            }
-
-            $order->save();
-
-        }else{
-
-            $order = Auth::user()->userOrderTray()->get()->first();
-            $order->idClient = $user;
-            $order->orderType = "Combo";
-            $order->day = date('d/m/Y');
-            $order->hour = date('H:i');
-            $order->image = $hamburguer->picture;
-            $order->hamburguer = $hamburguer->name . ': '. $requirements;
-            $order->comboItem = $hamburguer->name;
-
-            $verifyFollowing = DB::table('trays')
-                ->select('portion', 'drinks')
-                ->where('idClient', '=', $user)
-                ->get()->toArray();
-
-
-            //Verificando se há algum acompanhamento caso o cliente volte até hamburguer.
-            if ($verifyFollowing != ''){
-                $totalValue = DB::table('trays')
-                    ->select('totalValue', 'valueWithoutDisccount')
-                    ->where('idClient', '=', $user)
-                    ->get()->toArray();
-
-                $noDisccount = $totalValue[0]->valueWithoutDisccount;
-                $totalValue = $totalValue[0]->totalValue;
-                $totalValue = doubleval($totalValue);
-
-                //Abatimento de preço caso o cliente volte.
-                if (isset($myHamburguer)){
-                    $myHamburguer = doubleval($myHamburguer);
-                    $totalValue = $totalValue - $myHamburguer;
-                    $noDisccount = $order->valueWithoutDisccount - $myHamburguer;
-                }elseif(isset($extrasVal)){
-                    $totalValue = $totalValue - $extrasVal;
-                    $noDisccount = $order->valueWithoutDisccount - $extrasVal;
-                }
-
-                if (isset($request->extras)){
-                    $order->extras = $addItems;
-                    $order->totalValue = $hamburguer->comboValue + $valorNovo + $totalValue;
-                    $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $noDisccount;
-                }else{
-                    $order->extras = null;
-                    $order->totalValue = $hamburguer->comboValue + $totalValue;
-                    $order->valueWithoutDisccount = $hamburguer->comboValue + $noDisccount;
-                }
-
-            }else{
-                if (isset($request->extras)){
-                    $order->extras = $addItems;
-                    $order->totalValue = $hamburguer->comboValue + $valorNovo;
-                }else{
-                    $order->extras = null;
-                    $order->totalValue = $hamburguer->comboValue;
-                }
-            }
-
-            $order->save();
-        }
-
-        if(isset($verifyOrder)){
-            if ($verifyOrder->hamburguer == ''){
-                $order = Tray::find($verifyOrder->id);
-                $order->image = $hamburguer->picture;
-                $order->hamburguer = $hamburguer->name . ': '. $requirements;
-                $order->comboItem = $hamburguer->name;
-
-                if (isset($request->extras)){
-                    $order->extras = $addItems;
-                }else{
-                    $order->extras = null;
-                }
-
-                if($verifyOrder->totalValue != ''){
-                    if (isset($request->extras)){
-                        $order->totalValue = $verifyOrder->totalValue + $hamburguer->comboValue + $valorNovo;
-                        $order->valueWithoutDisccount = $verifyOrder->totalValue + $hamburguer->comboValue + $valorNovo;
-                    }else{
-                        $order->totalValue = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
-                        $order->valueWithoutDisccount = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
-                    }
-                }else{
-                    if (isset($request->extras)){
-                        $order->totalValue = $hamburguer->comboValue + $valorNovo;
-                        $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo;
-                    }else{
-                        $order->totalValue = $hamburguer->comboValue;
-                        $order->valueWithoutDisccount = $hamburguer->comboValue;
-                    }
-                }
-
-                $order->save();
-            }
-        }
-
-        //Evitando burlar o cupom de desconto.
-        $check = Auth::user()->userOrderTray()->get()->first();
-
-        if ($check->disccountUsed != null){
-
-            $rule = DB::table('coupons')
-                ->where('name', '=', $check->disccountUsed)
-                ->get()->toArray();
-
-            if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
-
-                DB::table('trays')
-                    ->where('id', '=', $check->id)
-                    ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount]);
-            }
-        }
-
-        $rate = DB::table('lock_rating')
-            ->get();
-
-        //Redirecionamento caso o cliente retroceda até 2x no combo.
-        if (isset($verifyFollowing)){
-          if ($verifyFollowing[0]->portion == null){
-              return view('clientUser.foodMenu.fries', compact('foods', 'rate'));
-
-          }elseif ($verifyFollowing[0]->drinks == null){
-              return redirect()->route('minhaBandeja.index');
-
-          }else{
-              return redirect()->route('fimCompra');
-          }
-
-        }else{
-            if ($order->portion == ''){
-                return view('clientUser.foodMenu.fries', compact('foods', 'rate'));
-            }elseif ($order->drinks == ''){
-                return redirect()->route('minhaBandeja.index')->with('msg-esc', '');
-            }else{
-                return redirect()->route('fimCompra');
-            }
-        }
-    }
-
-    public function editPortion()
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        $foods = DB::table('adverts')
-            ->where('foodType', '=', 'acompanhamento')
-            ->where('combo', '=', 'Sim')
-            ->get();
-
-        //Variável que indica que é uma view de edição
-        $edit = true;
-
-        $rate = DB::table('lock_rating')
-            ->get();
-
-        return view('clientUser.foodMenu.fries', compact('foods', 'edit', 'rate'));
-    }
-
-    public function drinks ($idFood)
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        //Verificando se o item está ativo.
-        $checkStatus = DB::table('adverts')
-            ->select('status')
-            ->where('id', '=', $idFood)
-            ->get()->toArray();
-
-        if ($checkStatus[0]->status == 'Inativo'){
-            return redirect()->back()->with('msg-dstv', '.');
-        }
-
-        $user = Auth::user();
-        $myOrder = $user->userOrderTray()->get()->first()->toArray();
-        $idOrder = $myOrder['id'];
-        $secondFood = Adverts::find($idFood);
-        $valueOrder = doubleval($myOrder['totalValue']) + doubleval($secondFood->comboValue);
-        $foods = DB::table('adverts')->where('foodType', '=', 'bebida')->get();
-
-        //Inserindo item na bandeja.
-        if ($myOrder['portion'] == ''){
-            $order = Tray::find($idOrder);
-            $order->portion = $secondFood->name;
-            $order->totalValue = $valueOrder;
-            $order->valueWithoutDisccount = $valueOrder;
-            $order->save();
-        }else{
-            return redirect()->route('minhaBandeja.index')->with('error-2', ' ');
-        }
-
-
-        if ($myOrder['drinks'] == '' or $myOrder['hamburguer'] == ''){
-            return redirect()->route('minhaBandeja.index')->with('msg-esc', 'a');
-        }else{
-            return redirect(route('fimCompra'));
-        }
-
-        return view('clientUser.foodMenu.drinks', compact('foods'));
-    }
-
-    public function editDrink()
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        $foods = DB::table('adverts')
-            ->where('foodType', '=', 'bebida')
-            ->where('combo', '=', 'Sim')
-            ->get();
-
-        //Variável que indica que é uma view de edição
-        $edit = true;
-
-        return view('clientUser.foodMenu.drinks', compact('foods', 'edit'));
-    }
-
-    public function shoppingFinish (Request $request, $idFood)
-    {
-        //Verificando se o item está ativo.
-        $checkStatus = DB::table('adverts')
-            ->select('status')
-            ->where('id', '=', $idFood)
-            ->get()->toArray();
-
-        if ($checkStatus[0]->status == 'Inativo'){
-            return redirect()->back()->with('msg-dstv', '.');
-        }
-
-        $user = Auth::user();
-        $myOrder = $user->userOrderTray()->get()->first()->toArray();
-        $idOrder = $myOrder['id'];
-        $thirdFood = Adverts::find($idFood);
-        $valueOrder = doubleval($myOrder['totalValue']) + doubleval($thirdFood->comboValue);
-
-        if ($myOrder['drinks'] == ''){
-
-            $order = Tray::find($idOrder);
-
-            if($request->sabor == ''){
-                $order->drinks = $thirdFood->name;
-            }else{
-                $order->drinks = $thirdFood->name . '| sabor: ' . $request->sabor;
-            }
-
-            $order->totalValue = $valueOrder;
-            $order->valueWithoutDisccount = $valueOrder;
-            $order->save();
-        }else{
-            return redirect()->route('minhaBandeja.index')->with('error', ' ');
-        }
-
-        if($myOrder['hamburguer'] == '' or $myOrder['portion'] == ''){
-            return redirect(route('minhaBandeja.index'));
-        }
-
-        return redirect(route('fimCompra'));
-    }
+//    }
+
+//    public function addExtraItem(Request $request, $id)
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        //Verificando se o item está ativo.
+//        $itemCheckStatus = DB::table('item_without_extras')
+//            ->where('id', '=', $id)
+//            ->get()->toArray();
+//
+//        $itemWExtrasValue = DB::table('item_without_extras')
+//            ->where('itemName', '=', $itemCheckStatus[0]->itemName)
+//            ->get()->toArray();
+//
+//        $itemWithExtrasValue = DB::table('auxiliar_detacheds')
+//            ->where('Item', '=', $itemCheckStatus[0]->itemName)
+//            ->get()->toArray();
+//
+//        $checkStatus = DB::table('adverts')
+//            ->select('status')
+//            ->where('name', '=', $itemCheckStatus[0]->itemName)
+//            ->get()->toArray();
+//
+//        if ($checkStatus[0]->status == 'Inativo'){
+//
+//            //Abatendo de valor na tabela de pedidos.
+//            $currentItemsVal = 0;
+//
+//            foreach ($itemWExtrasValue as $i){
+//                $currentItemsVal += $i->value;
+//            }
+//
+//            foreach ($itemWithExtrasValue as $iwt){
+//                $currentItemsVal += $iwt->valueWithExtras;
+//            }
+//
+//            $myTray = Tray::find($itemCheckStatus[0]->idOrder);
+//            $myTray->totalValue -= $currentItemsVal;
+//            $myTray->valueWithoutDisccount -= $currentItemsVal;
+//
+//            if ($myTray->valueWithoutDeliver != null){
+//                $myTray->valueWithoutDeliver -= $currentItemsVal;
+//            }
+//
+//            $myTray->extras = null;
+//            $myTray->save();
+//
+//            //Deletando o item das duas tabelas.
+//            DB::table('auxiliar_detacheds')
+//                ->where('Item', '=', $itemCheckStatus[0]->itemName)
+//                ->delete();
+//
+//            DB::table('item_without_extras')
+//                ->where('itemName', '=', $itemCheckStatus[0]->itemName)
+//                ->delete();
+//
+//            return redirect()->back()->with('msg-dstv', $itemCheckStatus[0]->itemName);
+//        }
+//
+//       //Buscando os itens e os formatando para entrar na tabela.
+//       $extras = array();
+//       $price = 0;
+//
+//       foreach ($request->ingredients as $ingredient){
+//
+//           $query = DB::table('extras')
+//               ->select('name', 'price')
+//               ->where('namePrice', '=', $ingredient)
+//               ->get()->toArray();
+//
+//           array_push($extras, $query[0]->name);
+//           $price += $query[0]->price;
+//       }
+//
+//       $extras = implode(', ', $extras);
+//
+//       $item = ItemWithoutExtras::find($id);
+//
+//       $newExtraItem = new AuxiliarDetached();
+//       $newExtraItem->idOrder = $item->idOrder;
+//       $newExtraItem->foodType = $item->foodType;
+//       $newExtraItem->item = $item->itemName;
+//       $newExtraItem->Extras = $item->item;
+//       $newExtraItem->nameExtra = $extras;
+//       $newExtraItem->valueWithExtras = $item->value + $price;
+//       $newExtraItem->save();
+//
+//        $myOrder= Auth::user()->userOrderTray()->select('id', 'totalValue')->get()->first()->toArray();
+//
+//        DB::table('trays')
+//            ->where('id', '=', $myOrder['id'])
+//            ->update(['totalValue' => $myOrder['totalValue'] + $price]);
+//
+//        $item->delete();
+//
+//        return redirect()->back()->with('msg-2', ' ');
+//
+//    }
+
+//    public function removePersonalized($id)
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        $personalized = AuxiliarDetached::find($id);
+//        $order = Tray::find($personalized->idOrder);
+//
+//        $order->totalValue = $order->totalValue - $personalized->valueWithExtras;
+//        $order->save();
+//
+//        $orderDelete = Tray::find($personalized->idOrder);
+//
+//        if ($orderDelete->totalValue == 0){
+//            $orderDelete->delete();
+//        }
+//        $personalized->delete();
+//
+//        return redirect()->back()->with('msg', ' ');
+//    }
+//
+//    public function editPersonalized(Request $req, $id)
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        //Verificando se o item está ativo.
+//        $itemCheckStatus = DB::table('auxiliar_detacheds')
+//            ->where('id', '=', $id)
+//            ->get()->toArray();
+//
+//        $itemWExtrasValue = DB::table('auxiliar_detacheds')
+//            ->where('Item', '=', $itemCheckStatus[0]->Item)
+//            ->get()->toArray();
+//
+//        $itemWithoutExtrasValue = DB::table('item_without_extras')
+//            ->where('itemName', '=', $itemCheckStatus[0]->Item)
+//            ->get()->toArray();
+//
+//        $checkStatus = DB::table('adverts')
+//            ->select('status')
+//            ->where('name', '=', $itemCheckStatus[0]->Item)
+//            ->get()->toArray();
+//
+//        if ($checkStatus[0]->status == 'Inativo'){
+//
+//            //Abatendo de valor na tabela de pedidos.
+//            $currentItemsVal = 0;
+//
+//            foreach ($itemWExtrasValue as $i){
+//                $currentItemsVal += $i->valueWithExtras;
+//            }
+//
+//            foreach ($itemWithoutExtrasValue as $iwth){
+//                $currentItemsVal += $iwth->value;
+//            }
+//
+//            $myTray = Tray::find($itemCheckStatus[0]->idOrder);
+//            $myTray->totalValue -= $currentItemsVal;
+//            $myTray->valueWithoutDisccount -= $currentItemsVal;
+//
+//            if ($myTray->valueWithoutDeliver != null){
+//                $myTray->valueWithoutDeliver -= $currentItemsVal;
+//            }
+//
+//            $myTray->extras = null;
+//            $myTray->save();
+//
+//            //Removendo-o das duas tabelas.
+//            DB::table('auxiliar_detacheds')
+//                ->where('Item', '=', $itemCheckStatus[0]->Item)
+//                ->delete();
+//
+//            DB::table('item_without_extras')
+//                ->where('ItemName', '=', $itemCheckStatus[0]->Item)
+//                ->delete();
+//
+//            return redirect()->back()->with('msg-dstv', $itemCheckStatus[0]->Item);
+//        }
+//
+//        $personalized = AuxiliarDetached::find($id);
+//
+//        //Recuperando o id do pedido com base no id do item personalizado.
+//        $tray = DB::table('auxiliar_detacheds')->select('idOrder', 'valueWithExtras', 'nameExtra')
+//            ->where('id', '=', $id)
+//            ->get()->first();
+//
+//        $editTray = Tray::find($tray->idOrder);
+//
+//        //Recuperando o valor do produto.
+//        $data = DB::table('adverts')->select('name','value')
+//            ->where('name', '=', $personalized->Item)
+//            ->get()->toArray();
+//
+//        //Recuperando o valor do adicional e somando com o item.
+//        $value = $data[0]->value;
+//        $val = 0;
+//
+//        if (isset($req->ingredients)) {
+//            foreach ($req->ingredients as $ing) {
+//                $v = DB::table('extras')->select('price')
+//                    ->where('name', '=', $ing)
+//                    ->get()->toArray();
+//
+//                foreach ($v as $item) {
+//                    $val += $item->price;
+//                }
+//            }
+//        }
+//
+//        if (isset($req->ingredients)){
+//            $ingredients = implode(', ', $req->ingredients);
+//        }
+//
+//        //Abatendo o preço com os itens removidos.
+//
+//        if ($val != 0){
+//            $newValue = $value + $val;
+//
+//            $updateValue = $tray->valueWithExtras - $newValue;
+//
+//            $personalized->nameExtra = $ingredients;
+//            $personalized->valueWithExtras = $newValue;
+//            $editTray->totalValue = $editTray->totalValue - $updateValue;
+//            $editTray->valueWithoutDisccount = $editTray->valueWithoutDisccount - $updateValue;
+//        }else{
+//
+//            $oldExtras = explode(', ', $tray->nameExtra);
+//
+//            $updateValue = 0;
+//
+//            foreach ($oldExtras as $old){
+//
+//                $extra = DB::table('extras')->select('price')
+//                    ->where('name', '=' ,$old)
+//                    ->get()->toArray();
+//
+//                $updateValue += $extra[0]->price;
+//            }
+//
+////            $personalized->Extras = null;
+//            $personalized->nameExtra = null;
+//            $personalized->valueWithExtras = $value;
+//            $editTray->totalValue = $editTray->totalValue - $updateValue;
+//            $editTray->valueWithoutDisccount = $editTray->valueWithoutDisccount - $updateValue;
+//        }
+//
+//        $personalized->save();
+//        $editTray->save();
+//
+//        //Abatendo o preço na tabela de pedido.
+//        $totalValue = $editTray->valueWithoutDisccount;
+//
+//        //Verificando o uso de cupom e se bate com o preço atual.
+//        if ($editTray->disccountUsed != null){
+//
+//            $rule = DB::table('coupons')
+//                ->where('name', '=', $editTray->disccountUsed)
+//                ->get()->toArray();
+//
+//            if ($totalValue < $rule[0]->disccountRule){
+//
+//                DB::table('trays')
+//                    ->where('id', '=',$editTray->id)
+//                    ->update(['disccountUsed' => null, 'valueWithoutDisccount' => $totalValue, 'totalValue' => $totalValue, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
+//
+//                return redirect()->route('fimCompra')->with('msg-rem-cup', '.');
+//            }
+//        }
+//
+//        return redirect()->route('fimCompra')->with('msg-2', ' ');
+//    }
+//
+//    public function editComboExtras(Request $request)
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        $verifyOrder = Auth::user()->userOrderTray()->get()->first();
+//
+//        if ($request->ingredients != null){
+//            $extras = explode(', ', $verifyOrder->extras);
+//
+//            //Verificando quais itens não tem no array e capturando o preço deles.
+//            $difference = array_diff($request->ingredients, $extras);
+//            $price = 0;
+//
+//            if ($difference != null){
+//
+//                foreach ($difference as $dif){
+//
+//                    $item = DB::table('extras')
+//                        ->select('price')
+//                        ->where('name', '=', $dif)
+//                        ->get()->toArray();
+//
+//                    $price += $item[0]->price;
+//                }
+//
+//                $verifyOrder->totalValue = $verifyOrder->totalValue + $price;
+//                $verifyOrder->valueWithoutDisccount  = $verifyOrder->valueWithoutDisccount  + $price;
+//                $verifyOrder->extras = implode(', ', $request->ingredients);
+//                $verifyOrder->save();
+//
+//                $check = Auth::user()->userOrderTray()->get()->first();
+//
+//                if ($check->disccountUsed != null){
+//
+//                    $rule = DB::table('coupons')
+//                        ->where('name', '=', $check->disccountUsed)
+//                        ->get()->toArray();
+//
+//                    if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
+//
+//                        DB::table('trays')
+//                            ->where('id', '=', $check->id)
+//                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
+//
+//                        return back()->with('msg-rem-cup', '.');
+//                    }
+//                }
+//
+//                return back();
+//
+//            }else{
+//
+//                $remove = array_diff($extras, $request->ingredients);
+//
+//                foreach ($remove as $rem){
+//
+//                    $item = DB::table('extras')
+//                        ->select('price')
+//                        ->where('name', '=', $rem)
+//                        ->get()->toArray();
+//
+//                    $price += $item[0]->price;
+//                }
+//
+//                $verifyOrder->totalValue = $verifyOrder->totalValue - $price;
+//                $verifyOrder->valueWithoutDisccount = $verifyOrder->valueWithoutDisccount - $price;
+//                $verifyOrder->extras = implode(', ', $request->ingredients);
+//                $verifyOrder->save();
+//
+//                $check = Auth::user()->userOrderTray()->get()->first();
+//
+//                if ($check->disccountUsed != null){
+//
+//                    $rule = DB::table('coupons')
+//                        ->where('name', '=', $check->disccountUsed)
+//                        ->get()->toArray();
+//
+//                    if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
+//
+//                        DB::table('trays')
+//                            ->where('id', '=', $check->id)
+//                            ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
+//
+//                        return back()->with('msg-rem-cup', '.');
+//                    }
+//                }
+//
+//                return back();
+//            }
+//
+//        } else{
+//
+//            $extras = $verifyOrder->extras;
+//
+//            $item = DB::table('extras')
+//                ->select('price')
+//                ->where('name', '=', $extras)
+//                ->get()->toArray();
+//
+//
+//            $verifyOrder->totalValue = $verifyOrder->totalValue - $item[0]->price;
+//            $verifyOrder->valueWithoutDisccount = $verifyOrder->valueWithoutDisccount - $item[0]->price;
+//            $verifyOrder->extras = null;
+//            $verifyOrder->save();
+//
+//            $check = Auth::user()->userOrderTray()->get()->first();
+//
+//            if ($check->disccountUsed != null){
+//
+//                $rule = DB::table('coupons')
+//                    ->where('name', '=', $check->disccountUsed)
+//                    ->get()->toArray();
+//
+//                if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
+//
+//                    DB::table('trays')
+//                        ->where('id', '=', $check->id)
+//                        ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount, 'valueWithoutDisccount' => $check->valueWithoutDisccount, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
+//
+//                    return back()->with('msg-rem-cup', '.');
+//                }
+//            }
+//
+//            return back();
+//        }
+//    }
+//
+//    public function orderComboHamburguer()
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        $foods = DB::table('adverts')
+//            ->where('foodType', '=', 'hamburguer')
+//            ->where('combo', '=', 'Sim')
+//            ->get();
+//
+//        foreach ($foods as $food){
+//            $foodFormat = explode(',', $food->extras);
+//            $one = array();
+//            foreach ($foodFormat as $t){
+//                $extra = DB::table('extras')
+//                    ->select('namePrice')
+//                    ->where('name', '=', $t)
+//                    ->get()->toArray();
+//
+//                foreach ($extra as $ext){
+//                    array_push($one, $ext->namePrice);
+//                    $food->extras = $one;
+//                }
+//            }
+//        }
+//
+//        $rate = DB::table('lock_rating')
+//            ->get();
+//
+//        if (isset($rate[0])){
+//            $rate = $rate[0]->lock;
+//        }else{
+//            $rate = "Não";
+//        }
+//
+//        return view('clientUser.foodMenu.hamburguer', compact('foods', 'rate'));
+//    }
+//
+//    public function fries(Request $request, $id)
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        //Verificando se o item está ativo.
+//        $checkStatus = DB::table('adverts')
+//            ->select('status')
+//            ->where('id', '=', $id)
+//            ->get()->toArray();
+//
+//        if ($checkStatus[0]->status == 'Inativo'){
+//            return redirect()->back()->with('msg-dstv', '.');
+//        }
+//
+//        if (isset ($request->extras)){
+//            //Buscando acompanhamento.
+//            $extras = [];
+//            $valorNovo = 0;
+//
+//            foreach ($request->extras as $ex){
+//                $extra = DB::table('extras')
+//                    ->select('name')
+//                    ->where('namePrice', '=', $ex)
+//                    ->get()->toArray();
+//
+//                foreach ($extra as $e => $value){
+//                    array_push($extras, $value);
+//                }
+//            }
+//
+//            //Somando os valores dos itens adicionais
+//            foreach ($request->extras as $exts){
+//                $vals = DB::table('extras')
+//                    ->select('price')
+//                    ->where('namePrice', '=', $exts)
+//                    ->get()->toArray();
+//
+//                foreach ($vals as $v => $vls){
+//                    $valorNovo += doubleval($vls->price);
+//                }
+//            }
+//
+//            //Ajustando o array que recebe os itens adicionais
+//            $add = [];
+//
+//            foreach ($extras as $ext => $val){
+//                array_push($add, $val->name);
+//            }
+//
+//            $addItems = implode(', ', $add);
+//        }
+//
+//        $user = Auth::user()->id;
+//        $hamburguer = Adverts::find($id);
+//        $foods = DB::table('adverts')
+//            ->where('foodType', '=', 'acompanhamento')
+//            ->where('combo', '=', 'Sim')
+//            ->get();
+//
+//        $verifyOrder = Auth::user()->userOrderTray()->get()->first();
+//
+//        if(isset($request['ingredients'])){
+//            $requirements = implode(', ', $request['ingredients']);
+//        }
+//
+//        $pending = DB::table('orders')
+//            ->where('idClient', '=', $user)
+//            ->where('status', '=', 'Pendente')
+//            ->get();
+//
+//        $going = DB::table('orders')
+//            ->select('status', 'deliverWay')
+//            ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
+//            ->where('idClient', '=', $user)
+//            ->get();
+//
+//        //Valor da entrega (frete).
+//        if (count($pending) != 0){
+//            $deliverValue = 0;
+//        }elseif(count($going) != 0){
+//            $deliverValue = 0;
+//        }else{
+//            $currentUser = User::find(Auth::user()->id);
+//            $taxe = DB::table('delivers')
+//                ->where('name', '=', $currentUser->district)
+//                ->get()->toArray();
+//
+//            if ($taxe != null){
+//                $deliverValue = $taxe[0]->price;
+//            }else{
+//                $deliverValue = 0;
+//            }
+//        }
+//
+//
+//        //Evitando erro de cliente voltar a página até hamburguer quando tiver com outros itens na bandeja.
+//        $verifyHamburguer = DB::table('trays')
+//            ->select('comboItem', 'extras')
+//            ->where('idClient', '=', $user)
+//            ->get()->toArray();
+//
+//        if (isset($verifyHamburguer[0])){
+//
+//            //Encontrando o hamburguer e extras para fazer abatimento de preço.
+//            if ($verifyHamburguer[0]->comboItem != null){
+//                $myHamburguer = DB::table('adverts')
+//                    ->select('comboValue')
+//                    ->where('name', '=', $verifyHamburguer[0]->comboItem)
+//                    ->get()->toArray();
+//
+//                $myHamburguer = $myHamburguer[0]->comboValue;
+//            }
+//
+//            if ($verifyHamburguer[0]->extras != null){
+//
+//                $myExtras = explode(',', $verifyHamburguer[0]->extras);
+//                $extrasVal = 0;
+//
+//                foreach ($myExtras as $ext){
+//                    $extrasValue = DB::table('extras')
+//                        ->select('price')
+//                        ->where('name', '=', ltrim($ext))
+//                        ->get()->toArray();
+//
+//                    $extrasVal += $extrasValue[0]->price;
+//                }
+//
+//                if (isset($myHamburguer)){
+//                    $myHamburguer += $extrasVal;
+//                }
+//            }
+//        }
+//
+//        if ($verifyOrder == null){
+//
+//            $order = new Tray();
+//            $order->idClient = $user;
+//            $order->orderType = "Combo";
+//            $order->day = date('d/m/Y');
+//            $order->hour = date('H:i');
+//            $order->image = $hamburguer->picture;
+//            $order->hamburguer = $hamburguer->name . ': '. $requirements;
+//            $order->comboItem = $hamburguer->name;
+//
+//            if (isset($request->extras)){
+//                $order->extras = $addItems;
+//                $order->totalValue = $hamburguer->comboValue + $valorNovo + $deliverValue;
+//                $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $deliverValue;
+//            }else{
+//                $order->extras = null;
+//                $order->totalValue = $hamburguer->comboValue + $deliverValue;
+//            }
+//
+//            $order->save();
+//
+//        }else{
+//
+//            $order = Auth::user()->userOrderTray()->get()->first();
+//            $order->idClient = $user;
+//            $order->orderType = "Combo";
+//            $order->day = date('d/m/Y');
+//            $order->hour = date('H:i');
+//            $order->image = $hamburguer->picture;
+//            $order->hamburguer = $hamburguer->name . ': '. $requirements;
+//            $order->comboItem = $hamburguer->name;
+//
+//            $verifyFollowing = DB::table('trays')
+//                ->select('portion', 'drinks')
+//                ->where('idClient', '=', $user)
+//                ->get()->toArray();
+//
+//
+//            //Verificando se há algum acompanhamento caso o cliente volte até hamburguer.
+//            if ($verifyFollowing != ''){
+//                $totalValue = DB::table('trays')
+//                    ->select('totalValue', 'valueWithoutDisccount')
+//                    ->where('idClient', '=', $user)
+//                    ->get()->toArray();
+//
+//                $noDisccount = $totalValue[0]->valueWithoutDisccount;
+//                $totalValue = $totalValue[0]->totalValue;
+//                $totalValue = doubleval($totalValue);
+//
+//                //Abatimento de preço caso o cliente volte.
+//                if (isset($myHamburguer)){
+//                    $myHamburguer = doubleval($myHamburguer);
+//                    $totalValue = $totalValue - $myHamburguer;
+//                    $noDisccount = $order->valueWithoutDisccount - $myHamburguer;
+//                }elseif(isset($extrasVal)){
+//                    $totalValue = $totalValue - $extrasVal;
+//                    $noDisccount = $order->valueWithoutDisccount - $extrasVal;
+//                }
+//
+//                if (isset($request->extras)){
+//                    $order->extras = $addItems;
+//                    $order->totalValue = $hamburguer->comboValue + $valorNovo + $totalValue;
+//                    $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo + $noDisccount;
+//                }else{
+//                    $order->extras = null;
+//                    $order->totalValue = $hamburguer->comboValue + $totalValue;
+//                    $order->valueWithoutDisccount = $hamburguer->comboValue + $noDisccount;
+//                }
+//
+//            }else{
+//                if (isset($request->extras)){
+//                    $order->extras = $addItems;
+//                    $order->totalValue = $hamburguer->comboValue + $valorNovo;
+//                }else{
+//                    $order->extras = null;
+//                    $order->totalValue = $hamburguer->comboValue;
+//                }
+//            }
+//
+//            $order->save();
+//        }
+//
+//        if(isset($verifyOrder)){
+//            if ($verifyOrder->hamburguer == ''){
+//                $order = Tray::find($verifyOrder->id);
+//                $order->image = $hamburguer->picture;
+//                $order->hamburguer = $hamburguer->name . ': '. $requirements;
+//                $order->comboItem = $hamburguer->name;
+//
+//                if (isset($request->extras)){
+//                    $order->extras = $addItems;
+//                }else{
+//                    $order->extras = null;
+//                }
+//
+//                if($verifyOrder->totalValue != ''){
+//                    if (isset($request->extras)){
+//                        $order->totalValue = $verifyOrder->totalValue + $hamburguer->comboValue + $valorNovo;
+//                        $order->valueWithoutDisccount = $verifyOrder->totalValue + $hamburguer->comboValue + $valorNovo;
+//                    }else{
+//                        $order->totalValue = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
+//                        $order->valueWithoutDisccount = doubleval($verifyOrder->totalValue) + $hamburguer->comboValue;
+//                    }
+//                }else{
+//                    if (isset($request->extras)){
+//                        $order->totalValue = $hamburguer->comboValue + $valorNovo;
+//                        $order->valueWithoutDisccount = $hamburguer->comboValue + $valorNovo;
+//                    }else{
+//                        $order->totalValue = $hamburguer->comboValue;
+//                        $order->valueWithoutDisccount = $hamburguer->comboValue;
+//                    }
+//                }
+//
+//                $order->save();
+//            }
+//        }
+//
+//        //Evitando burlar o cupom de desconto.
+//        $check = Auth::user()->userOrderTray()->get()->first();
+//
+//        if ($check->disccountUsed != null){
+//
+//            $rule = DB::table('coupons')
+//                ->where('name', '=', $check->disccountUsed)
+//                ->get()->toArray();
+//
+//            if ($check->valueWithoutDisccount < $rule[0]->disccountRule){
+//
+//                DB::table('trays')
+//                    ->where('id', '=', $check->id)
+//                    ->update(['disccountUsed' => null, 'totalValue' => $check->valueWithoutDisccount]);
+//            }
+//        }
+//
+//        $rate = DB::table('lock_rating')
+//            ->get();
+//
+//        //Redirecionamento caso o cliente retroceda até 2x no combo.
+//        if (isset($verifyFollowing)){
+//          if ($verifyFollowing[0]->portion == null){
+//              return view('clientUser.foodMenu.fries', compact('foods', 'rate'));
+//
+//          }elseif ($verifyFollowing[0]->drinks == null){
+//              return redirect()->route('minhaBandeja.index');
+//
+//          }else{
+//              return redirect()->route('fimCompra');
+//          }
+//
+//        }else{
+//            if ($order->portion == ''){
+//                return view('clientUser.foodMenu.fries', compact('foods', 'rate'));
+//            }elseif ($order->drinks == ''){
+//                return redirect()->route('minhaBandeja.index')->with('msg-esc', '');
+//            }else{
+//                return redirect()->route('fimCompra');
+//            }
+//        }
+//    }
+//
+//    public function editPortion()
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        $foods = DB::table('adverts')
+//            ->where('foodType', '=', 'acompanhamento')
+//            ->where('combo', '=', 'Sim')
+//            ->get();
+//
+//        //Variável que indica que é uma view de edição
+//        $edit = true;
+//
+//        $rate = DB::table('lock_rating')
+//            ->get();
+//
+//        return view('clientUser.foodMenu.fries', compact('foods', 'edit', 'rate'));
+//    }
+//
+//    public function drinks ($idFood)
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        //Verificando se o item está ativo.
+//        $checkStatus = DB::table('adverts')
+//            ->select('status')
+//            ->where('id', '=', $idFood)
+//            ->get()->toArray();
+//
+//        if ($checkStatus[0]->status == 'Inativo'){
+//            return redirect()->back()->with('msg-dstv', '.');
+//        }
+//
+//        $user = Auth::user();
+//        $myOrder = $user->userOrderTray()->get()->first()->toArray();
+//        $idOrder = $myOrder['id'];
+//        $secondFood = Adverts::find($idFood);
+//        $valueOrder = doubleval($myOrder['totalValue']) + doubleval($secondFood->comboValue);
+//        $foods = DB::table('adverts')->where('foodType', '=', 'bebida')->get();
+//
+//        //Inserindo item na bandeja.
+//        if ($myOrder['portion'] == ''){
+//            $order = Tray::find($idOrder);
+//            $order->portion = $secondFood->name;
+//            $order->totalValue = $valueOrder;
+//            $order->valueWithoutDisccount = $valueOrder;
+//            $order->save();
+//        }else{
+//            return redirect()->route('minhaBandeja.index')->with('error-2', ' ');
+//        }
+//
+//
+//        if ($myOrder['drinks'] == '' or $myOrder['hamburguer'] == ''){
+//            return redirect()->route('minhaBandeja.index')->with('msg-esc', 'a');
+//        }else{
+//            return redirect(route('fimCompra'));
+//        }
+//
+//        return view('clientUser.foodMenu.drinks', compact('foods'));
+//    }
+//
+//    public function editDrink()
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        $foods = DB::table('adverts')
+//            ->where('foodType', '=', 'bebida')
+//            ->where('combo', '=', 'Sim')
+//            ->get();
+//
+//        //Variável que indica que é uma view de edição
+//        $edit = true;
+//
+//        return view('clientUser.foodMenu.drinks', compact('foods', 'edit'));
+//    }
+
+//    public function shoppingFinish (Request $request, $idFood)
+//    {
+//        //Verificando se o item está ativo.
+//        $checkStatus = DB::table('adverts')
+//            ->select('status')
+//            ->where('id', '=', $idFood)
+//            ->get()->toArray();
+//
+//        if ($checkStatus[0]->status == 'Inativo'){
+//            return redirect()->back()->with('msg-dstv', '.');
+//        }
+//
+//        $user = Auth::user();
+//        $myOrder = $user->userOrderTray()->get()->first()->toArray();
+//        $idOrder = $myOrder['id'];
+//        $thirdFood = Adverts::find($idFood);
+//        $valueOrder = doubleval($myOrder['totalValue']) + doubleval($thirdFood->comboValue);
+//
+//        if ($myOrder['drinks'] == ''){
+//
+//            $order = Tray::find($idOrder);
+//
+//            if($request->sabor == ''){
+//                $order->drinks = $thirdFood->name;
+//            }else{
+//                $order->drinks = $thirdFood->name . '| sabor: ' . $request->sabor;
+//            }
+//
+//            $order->totalValue = $valueOrder;
+//            $order->valueWithoutDisccount = $valueOrder;
+//            $order->save();
+//        }else{
+//            return redirect()->route('minhaBandeja.index')->with('error', ' ');
+//        }
+//
+//        if($myOrder['hamburguer'] == '' or $myOrder['portion'] == ''){
+//            return redirect(route('minhaBandeja.index'));
+//        }
+//
+//        return redirect(route('fimCompra'));
+//    }
 
     public function reviewAndFinish()
     {
@@ -1294,24 +1294,6 @@ class TrayController extends Controller
             ->whereRaw("status <> 'Cancelado' and status <> 'Pedido Entregue' and status <> 'Pendente'")
             ->where('idClient', '=', Auth::user()->id)
             ->get();
-
-        //Inserindo valor sem frete para combo.
-        if ($checkCurrent[0]['orderType'] == 'Combo'){
-            $comboDistrict = DB::table('delivers')
-                ->where('name', '=', $client[0]->district)
-                ->get()->toArray();
-
-            if (count($pending) == 0 and count($going) == 0){
-                $updateNoTaxeCombo = Tray::find($checkCurrent[0]['id']);
-                $updateNoTaxeCombo->valueWithoutDeliver = $updateNoTaxeCombo->totalValue - $comboDistrict[0]->price;
-                $updateNoTaxeCombo->save();
-
-            }else{
-                $updateNoTaxeCombo = Tray::find($checkCurrent[0]['id']);
-                $updateNoTaxeCombo->valueWithoutDeliver = $updateNoTaxeCombo->totalValue;
-                $updateNoTaxeCombo->save();
-            }
-        }
 
         //Inserindo taxa de entrega para avulso.
         if ($checkCurrent == null){
@@ -1731,124 +1713,124 @@ class TrayController extends Controller
         return [$data, $places];
     }
 
-    public function removeCustom($id)
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            return redirect()->route('tipoPedido');
-        }
-
-        $delete = AuxiliarDetached::find($id);
-        $order = Tray::find($delete->idOrder);
-
-        $totalValue = $order->valueWithoutDisccount - $delete->valueWithExtras;
-        $updateOrder = $order->totalValue - $delete->valueWithExtras;
-
-        //Verificando o uso de cupom e se bate com o preço atual.
-        if ($order['disccountUsed'] != null){
-
-            $rule = DB::table('coupons')
-                ->where('name', '=', $order['disccountUsed'])
-                ->get()->toArray();
-
-            if ($totalValue < $rule[0]->disccountRule){
-
-                DB::table('auxiliar_detacheds')
-                    ->where('id', '=', $id)
-                    ->delete();
-
-                DB::table('trays')
-                    ->where('id', '=', $order['id'])
-                    ->update(['disccountUsed' => null, 'totalValue' => $totalValue, 'valueWithoutDisccount' => $totalValue, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
-
-                return redirect()->back()->with('msg-rem-cup', '.');
-
-            }else{
-                DB::table('auxiliar_detacheds')
-                    ->where('id', '=', $id)
-                    ->delete();
-
-                DB::table('trays')
-                    ->where('id', '=', $order['id'])
-                    ->update(['totalValue' => $updateOrder, 'valueWithoutDisccount' => $totalValue]);
-
-
-                $orderDelete = Tray::find($delete->idOrder);
-
-                if ($orderDelete->totalValue == 0){
-                    $orderDelete->delete();
-                }
-            }
-        }else{
-
-            DB::table('auxiliar_detacheds')
-                ->where('id', '=', $id)
-                ->delete();
-
-            DB::table('trays')
-                ->where('id', '=', $order['id'])
-                ->update(['totalValue' => $updateOrder, 'valueWithoutDisccount' => $totalValue]);
-
-            $orderDelete = Tray::find($delete->idOrder);
-
-            if ($orderDelete->totalValue == 0){
-                $orderDelete->delete();
-            }
-        }
-
-        return redirect()->back()->with('msg', '.');
-    }
-
-    public function removeExtras(Request $req)
-    {
-        //Pegando o nome do item, seu valor e o valor total do pedido até o momento.
-        $extra = DB::table('trays')
-            ->select('extras')
-            ->where('id', '=', $req->id)
-            ->get()->toArray();
-
-        $trayPrice = DB::table('trays')
-            ->select('totalValue')
-            ->where('id', '=', $req->id)
-            ->get()->toArray();
-
-        $price = DB::table('extras')
-            ->select('price')
-            ->where('name', '=', $req->extra)
-            ->get()->toArray();
-
-        $price = $price[0]->price;
-
-        $trayPrice = $trayPrice[0]->totalValue;
-
-        $extra = $extra[0]->extras;
-
-        $finalValue = $trayPrice - $price;
-
-        //Removendo o item adicional e subtraindo o valor do pedido.
-
-        if (isset($extra)){
-
-            $alter = explode(', ', $extra);
-            $position = array_search($req->extra, $alter);
-            unset($alter[$position]);
-            $updatedExtra = implode(', ', $alter);
-
-            $affected = DB::table('trays')
-                ->where('id', '=', $req->id)
-                ->update(['extras' => $updatedExtra]);
-
-            $alterValue = DB::table('trays')
-                ->where('id', '=', $req->id)
-                ->update(['totalValue' => $finalValue]);
-
-            return back()->with('msg', 'Item removido do sanduíche :(');
-        }else{
-            return back();
-        }
-    }
+//    public function removeCustom($id)
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        $delete = AuxiliarDetached::find($id);
+//        $order = Tray::find($delete->idOrder);
+//
+//        $totalValue = $order->valueWithoutDisccount - $delete->valueWithExtras;
+//        $updateOrder = $order->totalValue - $delete->valueWithExtras;
+//
+//        //Verificando o uso de cupom e se bate com o preço atual.
+//        if ($order['disccountUsed'] != null){
+//
+//            $rule = DB::table('coupons')
+//                ->where('name', '=', $order['disccountUsed'])
+//                ->get()->toArray();
+//
+//            if ($totalValue < $rule[0]->disccountRule){
+//
+//                DB::table('auxiliar_detacheds')
+//                    ->where('id', '=', $id)
+//                    ->delete();
+//
+//                DB::table('trays')
+//                    ->where('id', '=', $order['id'])
+//                    ->update(['disccountUsed' => null, 'totalValue' => $totalValue, 'valueWithoutDisccount' => $totalValue, 'deliverWay' => null, 'address' => null, 'payingMethod' => null]);
+//
+//                return redirect()->back()->with('msg-rem-cup', '.');
+//
+//            }else{
+//                DB::table('auxiliar_detacheds')
+//                    ->where('id', '=', $id)
+//                    ->delete();
+//
+//                DB::table('trays')
+//                    ->where('id', '=', $order['id'])
+//                    ->update(['totalValue' => $updateOrder, 'valueWithoutDisccount' => $totalValue]);
+//
+//
+//                $orderDelete = Tray::find($delete->idOrder);
+//
+//                if ($orderDelete->totalValue == 0){
+//                    $orderDelete->delete();
+//                }
+//            }
+//        }else{
+//
+//            DB::table('auxiliar_detacheds')
+//                ->where('id', '=', $id)
+//                ->delete();
+//
+//            DB::table('trays')
+//                ->where('id', '=', $order['id'])
+//                ->update(['totalValue' => $updateOrder, 'valueWithoutDisccount' => $totalValue]);
+//
+//            $orderDelete = Tray::find($delete->idOrder);
+//
+//            if ($orderDelete->totalValue == 0){
+//                $orderDelete->delete();
+//            }
+//        }
+//
+//        return redirect()->back()->with('msg', '.');
+//    }
+//
+//    public function removeExtras(Request $req)
+//    {
+//        //Pegando o nome do item, seu valor e o valor total do pedido até o momento.
+//        $extra = DB::table('trays')
+//            ->select('extras')
+//            ->where('id', '=', $req->id)
+//            ->get()->toArray();
+//
+//        $trayPrice = DB::table('trays')
+//            ->select('totalValue')
+//            ->where('id', '=', $req->id)
+//            ->get()->toArray();
+//
+//        $price = DB::table('extras')
+//            ->select('price')
+//            ->where('name', '=', $req->extra)
+//            ->get()->toArray();
+//
+//        $price = $price[0]->price;
+//
+//        $trayPrice = $trayPrice[0]->totalValue;
+//
+//        $extra = $extra[0]->extras;
+//
+//        $finalValue = $trayPrice - $price;
+//
+//        //Removendo o item adicional e subtraindo o valor do pedido.
+//
+//        if (isset($extra)){
+//
+//            $alter = explode(', ', $extra);
+//            $position = array_search($req->extra, $alter);
+//            unset($alter[$position]);
+//            $updatedExtra = implode(', ', $alter);
+//
+//            $affected = DB::table('trays')
+//                ->where('id', '=', $req->id)
+//                ->update(['extras' => $updatedExtra]);
+//
+//            $alterValue = DB::table('trays')
+//                ->where('id', '=', $req->id)
+//                ->update(['totalValue' => $finalValue]);
+//
+//            return back()->with('msg', 'Item removido do sanduíche :(');
+//        }else{
+//            return back();
+//        }
+//    }
 
     public function orderType()
     {

@@ -37,57 +37,57 @@ class OrdersController extends Controller
         return view('clientUser.myOrders');
     }
 
-    public function pending()
-    {
-        $user = Auth::user()->id;
-        $order = DB::table('orders')
-            ->where('idClient', '=', $user)
-            ->where('status', '=', 'Pendente')
-            ->get();
-
-        return view('clientUser.pending', compact('order'));
-    }
-
-    public function deletePending($id)
-    {
-        DB::table('orders')
-            ->where('id', '=', $id)
-            ->delete();
-
-        return back()->with('msg-rem', 'deletado');
-    }
-
-    public function confirmPending($id)
-    {
-        //Verificando se o delivery continua aberto.
-        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
-
-        if ($deliveryStatus[0]->status == 'Fechado'){
-            DB::table('orders')
-                ->where('idClient', '=', Auth::user()->id)
-                ->where('status', '=', 'Pendente')
-                ->update(['status' => 'Cancelado']);
-
-
-            return redirect()->route('tipoPedido');
-        }
-
-        DB::table('orders')
-            ->where('id', '=', $id)
-            ->update(['status' => 'Pedido registrado']);
-
-        return redirect()->route('preparo.index');
-    }
-
-    public function confirm()
-    {
-        $user = Auth::user()['id'];
-        Orders::where('idClient', $user)
-            ->where('status', 'Pendente')
-            ->update(['status' => 'Pedido registrado']);
-
-        return redirect()->route('preparo.index')->with('msg', 'teste');
-    }
+//    public function pending()
+//    {
+//        $user = Auth::user()->id;
+//        $order = DB::table('orders')
+//            ->where('idClient', '=', $user)
+//            ->where('status', '=', 'Pendente')
+//            ->get();
+//
+//        return view('clientUser.pending', compact('order'));
+//    }
+//
+//    public function deletePending($id)
+//    {
+//        DB::table('orders')
+//            ->where('id', '=', $id)
+//            ->delete();
+//
+//        return back()->with('msg-rem', 'deletado');
+//    }
+//
+//    public function confirmPending($id)
+//    {
+//        //Verificando se o delivery continua aberto.
+//        $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
+//
+//        if ($deliveryStatus[0]->status == 'Fechado'){
+//            DB::table('orders')
+//                ->where('idClient', '=', Auth::user()->id)
+//                ->where('status', '=', 'Pendente')
+//                ->update(['status' => 'Cancelado']);
+//
+//
+//            return redirect()->route('tipoPedido');
+//        }
+//
+//        DB::table('orders')
+//            ->where('id', '=', $id)
+//            ->update(['status' => 'Pedido registrado']);
+//
+//        return redirect()->route('preparo.index');
+//    }
+//
+//    public function confirm()
+//    {
+//        $user = Auth::user()['id'];
+//        Orders::where('idClient', $user)
+//            ->where('status', 'Pendente')
+//            ->update(['status' => 'Pedido registrado']);
+//
+//        return redirect()->route('preparo.index')->with('msg', 'teste');
+//    }
 
 
     /**
@@ -243,11 +243,6 @@ class OrdersController extends Controller
             }
         }
 
-        if ($tray->hamburguer != null && $tray->extras != null){
-
-            $tray->hamburguer = $tray->hamburguer . '. Adicionais: ' . $tray->extras . '.';
-
-        }
         $tray->save();
 
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
@@ -307,9 +302,9 @@ class OrdersController extends Controller
             $newOrder->detached = $itemOne . ';' .$itemTwo;
         }
 
-        if (isset($updOrder[0]['comboItem'])){
-            $newOrder->comboItem = $updOrder[0]['comboItem'];
-        }
+//        if (isset($updOrder[0]['comboItem'])){
+//            $newOrder->comboItem = $updOrder[0]['comboItem'];
+//        }
 
         $newOrder->clientComments = $updOrder[0]['clientComments'];
         $newOrder->deliverWay = $updOrder[0]['deliverWay'];
@@ -390,37 +385,12 @@ class OrdersController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $order = Orders::find($id);
 
         return view('Orders.order', compact('order'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     public function clientChangesStatus($id, $acao, $remetente, $idCliente)
     {

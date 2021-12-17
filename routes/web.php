@@ -26,8 +26,22 @@ Route::get('/', function () {
         $rate = "Não";
     }
 
-    $pizzas = DB::table('adverts')
+    $smallPizzas = DB::table('adverts')
         ->where('foodType', '=', 'Pizza')
+        ->where('name', 'like', '%'. 'Pequena'. '%')
+        ->get()->toArray();
+
+    $mediumPizzas = DB::table('adverts')
+        ->where('foodType', '=', 'Pizza')
+        ->where('name', 'like', '%'. 'Média'. '%')
+        ->get()->toArray();
+
+    $largePizzas = DB::table('adverts')
+        ->where('foodType', '=', 'Pizza')
+        ->where('name', 'like', '%'. 'Grande'. '%')
+        ->orWhere('name', 'like', '%'. 'Família'. '%')
+        ->orWhere('name', 'like', '%'. 'Gigante'. '%')
+        ->orWhere('name', 'like', '%'. 'Maracanã'. '%')
         ->get()->toArray();
 
     $drinks = DB::table('adverts')
@@ -38,25 +52,9 @@ Route::get('/', function () {
         ->where('foodType', '=', 'Sobremesa')
         ->get()->toArray();
 
-    $foods = Adverts::all();
+    $foods = DB::table('adverts')->get()->toArray();
 
-    foreach ($foods as $food){
-        $foodFormat = explode(',', $food->extras);
-        $one = array();
-        foreach ($foodFormat as $t){
-            $extra = DB::table('extras')
-                ->select('namePrice')
-                ->where('name', '=', $t)
-                ->get()->toArray();
-
-            foreach ($extra as $ext){
-                array_push($one, $ext->namePrice);
-                $food->extras = $one;
-            }
-        }
-    }
-
-    return view('welcome', compact('pizzas', 'drinks', 'desserts', 'rate', 'foods'));
+    return view('welcome', compact('smallPizzas', 'mediumPizzas', 'largePizzas', 'drinks', 'desserts', 'rate', 'foods'));
 })->name('welcome');
 
 //Rotas de redefinição de senha.
@@ -80,7 +78,7 @@ Route::resource('/clientes', 'ClientsController')->middleware('auth');
 
 Route::resource('/usuario', 'UserController')->middleware('auth');
 
-    Route::resource('/preparo', 'PreparingController')->middleware('auth');
+Route::resource('/preparo', 'PreparingController')->middleware('auth');
 
 Route::resource('/cupons', 'CouponController')->middleware('auth');
 
@@ -88,7 +86,7 @@ Route::resource('/refeicoes', 'menuController')->middleware('auth');
 
 Route::resource('/minhaBandeja', 'TrayController')->middleware('auth');
 
-Route::resource('/itensAdicionais', 'ExtrasController')->middleware('auth');
+//Route::resource('/itensAdicionais', 'ExtrasController')->middleware('auth');
 
 Route::resource('/locaisDeEntrega', 'deliverController')->middleware('auth');
 
@@ -100,24 +98,24 @@ Route::get('/meusCupons', 'CouponController@myCoupons')->name('meusCupons')->mid
 Route::get('/entrar', 'LoginController@login')->name('entrar');
 
 //Rotas de combo.
-Route::get('/hamburguer', 'TrayController@orderComboHamburguer')->name('comboHamburguer')->middleware('auth');
+//Route::get('/hamburguer', 'TrayController@orderComboHamburguer')->name('comboHamburguer')->middleware('auth');
 
-Route::get('/acompanhamento/{id}', 'TrayController@fries')->name('acompanhamento')->middleware('auth');
+//Route::get('/acompanhamento/{id}', 'TrayController@fries')->name('acompanhamento')->middleware('auth');
 
-Route::post('/bebida/{id}', 'TrayController@drinks')->name('bebida')->middleware('auth');
+//Route::post('/bebida/{id}', 'TrayController@drinks')->name('bebida')->middleware('auth');
 
 Route::post('/salvamento/{id?}', 'TrayController@shoppingFinish')->name('salvamento')->middleware('auth');
 
 Route::get('/finalizarCompra', 'TrayController@reviewAndFinish')->name('fimCompra')->middleware('auth');
 
-Route::post('/removerAdicional', 'TrayController@removeExtras')->name('removeadd')->middleware('auth');
+//Route::post('/removerAdicional', 'TrayController@removeExtras')->name('removeadd')->middleware('auth');
 
 //Rotas de edição do combo.
-Route::get('/editarComboAcompanhamento', 'TrayController@editPortion')->name('editarPorcao')->middleware('auth');
+//Route::get('/editarComboAcompanhamento', 'TrayController@editPortion')->name('editarPorcao')->middleware('auth');
 
-Route::get('/editarComboBebida', 'TrayController@editDrink')->name('editarBebida')->middleware('auth');
+//Route::get('/editarComboBebida', 'TrayController@editDrink')->name('editarBebida')->middleware('auth');
 
-Route::get('/editarComboExtras/{id?}', 'TrayController@editComboExtras')->name('editarComboExtras')->middleware('auth');
+//Route::get('/editarComboExtras/{id?}', 'TrayController@editComboExtras')->name('editarComboExtras')->middleware('auth');
 
 //Rotas de pedido avulso.
 Route::get('/cardapio/{insert?}', 'menuController@foodMenu')->name('cardapio')->middleware('auth');
@@ -126,13 +124,13 @@ Route::get('/adicionarItem/{id}', 'TrayController@freeOrder')->name('adicionarIt
 
 Route::post('/removerItem/{id}', 'TrayController@detached')->name('removerItem')->middleware('auth');
 
-Route::post('/removerPersonalizado/{id}', 'TrayController@removePersonalized')->name('removerPersonalizado')->middleware('auth');
+//Route::post('/removerPersonalizado/{id}', 'TrayController@removePersonalized')->name('removerPersonalizado')->middleware('auth');
 
-Route::post('/editarPersonalizado/{id}', 'TrayController@editPersonalized')->name('editarPersonalizado')->middleware('auth');
+//Route::post('/editarPersonalizado/{id}', 'TrayController@editPersonalized')->name('editarPersonalizado')->middleware('auth');
 
-Route::post('/removeCustomizado/{id}', 'TrayController@removeCustom')->name('removeCustomizado')->middleware('auth');
+//Route::post('/removeCustomizado/{id}', 'TrayController@removeCustom')->name('removeCustomizado')->middleware('auth');
 
-Route::post('/adicionaExtraComum/{id}', 'TrayController@addExtraItem')->name('addExtraItem')->middleware('auth');
+//Route::post('/adicionaExtraComum/{id}', 'TrayController@addExtraItem')->name('addExtraItem')->middleware('auth');
 
 //Rota de aplicação de cupom.
 Route::post('/aplicarCupom', 'TrayController@couponApply')->name('aplicarCupom')->middleware('auth');
@@ -172,11 +170,11 @@ Route::get('/financeiro', 'FinancialController@index')->name('financeiro')->midd
 
 Route::get('/dashboard', 'FinancialController@dashboard')->name('dashboard')->middleware('auth');
 
-Route::get('/pedidosPendentes', 'OrdersController@pending')->name('pedidosPendentes')->middleware('auth');
+//Route::get('/pedidosPendentes', 'OrdersController@pending')->name('pedidosPendentes')->middleware('auth');
 
-Route::get('/deletarPendente/{id}', 'OrdersController@deletePending')->name('deletaPendente')->middleware('auth');
+//Route::get('/deletarPendente/{id}', 'OrdersController@deletePending')->name('deletaPendente')->middleware('auth');
 
-Route::get('/confirmarPendente/{id}', 'OrdersController@confirmPending')->name('confirmaPendente')->middleware('auth');
+//Route::get('/confirmarPendente/{id}', 'OrdersController@confirmPending')->name('confirmaPendente')->middleware('auth');
 
 Route::get('/confirmarPedido', 'OrdersController@confirm')->name('confirmarPedido')->middleware('auth');
 
@@ -239,7 +237,6 @@ Route::get('/pedidoCliente', 'PreparingController@clientOrder')->name('pedidoCli
 Route::get('/verificarFrete', 'TrayController@verificaFrete')->name('verificarFrete');
 
 //Rotas de notificações
-
 Route::post('/save-token', 'HomeController@saveToken')->name('save-token');
 
 Route::post('/send-notification', 'HomeController@sendNotification')->name('send.notification');

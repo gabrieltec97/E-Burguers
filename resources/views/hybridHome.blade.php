@@ -42,10 +42,7 @@
                 Swal.fire({
                     title: 'Muito beeeem!',
                     text: 'O pedido foi entregue, parabéns à todos pelo empenho!',
-                    imageUrl: 'https://localhost/E-Pedidos/public/logo/congrats.gif',
-                    imageWidth: 400,
-                    imageHeight: 200,
-                    imageAlt: 'Parabéns pelo empenho!',
+                    icon: 'success',
                     showConfirmButton: false,
                     timer: 6000,
                     timerProgressBar: true

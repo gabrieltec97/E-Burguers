@@ -54,50 +54,7 @@
             </li>
         </ul>
 
-        <span class="navbar-text area-carrinho">
-        <?php
-            $user = \Illuminate\Support\Facades\Auth::user();
-            $tray = $user->userOrderTray()->select('hamburguer', 'portion', 'drinks')->get()->toArray();
-            $freeTray = $user->userOrderTray()->select('id','detached')->get()->toArray();
-            $count = 0;
-
-            if (isset($tray[0])){
-                $items = \Illuminate\Support\Facades\DB::table('item_without_extras')
-                    ->select('id')
-                    ->where('idOrder', '=', $freeTray[0]['id'])
-                    ->get()
-                    ->toArray();
-
-                $count += count($items);
-
-                $itemsWithExtras = \Illuminate\Support\Facades\DB::table('auxiliar_detacheds')
-                    ->select('id')
-                    ->where('idOrder', '=', $freeTray[0]['id'])
-                    ->get()
-                    ->toArray();
-
-                $count += count($itemsWithExtras);
-            }
-
-            if(isset($tray[0])){
-                if($tray[0]['hamburguer'] != ''){
-                    $count = 1;
-                }
-
-                if($tray[0]['drinks'] != ''){
-                    $count += 1;
-                }
-
-                if($tray[0]['portion'] != ''){
-                    $count += 1;
-                }
-            }
-         ?>
-                <i class="fas fa-shopping-cart carrinho text-white">
-                <span class="badge badge-secondary"><span class="text-white valor-carrinho"><?= $count ?></span></span></i>
-        </span>
-
-        <div>
+        <div class="opc-desktop">
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?php
@@ -130,6 +87,42 @@
 
                     <span class="font-weight-bold" style="color: black">Sair</span></a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="opc-mobile">
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?php
+                date_default_timezone_set('America/Sao_Paulo');
+                $agora =getdate();
+                $hora = $agora["hours"];
+                $usuario = \Illuminate\Support\Facades\Auth::user()->name;
+
+
+                ?>
+
+                @if($hora >= 5 && $hora < 12)
+                    <span class="saudacao" style="color: white">Bom dia, {{ $usuario }}</span>
+                @elseif($hora >= 12 && $hora < 18)
+                    <span class="saudacao" style="color: white"> Boa tarde, {{ $usuario }} &nbsp;</span>
+                @else
+                    <span class="saudacao" style="color: white">Boa noite, {{ $usuario }}</span>
+                @endif
+            </a>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{{ route('meusDados') }}"><span class="font-weight-bold" style="color: black">Meus dados</span></a>
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();"">
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+
+                <span class="font-weight-bold" style="color: black">Sair</span></a>
             </div>
         </div>
     </div>

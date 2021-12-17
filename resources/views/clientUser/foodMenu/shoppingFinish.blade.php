@@ -228,7 +228,7 @@
                                                     </div>
 
                                                         <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
-                                                            <label class="font-weight-bold" style="color: black;font-size: 18px">Nº da residência</label>
+                                                            <label class="font-weight-bold" style="color: black;font-size: 18px">Nº da residência (Complemento)</label>
                                                             <input type="text" class="form-control adDeliver" name="adNumber" placeholder="Dê mais detalhes sobre a localização.">
                                                         </div>
 
@@ -437,16 +437,41 @@
                                     <div class="col-12">
 
                                         <?php
-                                        $count = strlen($myOrder['totalValue']);
 
-                                        if ($count == 4 && $myOrder['totalValue'] > 10 or $count == 3){
-                                            $price = $myOrder['totalValue'] . '0';
-                                        }elseif ($count == 2){
-                                            $price = $myOrder['totalValue']. '.' . '00';
-                                        }
-                                        else{
-                                            $price = $myOrder['totalValue'];
-                                        }
+                                            if (str_contains($myOrder['totalValue'] , '.')){
+                                                $totalValue = $myOrder['totalValue'];
+                                                if ($totalValue > 0){
+                                                    $vals = explode('.', $totalValue);
+
+                                                    $pieces = strlen($vals[0]);
+                                                    $piecesAfter = strlen($vals[1]);
+                                                }else{
+                                                    $pieces = 0;
+                                                }
+
+                                                $count2 = strlen($totalValue);
+
+                                                if ($count2 == 4 && $totalValue > 10){
+                                                    $price = $totalValue . '0';
+                                                }elseif ($count2 == 2){
+                                                    $price = $totalValue. '.' . '00';
+                                                }elseif($count2 == 5 && $pieces == 3){
+                                                    $price = $totalValue. '0';
+                                                }elseif($count2 == 3){
+                                                    $price = $totalValue . '0';
+                                                }elseif($pieces == 5  && $count2 >= 6 && $piecesAfter < 2){
+                                                    $price = $totalValue . '0';
+                                                }elseif($pieces == 4  && $count2 >= 6 && $piecesAfter < 2){
+                                                    $price = $totalValue . '0';
+                                                }
+                                                elseif($pieces > 3 && $count2 >= 6){
+                                                    $price = $totalValue;
+                                                } else{
+                                                    $price = $totalValue;
+                                                }
+                                            }else{
+                                                $price = $myOrder['totalValue'] . '.00';
+                                            }
                                         ?>
 
                                         <label class="font-weight-bold" style="font-size: 18px; color: black;">Valor total: <span class="text-success font-weight-normal">R$</span> </label>
@@ -481,7 +506,7 @@
                                                                         <form action="{{ route('removerItem', $value->id)}}" method="post">
                                                                             @csrf
                                                                             @if($value != '')
-                                                                                <li style="position: relative; right: 20px; font-size: 15px;">{{ $value->itemName }}
+                                                                                <li style="position: relative; right: 20px; font-size: 15px;">{{ $value->item }}
                                                                                     <button type="submit" class="removeItem ml-1" title="Remover item" style="border: none; background: none; cursor: pointer;"><i class="fas fa-times text-danger"></i></button></li>
                                                                             @endif
                                                                         </form>
@@ -498,30 +523,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    @if($myOrder['orderType'] != 'Avulso')
-                                        {{--                                    @if($myOrder['extras'] != '')--}}
-                                        {{--                                        <hr>--}}
-                                        {{--                                        <h5 class="font-weight-bold text-center mb-3">Adicionais:</h5>--}}
-                                        {{--                                        <ol>--}}
-
-                                        {{--                                            @foreach(explode(', ', $myOrder['extras']) as $extra)--}}
-                                        {{--                                                <form action="{{ route('removeadd')}}" class="form-group removerAdicional">--}}
-                                        {{--                                                    <li class="font-weight-bold" style="margin-bottom: -5px;"><span style="cursor:pointer;" title="Item adicionado ao sanduíche">{{ $extra }}</span> &nbsp;<button type="submit" class="fas fa-times text-danger removeItem" title="Remover item adicional" style="cursor: pointer"></button></li>--}}
-                                        {{--                                                    <select name="extra" hidden>--}}
-                                        {{--                                                        <option value="{{ $extra }}"></option>--}}
-                                        {{--                                                    </select>--}}
-
-                                        {{--                                                    <select name="id" hidden>--}}
-                                        {{--                                                        <option value="{{ $myOrder['id'] }}"></option>--}}
-                                        {{--                                                    </select>--}}
-                                        {{--                                                </form>--}}
-                                        {{--                                            @endforeach--}}
-
-                                        {{--                                        </ol>--}}
-                                        {{--                                        <hr>--}}
-                                        {{--                                    @endif--}}
-                                    @endif
 
                                     <form id="couponApply" action="{{ route('aplicarCupom') }}" method="post">
                                         @csrf

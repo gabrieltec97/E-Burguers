@@ -514,53 +514,42 @@ class FinancialController extends Controller
         //Recuperando os itens mais vendidos.
         $detached = [];
 
-        //Combo
-        $cb = DB::table('orders')
-            ->select(DB::raw('comboItem, COUNT(comboItem) as count2'))
-            ->groupBy('comboItem')
-            ->orderBy(DB::raw('count(comboItem)'), 'desc')
-            ->limit(4)
-            ->get()
-            ->toArray();
-
-        foreach ($cb as $ck){
-
-           if ($ck->count2 != 0){
-               array_push($detached, [
-                   'item' => $ck->comboItem,
-                   'quantidade' => $ck->count2
-               ]);
-           }
-        }
+//        //Combo
+//        $cb = DB::table('orders')
+//            ->select(DB::raw('comboItem, COUNT(comboItem) as count2'))
+//            ->groupBy('comboItem')
+//            ->orderBy(DB::raw('count(comboItem)'), 'desc')
+//            ->limit(4)
+//            ->get()
+//            ->toArray();
+//
+//        foreach ($cb as $ck){
+//
+//           if ($ck->count2 != 0){
+//               array_push($detached, [
+//                   'item' => $ck->comboItem,
+//                   'quantidade' => $ck->count2
+//               ]);
+//           }
+//        }
 
         $adverts = Adverts::all();
         $sale = array();
         $total = 0;
         foreach ($adverts as $advert){
             $query = DB::table('orders')
-                ->selectRaw("hamburguer,
-                    fries,
-                    drinks,
+                ->selectRaw("
 	                detached,
                     CHAR_LENGTH(detached) - CHAR_LENGTH(REPLACE(LOWER(detached), '". strtolower($advert->name)."',
                     SPACE(LENGTH('". strtolower($advert->name)."')-1)))
-                        AS total ,
-                         CHAR_LENGTH(hamburguer) - CHAR_LENGTH(REPLACE(LOWER(hamburguer), '". strtolower($advert->name)."',
-                          SPACE(LENGTH('". strtolower($advert->name)."')-1)))
-                        AS total2,
-                         CHAR_LENGTH(fries) - CHAR_LENGTH(REPLACE(LOWER(fries), '". strtolower($advert->name)."',
-                         SPACE(LENGTH('". strtolower($advert->name)."')-1)))
-                        AS total3,
-                         CHAR_LENGTH(drinks) - CHAR_LENGTH(REPLACE(LOWER(drinks), '". strtolower($advert->name)."',
-                         SPACE(LENGTH('". strtolower($advert->name)."')-1)))
-                        AS total4")
+                        AS total")
                 ->where('month', '=', $thisMonth)
                 ->where('year', '=', $thisYear)
                 ->where('status', '=', 'Pedido Entregue')
                 ->get()->toArray();
 
             foreach ($query as $q){
-                $total += $q->total + $q->total2 + $q->total3 +$q->total4;
+                $total += $q->total;
             }
 
             DB::table('adverts')
@@ -571,27 +560,54 @@ class FinancialController extends Controller
 
             $total = 0;
         }
-        //Verifica quantos foram vendidos de cada item.
 
+        //Verifica quantos foram vendidos de cada item.
         array_multisort(array_column($sale,'1'),SORT_DESC, $sale);
 
-        if (isset($sale[0]) && isset($sale[1]) && isset($sale[2]) && isset($sale[3])){
-            $chart2 = new Grafico();
-
-            $chart2->labels([$sale[0][0], $sale[1][0], $sale[2][0], $sale[3][0]]);
-            $chart2->dataset('Total de vendas este ano', 'doughnut' , [$sale[0][1],$sale[1][1],$sale[2][1], $sale[3][1]])->options([
-                'backgroundColor' => [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)'
-                ],
-            ]);
-        }
-
-        if (isset($sale[0]) && isset($sale[1]) && isset($sale[2]) && isset($sale[3])){
-            return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
+        if (isset($sale[0])){
+            $label1 = $sale[0][0];
+            $val1 = $sale[0][1];
         }else{
-            return view('Financial.dashboard', compact('chart',  'countMonth', 'countDayNow', 'totalValue', 'totalValueToday'));
+            $label1 = '';
+            $val1 = '';
         }
+
+        if (isset($sale[1])){
+            $label2 = $sale[1][0];
+            $val2 = $sale[1][1];
+        }else{
+            $label2 = '';
+            $val2 = '';
+        }
+
+        if (isset($sale[2])){
+            $label3 = $sale[2][0];
+            $val3 = $sale[2][1];
+        }else{
+            $label3 = '';
+            $val3 = '';
+        }
+
+        if (isset($sale[3])){
+            $label4 = $sale[3][0];
+            $val4 = $sale[3][1];
+        }else{
+            $label4 = '';
+            $val4 = '';
+        }
+
+        $chart2 = new Grafico();
+
+        $chart2->labels([$label1, $label2, $label3, $label4]);
+        $chart2->dataset('Total de vendas este ano', 'doughnut' , [$val1, $val2, $val3, $val4])->options([
+            'backgroundColor' => [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ],
+        ]);
+
+
+        return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
     }
 }

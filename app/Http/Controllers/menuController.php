@@ -54,37 +54,37 @@ class menuController extends Controller
 
         if (isset($tray[0]->id)){
             $items = DB::table('item_without_extras')
-                ->select('itemName', 'id')
+                ->select('item', 'id')
                 ->where('idOrder', '=', $tray[0]->id)
                 ->get()->toArray();
 
-            $query = DB::table('auxiliar_detacheds')
-                ->select('item', 'nameExtra', 'id')
-                ->where('idOrder', '=', $tray[0]->id)
-                ->get()->toArray();
-
-            $itemWExtras = array();
-
-            foreach ($query as $it){
-                array_push($itemWExtras, ['name' => $it->item . ' + ' . $it->nameExtra, 'id' => $it->id]);
-            }
+//            $query = DB::table('auxiliar_detacheds')
+//                ->select('item', 'nameExtra', 'id')
+//                ->where('idOrder', '=', $tray[0]->id)
+//                ->get()->toArray();
+//
+//            $itemWExtras = array();
+//
+//            foreach ($query as $it){
+//                array_push($itemWExtras, ['name' => $it->item . ' + ' . $it->nameExtra, 'id' => $it->id]);
+//            }
         }
 
-        foreach ($foods as $food){
-            $foodFormat = explode(',', $food->extras);
-            $one = array();
-            foreach ($foodFormat as $t){
-                $extra = DB::table('extras')
-                    ->select('namePrice')
-                    ->where('name', '=', $t)
-                    ->get()->toArray();
-
-                foreach ($extra as $ext){
-                    array_push($one, $ext->namePrice);
-                    $food->extras = $one;
-                }
-            }
-        }
+//        foreach ($foods as $food){
+//            $foodFormat = explode(',', $food->extras);
+//            $one = array();
+//            foreach ($foodFormat as $t){
+//                $extra = DB::table('extras')
+//                    ->select('namePrice')
+//                    ->where('name', '=', $t)
+//                    ->get()->toArray();
+//
+//                foreach ($extra as $ext){
+//                    array_push($one, $ext->namePrice);
+//                    $food->extras = $one;
+//                }
+//            }
+//        }
 
         $rate = DB::table('lock_rating')
             ->get();
@@ -95,8 +95,22 @@ class menuController extends Controller
             $rate = "Não";
         }
 
-        $pizzas = DB::table('adverts')
+        $smallPizzas = DB::table('adverts')
             ->where('foodType', '=', 'Pizza')
+            ->where('name', 'like', '%'. 'Pequena'. '%')
+            ->get()->toArray();
+
+        $mediumPizzas = DB::table('adverts')
+            ->where('foodType', '=', 'Pizza')
+            ->where('name', 'like', '%'. 'Média'. '%')
+            ->get()->toArray();
+
+        $largePizzas = DB::table('adverts')
+            ->where('foodType', '=', 'Pizza')
+            ->where('name', 'like', '%'. 'Grande'. '%')
+            ->orWhere('name', 'like', '%'. 'Família'. '%')
+            ->orWhere('name', 'like', '%'. 'Gigante'. '%')
+            ->orWhere('name', 'like', '%'. 'Maracanã'. '%')
             ->get()->toArray();
 
         $drinks = DB::table('adverts')
@@ -109,10 +123,10 @@ class menuController extends Controller
 
         if(isset($tray[0]->id)){
 
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'coupons', 'deliveryStatus', 'insert', 'rate', 'tray', 'items', 'val', 'itemWExtras', 'pizzas', 'drinks', 'desserts'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'coupons', 'deliveryStatus', 'insert', 'rate', 'tray', 'items', 'val', 'smallPizzas', 'mediumPizzas', 'largePizzas', 'drinks', 'desserts'));
         }else{
 
-            return view('clientUser.foodMenu.foodMenu', compact('foods', 'coupons', 'deliveryStatus', 'rate', 'insert', 'rate', 'pizzas', 'drinks', 'desserts'));
+            return view('clientUser.foodMenu.foodMenu', compact('foods', 'coupons', 'deliveryStatus', 'rate', 'insert', 'rate', 'smallPizzas', 'mediumPizzas', 'largePizzas', 'drinks', 'desserts'));
         }
     }
 
@@ -196,8 +210,12 @@ class menuController extends Controller
         }
 
         $advert = new Adverts();
-
         $advert->name = $request->mealName;
+
+        if ($request->tipoRef == 'Pizza'){
+            $advert->name = $request->mealName . ' - ' . $request->size . ' (' . $request->cmsize .'cm)';
+        }
+
         $advert->value = $request->mealValue;
         $advert->foodType = $request->tipoRef;
 

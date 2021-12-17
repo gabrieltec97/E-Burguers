@@ -12,7 +12,7 @@ class ClientsController extends Controller
 
     public function myData()
     {
-        if (Auth::user()->hasPermissionTo('Pedidos (Comum)') or Auth::user()->hasPermissionTo('Pedidos (Híbrido)') or Auth::user()->hasPermissionTo('Em Preparo')){
+        if (Auth::user()->hasPermissionTo('Pedidos (Comum)') or Auth::user()->hasPermissionTo('Pedidos (Híbrido)')){
 
             if (Auth::user()->hasPermissionTo('Dashboard')){
                 $user = 'administrador';

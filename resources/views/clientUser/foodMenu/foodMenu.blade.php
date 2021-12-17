@@ -38,18 +38,19 @@
 
     <div class="container-fluid mt-5">
         <div class="row">
-            <div class="col-lg-12 mt-4 col-sm-12">
-                <h1 class="titulo-cardapio text-center mb-4">Preparamos um cardápio especial para você!</h1>
+            <div class="col-12 d-lg-none" style="margin-top: 10px">
                 <hr>
             </div>
 
-            <div class="col-12">
+            <div class="col-12 mt-lg-4">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item font-weight-bold text-primary complete-all" style="cursor: pointer" onclick="completeAll()">Cardápio completo</li>
-                        <li class="breadcrumb-item just-pizzas" style="cursor: pointer" onclick="justPizzas()">Apenas Pizzas</li>
-                        <li class="breadcrumb-item just-drinks" style="cursor: pointer" onclick="justDrinks()">Apenas Bebidas</li>
-                        <li class="breadcrumb-item just-desserts" style="cursor: pointer" onclick="justDesserts()">Apenas Sobremesas</li>
+                        <li class="breadcrumb-item just-pizzas" style="cursor: pointer" onclick="justPizzas()">Pizzas Pequenas</li>
+                        <li class="breadcrumb-item just-medium" style="cursor: pointer" onclick="justMedium()">Pizzas Médias</li>
+                        <li class="breadcrumb-item just-large" style="cursor: pointer" onclick="justLarge()">Pizzas Grandes</li>
+                        <li class="breadcrumb-item just-drinks" style="cursor: pointer" onclick="justDrinks()">Bebidas</li>
+                        <li class="breadcrumb-item just-desserts" style="cursor: pointer" onclick="justDesserts()">Sobremesas</li>
                     </ol>
                 </nav>
             </div>
@@ -178,93 +179,297 @@
                             </div>
                         @endforeach
 
-                            @foreach($pizzas as $pizza)
-                                <div class="col-12 mt-lg-3 col-lg-4 div-pizzas" id="addPizza{{ $pizza->id }}">
-                                    <form action="{{ route('adicionarItem', $pizza->id) }}">
+                            @foreach($smallPizzas as $smPizza)
+                                <div class="col-12 mt-lg-3 col-lg-4 div-pizzas" id="addPizza{{ $smPizza->id }}">
+                                    <form action="{{ route('adicionarItem', $smPizza->id) }}">
 
                                         <div class="card card-cardapio">
                                             <div class="card-header bg-dark">
-                                                <span class="text-white">{{ $pizza->name }} -</span>  <span class="text-danger font-weight-bold">R$ {{ $pizza->value }}</span>
+                                                <span class="text-white">{{ $smPizza->name }} -</span>  <span class="text-danger font-weight-bold">R$ {{ $smPizza->value }}</span>
                                             </div>
                                             <div class="card-body">
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <img class="card-img-top img-item" src="{{ asset($pizza->picture) }}">
+                                                            <img class="card-img-top img-item" src="{{ asset($smPizza->picture) }}">
                                                         </div>
 
                                                         <div class="col-8">
-                                                            <span class="fooddesc">{{ $pizza->description }}</span>
+                                                            <span class="fooddesc">{{ $smPizza->description }}</span>
                                                         </div>
 
                                                         <div class="col-6 starsrate">
                                                             @if($rate != "Não")
-                                                                @if($pizza->finalGrade == 1)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                @elseif($pizza->finalGrade > 1 && $pizza->finalGrade < 2)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star-half text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                @elseif($pizza->finalGrade == 2)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                @elseif($pizza->finalGrade > 2 && $pizza->finalGrade < 3)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star-half text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                @elseif($pizza->finalGrade == 3)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                @elseif($pizza->finalGrade > 3 && $pizza->finalGrade < 4)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star-half text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                @elseif($pizza->finalGrade == 4)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="far fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                @elseif($pizza->finalGrade > 4 && $pizza->finalGrade < 5)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star-half text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                @elseif($pizza->finalGrade == 5)
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
-                                                                    <i class="fas fa-star text-warning" title="{{$pizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @if($smPizza->finalGrade == 1)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($smPizza->finalGrade > 1 && $smPizza->finalGrade < 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($smPizza->finalGrade == 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($smPizza->finalGrade > 2 && $smPizza->finalGrade < 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($smPizza->finalGrade == 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($smPizza->finalGrade > 3 && $smPizza->finalGrade < 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($smPizza->finalGrade == 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($smPizza->finalGrade > 4 && $smPizza->finalGrade < 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($smPizza->finalGrade == 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$smPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
                                                                 @endif
                                                             @endif
                                                         </div>
 
                                                         <div class="col-12">
                                                             @if($deliveryStatus[0]->status != 'Fechado')
-                                                                @if($pizza->status == 'Ativo')
-                                                                    @if($pizza->foodType == 'Pizza')
+                                                                @if($smPizza->status == 'Ativo')
+                                                                    @if($smPizza->foodType == 'Pizza')
                                                                         <button type="button" value="{{ session('scroll') }}" class="personalizar-session" hidden></button>
-                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addPizza" value="addPizza{{ $pizza->id }}">Adicionar à bandeja</button>
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addPizza" value="addPizza{{ $smPizza->id }}">Adicionar à bandeja</button>
                                                                     @else
-                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" style="margin-left: -22px;" name="addPizza" value="addPizza{{ $pizza->id }}">Adicionar à bandeja</button>
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" style="margin-left: -22px;" name="addPizza" value="addPizza{{ $smPizza->id }}">Adicionar à bandeja</button>
+                                                                    @endif
+
+                                                                @else
+                                                                    <label class="text-danger font-weight-bold mt-2" style="margin-left: -20px">Este item está temporariamente indisponível.</label>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endforeach
+
+                            @foreach($mediumPizzas as $mdPizza)
+                                <div class="col-12 mt-lg-3 col-lg-4 div-medium-pizzas" id="addMd{{ $mdPizza->id }}">
+                                    <form action="{{ route('adicionarItem', $mdPizza->id) }}">
+
+                                        <div class="card card-cardapio">
+                                            <div class="card-header bg-dark">
+                                                <span class="text-white">{{ $mdPizza->name }} -</span>  <span class="text-danger font-weight-bold">R$ {{ $mdPizza->value }}</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <img class="card-img-top img-item" src="{{ asset($mdPizza->picture) }}">
+                                                        </div>
+
+                                                        <div class="col-8">
+                                                            <span class="fooddesc">{{ $mdPizza->description }}</span>
+                                                        </div>
+
+                                                        <div class="col-6 starsrate">
+                                                            @if($rate != "Não")
+                                                                @if($mdPizza->finalGrade == 1)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($mdPizza->finalGrade > 1 && $mdPizza->finalGrade < 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($mdPizza->finalGrade == 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($mdPizza->finalGrade > 2 && $mdPizza->finalGrade < 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($mdPizza->finalGrade == 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($mdPizza->finalGrade > 3 && $mdPizza->finalGrade < 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($mdPizza->finalGrade == 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($mdPizza->finalGrade > 4 && $mdPizza->finalGrade < 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($mdPizza->finalGrade == 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$mdPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            @if($deliveryStatus[0]->status != 'Fechado')
+                                                                @if($mdPizza->status == 'Ativo')
+                                                                    @if($mdPizza->foodType == 'Pizza')
+                                                                        <button type="button" value="{{ session('scroll') }}" class="personalizar-session" hidden></button>
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addPizza" value="addMd{{ $mdPizza->id }}">Adicionar à bandeja</button>
+                                                                    @else
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" style="margin-left: -22px;" name="addPizza" value="addPizza{{ $mdPizza->id }}">Adicionar à bandeja</button>
+                                                                    @endif
+
+                                                                @else
+                                                                    <label class="text-danger font-weight-bold mt-2" style="margin-left: -20px">Este item está temporariamente indisponível.</label>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endforeach
+
+                            @foreach($largePizzas as $lgPizza)
+                                <div class="col-12 mt-lg-3 col-lg-4 div-large-pizzas" id="addLg{{ $lgPizza->id }}">
+                                    <form action="{{ route('adicionarItem', $lgPizza->id) }}">
+
+                                        <div class="card card-cardapio">
+                                            <div class="card-header bg-dark">
+                                                <span class="text-white">{{ $lgPizza->name }} -</span>  <span class="text-danger font-weight-bold">R$ {{ $lgPizza->value }}</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <img class="card-img-top img-item" src="{{ asset($lgPizza->picture) }}">
+                                                        </div>
+
+                                                        <div class="col-8">
+                                                            <span class="fooddesc">{{ $lgPizza->description }}</span>
+                                                        </div>
+
+                                                        <div class="col-6 starsrate">
+                                                            @if($rate != "Não")
+                                                                @if($lgPizza->finalGrade == 1)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($lgPizza->finalGrade > 1 && $lgPizza->finalGrade < 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($lgPizza->finalGrade == 2)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($lgPizza->finalGrade > 2 && $lgPizza->finalGrade < 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($lgPizza->finalGrade == 3)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($lgPizza->finalGrade > 3 && $lgPizza->finalGrade < 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($lgPizza->finalGrade == 4)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="far fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($lgPizza->finalGrade > 4 && $lgPizza->finalGrade < 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star-half text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @elseif($lgPizza->finalGrade == 5)
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                    <i class="fas fa-star text-warning" title="{{$lgPizza->ratingAmount}} Avaliações" style="cursor: pointer"></i>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            @if($deliveryStatus[0]->status != 'Fechado')
+                                                                @if($lgPizza->status == 'Ativo')
+                                                                    @if($lgPizza->foodType == 'Pizza')
+                                                                        <button type="button" value="{{ session('scroll') }}" class="personalizar-session" hidden></button>
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" name="addPizza" value="addLg{{ $lgPizza->id }}">Adicionar à bandeja</button>
+                                                                    @else
+                                                                        <button type="submit" class="btn btn-success adicionar-bandeja text-white" style="margin-left: -22px;" name="addPizza" value="addPizza{{ $lgPizza->id }}">Adicionar à bandeja</button>
                                                                     @endif
 
                                                                 @else
@@ -456,7 +661,7 @@
                                 </div>
                             @endif
 
-                            @if($pizzas == null)
+                            @if($smallPizzas == null)
                                 <div class="col-12 d-flex justify-content-center">
                                     <h3 class="d-none no-pizzas">Sem pizzas cadastradas...</h3>
                                 </div>
@@ -465,23 +670,67 @@
                                     <i class="far fa-frown text-info d-none no-pizzas" style="font-size: 128px;"></i>
                                 </div>
                             @endif
+
+                            @if($mediumPizzas == null)
+                                <div class="col-12 d-flex justify-content-center">
+                                    <h3 class="d-none no-mdpizzas">Sem pizzas médias cadastradas...</h3>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-center mt-4">
+                                    <i class="far fa-frown text-info d-none no-mdpizzas" style="font-size: 128px;"></i>
+                                </div>
+                            @endif
+
+                            @if($largePizzas == null)
+                                <div class="col-12 d-flex justify-content-center">
+                                    <h3 class="d-none no-lgpizzas">Sem pizzas grandes cadastradas...</h3>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-center mt-4">
+                                    <i class="far fa-frown text-info d-none no-lgpizzas" style="font-size: 128px;"></i>
+                                </div>
+                            @endif
                     </div>
 
 
                 </div>
             </div>
 
-            <?php
+        <?php
             if (isset($val)){
-                $count = strlen($val[0]['totalValue']);
+                if (str_contains($val[0]['totalValue'] , '.')){
+                    $totalValue = $val[0]['totalValue'];
+                    if ($totalValue > 0){
+                        $vals = explode('.', $totalValue);
 
-                if ($count == 4 && $val[0]['totalValue'] > 10 or $count == 3){
-                    $price = $val[0]['totalValue'] . '0';
-                }elseif ($count == 2){
-                    $price = $val[0]['totalValue']. '.' . '00';
-                }
-                else{
-                    $price = $val[0]['totalValue'];
+                        $pieces = strlen($vals[0]);
+                        $piecesAfter = strlen($vals[1]);
+                    }else{
+                        $pieces = 0;
+                    }
+
+                    $count2 = strlen($totalValue);
+
+                    if ($count2 == 4 && $totalValue > 10){
+                        $price = $totalValue . '0';
+                    }elseif ($count2 == 2){
+                        $price = $totalValue. '.' . '00';
+                    }elseif($count2 == 5 && $pieces == 3){
+                        $price = $totalValue. '0';
+                    }elseif($count2 == 3){
+                        $price = $totalValue . '0';
+                    }elseif($pieces == 5  && $count2 >= 6 && $piecesAfter < 2){
+                        $price = $totalValue . '0';
+                    }elseif($pieces == 4  && $count2 >= 6 && $piecesAfter < 2){
+                        $price = $totalValue . '0';
+                    }
+                    elseif($pieces > 3 && $count2 >= 6){
+                        $price = $totalValue;
+                    } else{
+                        $price = $totalValue;
+                    }
+                }else{
+                    $price = $val[0]['totalValue'] . '.00';
                 }
             }else{
                 $price = 0;
@@ -501,19 +750,10 @@
                                 @foreach($items as $item)
                                     <form action="{{ route('removerItem', ['id' => $item->id])}}" method="post">
                                         @csrf
-                                    <li>{{$item->itemName}} <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
+                                    <li>{{$item->item}} <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
 
                                     </form>
                                 @endforeach
-                            @endif
-
-                            @if(isset($itemWExtras))
-                                    @foreach($itemWExtras as $item2)
-                                        <form action="{{ route('removerPersonalizado', $item2['id']) }}" method="post">
-                                            @csrf
-                                        <li><span class="text-success">{{$item2['name']}}<button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></span></li>
-                                        </form>
-                                    @endforeach
                             @endif
                         </ol>
 
@@ -567,17 +807,8 @@
                                             @foreach($items as $item)
                                                 <form action="{{ route('removerItem', ['id' => $item->id])}}" method="post">
                                                     @csrf
-                                                    <li>{{$item->itemName}} <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
+                                                    <li>{{$item->item}} <button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></li>
 
-                                                </form>
-                                            @endforeach
-                                        @endif
-
-                                        @if(isset($itemWExtras))
-                                            @foreach($itemWExtras as $item2)
-                                                <form action="{{ route('removerPersonalizado', $item2['id']) }}" method="post">
-                                                    @csrf
-                                                    <li><span class="text-success">{{$item2['name']}}<button type="submit" class="fas fa-times text-danger ml-1" style="cursor: pointer; border: none; background-color: white;" title="Remover item"></button></span></li>
                                                 </form>
                                             @endforeach
                                         @endif
@@ -619,6 +850,8 @@
                     </div>
                 </div>
             </div>
+
+
 
             <div class="col-12 d-flex justify-content-end">
                 <div class="footertray">
@@ -751,8 +984,25 @@
             </script>
         @endif
 
+        @if($insert == 1 && $deliveryStatus[0]->status != 'Fechado')
+                <script>
+                    Swal.fire({
+                        title: 'Bem vindo(a)!',
+                        text: 'Preparamos um cardápio especial para você!',
+                        imageUrl: 'http://localhost/E-Pedidos/public/logo/cardr.png',
+                        imageWidth: 180,
+                        imageHeight: 180,
+                        imageAlt: 'Custom image',
+                        timer: 5000,
+                        timerProgressBar: true,
+                    })
+                </script>
+        @endif
+
         <input type="text" value="{{ count($desserts) }}" class="dest" hidden>
-        <input type="text" value="{{ count($pizzas) }}" class="pzzs" hidden>
+        <input type="text" value="{{ count($smallPizzas) }}" class="pzzs" hidden>
+        <input type="text" value="{{ count($largePizzas) }}" class="lgpzzs" hidden>
+        <input type="text" value="{{ count($mediumPizzas) }}" class="mdpzzs" hidden>
         <input type="text" value="{{ count($drinks) }}" class="dks" hidden>
 
     <script>
@@ -766,8 +1016,10 @@
 
             $(".no-desserts").addClass('d-none', 'true');
             $(".no-drinks").addClass('d-none', 'true');
+            $(".no-mdpizzas").addClass('d-none', 'true');
+            $(".no-lgpizzas").addClass('d-none', 'true');
 
-            $(".div-food, .div-drinks, .div-desserts").hide('slow');
+            $(".div-food, .div-drinks, .div-desserts, .div-large-pizzas, .div-medium-pizzas").hide('slow');
             setTimeout(function (){
                 $(".div-pizzas").show('slow');
             },700);
@@ -780,6 +1032,10 @@
             $(".just-drinks").removeClass('text-primary');
             $(".just-desserts").removeClass('font-weight-bold');
             $(".just-desserts").removeClass('text-primary');
+            $(".just-medium").removeClass('font-weight-bold');
+            $(".just-medium").removeClass('text-primary');
+            $(".just-large").removeClass('font-weight-bold');
+            $(".just-large").removeClass('text-primary');
         }
 
         function justDrinks(){
@@ -792,8 +1048,10 @@
 
             $(".no-pizzas").addClass('d-none', 'true');
             $(".no-desserts").addClass('d-none', 'true');
+            $(".no-lgpizzas").addClass('d-none', 'true');
+            $(".no-mdpizzas").addClass('d-none', 'true');
 
-            $(".div-food, .div-pizzas, .div-desserts").hide('slow');
+            $(".div-food, .div-pizzas, .div-desserts, .div-medium-pizzas, .div-large-pizzas").hide('slow');
             setTimeout(function (){
                 $(".div-drinks").show('slow');
             },700);
@@ -806,6 +1064,10 @@
             $(".just-pizzas").removeClass('text-primary');
             $(".just-desserts").removeClass('font-weight-bold');
             $(".just-desserts").removeClass('text-primary');
+            $(".just-medium").removeClass('font-weight-bold');
+            $(".just-medium").removeClass('text-primary');
+            $(".just-large").removeClass('font-weight-bold');
+            $(".just-large").removeClass('text-primary');
         }
 
         function justDesserts(){
@@ -818,8 +1080,10 @@
 
             $(".no-pizzas").addClass('d-none', 'true');
             $(".no-drinks").addClass('d-none', 'true');
+            $(".no-mdpizzas").addClass('d-none', 'true');
+            $(".no-lgpizzas").addClass('d-none', 'true');
 
-            $(".div-food, .div-pizzas, .div-drinks").hide('slow');
+            $(".div-food, .div-pizzas, .div-drinks, .div-medium-pizzas, .div-large-pizzas").hide('slow');
             setTimeout(function (){
                 $(".div-desserts").show('slow');
             },700);
@@ -832,6 +1096,10 @@
             $(".just-pizzas").removeClass('text-primary');
             $(".just-drinks").removeClass('font-weight-bold');
             $(".just-drinks").removeClass('text-primary');
+            $(".just-medium").removeClass('font-weight-bold');
+            $(".just-medium").removeClass('text-primary');
+            $(".just-large").removeClass('font-weight-bold');
+            $(".just-large").removeClass('text-primary');
         }
 
         function completeAll(){
@@ -839,8 +1107,10 @@
             $(".no-pizzas").addClass('d-none', 'true');
             $(".no-drinks").addClass('d-none', 'true');
             $(".no-desserts").addClass('d-none', 'true');
+            $(".no-mdpizzas").addClass('d-none', 'true');
+            $(".no-lgpizzas").addClass('d-none', 'true');
 
-            $(".div-desserts, .div-pizzas, .div-drinks").hide('slow');
+            $(".div-desserts, .div-pizzas, .div-drinks, .div-medium-pizzas, .div-large-pizzas").hide('slow');
             setTimeout(function (){
                 $(".div-food").show('slow');
             },700);
@@ -853,6 +1123,74 @@
             $(".just-pizzas").removeClass('text-primary');
             $(".just-drinks").removeClass('font-weight-bold');
             $(".just-drinks").removeClass('text-primary');
+            $(".just-medium").removeClass('font-weight-bold');
+            $(".just-medium").removeClass('text-primary');
+            $(".just-large").removeClass('font-weight-bold');
+            $(".just-large").removeClass('text-primary');
+        }
+
+        function justMedium(){
+
+            $(".no-pizzas").addClass('d-none', 'true');
+            $(".no-drinks").addClass('d-none', 'true');
+            $(".no-desserts").addClass('d-none', 'true');
+            $(".no-lgpizzas").addClass('d-none', 'true');
+
+            let mdpizzas = $(".mdpzzs").val();
+
+            if (mdpizzas == 0){
+                $(".no-mdpizzas").removeClass('d-none', 'true');
+            }
+
+            $(".div-food, .div-pizzas, .div-drinks, .div-desserts, .div-large-pizzas").hide('slow');
+            setTimeout(function (){
+                $(".div-medium-pizzas").show('slow');
+            },700);
+
+            $(".just-medium").addClass('font-weight-bold');
+            $(".just-medium").addClass('text-primary');
+            $(".just-desserts").removeClass('font-weight-bold');
+            $(".just-desserts").removeClass('text-primary');
+            $(".just-pizzas").removeClass('font-weight-bold');
+            $(".just-pizzas").removeClass('text-primary');
+            $(".just-drinks").removeClass('font-weight-bold');
+            $(".just-drinks").removeClass('text-primary');
+            $(".complete-all").removeClass('font-weight-bold');
+            $(".complete-all").removeClass('text-primary');
+            $(".just-large").removeClass('font-weight-bold');
+            $(".just-large").removeClass('text-primary');
+        }
+
+        function justLarge(){
+
+            $(".no-pizzas").addClass('d-none', 'true');
+            $(".no-drinks").addClass('d-none', 'true');
+            $(".no-desserts").addClass('d-none', 'true');
+            $(".no-mdpizzas").addClass('d-none', 'true');
+
+            let lgpizzas = $(".lgpzzs").val();
+
+            if (lgpizzas == 0){
+                $(".no-lgpizzas").removeClass('d-none', 'true');
+            }
+
+            $(".div-food, .div-pizzas, .div-drinks, .div-desserts, .div-medium-pizzas").hide('slow');
+            setTimeout(function (){
+                $(".div-large-pizzas").show('slow');
+            },700);
+
+            $(".just-large").addClass('font-weight-bold');
+            $(".just-large").addClass('text-primary');
+            $(".just-desserts").removeClass('font-weight-bold');
+            $(".just-desserts").removeClass('text-primary');
+            $(".just-pizzas").removeClass('font-weight-bold');
+            $(".just-pizzas").removeClass('text-primary');
+            $(".just-drinks").removeClass('font-weight-bold');
+            $(".just-drinks").removeClass('text-primary');
+            $(".complete-all").removeClass('font-weight-bold');
+            $(".complete-all").removeClass('text-primary');
+            $(".just-medium").removeClass('font-weight-bold');
+            $(".just-medium").removeClass('text-primary');
         }
     </script>
 
@@ -860,12 +1198,18 @@
             <script>
                 var scrollar = $(".personalizar-session").val();
 
+                console.log(scrollar);
+
                 if (scrollar.includes('addPizza') == true){
                     justPizzas();
                 }else if (scrollar.includes('addDrink') == true){
                     justDrinks();
                 }else if (scrollar.includes('addDesserts') == true){
                     justDesserts();
+                }else if (scrollar.includes('addMd') == true){
+                    justMedium();
+                }else if (scrollar.includes('addLg') == true){
+                    justLarge();
                 }
 
                 setTimeout(function (){

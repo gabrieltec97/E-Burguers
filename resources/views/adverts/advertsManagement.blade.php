@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="col-12 col-lg-6 mb-2 d-flex justify-content-lg-end">
-                                <button type="button" class="btn btn-primary"><i class="fas fa-pizza-slice text-white mr-2"></i><a href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none; color: white">Novo item</a></button>
+                                <button type="button" class="btn btn-primary"><a href="{{ route('refeicoes.create') }}" title="Cadastrar refeição para o cardápio" style="font-size: 15px; text-decoration: none; color: white"><i class="fas fa-pizza-slice text-white mr-2"></i>Novo item</a></button>
                             </div>
                         </div>
 
@@ -90,8 +90,8 @@
     <div class="modal fade" id="modalTrava" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: black; margin-bottom: -30px">Atenção!</h5>
+                <div class="modal-header" style="background-color: #343a40">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: white; margin-bottom: -30px">Atenção!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -101,10 +101,10 @@
                         @csrf
                         <p>
                             @if($rate == "Sim")
-                           <p style="color: black; margin-top: -20px;"> Deseja ocultar as avaliações? As avaliações dos clientes não aparecerão mais ao lado de cada item
+                           <p class="mt-2" style="color: black; margin-top: -20px;"> Deseja ocultar as avaliações? As avaliações dos clientes não aparecerão mais ao lado de cada item
                                do cardápio.</p>
                             @else
-                                <p style="color: black; margin-top: -20px;">Deseja mostrar as avaliações? As avaliações dos clientes aparecerão ao lado de cada item
+                                <p class="mt-2" style="color: black; margin-top: -20px;">Deseja mostrar as avaliações? As avaliações dos clientes aparecerão ao lado de cada item
                                     do cardápio.</p>
                             @endif
                         </p>

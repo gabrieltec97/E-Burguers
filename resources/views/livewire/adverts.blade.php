@@ -18,7 +18,13 @@
                 <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->foodType }} </a></td>
                 <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->totalSale == null ? '0' : $meal->totalSale }}</a></td>
                 <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->value }}</a></td>
-                <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" title="Nota {{ round($meal->finalGrade, 1) }} em {{ $meal->ratingAmount == null ? '0' : $meal->ratingAmount }} avaliações" style="color: rgba(0,0,0,0.73); text-decoration: none">{{ $meal->finalGrade == null ? 'Ainda não avaliado' : round($meal->finalGrade, 1) }}</a></td>
+                <td style="cursor: pointer;"><a href="{{ route('refeicoes.show', $meal->id) }}" title="Nota {{ round($meal->finalGrade, 1) }} em {{ $meal->ratingAmount == null ? '0' : $meal->ratingAmount }} avaliações" style="color: rgba(0,0,0,0.73); text-decoration: none">
+                        @if($meal->foodType == 'Bebida')
+                            <span class="text-primary">Item não avaliável</span>
+                        @else
+                        {{ $meal->finalGrade == null ? 'Ainda não avaliado' : round($meal->finalGrade, 1) }}
+                        @endif
+                    </a></td>
             </tr>
         @endforeach
 
