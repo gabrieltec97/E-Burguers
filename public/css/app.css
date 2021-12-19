@@ -11116,6 +11116,7 @@ a.text-dark:focus {
 
     .recover-card{
         width: 450px;
+        border: none;
     }
 
     .desktopRotulo{

@@ -63,7 +63,9 @@
                     $hora = $agora["hours"];
                     $usuario = \Illuminate\Support\Facades\Auth::user()->name;
 
-
+                    $user = \Illuminate\Support\Facades\DB::table('users')
+                    ->where('id', '=', Auth::user()->id)
+                    ->get()->toArray();
                     ?>
 
                     @if($hora >= 5 && $hora < 12)
@@ -76,10 +78,15 @@
                 </a>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @if(isset($user[0]))
+                        @if($user[0]->type == 'Employee')
+                    <a class="dropdown-item" href="{{ route('home') }}"><span class="font-weight-bold" style="color: black">Modo funcionário</span></a>
+                        @endif
+                    @endif
                     <a class="dropdown-item" href="{{ route('meusDados') }}"><span class="font-weight-bold" style="color: black">Meus dados</span></a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();"">
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"">
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
@@ -94,15 +101,6 @@
     <div class="opc-mobile">
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <?php
-                date_default_timezone_set('America/Sao_Paulo');
-                $agora =getdate();
-                $hora = $agora["hours"];
-                $usuario = \Illuminate\Support\Facades\Auth::user()->name;
-
-
-                ?>
-
                 @if($hora >= 5 && $hora < 12)
                     <span class="saudacao" style="color: white">Bom dia, {{ $usuario }}</span>
                 @elseif($hora >= 12 && $hora < 18)
@@ -113,10 +111,15 @@
             </a>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                @if(isset($user[0]))
+                    @if($user[0]->type == 'Employee')
+                <a class="dropdown-item" href="{{ route('home') }}"><span class="font-weight-bold" style="color: black">Modo funcionário</span></a>
+                    @endif
+                @endif
                 <a class="dropdown-item" href="{{ route('meusDados') }}"><span class="font-weight-bold" style="color: black">Meus dados</span></a>
                 <a class="dropdown-item" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();"">
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();"">
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf

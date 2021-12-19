@@ -108,8 +108,7 @@ $deliveryStatus = DB::table('delivery_status')
     </nav>
 </div>
 
-<section id="section2">
-
+<section id="section2" style="margin-top: 30px">
     <div class="col-12">
         <div class="container-fluid">
             <div class="row verifica-card" id="cardapio">
@@ -739,8 +738,6 @@ $deliveryStatus = DB::table('delivery_status')
                     </div>
                 @endif
             </div>
-
-
             </div>
     </div>
 </section>
@@ -839,10 +836,6 @@ $deliveryStatus = DB::table('delivery_status')
                        <div class="col-12">
                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.545328821416!2d-43.703330085404374!3d-22.745134937840113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x995688b1bd9abb%3A0x283073f79234598c!2sAv.%20Min.%20Fernando%20Costa%20-%20Boa%20Esperan%C3%A7a%2C%20Serop%C3%A9dica%20-%20RJ%2C%2023890-000!5e0!3m2!1spt-BR!2sbr!4v1636850225910!5m2!1spt-BR!2sbr" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                        </div>
-
-{{--                       <div class="col-12">--}}
-{{--                           <hr>--}}
-{{--                       </div>--}}
 
                        <div class="col-12 mt-2 number-modal d-flex justify-content-center">
                             <a href="tel:(21)997582608" style="font-size: 16px">(21) 99758-2608 (ligar)</a>

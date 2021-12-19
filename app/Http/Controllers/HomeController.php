@@ -143,28 +143,28 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(!Auth::user()->hasPermissionTo('Pedidos (Comum)')){
+        $occupation = DB::table('model_has_roles')
+            ->select('role_id')
+            ->where('model_id', '=', Auth::user()->id)
+            ->get()->toArray();
 
-            $role = Auth::user()->toArray();
+       if (isset($occupation[0])){
 
-            if (isset($role['roles'][0])){
-                $role = $role['roles'][0]['name'];
+           $role = DB::table('roles')
+               ->select('name')
+               ->where('id', '=', $occupation[0]->role_id)
+               ->get()->toArray();
 
-                    if ($role == 'Atendente Híbrido' or $role == 'Administrador'){
-                    return redirect()->route('hybridHome');
-                }elseif($role == 'Cozinheiro'){
-                    return redirect()->route('emPreparo');
-                }elseif($role == 'Entregador'){
-                        return redirect()->route('entregas');
-                }else{
-                    throw new UnauthorizedException('403', 'Opa, você não tem acesso para esta rota.');
-                }
-            }else{
-                return redirect('cardapio/1');
-            }
-        }
+           $role = $role[0]->name;
 
-        return redirect()->back();
+           if ($role == 'Atendente Híbrido' or $role == 'Administrador'){
+               return redirect()->route('hybridHome');
+           }elseif($role == 'Entregador'){
+               return redirect()->route('entregas');
+           }
+       }else{
+           return redirect('cardapio/1');
+       }
     }
 
     public function hybridHome()

@@ -66,8 +66,6 @@ class UserController extends Controller
             }else{
                 array_push($occup, ['occupation' => 'Perfil não configurado', 'id' => $employee['id']]);
             }
-
-
         }
 
         return view('User.management', compact('employees', 'occup'));

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 d-flex justify-content-center">
             <div class="card recover-card">
-                <div class="card-header">Alterar senha</div>
+                <div class="card-header bg-danger" style="color: white">Alterar senha</div>
 
                 <div class="card-body">
                     @if (session('status'))

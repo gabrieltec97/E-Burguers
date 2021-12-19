@@ -50,9 +50,11 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link" style="margin-right: -12px" href="{{ route('password.request') }}">
                                         {{ __('Esqueci minha senha') }}
                                     </a>
+{{--                                    <a href="#" style="color: black; text-decoration: none; cursor: inherit">ou</a>--}}
+{{--                                    <a href="{{ route('entrar') }}">Cadastre-se</a>--}}
                                 @endif
                             </div>
                         </div>

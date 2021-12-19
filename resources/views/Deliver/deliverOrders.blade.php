@@ -84,7 +84,7 @@
 
                                         <select name="teste" class="menuHibrido form-control" style="cursor:pointer;" id="{{ $reg->id }}" onchange="muda({{ $reg->id }})">
                                             <option class="alterStatus" disabled selected>Alterar Status</option>
-                                            <option value="Cancelar">Cancelar</option>
+{{--                                            <option value="Cancelar">Cancelar</option>--}}
                                             <option value="Entregue">Pedido entregue</option>
                                         </select>
                                     </td>

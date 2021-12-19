@@ -31,7 +31,7 @@
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 <span class="text-white">
-                    Pizzaria Megatonne
+                    Pizza Express P&C
                 </span>
             </a>
             <button class="navbar-toggler border-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
