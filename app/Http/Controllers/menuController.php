@@ -184,12 +184,16 @@ class menuController extends Controller
         $rules = [
             'mealValue' => 'required',
             'mealName' => 'required|min:4|max:70',
+            'mealDescription' => 'required',
+            'ctpieces' => 'required',
+            'cmsize' => 'required',
             'mealDescription' => 'required'
-
         ];
 
         $messages = [
             'mealName.required' => 'Por favor, insira o nome da refeição.',
+            'ctpieces.required' => 'Por favor, insira corretamente a quantidade de pedaços.',
+            'cmsize.required' => 'Por favor, insira corretamente o tamanho da pizza.',
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
             'mealName.max' => 'O nome da refeição não pode ter mais de 70 caracteres.',
             'mealDescription.required' => 'Por favor, insira a descrição da refeição.'
@@ -336,7 +340,9 @@ class menuController extends Controller
         $rules = [
             'mealName' => 'required|min:4|max:50',
             'mealValue' => 'required|min:4|max:6',
-            'mealDescription' => 'required'
+            'mealDescription' => 'required',
+            'cmsize' => 'required',
+            'ctpieces' => 'required'
         ];
 
         $messages = [
@@ -344,6 +350,8 @@ class menuController extends Controller
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
             'mealName.max' => 'O nome da refeição não pode ter mais de 50 caracteres.',
             'mealValue.required' => 'Por favor, insira o valor da refeição.',
+            'ctpieces.required' => 'Por favor, insira corretamente a quantidade de pedaços.',
+            'cmsize.required' => 'Por favor, insira corretamente o tamanho da pizza.',
             'mealValue.min' => 'Por favor, insira um valor válido.',
             'mealDescription.required' => 'Por favor, insira a descrição da refeição.'
         ];

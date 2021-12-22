@@ -78,10 +78,10 @@
                                         <div class="col-12 col-lg-4 mt-3 cmsizes">
                                             <label class="font-weight-bold" style="color: black;">Quantidade de pedaços</label>
                                             <br>
-                                            <input type="number" name="ctpieces" class="form-control cmpieces {{ ($errors->has('cmsize') ? 'is-invalid' : '') }}" value="{{ $meal->ctpieces }}">
-                                            @if($errors->has('cmsize'))
+                                            <input type="number" name="ctpieces" class="form-control cmpieces {{ ($errors->has('ctpieces') ? 'is-invalid' : '') }}" value="{{ $meal->ctpieces }}">
+                                            @if($errors->has('ctpieces'))
                                                 <div class="invalid-feedback">
-                                                    <span class="font-weight-bold"> {{ $errors->first('cmsize') }}</span>
+                                                    <span class="font-weight-bold"> {{ $errors->first('ctpieces') }}</span>
                                                 </div>
                                             @endif
                                         </div>

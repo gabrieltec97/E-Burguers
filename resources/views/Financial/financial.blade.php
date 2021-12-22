@@ -326,6 +326,44 @@ $anoAtual = strftime('%Y');
                                 </select>
                             </div>
 
+                            <?php
+
+                            if (str_contains($money , '.')){
+                                $totalValue = $money;
+                                if ($totalValue > 0){
+                                    $vals = explode('.', $totalValue);
+
+                                    $pieces = strlen($vals[0]);
+                                    $piecesAfter = strlen($vals[1]);
+                                }else{
+                                    $pieces = 0;
+                                }
+
+                                $count2 = strlen($totalValue);
+
+                                if ($count2 == 4 && $totalValue > 10){
+                                    $price = $totalValue . '0';
+                                }elseif ($count2 == 2){
+                                    $price = $totalValue. '.' . '00';
+                                }elseif($count2 == 5 && $pieces == 3){
+                                    $price = $totalValue. '0';
+                                }elseif($count2 == 3){
+                                    $price = $totalValue . '0';
+                                }elseif($pieces == 5  && $count2 >= 6 && $piecesAfter < 2){
+                                    $price = $totalValue . '0';
+                                }elseif($pieces == 4  && $count2 >= 6 && $piecesAfter < 2){
+                                    $price = $totalValue . '0';
+                                }
+                                elseif($pieces > 3 && $count2 >= 6){
+                                    $price = $totalValue;
+                                } else{
+                                    $price = $totalValue;
+                                }
+                            }else{
+                                $price = $money . '.00';
+                            }
+                            ?>
+
                             <div class="col-12 col-lg-8 mt-4 target">
                                 <label style="color: black;">Total de vendas: <b>
                                         @if($sales < 1)
@@ -339,9 +377,9 @@ $anoAtual = strftime('%Y');
                                 <br>
                                 <label style="color: black;">Total de arrecadado: <b>
                                         @if($money < 1)
-                                            <span class="text-danger font-weight-normal">R$ {{ $money }}</span>
+                                            <span class="text-danger font-weight-normal">R$ {{ $price }}</span>
                                         @elseif($money >= 1)
-                                            <span class="text-success font-weight-normal">R$ {{ $money }}</span>
+                                            <span class="text-success font-weight-normal">R$ {{ $price }}</span>
                                         @endif
                                     </b></label>
                                 <br>
