@@ -20,7 +20,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <label style="color: black;" class="font-weight-bold">Nome</label>
-                                        <input type="text" class="form-control nome-refeicao-edit {{ ($errors->has('mealName') ? 'is-invalid' : '') }}" value="{{ $meal->name }}" title="Nome que identifica a refeição" name="mealName">
+                                        <input type="text" class="form-control nome-refeicao {{ ($errors->has('mealName') ? 'is-invalid' : '') }}" value="{{ $meal->name }}" title="Nome que identifica a refeição" name="mealName">
                                         @if($errors->has('mealName'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('mealName') }}</span>
@@ -50,12 +50,46 @@
                                                 @endif
                                             </div>
                                         @endif
+                                    @if($meal->foodType == 'Pizza')
+                                    <div class="col-12 col-lg-4 mt-3 mt-lg-0 sizes">
+                                        <label class="font-weight-bold {{ ($errors->has('size') ? 'is-invalid' : '') }}" style="color: black;">Tamanho</label>
+                                        <br>
+                                        <select name="size" class="form-control pizzaSize">
+                                            <option value="Pequena" {{ $meal->size == 'Pequena' ? 'selected' : '' }}>Pequena</option>
+                                            <option value="Média" {{ $meal->size == 'Média' ? 'selected' : '' }}>Média</option>
+                                            <option value="Grande" {{ $meal->size == 'Grande' ? 'selected' : '' }}>Grande</option>
+                                            <option value="Família" {{ $meal->size == 'Família' ? 'selected' : '' }}>Família</option>
+                                            <option value="Gigante" {{ $meal->size == 'Gigante' ? 'selected' : '' }}>Gigante</option>
+                                            <option value="Maracanã" {{ $meal->size == 'Maracanã' ? 'selected' : '' }}>Maracanã</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 col-lg-4 mt-3 cmsizes">
+                                        <label class="font-weight-bold" style="color: black;">Tamanho da pizza (cm)</label>
+                                        <br>
+                                        <input type="number" class="form-control cmsize {{ ($errors->has('cmsize') ? 'is-invalid' : '') }}" value="{{ $meal->cmsize }}" placeholder="Cm" name="cmsize">
+                                        @if($errors->has('cmsize'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('cmsize') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                        <div class="col-12 col-lg-4 mt-3 cmsizes">
+                                            <label class="font-weight-bold" style="color: black;">Quantidade de pedaços</label>
+                                            <br>
+                                            <input type="number" name="ctpieces" class="form-control cmpieces {{ ($errors->has('cmsize') ? 'is-invalid' : '') }}" value="{{ $meal->ctpieces }}">
+                                            @if($errors->has('cmsize'))
+                                                <div class="invalid-feedback">
+                                                    <span class="font-weight-bold"> {{ $errors->first('cmsize') }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endif
 
                                     <div class="col-12 mt-3">
                                         <label style="color: black;" class="font-weight-bold">Descrição</label>
                                         <textarea name="mealDescription" title="Breve texto que informa as características da refeição. O texto deve conter no mínimo 70 e no máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao-edit {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}"> {{$meal->description}}</textarea>
-                                        <label class="text-primary font-weight-bold mt-2 total-char">Total de caracteres: <span class="contagem font-weight-bolder"></span></label><br>
-                                        <label class="text-primary font-weight-bold lbl-alerta">A descrição deve conter no mínimo 70 e no máximo 96 caracteres.</label>
                                         @if($errors->has('mealDescription'))
                                             <div class="invalid-feedback">
                                                 <span class="font-weight-bold"> {{ $errors->first('mealDescription') }}</span>

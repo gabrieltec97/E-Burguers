@@ -212,6 +212,13 @@
                             <div class="col-6 infoPedidos2" hidden>
                                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.6704914203574!2d-43.7088024854045!3d-22.7404856376743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x995685c8faaaab%3A0x5047cf2b0e723cdb!2sChurrascaria%20e%20Pizzaria%20Espa%C3%A7o%20Grill!5e0!3m2!1spt-BR!2sbr!4v1636857936567!5m2!1spt-BR!2sbr" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                             </div>
+
+                            @if($order[0]->deliverWay != 'Retirada no restaurante')
+                            <div class="col-12">
+                                <hr>
+                                <p class="text-center" style="margin-bottom: -10px; margin-top: -10px">Entrega de 30 à 60 min</p>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -343,8 +350,16 @@
                                 @endforeach
                             </div>
                         </div>
+
+                    @if($order[0]->deliverWay != 'Retirada no restaurante')
+                        <div class="col-12">
+                            <p class="text-center" style="margin-bottom: 0px">Entrega de 30 - 60 min</p>
+                        </div>
+                    @endif
                 @endif
             </div>
+
+
 
             @if($order[0]->deliverWay == 'Retirada no restaurante')
             <div class="modal-footer">
@@ -432,7 +447,7 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Pedido cadastrado!',
-                    text: 'Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.',
+                    text: 'Acompanhe o andamento de seu pedido por aqui, a tela será atualizada automaticamente. O tempo médio para a entrega é de 30 a 60 minutos.',
                     timer: 15000,
                     timerProgressBar: true
                 })
@@ -442,7 +457,7 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Pedidos cadastrados!',
-                    text: 'Agora basta acompanhar o andamento por aqui. A tela será atualizada automaticamente.',
+                    text: 'Acompanhe o andamento de seu pedido por aqui, a tela será atualizada automaticamente. O tempo médio para a entrega é de 30 a 60 minutos.',
                     timer: 15000,
                     timerProgressBar: true
                 })

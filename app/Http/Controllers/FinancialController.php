@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Adverts;
 use App\Charts\Grafico;
+use App\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -534,63 +535,57 @@ class FinancialController extends Controller
 //        }
 
         $adverts = Adverts::all();
+        $orders = DB::table('orders')
+            ->select('detached')
+            ->where('month', '=', $thisMonth)
+            ->where('year', '=', $thisYear)
+            ->where('status', '=', 'Pedido Entregue')
+            ->get()->toArray();
+
         $sale = array();
-        $total = 0;
-        foreach ($adverts as $advert){
-            $query = DB::table('orders')
-                ->selectRaw("
-	                detached,
-                    CHAR_LENGTH(detached) - CHAR_LENGTH(REPLACE(LOWER(detached), '". strtolower($advert->name)."',
-                    SPACE(LENGTH('". strtolower($advert->name)."')-1)))
-                        AS total")
-                ->where('month', '=', $thisMonth)
-                ->where('year', '=', $thisYear)
-                ->where('status', '=', 'Pedido Entregue')
-                ->get()->toArray();
-
-            foreach ($query as $q){
-                $total += $q->total;
-            }
-
-            DB::table('adverts')
-                ->where('name', '=', $advert->name)
-                ->update(['totalSale' => $total]);
-
-            array_push($sale, [$advert->name, $total, $advert->id]);
-
-            $total = 0;
+        $total = array();
+        foreach ($orders as $ord => $v){
+           array_push($total, $v->detached);
         }
 
-        //Verifica quantos foram vendidos de cada item.
-        array_multisort(array_column($sale,'1'),SORT_DESC, $sale);
+        $total = implode(',', $total);
+
+        foreach ($adverts as $advert){
+
+            $numero_palavras = substr_count ($total, $advert->name);
+            array_push($sale, ['item' => $advert->name, 'sales' => $numero_palavras]);
+            $numero_palavras = 0;
+        }
+
+        array_multisort(array_column($sale,'sales'),SORT_DESC, $sale);
 
         if (isset($sale[0])){
-            $label1 = $sale[0][0];
-            $val1 = $sale[0][1];
+            $label1 = $sale[0]['item'];
+            $val1 = $sale[0]['sales'];
         }else{
             $label1 = '';
             $val1 = '';
         }
 
         if (isset($sale[1])){
-            $label2 = $sale[1][0];
-            $val2 = $sale[1][1];
+            $label2 = $sale[1]['item'];
+            $val2 = $sale[1]['sales'];
         }else{
             $label2 = '';
             $val2 = '';
         }
 
         if (isset($sale[2])){
-            $label3 = $sale[2][0];
-            $val3 = $sale[2][1];
+            $label3 = $sale[2]['item'];
+            $val3 = $sale[2]['sales'];
         }else{
             $label3 = '';
             $val3 = '';
         }
 
         if (isset($sale[3])){
-            $label4 = $sale[3][0];
-            $val4 = $sale[3][1];
+            $label4 = $sale[3]['item'];
+            $val4 = $sale[3]['sales'];
         }else{
             $label4 = '';
             $val4 = '';
@@ -606,7 +601,6 @@ class FinancialController extends Controller
                 'rgb(255, 205, 86)'
             ],
         ]);
-
 
         return view('Financial.dashboard', compact('chart', 'chart2', 'countMonth', 'countDayNow', 'totalValue', 'totalValueToday', 'sale'));
     }

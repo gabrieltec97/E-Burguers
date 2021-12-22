@@ -739,7 +739,7 @@
 
             <div class="col-3">
                 <div class="card fixo">
-                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><i class="fas fa-shopping-cart carrinho text-white mr-2"></i> {{ $deliveryStatus[0]->status == 'Fechado' ? 'Delivery fechado' : 'Seu pedido está assim'}}</div>
+                    <div class="card-header font-weight-bold text-white bg-danger" style="font-size: 22px;"><img src="{{ asset('logo/cardapio.png') }}" class="mr-2" style="width: 32px; height: 32px"> {{ $deliveryStatus[0]->status == 'Fechado' ? 'Delivery fechado' : 'Seu pedido está assim'}}</div>
 
                     <div class="card-body">
                         @if($deliveryStatus[0]->status == 'Fechado')

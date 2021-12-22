@@ -4,7 +4,7 @@ $(function () {
 $(".div-img-user").hide();
 
 //Verificação de itens vendidos e cancelados hoje.
-$(".vendidos, .pedidos-cancelados").hide();
+$(".vendidos, .pedidos-cancelados, .text-bebida").hide();
 
 
 //Mascara de horário de funcionamento
@@ -310,39 +310,38 @@ $(".ingredientes").on("keyup", function (){
 
     });
 
-    $(".lbl-alerta, .total-char").hide();
+// $(".descricao, .descricao-edit").on("click", function (){
+//     $(".lbl-alerta, .total-char").fadeIn('slow');
+//
+//     setTimeout(function (){
+//         $(".lbl-alerta").fadeOut('slow');
+//     },10000)
+// });
 
-$(".descricao, .descricao-edit").on("click", function (){
-    $(".lbl-alerta, .total-char").fadeIn('slow');
-
-    setTimeout(function (){
-        $(".lbl-alerta").fadeOut('slow');
-    },10000)
-});
-
-$(".descricao, .descricao-edit").on("keyup", function (){
-
-   var text = $(".descricao, .descricao-edit").val();
-   var totalChar = text.length;
-
-   if(totalChar < 70 || totalChar > 90){
-       $(".contagem").text(totalChar);
-       $(".contagem").css('color', 'red');
-       $(".btn-cadastrar-refeicao").attr('disabled', 'disabled')
-       $(".btn-cadastrar-refeicao").css('cursor', 'not-allowed');
-   }else{
-       $(".contagem").text(totalChar);
-       $(".contagem").css('color', '#5cb85c');
-       $(".btn-cadastrar-refeicao").removeAttr('disabled', 'disabled')
-       $(".btn-cadastrar-refeicao").css('cursor', 'pointer')
-   }
-});
+// $(".descricao, .descricao-edit").on("keyup", function (){
+//
+//    var text = $(".descricao, .descricao-edit").val();
+//    var totalChar = text.length;
+//
+//    if(totalChar < 70 || totalChar > 90){
+//        $(".contagem").text(totalChar);
+//        $(".contagem").css('color', 'red');
+//        $(".btn-cadastrar-refeicao").attr('disabled', 'disabled')
+//        $(".btn-cadastrar-refeicao").css('cursor', 'not-allowed');
+//    }else{
+//        $(".contagem").text(totalChar);
+//        $(".contagem").css('color', '#5cb85c');
+//        $(".btn-cadastrar-refeicao").removeAttr('disabled', 'disabled')
+//        $(".btn-cadastrar-refeicao").css('cursor', 'pointer')
+//    }
+// });
 
 $(".btn-cadastrar-refeicao").on("click", function () {
     $(".nome-refeicao2").text($(".nome-refeicao").val());
     $(".valor-refeicao2").text($(".valorRefeicao").val());
     $(".ingredientes2").text($(".ingredientes").val());
     $(".tipoRef2").text($(".tipoRef").val());
+    $(".descricao2").text($(".descricao").val());
 
     // if($('input[name=combo]:checked', '.form-refeicao')){
     //     var check = $('input[name=combo]:checked', '.form-refeicao').val()
@@ -356,8 +355,6 @@ $(".btn-cadastrar-refeicao").on("click", function () {
     //     $(".p-valor-combo-2").show();
     //     $(".valor-combo2").text($(".valComboPromo").val());
     // }
-
-    $(".descricao2").text($(".descricao").val());
 })
 
 //Edição de dados do funcionário.
@@ -841,13 +838,14 @@ $(".tipoRef").on("change", function () {
 
     }else if ($(this).val() == 'Pizza'){
 
-        $('.tastes').fadeOut('slow')
+        $(".tastes").fadeOut('slow')
         $(".sizes, .cmsizes").fadeIn('slow');
 
     }else if ($(this).val('Sobremesa')){
 
         $(".sizes, .cmsizes").fadeOut('slow');
         $(".tastes").fadeOut('slow');
+        $(".descricao").val('');
     }else{
         $(".igr").fadeIn('slow');
         $(".itr").fadeIn('slow');
@@ -950,6 +948,28 @@ $(".adicionar-bandeja, .cad-horario, .send-asset, .cadastrar-ref, .salvar-alt-cl
       $(".close-here").click();
       $(".close-here").click();
   }, 1000);
+});
+
+var size = '';
+$(".pizzaSize").on('change', function (){
+    size = $(".pizzaSize").val();
+
+    $(".descricao, .descricao-edit").val('Deliciosa ' + $(".nome-refeicao").val().toLowerCase() + ' quentinha para você. Pizza ' + size.toLowerCase() + ' de ' + $(".cmsize").val() + ' cm que serve ' + $(".cmpieces").val() + ' pedaços.');
+});
+
+
+
+$(".nome-refeicao, .cmsize, .cmpieces").on('keyup', function (){
+
+    $(".descricao-edit").val('Deliciosa ' + $(".nome-refeicao").val().toLowerCase() + ' quentinha para você. Pizza ' + size + ' de ' + $(".cmsize").val() + ' cm que serve ' + $(".cmpieces").val() + ' pedaços.');
+
+    if ($(".tipoRef").val() == 'Bebida'){
+
+        $(".descricao, .descricao-edit").val('Deliciosa ' + $(this).val().toLowerCase() + ' geladinha, pronta para lhe acompanhar nos seus pedidos!')
+    }else if($(".tipoRef").val() == 'Pizza'){
+
+        $(".descricao").val('Deliciosa ' + $(".nome-refeicao").val().toLowerCase() + ' quentinha para você. Pizza ' + size + ' de ' + $(".cmsize").val() + ' cm que serve ' + $(".cmpieces").val() + ' pedaços.');
+    }
 });
 
 });

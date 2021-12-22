@@ -9,7 +9,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 col-sm-12">
+            <div class="col-lg-12 col-sm-12 mb-3 mb-lg-4">
 
                @if(session('msg'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -24,7 +24,6 @@
                     <div class="card-header font-weight-bold text-white bg-primary" style="font-size: 25px;">Nova refeição</div>
 
                     <div class="card-body">
-                        <div class="container-fluid">
                             <form action="{{ route('refeicoes.store') }}" method="post" class="form-group form-refeicao" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
@@ -78,7 +77,7 @@
                                     <div class="col-12 col-lg-4 mt-3 sizes">
                                         <label class="font-weight-bold {{ ($errors->has('size') ? 'is-invalid' : '') }}" style="color: black;">Tamanho</label>
                                         <br>
-                                        <select name="size" class="form-select">
+                                        <select name="size" class="form-select pizzaSize">
                                             <option value="Pequena" {{ old('size') == 'Pequena' ? 'selected' : '' }}>Pequena</option>
                                             <option value="Média" {{ old('size') == 'Média' ? 'selected' : '' }}>Média</option>
                                             <option value="Grande" {{ old('size') == 'Grande' ? 'selected' : '' }}>Grande</option>
@@ -99,11 +98,20 @@
                                         @endif
                                     </div>
 
+                                    <div class="col-12 col-lg-4 mt-3 cmsizes">
+                                        <label class="font-weight-bold" style="color: black;">Quantidade de pedaços</label>
+                                        <br>
+                                        <input type="number" name="ctpieces" class="form-control cmpieces {{ ($errors->has('cmsize') ? 'is-invalid' : '') }}" value="{{ old('cmsize') }}">
+                                        @if($errors->has('cmsize'))
+                                            <div class="invalid-feedback">
+                                                <span class="font-weight-bold"> {{ $errors->first('cmsize') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
                                     <div class="col-12 mt-3">
                                         <label style="color: black;" class="font-weight-bold">Descrição</label>
-                                        <textarea name="mealDescription" title="Breve texto que informa as características da refeição. Mínimo 70 e máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}">{{ old('mealDescription') }}Deliciosa pizza de [SABOR] com [TAMANHO]cm. Pizza [TAMANHO (PEQUENA, MÉDIA)] que serve X pedaços.</textarea>
-                                        <label class="text-primary font-weight-bold mt-2 total-char">Total de caracteres: <span class="contagem font-weight-bolder"></span></label><br>
-                                        <label class="text-primary font-weight-bold lbl-alerta">A descrição deve conter no mínimo 70 e no máximo 90 caracteres.</label>
+                                        <textarea name="mealDescription" title="Breve texto que informa as características da refeição. Mínimo 70 e máximo 96 caracteres." cols="20" rows="5" style="resize: none" class="form-control descricao {{ ($errors->has('mealDescription') ? 'is-invalid' : '') }}">{{ old('mealDescription') }}</textarea>
                                         @if($errors->has('mealDescription'))
                                        <div class="invalid-feedback">
                                           <span class="font-weight-bold"> {{ $errors->first('mealDescription') }}</span>
@@ -111,7 +119,7 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-12  col-md-4">
+                                    <div class="col-12 mt-3 col-md-4">
                                         <label class="font-weight-bold" style="color: black;">Foto (Opcional)</label>
                                         <input type="file" name="advPhoto" accept=".png, .jpg, .jpeg, .gif">
                                     </div>
@@ -143,7 +151,6 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
                         <div class="col-12 mt-5 d-flex justify-content-end">
                             <button type="button" class="btn-cadastrar-refeicao btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado"><i class="fas fa-plus mr-2"></i>Cadastrar refeição</button>
                         </div>

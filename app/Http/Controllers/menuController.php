@@ -184,7 +184,7 @@ class menuController extends Controller
         $rules = [
             'mealValue' => 'required',
             'mealName' => 'required|min:4|max:70',
-            'mealDescription' => 'required|min:70|max:96'
+            'mealDescription' => 'required'
 
         ];
 
@@ -192,9 +192,7 @@ class menuController extends Controller
             'mealName.required' => 'Por favor, insira o nome da refeição.',
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
             'mealName.max' => 'O nome da refeição não pode ter mais de 70 caracteres.',
-            'mealDescription.required' => 'Por favor, insira a descrição da refeição.',
-            'mealDescription.min' => 'Este campo deve conter no mínimo 70 caracteres',
-            'mealDescription.max' => 'Este campo deve conter no máximo 90 caracteres'
+            'mealDescription.required' => 'Por favor, insira a descrição da refeição.'
         ];
 
         $request->validate($rules, $messages);
@@ -210,10 +208,13 @@ class menuController extends Controller
         }
 
         $advert = new Adverts();
-        $advert->name = $request->mealName;
+        $advert->name = ucfirst($request->mealName);
 
         if ($request->tipoRef == 'Pizza'){
             $advert->name = $request->mealName . ' - ' . $request->size . ' (' . $request->cmsize .'cm)';
+            $advert->size = $request->size;
+            $advert->cmsize = $request->cmsize;
+            $advert->ctpieces = $request->ctpieces;
         }
 
         $advert->value = $request->mealValue;
@@ -241,7 +242,7 @@ class menuController extends Controller
             File::move($image, public_path(). '/imagens/img'.$number.'.'.$extension);
             $advert->picture = 'imagens/img'.$number.'.'.$extension;
         }else{
-            $advert->picture = 'logo/pizza.jpg';
+            $advert->picture = 'logo/pizzamg.png';
         }
 
         $advert->save();
@@ -333,20 +334,18 @@ class menuController extends Controller
         }
 
         $rules = [
-            'mealName' => 'required|min:4|max:70',
+            'mealName' => 'required|min:4|max:50',
             'mealValue' => 'required|min:4|max:6',
-            'mealDescription' => 'required|min:70|max:96'
+            'mealDescription' => 'required'
         ];
 
         $messages = [
             'mealName.required' => 'Por favor, insira o nome da refeição.',
             'mealName.min' => 'O nome da refeição deve conter no mínimo 4 caracteres.',
-            'mealName.max' => 'O nome da refeição não pode ter mais de 70 caracteres.',
+            'mealName.max' => 'O nome da refeição não pode ter mais de 50 caracteres.',
             'mealValue.required' => 'Por favor, insira o valor da refeição.',
             'mealValue.min' => 'Por favor, insira um valor válido.',
-            'mealDescription.required' => 'Por favor, insira a descrição da refeição.',
-            'mealDescription.min' => 'Este campo deve conter no mínimo 70 caracteres',
-            'mealDescription.max' => 'Este campo deve conter no máximo 96 caracteres'
+            'mealDescription.required' => 'Por favor, insira a descrição da refeição.'
         ];
 
         $request->validate($rules, $messages);
@@ -361,11 +360,17 @@ class menuController extends Controller
         $imageName = '\imagens\i' . $imageName;
         $advert->description = $request->mealDescription;
 
+        if ($advert->foodType == 'Pizza'){
+            $advert->size = $request->size;
+            $advert->cmsize = $request->cmsize;
+            $advert->ctpieces = $request->ctpieces;
+        }
+
         $path = public_path($imageName);
 
         //Deletando imagem antiga
         if ($request->advPhoto != null){
-            if ($advert->picture != 'logo/pizza.jpg'){
+            if ($advert->picture != 'logo/pizzamg.png'){
                 unlink($path);
             }
         }

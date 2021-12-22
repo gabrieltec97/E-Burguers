@@ -298,7 +298,8 @@
                 position: 'top-end',
                 toast: true,
                 showConfirmButton: false,
-                timer: 6000,
+                showCloseButton: true,
+                timer: 4000,
                 timerProgressBar: true
             })
         </script>
