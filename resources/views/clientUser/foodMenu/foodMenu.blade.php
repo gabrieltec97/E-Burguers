@@ -42,17 +42,15 @@
                 <hr>
             </div>
 
-            <div class="col-12 mt-lg-4">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item font-weight-bold text-primary complete-all" style="cursor: pointer" onclick="completeAll()">Cardápio completo</li>
-                        <li class="breadcrumb-item just-pizzas" style="cursor: pointer" onclick="justPizzas()">Pizzas Pequenas</li>
-                        <li class="breadcrumb-item just-medium" style="cursor: pointer" onclick="justMedium()">Pizzas Médias</li>
-                        <li class="breadcrumb-item just-large" style="cursor: pointer" onclick="justLarge()">Pizzas Grandes</li>
-                        <li class="breadcrumb-item just-drinks" style="cursor: pointer" onclick="justDrinks()">Bebidas</li>
-                        <li class="breadcrumb-item just-desserts" style="cursor: pointer" onclick="justDesserts()">Sobremesas</li>
-                    </ol>
-                </nav>
+            <div class="col-12 mt-lg-4 mb-4 mb-lg-2">
+                <select id="choose" class="form-control">
+                    <option value="Cardápio completo" class="CP1">Cardápio completo</option>
+                    <option value="Pizzas Pequenas" class="PP">Pizzas Pequenas</option>
+                    <option value="Pizzas Médias" class="PM">Pizzas Médias</option>
+                    <option value="Pizzas Grandes" class="PG">Pizzas Grandes</option>
+                    <option value="Bebidas" class="BEB">Bebidas</option>
+                    <option value="Sobremesas" class="SOB">Sobremesas</option>
+                </select>
             </div>
 
             @if(isset($tray))
@@ -1006,6 +1004,23 @@
         <input type="text" value="{{ count($drinks) }}" class="dks" hidden>
 
     <script>
+
+        $("#choose").on("change", function (){
+            if ($(this).val() == 'Cardápio completo'){
+                completeAll();
+            }else if ($(this).val() == 'Pizzas Pequenas'){
+                justPizzas();
+            }else if ($(this).val() == 'Pizzas Médias'){
+                justMedium();
+            }else if ($(this).val() == 'Pizzas Grandes'){
+                justLarge();
+            }else if ($(this).val() == 'Bebidas'){
+                justDrinks();
+            }else if ($(this).val() == 'Sobremesas'){
+                justDesserts();
+            }
+        });
+
         function justPizzas(){
 
             let pizzas = $(".pzzs").val();
@@ -1198,18 +1213,21 @@
             <script>
                 var scrollar = $(".personalizar-session").val();
 
-                console.log(scrollar);
-
                 if (scrollar.includes('addPizza') == true){
                     justPizzas();
+                    $(".PP").attr('selected', true);
                 }else if (scrollar.includes('addDrink') == true){
                     justDrinks();
+                    $(".BEB").attr('selected', true);
                 }else if (scrollar.includes('addDesserts') == true){
                     justDesserts();
+                    $(".SOB").attr('selected', true);
                 }else if (scrollar.includes('addMd') == true){
                     justMedium();
+                    $(".PM").attr('selected', true);
                 }else if (scrollar.includes('addLg') == true){
                     justLarge();
+                    $(".PG").attr('selected', true);
                 }
 
                 setTimeout(function (){

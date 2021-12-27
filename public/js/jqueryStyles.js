@@ -1,11 +1,10 @@
 $(function () {
 
 // Ajuste de imagem de usuário no menu lateral.
-$(".div-img-user").hide();
+$(".div-img-user, .text-entregas").hide();
 
 //Verificação de itens vendidos e cancelados hoje.
 $(".vendidos, .pedidos-cancelados, .text-bebida").hide();
-
 
 //Mascara de horário de funcionamento
 $(".horarioFuncionamento").mask('00:00');
@@ -929,7 +928,7 @@ $(".valor-item-add").mask('000.00', {reverse: true});
     });
 
 //Spinner de item sendo adicionado.
-$(".adicionar-bandeja, .cad-horario, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .delete-item, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
+$(".adicionar-bandeja, .cad-horario, .buscar-entregas, .send-asset, .cadastrar-ref, .salvar-alt-client, .send-aval, .edit-item-add, .cadastrar-item-add, .toggle-aval, .delete-item, .salvar-agora, .buscar-dados, .deletar-func, .cadastrar-cupom, .botao-salvar, .cadastrar-funcionario, .toggleAdvert, .atualizar-msg-emergencia, .alterar-local-cupom, .editar-area ,.aplicar-cupom, .cancelar-pedido, .cadastrar-pedido-agora, .mais-pedidos, .cadastrar-taxa").on('click', function (){
   $(this).html('<div class="spinner-border text-light" role="status"></div>');
 
   setTimeout(function (){
@@ -972,4 +971,11 @@ $(".nome-refeicao, .cmsize, .cmpieces").on('keyup', function (){
     }
 });
 
+if ($(".diff-day").val() == 'sim'){
+    $(".text-entregas").show();
+
+    setTimeout(function (){
+        $(".text-entregas").hide('slow');
+    }, 8000)
+}
 });

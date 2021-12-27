@@ -95,17 +95,17 @@ $deliveryStatus = DB::table('delivery_status')
 
 </section>
 
-<div class="col-12 mt-3 d-flex justify-content-center">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mybreadcrumb">
-            <li class="breadcrumb-item font-weight-bold text-primary complete-all b-items" style="cursor: pointer" onclick="completeAll()">Cardápio completo</li>
-            <li class="breadcrumb-item just-pizzas b-items" style="cursor: pointer" onclick="justPizzas()">Pizzas Pequenas</li>
-            <li class="breadcrumb-item just-medium b-items" style="cursor: pointer" onclick="justMedium()">Pizzas Médias</li>
-            <li class="breadcrumb-item just-large b-items" style="cursor: pointer" onclick="justLarge()">Pizzas Grandes</li>
-            <li class="breadcrumb-item just-drinks b-items" style="cursor: pointer" onclick="justDrinks()">Bebidas</li>
-            <li class="breadcrumb-item just-desserts b-items" style="cursor: pointer" onclick="justDesserts()">Sobremesas</li>
-        </ol>
-    </nav>
+<div class="col-12 col-lg-3 mt-3 d-flex justify-content-center">
+    <div class="col-12 mt-lg-4 mb-4 mb-lg-0">
+        <select id="choose" class="form-control">
+            <option value="Cardápio completo" class="CP1">Cardápio completo</option>
+            <option value="Pizzas Pequenas" class="PP">Pizzas Pequenas</option>
+            <option value="Pizzas Médias" class="PM">Pizzas Médias</option>
+            <option value="Pizzas Grandes" class="PG">Pizzas Grandes</option>
+            <option value="Bebidas" class="BEB">Bebidas</option>
+            <option value="Sobremesas" class="SOB">Sobremesas</option>
+        </select>
+    </div>
 </div>
 
 <section id="section2" style="margin-top: 30px">
@@ -801,6 +801,49 @@ $deliveryStatus = DB::table('delivery_status')
     </div>
 </section>
 
+<div class="col-12 d-flex justify-content-end">
+    <div class="footerinfo" style="margin-right: -5px; position: fixed">
+        <span class="badge badge-danger footer-info ml-1" style="cursor:pointer;" data-toggle="modal" data-target="#modalDeliver">Onde <br> entregamos</span>
+        <img src="{{ asset('logo/deliverw.png') }}" style="width: 60px; height: 60px; cursor: pointer" title="Informações do pedido" class="footer-info" data-toggle="modal" data-target="#modalDeliver">
+    </div>
+</div>
+
+<div class="modal fade" id="modalDeliver" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Áreas de entrega</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-center mb-3">Veja onde entregamos</h4>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Bairro</th>
+                        <th scope="col">Taxa de entrega</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach($districts as $district)
+                    <tr>
+                        <th>{{ $district->name }}</th>
+                        <td>R$ {{ $district->price }}</td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+
+                <p class="text-center" style="margin-bottom: -5px; color: black; font-size: 15.5px">O tempo de entrega é de 30 à 60 min.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function scrollPedir(){
         $('html, body').animate({
@@ -882,6 +925,23 @@ $deliveryStatus = DB::table('delivery_status')
 <input type="text" value="{{ count($drinks) }}" class="dks" hidden>
 
 <script>
+
+    $("#choose").on("change", function (){
+        if ($(this).val() == 'Cardápio completo'){
+            completeAll();
+        }else if ($(this).val() == 'Pizzas Pequenas'){
+            justPizzas();
+        }else if ($(this).val() == 'Pizzas Médias'){
+            justMedium();
+        }else if ($(this).val() == 'Pizzas Grandes'){
+            justLarge();
+        }else if ($(this).val() == 'Bebidas'){
+            justDrinks();
+        }else if ($(this).val() == 'Sobremesas'){
+            justDesserts();
+        }
+    });
+
     function justPizzas(){
 
         let pizzas = $(".pzzs").val();

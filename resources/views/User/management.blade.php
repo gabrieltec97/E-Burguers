@@ -71,13 +71,18 @@
                                 <tr>
                                     <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee['id']) }}">{{ $employee['name'] }} {{ $employee['surname'] }}</a></td>
                                     <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee['id']) }}">{{ $employee['phone'] }} </a></td>
-                                    <td><a style="color:rgba(0,0,0,0.73); text-decoration: none" href="{{ route('usuario.show', $employee['id']) }}">
+                                    <td style="cursor: pointer;">
                                         @foreach($occup as $oc)
 
                                             @if($oc['id'] == $employee['id'])
-                                                {{ $oc['occupation'] }}
+                                                @if($oc['occupation'] == 'Entregador')
+                                                    <span class="text-success" onclick="optionDeliveryMan{{$employee['id']}}()" data-toggle="modal" data-target="#modalDeliver">{{ $oc['occupation'] }}</span>
+                                                    @else
+                                                    {{ $oc['occupation'] }}
+                                                @endif
                                             @endif
-                                        @endforeach</a></td>
+                                        @endforeach</td>
+
 
                                     @if($employee['id'] == 1)
                                         <td class="text-danger">Não é possível alterar este login</td>
@@ -85,6 +90,22 @@
                                     <td><a href="{{ route('userRoles', ['user' => $employee['id']]) }}" class="btn btn-info" style="text-decoration:none; color:whitesmoke;">Configurar perfil</a></td>
                                     @endif
                                 </tr>
+
+                                <script>
+                                    function optionDeliveryMan{{$employee['id']}}(){
+                                        Swal.fire({
+                                            title: 'Escolha uma opção',
+                                            icon: 'info',
+                                            html:
+                                                '<a href="{{ route('countSendings', $employee['id']) }}" class="btn btn-success redirect-sender mr-2">Ver entregas</a>' +
+                                                '<a href="{{ route('usuario.show', $employee['id']) }}" class="btn btn-primary redirect-sender">Ver perfil</a>',
+                                            showCloseButton: false,
+                                            showConfirmButton: false,
+                                            showCancelButton: false,
+                                            focusConfirm: false,
+                                        });
+                                    }
+                                </script>
                             @endforeach
                             </tbody>
                         </table>

@@ -113,7 +113,7 @@
                                     <label style="color: black;" class="font-weight-bold">Bairro</label>
                                     <select name="district" class="form-control">
                                         @foreach($neighboor as $n => $value)
-                                            <option value="{{ $value->name }}">{{ $value->name }}</option>
+                                            <option value="{{ $value->name }}" {{ $value->name == $data['district'] ? 'selected' : '' }}>{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

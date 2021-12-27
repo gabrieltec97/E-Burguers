@@ -72,7 +72,7 @@
 
                                     <div class="col-12 mt-4 d-flex justify-content-end">
                                         @if(isset($details))
-                                            <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#modalEntregasFeitas">Entregas realizadas</button>
+                                            <a href="{{ route('countSendings', $user['id']) }}" class="btn btn-success mr-2">Entregas realizadas</a>
                                         @endif
                                         <a href="{{ route('usuario.edit', $user['id']) }}" class="btn btn-primary">Editar cadastro</a>
                                     </div>

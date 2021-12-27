@@ -156,7 +156,7 @@
                                                         <span style="color: black; margin-top: 20px;; font-size: 17px" class="text-primary">Cliente:</span> <span style="color: black; font-size: 16px">{{ $reg->clientName }}</span> <br>
 
                                                         @if($reg->deliverWay == 'Entrega em domicílio')
-                                                            <span style="color: black; font-size: 17px">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }} </span> <br>
+                                                            <span style="color: black; font-size: 17px" class="text-primary">Endereço: </span><span style="color: black; font-size: 16px">{{ $reg->address }} </span> <br>
 
                                                             @if($reg->district == null)
                                                                 <br>
@@ -164,6 +164,11 @@
                                                         @endif
 
                                                         <span style="color: black; font-size: 17px" class="text-primary">Telefone do cliente: </span><span style="color: black; font-size: 16px">{{ $reg->userPhone }} </span> <br>
+
+                                                            @if($reg->clientComments != null)
+                                                                <hr class="mt-2">
+                                                                <span class="text-danger font-weight-bold">Comentários do cliente: </span><span style="color: black; font-size: 16px">{{ $reg->clientComments }}</span>
+                                                            @endif
 
 
                                                         @if($reg->deliverMan != null)

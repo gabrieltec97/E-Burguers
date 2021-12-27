@@ -181,14 +181,22 @@ class menuController extends Controller
             return redirect()->route('home');
         }
 
-        $rules = [
-            'mealValue' => 'required',
-            'mealName' => 'required|min:4|max:70',
-            'mealDescription' => 'required',
-            'ctpieces' => 'required',
-            'cmsize' => 'required',
-            'mealDescription' => 'required'
-        ];
+        if($request->tipoRef == 'Pizza'){
+            $rules = [
+                'mealValue' => 'required',
+                'mealName' => 'required|min:4|max:70',
+                'mealDescription' => 'required',
+                'ctpieces' => 'required',
+                'cmsize' => 'required',
+                'mealDescription' => 'required'
+            ];
+        }else{
+            $rules = [
+                'mealValue' => 'required',
+                'mealName' => 'required|min:4|max:70',
+                'mealDescription' => 'required'
+            ];
+        }
 
         $messages = [
             'mealName.required' => 'Por favor, insira o nome da refeição.',
@@ -337,13 +345,22 @@ class menuController extends Controller
             return redirect()->route('home');
         }
 
-        $rules = [
-            'mealName' => 'required|min:4|max:50',
-            'mealValue' => 'required|min:4|max:6',
-            'mealDescription' => 'required',
-            'cmsize' => 'required',
-            'ctpieces' => 'required'
-        ];
+        if($request->tipoRef == 'Pizza'){
+            $rules = [
+                'mealValue' => 'required',
+                'mealName' => 'required|min:4|max:70',
+                'mealDescription' => 'required',
+                'ctpieces' => 'required',
+                'cmsize' => 'required',
+                'mealDescription' => 'required'
+            ];
+        }else{
+            $rules = [
+                'mealValue' => 'required',
+                'mealName' => 'required|min:4|max:70',
+                'mealDescription' => 'required'
+            ];
+        }
 
         $messages = [
             'mealName.required' => 'Por favor, insira o nome da refeição.',

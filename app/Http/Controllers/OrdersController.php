@@ -590,15 +590,35 @@ class OrdersController extends Controller
             } else if($order->deliverWay == 'Entrega em domicílio'){
                 $order->status = 'Em rota de entrega';
 
+                if ($request->deliverMan != 'Não informado'){
+                    $data = explode(' ', $request->deliverMan);
+                    $name = $data[0];
+                    unset($data[0]);
+                    $surname = implode(' ', $data);
+
+                    $idDeliveryMan = DB::table('users')
+                        ->select('id')
+                        ->where('name', '=', $name)
+                        ->where('surname', '=', $surname)
+                        ->get()->toArray();
+
+                    $idDeliveryMan = $idDeliveryMan[0]->id;
+                }else{
+                    $idDeliveryMan = null;
+                }
+
                 //Evitando um entregador somar mais de uma entrega com mais de um pedido no mesmo endereço.
                 if (isset($verify)){
                     if ($order->id == $verify[0]){
                         $order->deliverMan = $request->deliverMan;
+                        $order->idDeliverMan = $idDeliveryMan;
                     }else{
                         $order->deliverMan = $request->deliverMan . '*';
+                        $order->idDeliverMan = $idDeliveryMan . '*';
                     }
                 }else{
                     $order->deliverMan = $request->deliverMan;
+                    $order->idDeliverMan = $idDeliveryMan;
                 }
 
                 $order->save();

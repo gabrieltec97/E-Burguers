@@ -53,8 +53,9 @@ Route::get('/', function () {
         ->get()->toArray();
 
     $foods = DB::table('adverts')->get()->toArray();
+    $districts = DB::table('delivers')->select('name', 'price')->get()->toArray();
 
-    return view('welcome', compact('smallPizzas', 'mediumPizzas', 'largePizzas', 'drinks', 'desserts', 'rate', 'foods'));
+    return view('welcome', compact('smallPizzas', 'mediumPizzas', 'largePizzas', 'drinks', 'desserts', 'rate', 'foods', 'districts'));
 })->name('welcome');
 
 //Rotas de redefinição de senha.
@@ -151,6 +152,9 @@ Route::get('/meusDados', 'ClientsController@myData')->name('meusDados')->middlew
 
 Route::get('/meusPedidos', 'OrdersController@clientsOrders')->name('meusPedidos')->middleware('auth');
 
+Route::get('/entregador/{id}', 'DeliveryManController@countSendings')->name('countSendings')->middleware('auth');
+
+Route::get('/buscar-entregas/{id}', 'DeliveryManController@searchSendings')->name('searchSendings')->middleware('auth');
 
 Route::get('/gerenciamento-de-usuarios', 'UserController@userManagement')->name('gerenciamento')->middleware('auth');
 
