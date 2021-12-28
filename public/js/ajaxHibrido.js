@@ -23,7 +23,7 @@ $(document).ready(() => {
 
                         setTimeout(function (){
                             $("#showNotif").submit();
-                        }, 1000);
+                        }, 2000);
 
                     }else if(Notification.permission !== 'denied'){
                         Notification.requestPermission().then(permission => {
@@ -33,14 +33,14 @@ $(document).ready(() => {
 
                                 setTimeout(function (){
                                     $("#showNotif").submit();
-                                }, 1000);
+                                }, 2000);
                             }
                         })
                     }
 
                     setTimeout(function (){
                         location.reload();
-                    }, 1000);
+                    }, 2000);
 
                 }else if (valorAnterior > valorAtual){
 

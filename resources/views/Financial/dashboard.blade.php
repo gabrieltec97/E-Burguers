@@ -42,16 +42,24 @@
 
             $count2 = strlen($totalValueToday);
 
-            if ($count2 == 4 && $totalValueToday > 10){
+            if ($count2 == 4 && $totalValueToday > 10 && $totalValueToday < 1000){
                 $price = $totalValueToday . '0';
+            }elseif ($count2 == 4 && $totalValueToday > 1000){
+                $price = $totalValueToday . '.00';
             }elseif ($count2 == 2){
                 $price = $totalValueToday. '.' . '00';
             }elseif($count2 == 5 && $pieces == 3){
                 $price = $totalValueToday. '0';
-            }elseif($count2 == 3){
+            }elseif($count2 == 3 && $pieces == 1){
                 $price = $totalValueToday . '0';
-            }elseif($pieces > 3){
-                $price = $totalValueToday . '0';
+            }elseif($count2 == 3 && $pieces == 3){
+                $price = $totalValueToday . '.00';
+            }elseif($count2 == 1){
+                $price = $totalValueToday. '.00';
+            }elseif($count2 == 6 && $totalValueToday > 1000){
+                $price = $totalValueToday. '0';
+            }elseif($count2 == 7 && $totalValueToday > 10000){
+                $price = $totalValueToday. '0';
             }
             else{
                 $price = $totalValueToday;
@@ -95,31 +103,33 @@
             <?php
 
             if ($totalValue > 0){
-                $vals = explode('.', $totalValue);
+                $pieces = explode('.', $totalValue);
 
-                $pieces = strlen($vals[0]);
-                $piecesAfter = strlen($vals[1]);
+                $pieces = strlen($pieces[0]);
             }else{
                 $pieces = 0;
             }
 
             $count2 = strlen($totalValue);
 
-            if ($count2 == 4 && $totalValue > 10){
+            if ($count2 == 4 && $totalValue > 10 && $totalValue < 1000){
                 $totalPrice = $totalValue . '0';
+            }elseif ($count2 == 4 && $totalValue > 1000){
+                $totalPrice = $totalValue . '.00';
             }elseif ($count2 == 2){
                 $totalPrice = $totalValue. '.' . '00';
             }elseif($count2 == 5 && $pieces == 3){
                 $totalPrice = $totalValue. '0';
-            }elseif($count2 == 3){
+            }elseif($count2 == 3 && $pieces == 1){
                 $totalPrice = $totalValue . '0';
-            }elseif($pieces == 5  && $count2 >= 6 && $piecesAfter < 2){
-                $totalPrice = $totalValue . '0';
-            }elseif($pieces == 4  && $count2 >= 6 && $piecesAfter < 2){
-                $totalPrice = $totalValue . '0';
-            }
-            elseif($pieces > 3 && $count2 >= 6){
-                $totalPrice = $totalValue;
+            }elseif($count2 == 3 && $pieces == 3){
+                $totalPrice = $totalValue . '.00';
+            }elseif($count2 == 1){
+                $totalPrice = $totalValue. '.00';
+            }elseif($count2 == 6 && $totalValue > 1000){
+                $totalPrice = $totalValue. '0';
+            }elseif($count2 == 7 && $totalValue > 10000){
+                $totalPrice = $totalValue. '0';
             }
             else{
                 $totalPrice = $totalValue;

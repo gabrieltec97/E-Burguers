@@ -745,15 +745,6 @@ $(".verifica-val-troco").hide();
 
 $(".finalizar-pedido").on("click", function (){
 
-    if ($(".forma-pagamento").val() == null){
-        $(".troco").removeAttr('required', 'true');
-
-        Swal.fire({
-            icon: 'warning',
-            text: 'Escolha uma forma de pagamento'
-        });
-    }
-
     if ($(".forma-pagamento").val() == 'Dinheiro' && $(".forma-entrega").val() == 'Entrega em domicílio'){
         if ($(".troco").val() == ''){
 
@@ -773,7 +764,8 @@ $(".finalizar-pedido").on("click", function (){
                 text: 'Você inseriu um valor inválido para troco.',
             })
         }
-    }else if ($(".forma-pagamento").val() == null){
+    }else if ($(".forma-entrega").val() == 'Entrega em domicílio' && $(".forma-pagamento").val() == null){
+
         $(".troco").removeAttr('required', 'true');
         $(".finalizar-pedido").removeAttr('data-toggle', 'true');
 
@@ -781,38 +773,43 @@ $(".finalizar-pedido").on("click", function (){
             icon: 'warning',
             text: 'Escolha uma forma de pagamento'
         });
-    }else if ($(".forma-entrega").val() != 'Retirada no restaurante'){
+    }else if ($(".forma-entrega").val() == 'Entrega em domicílio'){
 
-        if ($(".end-entrega").val().length < 5){
-            Swal.fire({
-                icon: 'warning',
-                text: 'Preencha o nome da rua a ser entregue, para que possamos encontrá-la corretamente.'
-            });
+        if ($(".entregaFora").is(':checked')){
 
-            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
-        }else if($(".adDeliver").val().length < 1){
-            Swal.fire({
-                icon: 'warning',
-                text: 'Preencha corretamente o número da residência a ser entregue, para que possamos identificá-la.'
-            });
+            if ($(".end-entrega").val().length < 5){
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Preencha o nome da rua a ser entregue, para que possamos encontrá-la corretamente.'
+                });
 
-            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+                $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+            }else if($(".adDeliver").val().length < 1){
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Preencha corretamente o número da residência a ser entregue, para que possamos identificá-la.'
+                });
 
-        }else if($(".entregaDiff").val() == '' ){
-            Swal.fire({
-                icon: 'warning',
-                text: 'Informe corretamente em qual bairro será entregue o seu pedido.'
-            });
+                $(".finalizar-pedido").removeAttr('data-toggle', 'true');
 
-            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+            }else if($(".entregaDiff").val() == '' ){
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Informe corretamente em qual bairro será entregue o seu pedido.'
+                });
 
-        }else if($(".pontoRef").val().length < 5){
-            Swal.fire({
-                icon: 'warning',
-                text: 'Preencha corretamente o ponto de referência para que possamos encontrar a residência.'
-            });
+                $(".finalizar-pedido").removeAttr('data-toggle', 'true');
 
-            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+            }else if($(".pontoRef").val().length < 5){
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Preencha corretamente o ponto de referência para que possamos encontrar a residência.'
+                });
+
+                $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+            }else{
+                $(".finalizar-pedido").attr('data-toggle', 'modal');
+            }
 
         }else{
             $(".finalizar-pedido").attr('data-toggle', 'modal');

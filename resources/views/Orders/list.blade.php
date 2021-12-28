@@ -9,7 +9,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 col-sm-12">
+            <div class="col-lg-12 col-sm-12 mb-5">
                 <div class="card hist-ped">
                     <div class="card-header font-weight-bold text-white" style="font-size: 25px; background: #17B3DF;">Pedidos registrados</div>
                     <div class="card-body first-table">

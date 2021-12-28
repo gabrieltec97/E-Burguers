@@ -273,7 +273,7 @@
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 val-entregue">
                                                         <label class="font-weight-bold" style="color: black;font-size: 18px">Valor entregue</label>
-                                                        <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
+                                                        <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="O valor que você vai pagar ao entregador." required>
                                                         <span class="text-danger verifica-val-troco" style="font-size: 15px">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                     </div>
                                                 @endif

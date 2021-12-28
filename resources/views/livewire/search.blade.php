@@ -45,7 +45,7 @@
             </tbody>
         </table>
 
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" style="margin-bottom: -15px">
             {{ $orders->links('livewire.pagination') }}
         </div>
 </div>
