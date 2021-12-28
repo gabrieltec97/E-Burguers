@@ -13,7 +13,7 @@
             <div class="col-12 mt-5">
                 <div class="container-fluid mt-2">
                     <div class="row">
-                        <div class="col-12 col-lg-8 mb-3">
+                        <div class="col-12 col-lg-8 mb-3 mt-3 mt-lg-0">
                             <div class="card card-finalizando">
                                 <div class="card-header bg-dark">
                                     <h5 class="font-weight-bold text-white" style="margin-bottom: -1px">Finalizando pedido</h5>
@@ -222,6 +222,18 @@
                                                         <label class="font-weight-bold"><span class="text-danger">Outro local (Insira)</span></label><br>
                                                     </div>
 
+                                                        <div class="col-12 col-lg-6 mt-4 mt-lg-4 local-entrega-see">
+                                                            <div class="row mt-lg-3">
+                                                                <div class="col-1 mr-3">
+                                                                    <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
+                                                                </div>
+
+                                                                <div class="col-8">
+                                                                    <label class="ml-3 font-weight-bold">{{ $sendAddress }} - {{ $district }}</label><br>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 local-entrega">
                                                         <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
                                                         <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
@@ -250,6 +262,7 @@
                                                     <div class="col-12 col-lg-6 mt-4 pagamento">
                                                         <label class="font-weight-bold" style="color: black;font-size: 18px;">Método de pagamento</label>
                                                         <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
+                                                            <option value="invalid" disabled selected>Escolha uma opção</option>
                                                             <option value="Dinheiro">Dinheiro</option>
                                                             <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
                                                             <option value="Cartão de crédito (Visa)">Cartão de crédito (Visa)</option>

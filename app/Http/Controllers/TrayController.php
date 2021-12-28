@@ -1391,7 +1391,7 @@ class TrayController extends Controller
         }
 
         if (isset($user->id)){
-            $address = DB::table('users')->select('address', 'adNumber')->where('id', '=', $user->id)->get()->toArray();
+            $address = DB::table('users')->select('address', 'adNumber', 'district')->where('id', '=', $user->id)->get()->toArray();
         }
 
         $diffSend = null;
@@ -1595,20 +1595,21 @@ class TrayController extends Controller
 
         if(isset($items) && isset($address[0]->address)){
             $sendAddress = $address[0]->address . ', ' .$address[0]->adNumber;
+            $district = $address[0]->district;
 
             if (isset($pendings)){
 
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'myOrder', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'myOrder', 'items', 'sendAddress', 'district', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'customs', 'myOrder', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('pendings', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'customs', 'myOrder', 'items', 'sendAddress', 'district', 'addons'));
                 }
 
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'items', 'sendAddress', 'district', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'customs', 'items', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated',  'customs', 'items', 'sendAddress', 'district', 'addons'));
                 }
             }
 
@@ -1632,18 +1633,19 @@ class TrayController extends Controller
 
         elseif (isset($address[0]->address)){
             $sendAddress = $address[0]->address . ', ' .$address[0]->adNumber;
+            $district = $address[0]->district;
 
             if (isset($pendings)){
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'sendAddress', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'sendAddress', 'district', 'pendings', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs','sendAddress', 'pendings', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs','sendAddress', 'district', 'pendings', 'addons'));
                 }
             }else{
                 if ($customs == null){
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'sendAddress', 'district', 'addons'));
                 }else{
-                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs', 'sendAddress', 'addons'));
+                    return view('clientUser.foodMenu.shoppingFinish', compact('myOrder', 'usedCoupon', 'diffSend', 'deliver', 'places', 'exist', 'separated', 'customs', 'sendAddress', 'district', 'addons'));
                 }
             }
         }

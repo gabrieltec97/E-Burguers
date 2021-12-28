@@ -15,6 +15,8 @@ if (!isset($thisMonth)){
     $thisYear = strftime('%Y');
     $day = strftime('%d');
 }
+
+$currentYear = strftime('%Y');
 ?>
 
 @if($thisMonth == strftime('%B', strtotime('today')) && $day == strftime('%d') && $thisYear == strftime('%Y'))
@@ -30,7 +32,7 @@ if (!isset($thisMonth)){
             <div class="col-12">
                 <div class="card shadow">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #1fbee1">
-                        <span style="color: white">{{ $deliveryMan[0]->name . ' ' . $deliveryMan[0]->surname}} </span>
+                        <span style="color: white">{{ $deliveryMan[0]->name . ' ' . $deliveryMan[0]->surname}} - Entregas</span>
                     </div>
 
                     <div class="card-body">
@@ -167,9 +169,9 @@ if (!isset($thisMonth)){
 
                                <div class="col-12 col-lg-2 mt-3 mt-lg-0">
                                    <select name="year" class="form-control" style="cursor: pointer">
-                                       <option value="{{ $thisYear }}">{{ $thisYear }}</option>
-                                       <option value="{{ $thisYear - 1 }}">{{ $thisYear - 1 }}</option>
-                                       <option value="{{ $thisYear - 2 }}">{{ $thisYear - 2 }}</option>
+                                       <option value="{{ $currentYear }}">{{ $currentYear }}</option>
+                                       <option value="{{ $currentYear - 1 }}" {{ $thisYear == $currentYear - 1 ? 'selected' : '' }}>{{ $currentYear - 1 }}</option>
+                                       <option value="{{ $currentYear - 2 }}" {{ $thisYear == $currentYear - 2 ? 'selected' : '' }}>{{ $currentYear - 2 }}</option>
                                    </select>
                                </div>
 
@@ -188,7 +190,7 @@ if (!isset($thisMonth)){
                 </div>
             </div>
 
-            <div class="col-12 mt-3 mb-5">
+            <div class="col-12 mt-5 mb-5">
                 <div class="card shadow">
                     <div class="card-header font-weight-bold text-muted" style="font-size: 25px; background: #1fbee1">
                         <span style="color: white">Entregas feitas este mês</span>

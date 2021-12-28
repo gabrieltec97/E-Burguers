@@ -182,7 +182,8 @@ class DeliveryManController extends Controller
             ->where('id', '=', $id)
             ->get()->toArray();
 
-        if ($deliveryMan == null){
+        //Evitando crashes na aplicação.
+        if ($deliveryMan == null or $request->dia == null){
             return redirect()->route('gerenciamento');
         }
 
