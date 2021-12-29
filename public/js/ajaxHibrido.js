@@ -40,7 +40,7 @@ $(document).ready(() => {
 
                     setTimeout(function (){
                         location.reload();
-                    }, 2000);
+                    }, 2100);
 
                 }else if (valorAnterior > valorAtual){
 
