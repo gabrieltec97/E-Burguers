@@ -329,20 +329,13 @@
                                         @endif
                                     </div>
 
-                                    @if($order[0]->deliverWay == 'Entrega em domicílio' && $order[0]->status != 'Em rota de entrega')
+                                    @if($ord->status == 'Pedido registrado')
                                     <div class="col-12 d-flex justify-content-start my-2">
                                             <form action="{{ route('clienteAlteraStatus', ['id' => $ord->id, 'acao' => 'Cancelado', 'remetente' => 'cliente', 'idCliente' => $idUser]) }}" method="post">
                                                 @csrf
-                                                <button type="submit" class="btn btn-danger cancel-alot">Cancelar</button> <br>
+                                                <button type="submit" class="btn btn-danger cancel-alot{{ $ord->id }}">Cancelar</button> <br>
                                             </form>
                                     </div>
-                                    @elseif($order[0]->deliverWay == 'Retirada no restaurante' && $order[0]->status != 'Pronto para ser retirado no restaurante')
-                                        <div class="col-12 d-flex justify-content-start my-2">
-                                            <form action="{{ route('clienteAlteraStatus', ['id' => $ord->id, 'acao' => 'Cancelado', 'remetente' => 'cliente', 'idCliente' => $idUser]) }}" method="post">
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger cancel-alot">Cancelar</button> <br>
-                                            </form>
-                                        </div>
                                     @endif
                                     <div class="col-12" style="margin-top: -10px">
                                         <hr>

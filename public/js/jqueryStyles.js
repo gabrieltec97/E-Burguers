@@ -699,9 +699,37 @@ $(".entregaCasa").on("click", function () {
 });
 
 //Inserção de máscara de valor a ser entregue:
-
-    $(".troco, .compras-acima").keyup(function (){
+    $(".troco, .compras-acima, .editar-valor-ent").keyup(function (){
         $(this).mask('000.00', {reverse: true});
+    });
+
+$(".ver-troco").hide();
+//Alteração de valor de troco.
+$(".editar-valor-ent").on('click', function (){
+    $(".editar-valor-ent").css('cursor', 'initial');
+})
+
+$(".editar-valor-ent").on('keyup', function (){
+    if (parseFloat($(".editar-valor-ent").val()) < parseFloat($(".bt-total").val())){
+        $(".ver-troco").show('slow');
+    }else{
+        $(".ver-troco").hide('slow');
+    }
+});
+
+    $(".finalizar-pedido").on("click", function (){
+        if (parseFloat($(".editar-valor-ent").val()) < parseFloat($(".bt-total").val())){
+
+            Swal.fire({
+                icon: 'warning',
+                text: 'Você inseriu um valor inválido para ser entregue no ato da compra.'
+            });
+
+            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+        }else{
+            $(".finalizar-pedido").removeAttr('title', 'true');
+            $(".finalizar-pedido").attr('data-toggle', 'modal');
+        }
     });
 
 
@@ -739,42 +767,13 @@ $(".finalizar-ok").on("click", function () {
     },8000);
 
 //Verificação de valor de troco.
-var valorPedido = parseFloat($(".total-val").text());
-var clienteTroco = $(".troco").val()
+var valorPedido = parseFloat($(".pg-val").val());
+var clienteTroco = parseFloat($(".troco").val());
 $(".verifica-val-troco").hide();
 
 $(".finalizar-pedido").on("click", function (){
 
-    if ($(".forma-pagamento").val() == 'Dinheiro' && $(".forma-entrega").val() == 'Entrega em domicílio'){
-        if ($(".troco").val() == ''){
-
-            $(".finalizar-pedido").attr('title', 'Você inseriu um valor de troco inferior ao valor do pedido.');
-            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
-
-            Swal.fire({
-                icon: 'warning',
-                text: 'Verifique a forma de pagamento e insira o valor do troco (caso seja no dinheiro).',
-            })
-        }else if($(".troco").val() < valorPedido){
-
-            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
-
-            Swal.fire({
-                icon: 'warning',
-                text: 'Você inseriu um valor inválido para troco.',
-            })
-        }
-    }else if ($(".forma-entrega").val() == 'Entrega em domicílio' && $(".forma-pagamento").val() == null){
-
-        $(".troco").removeAttr('required', 'true');
-        $(".finalizar-pedido").removeAttr('data-toggle', 'true');
-
-        Swal.fire({
-            icon: 'warning',
-            text: 'Escolha uma forma de pagamento'
-        });
-    }else if ($(".forma-entrega").val() == 'Entrega em domicílio'){
-
+    if ($(".hasCoupon").val() == undefined){
         if ($(".entregaFora").is(':checked')){
 
             if ($(".end-entrega").val().length < 5){
@@ -795,7 +794,7 @@ $(".finalizar-pedido").on("click", function (){
             }else if($(".entregaDiff").val() == '' ){
                 Swal.fire({
                     icon: 'warning',
-                    text: 'Informe corretamente em qual bairro será entregue o seu pedido.'
+                    text: 'Informe em qual bairro será entregue o seu pedido.'
                 });
 
                 $(".finalizar-pedido").removeAttr('data-toggle', 'true');
@@ -807,22 +806,85 @@ $(".finalizar-pedido").on("click", function (){
                 });
 
                 $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+            }else if ($(".forma-pagamento").val() == null){
+
+                $(".troco").removeAttr('required', 'true');
+                $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Escolha uma forma de pagamento'
+                });
+            }else if ($(".forma-pagamento").val() == 'Dinheiro'){
+                if ($(".troco").val() == ''){
+
+                    $(".finalizar-pedido").attr('title', 'Você inseriu um valor de troco inferior ao valor do pedido.');
+                    $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+                    Swal.fire({
+                        icon: 'warning',
+                        text: 'Insira o valor a ser entregue no ato da compra.',
+                    })
+                }else if($(".troco").val() < valorPedido){
+
+                    $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+                    Swal.fire({
+                        icon: 'warning',
+                        text: 'O valor a ser pago não pode ser inferior ao valor do pedido.',
+                    })
+                }
+            }else if ($(".forma-pagamento").val() == null){
+
+                $(".troco").removeAttr('required', 'true');
+                $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Escolha uma forma de pagamento'
+                });
             }else{
+                $(".finalizar-pedido").removeAttr('title', 'true');
                 $(".finalizar-pedido").attr('data-toggle', 'modal');
             }
+        }else if ($(".forma-pagamento").val() == 'Dinheiro'){
+            if ($(".troco").val() == ''){
 
+                $(".finalizar-pedido").attr('title', 'Você inseriu um valor de troco inferior ao valor do pedido.');
+                $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Insira o valor a ser entregue no ato da compra.',
+                })
+            }else if($(".troco").val() < valorPedido){
+
+                $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'O valor a ser pago não pode ser inferior ao valor do pedido.',
+                })
+            }
+        }else if ($(".forma-pagamento").val() == null){
+
+            $(".troco").removeAttr('required', 'true');
+            $(".finalizar-pedido").removeAttr('data-toggle', 'true');
+
+            Swal.fire({
+                icon: 'warning',
+                text: 'Escolha uma forma de pagamento'
+            });
         }else{
+            $(".finalizar-pedido").removeAttr('title', 'true');
             $(".finalizar-pedido").attr('data-toggle', 'modal');
         }
-    }else{
-        $(".finalizar-pedido").removeAttr('title', 'true');
-        $(".finalizar-pedido").attr('data-toggle', 'modal');
     }
 })
 
 $(".troco").on("keyup", function (){
-    clienteTroco = parseInt($(".troco").val());
-    valorPedido = parseFloat($(".total-val").text())
+    clienteTroco = parseFloat($(".troco").val());
+    valorPedido = parseFloat($(".pg-val").val())
 
     if (isNaN(clienteTroco) || valorPedido > clienteTroco){
         $(".verifica-val-troco").fadeIn('slow');

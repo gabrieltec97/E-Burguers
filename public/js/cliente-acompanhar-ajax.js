@@ -45,6 +45,16 @@ $(document).ready(() => {
 
                 if (dados.length == 1) {
 
+                    //Travando o clique do botão de cancelamentos.
+                    if (dados[0].status == 'Em rota de entrega' || dados[0].status == 'Em preparo' || dados[0].status == 'Pronto para ser retirado no restaurante'){
+
+                        $(".cancelarPedido, .cancel-alot").on("click", function (e){
+                            e.preventDefault();
+                        });
+
+                        $(".cancelarPedido, .cancel-alot").attr('hidden', 'true');
+                    }
+
                     var status = dados[0].status;
 
                     $(".ul-pedidos").removeAttr('hidden', 'true');
@@ -234,29 +244,20 @@ $(document).ready(() => {
                                 send2 = 'não';
                             }
                         }
-                    })
+                    });
 
                     if(dados[0].status == 'Pronto para ser retirado no restaurante'){
                         $(".et1, .et2, .et5").css('background', '#d4f5d4');
-                        $(".preparing, .btn-cancelamentos, .hr-cancelamentos, .cancel-alot").attr('hidden', 'true');
+                        $(".preparing, .hr-cancelamentos").attr('hidden', 'true');
                         $(".et2, .page-wrapper, #takeThere").removeAttr('hidden', 'true');
 
-                        //Travando o clique do botão.
-                        $(".btn-cancelamentos").on("click", function (e){
-                            e.preventDefault();
-                        })
+
                     }else if (dados[0].status == 'Em rota de entrega') {
                         $(".et1, .et2, .et3").css('background', '#d4f5d4');
                         $(".hr-cancelamentos, .btn-cancelamentos, .et2, .preparing, .cancel-alot").attr('hidden', 'true');
                         $(".page-wrapper, #delivery").removeAttr('hidden', 'true');
                         $(".col-alot").removeClass('col-8');
                         $(".col-alot").addClass('col-12');
-
-
-                        //Travando o clique do botão.
-                        $(".btn-cancelamentos, .cancel-alot").on("click", function (e) {
-                            e.preventDefault();
-                        })
                     }
 
                     let data = '';
@@ -265,6 +266,17 @@ $(document).ready(() => {
                         data+= "<tr><td>"+ '#'+ (pedido.id) + "</td>";
                         data+= "<td>"+ (pedido.hour) + "</td>";
                         data+= "<td>"+ (pedido.status) + "</td></tr>";
+
+                        //Travando o clique do botão de cancelamentos.
+                        if (pedido.status == 'Em rota de entrega' || pedido.status == 'Em preparo' || pedido.status == 'Pronto para ser retirado no restaurante'){
+
+                            $(".cancel-alot"+ pedido.id).on("click", function (e){
+                                e.preventDefault();
+                            });
+
+                            $(".cancel-alot"+ pedido.id).attr('hidden', 'true');
+                            console.log(pedido.id)
+                        }
                     }
 
                     $(".dados-tab").html(data);

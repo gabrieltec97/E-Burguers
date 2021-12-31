@@ -1968,12 +1968,15 @@ class TrayController extends Controller
 
     public function couponApply(Request $request)
     {
-
         //Verificando se o delivery continua aberto.
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
         if ($deliveryStatus[0]->status == 'Fechado'){
             return redirect()->route('tipoPedido');
+        }
+
+        if ($request->payingMethod == ''){
+            return redirect()->back()->with('msg-pag', '.');
         }
 
         //Alterando dados do pedido para em caso de aplicação de cupom e entrega em endereço diferente.

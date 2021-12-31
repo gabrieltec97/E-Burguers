@@ -22,21 +22,21 @@
                                     <form id="cadastrarPedido" action="{{ route('pedidos.store') }}" method="post" class="form-group">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-12 col-lg-6 div-forma-retirada">
-                                                <label class="font-weight-bold" style="font-size: 18px">Forma de retirada (Escolha)</label>
-                                                <select name="formaRetirada" class="form-control forma-entrega">
-                                                    @if(isset($pendings))
-                                                        <option value="{{ $pendings }}">{{ $pendings }}</option>
-                                                    @elseif(isset($exist[0]))
-                                                        <option value="{{ $exist[0]->deliverWay }}">{{ $exist[0]->deliverWay }}</option>
-                                                    @elseif($deliver != null)
-                                                        <option value="{{ $deliver }}" class="deliver-coupon" title="Local inserido junto com cupom. Para trocar, clique em alterar local.">{{ $deliver }}</option>
-                                                    @else
-                                                        <option value="Entrega em domicílio">Entrega em domicílio</option>
-                                                        <option value="Retirada no restaurante">Retirada no restaurante</option>
-                                                    @endif
-                                                </select>
-                                            </div>
+{{--                                            <div class="col-12 col-lg-6 div-forma-retirada">--}}
+{{--                                                <label class="font-weight-bold" style="font-size: 18px">Forma de retirada (Escolha)</label>--}}
+{{--                                                <select name="formaRetirada" class="form-control forma-entrega">--}}
+{{--                                                    @if(isset($pendings))--}}
+{{--                                                        <option value="{{ $pendings }}">{{ $pendings }}</option>--}}
+{{--                                                    @elseif(isset($exist[0]))--}}
+{{--                                                        <option value="{{ $exist[0]->deliverWay }}">{{ $exist[0]->deliverWay }}</option>--}}
+{{--                                                    @elseif($deliver != null)--}}
+{{--                                                        <option value="{{ $deliver }}" class="deliver-coupon" title="Local inserido junto com cupom. Para trocar, clique em alterar local.">{{ $deliver }}</option>--}}
+{{--                                                    @else--}}
+{{--                                                        <option value="Entrega em domicílio">Entrega em domicílio</option>--}}
+{{--                                                        <option value="Retirada no restaurante">Retirada no restaurante</option>--}}
+{{--                                                    @endif--}}
+{{--                                                </select>--}}
+{{--                                            </div>--}}
 
                                             @if(isset($pendings))
 
@@ -73,9 +73,11 @@
                                               @elseif($diffSend[1] != null)
                                                   <div class="col-12 col-lg-6 mt-4">
                                                       <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
-                                                      <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
+                                                      <h5>Pagamento em {{ $diffSend[1] }}, troco para R$ {{ $diffSend[2] }}</h5>
                                                   </div>
                                               @endif
+
+                                                  <button class="hasCoupon" value="{{ $diffSend[1] }}" hidden></button>
                                             @else
                                             <div class="col-12 col-lg-6 mt-4 pagamento">
                                                 <label class="font-weight-bold" style="color:black;font-size: 18px;">Método de pagamento</label>
@@ -144,13 +146,16 @@
                                                         @elseif($diffSend[1] != null)
                                                             <div class="col-12 mt-4">
                                                                 <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
-                                                                <h5>Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
+                                                                <h5>Pagamento em {{ $diffSend[1] }}, troco para R${{ $diffSend[2] }}</h5>
                                                             </div>
                                                         @endif
+
+                                                            <button class="hasCoupon" value="{{ $diffSend[1] }}" hidden></button>
                                                     @else
                                                         <div class="col-12 col-lg-6 mt-4 pagamento">
                                                             <label class="font-weight-bold" style="color:black; font-size: 18px;">Método de pagamento</label>
                                                             <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
+                                                                <option value="invalid" disabled selected>Escolha uma opção</option>
                                                                 <option value="Dinheiro">Dinheiro</option>
                                                                 <option value="Cartão de crédito (Elo)">Cartão de crédito (Elo)</option>
                                                                 <option value="Cartão de crédito (Visa)">Cartão de crédito (Visa)</option>
@@ -205,15 +210,21 @@
                                                     @elseif($diffSend[1] != null)
                                                       <div class="col-12 col-lg-6 mt-4">
                                                           <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
-                                                          <h5 class="mt-3">Pagamento em {{ $diffSend[1] }}, troco para {{ $diffSend[2] }}</h5>
+                                                          <h5 class="mt-3">Pagamento em {{ $diffSend[1] }}</h5>
+
+                                                          <label for="troco">Troco para:</label>
+                                                              <input type="text" class="form-control w-50 editar-valor-ent" autocomplete="off" name="valEntregue" value="{{ $diffSend[2] }}">
+                                                                <span class="text-danger font-weight-bold ver-troco mt-2">Valor inválido para troco.</span><br>
                                                       </div>
 
                                                       <div class="col-12 col-lg-6 mt-4">
                                                           <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local / Pagamento</button>
                                                       </div>
                                                     @endif
+
+                                                        <button class="hasCoupon" value="{{ $diffSend[1] }}" hidden></button>
                                                 @else
-                                                    <div class="col-12 col-lg-6 entrega">
+                                                    <div class="col-12 col-lg-6">
                                                         <label class="font-weight-bold entrega-mobile" style="color: black; font-size: 18px">Entregar em</label>
                                                         <br>
                                                         <input type="radio" class="entregaCasa mt-1" name="entrega" value="Entregaemcasa">
@@ -222,8 +233,8 @@
                                                         <label class="font-weight-bold"><span class="text-danger">Outro local (Insira)</span></label><br>
                                                     </div>
 
-                                                        <div class="col-12 col-lg-6 mt-4 mt-lg-4 local-entrega-see">
-                                                            <div class="row mt-lg-3">
+                                                        <div class="col-12 col-lg-6 mt-4 mt-lg-2 local-entrega-see">
+                                                            <div class="row">
                                                                 <div class="col-1 mr-3">
                                                                     <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
                                                                 </div>
@@ -234,9 +245,9 @@
                                                             </div>
                                                         </div>
 
-                                                    <div class="col-12 col-lg-6 mt-4 mt-lg-4 local-entrega">
+                                                    <div class="col-12 col-lg-6 mt-4 mt-lg-0 local-entrega">
                                                         <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
-                                                        <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Insira o local a ser entregue.">
+                                                        <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $sendAddress }}" placeholder="Digite apenas o nome da rua.">
                                                     </div>
 
                                                         <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
@@ -489,6 +500,7 @@
 
                                         <label class="font-weight-bold" style="font-size: 18px; color: black;">Valor total: <span class="text-success font-weight-normal">R$</span> </label>
                                         <span class="text-success total-val" style="font-size: 17px">{{ $price }}</span>
+                                        <button class="pg-val" value="{{ $price }}" hidden></button>
                                     </div>
 
                                    <div class="col-12 mb-lg-3">
@@ -615,6 +627,8 @@
         </div>
     </div>
 
+    <button class="bt-total" value="{{ $price }}" hidden></button>
+
     <div class="col-12 d-flex justify-content-end">
         <div class="footertray">
 
@@ -697,7 +711,16 @@
         </script>
     @endif
 
-    @if(session('msg-exp') or session('msg-retire') or session('msg-coupon-used') or session('msg-troco') or session('msg-use') or session('msg-success') or session('msg-rem-cup') or session('msg') or isset($exist[0]))
+    @if(session('msg-pag'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                text: 'Cupom não aplicado porque você não escolheu uma forma de pagamento.',
+            })
+        </script>
+    @endif
+
+    @if(session('msg-exp') or session('msg-retire')or session('msg-pag') or session('msg-coupon-used') or session('msg-troco') or session('msg-use') or session('msg-success') or session('msg-rem-cup') or session('msg') or isset($exist[0]))
 
     @else
         <script>

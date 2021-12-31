@@ -98,6 +98,15 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+        //Atualizando valor a ser entregue.
+        $updGivingPrice = Auth::user()->userOrderTray()->get()->toArray();
+
+        if ($request->valEntregue == ''){
+            $givingValue = $updGivingPrice[0]['payingValue'];
+        }else{
+            $givingValue = $request->valEntregue;
+        }
+
         //Bairro diferente do cadastrado.
         $updatedDiffDistrict = $request->diffDistrict;
 
@@ -145,7 +154,10 @@ class OrdersController extends Controller
 
             $tray = Tray::find($id);
 
-            $tray->deliverWay = $request->formaRetirada;
+
+            $tray->deliverWay = 'Entrega em domicílio';
+
+//            $tray->deliverWay = $request->formaRetirada;
             if ($tray->payingMethod == null){
                 $tray->payingMethod = $request->formaPagamento;
             }
@@ -174,31 +186,33 @@ class OrdersController extends Controller
                 }
             }
 
-            if ($tray->payingValue == null){
-                $tray->payingValue = $request->valEntregue;
-            }
-
+//            if ($tray->payingValue == null){
+//
+//            }
+            $tray->payingValue = $request->valEntregue;
             $tray->clientComments = $request->obs;
 
-            if ($request->formaRetirada == 'Retirada no restaurante'){
-                $tray->valueWithoutDeliver = $tray->totalValue - $districtPrice;
+// ** TRECHO DE CÓDIGO COMENTADO DEVIDO À LIMITAÇÃO DO RESTAURANTE EM BUSCAR LÁ **
 
-                //Verificação de uso de cupom de frete grátis.
-                if ($tray->disccountUsed == null){
-                    $tray->totalValue = $tray->totalValue - $districtPrice;
-                }
-
-
-            }else{
-                if ($request->entrega == 'localEntregaFora'){
-                    $local = DB::table('delivers')
-                        ->where('name', '=', $request->diffDistrict)
-                        ->get()->toArray();
-
-                    $tray->valueWithoutDeliver = $tray->totalValue - $districtPrice;
-                    $tray->totalValue = $tray->totalValue - $districtPrice + $local[0]->price;
-                }
-            }
+//            if ($request->formaRetirada == 'Retirada no restaurante'){
+//                $tray->valueWithoutDeliver = $tray->totalValue - $districtPrice;
+//
+//                //Verificação de uso de cupom de frete grátis.
+//                if ($tray->disccountUsed == null){
+//                    $tray->totalValue = $tray->totalValue - $districtPrice;
+//                }
+//
+//
+//            }else{
+//                if ($request->entrega == 'localEntregaFora'){
+//                    $local = DB::table('delivers')
+//                        ->where('name', '=', $request->diffDistrict)
+//                        ->get()->toArray();
+//
+//                    $tray->valueWithoutDeliver = $tray->totalValue - $districtPrice;
+//                    $tray->totalValue = $tray->totalValue - $districtPrice + $local[0]->price;
+//                }
+//            }
         }else{
             //Inserindo valores de entrega com base no dos pedidos correntes atuais.
             if (count($pending) != 0){
@@ -306,6 +320,7 @@ class OrdersController extends Controller
 //            $newOrder->comboItem = $updOrder[0]['comboItem'];
 //        }
 
+
         $newOrder->clientComments = $updOrder[0]['clientComments'];
         $newOrder->deliverWay = $updOrder[0]['deliverWay'];
         $newOrder->totalValue = $updOrder[0]['totalValue'];
@@ -315,7 +330,7 @@ class OrdersController extends Controller
         $newOrder->monthDay =  date("d");
         $newOrder->month = strftime('%B', strtotime('today'));
         $newOrder->usedCoupon = $updOrder[0]['disccountUsed'];
-        $newOrder->payingValue = $updOrder[0]['payingValue'];
+        $newOrder->payingValue = $givingValue;
 
         if ($updatedDiffDistrict != ''){
             $newOrder->district = $updatedDiffDistrict;
