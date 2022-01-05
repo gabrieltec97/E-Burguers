@@ -66,7 +66,7 @@
                                             @if($diffSend != null)
                                               @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
                                                   <div class="col-12 mt-4">
-                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
+                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 70px; height: 70px"></a>
                                                       <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                   </div>
 
@@ -158,7 +158,7 @@
                                                     @if($diffSend != null)
                                                         @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
                                                             <div class="col-12 col-lg-6 mt-4">
-                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
+                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 70px; height: 70px"></a>
                                                                 <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                             </div>
 
@@ -237,12 +237,12 @@
                                                 @if($diffSend != null)
 
                                                     @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
-                                                      <div class="col-12 col-lg-6 mt-4">
-                                                          <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
-                                                          <h5>Pagamento em {{ $diffSend[1] }}</h5>
+                                                      <div class="col-12 col-lg-6">
+                                                          <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 60px; height: 60px"></a>
+                                                          <h5 class="mt-3">Pagamento em {{ $diffSend[1] }}</h5>
                                                       </div>
 
-                                                            <div class="col-12 col-lg-6 mt-lg-4">
+                                                            <div class="col-12 col-lg-6">
                                                                 <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
                                                                 <label>Será enviado para: {{ $diffSend[0] }}</label>
                                                             </div>
@@ -252,8 +252,8 @@
                                                             </div>
                                                     @elseif($diffSend[1] != null)
 
-                                                      <div class="col-12 col-lg-6 mt-4">
-                                                          <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
+                                                      <div class="col-12 col-lg-6">
+                                                          <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/money.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 70px; height: 70px"></a>
                                                           <h5 class="mt-3">Pagamento em {{ $diffSend[1] }}</h5>
 
                                                           <label for="troco">Troco para (alterar):</label>
@@ -261,7 +261,7 @@
                                                               <span class="text-danger font-weight-bold ver-troco mt-2">Valor inválido para troco.</span><br>
                                                       </div>
 
-                                                        <div class="col-12 col-lg-6 mt-lg-4">
+                                                        <div class="col-12 col-lg-6">
                                                             <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
                                                             <label>Será enviado para: {{ $diffSend[0] }}</label>
                                                         </div>

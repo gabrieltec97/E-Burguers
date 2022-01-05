@@ -229,7 +229,8 @@
                                     @csrf
 
                                     <label style="margin-top: -25px;color: black" class="font-weight-bold">Selecione o entregador</label>
-                                    <select name="deliverMan" class="form-control">
+                                    <select name="deliverMan" class="form-control select-dm{{ $reg->id }}" onchange="changeDM({{ $reg->id }})">
+                                        <option selected disabled>Escolha o entregador</option>
                                         @foreach($deliveryMen as $d => $man)
                                             <option value="{{ $man[0]->name }} {{ $man[0]->surname }}">{{ $man[0]->name }} {{ $man[0]->surname }}</option>
                                         @endforeach
@@ -240,7 +241,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Voltar</button>
-                                <button type="button" class="btn btn-success sendOrder">Enviar pedido</button>
+                                <button type="button" class="btn btn-success sendOrder{{ $reg->id }}" onclick="sendSubmit({{ $reg->id }})" disabled>Enviar pedido</button>
                             </div>
                         </div>
                     </div>
@@ -268,6 +269,23 @@
     </audio>
 
     <script>
+
+        function changeDM(id){
+            if ($(".select-dm" + id).val() != null){
+                $(".sendOrder"+id).removeAttr('disabled', 'true');
+            }
+        }
+
+        function sendSubmit(id){
+
+            if ($(".select-dm" + id).val() == null){
+                e.preventDefault();
+            }else{
+                $(".sendOrder" + id).html('<div class="spinner-border text-light" role="status"></div>');
+                $("#readyOrder"+ id).submit();
+            }
+        }
+
         function muda(id){
             var acao = $("#" +id).val();
 
