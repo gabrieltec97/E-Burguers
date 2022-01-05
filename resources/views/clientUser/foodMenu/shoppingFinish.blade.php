@@ -14,7 +14,7 @@
                 <div class="container-fluid mt-2">
                     <div class="row">
                         <div class="col-12 col-lg-8 mb-3 mt-3 mt-lg-0">
-                            <div class="card card-finalizando">
+                            <div class="card card-finalizando" style="border: none;">
                                 <div class="card-header bg-dark">
                                     <h5 class="font-weight-bold text-white" style="margin-bottom: -1px">Finalizando pedido</h5>
                                 </div>
@@ -70,11 +70,29 @@
                                                       <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                   </div>
 
+                                                                <div class="col-12 col-lg-6 mt-lg-4">
+                                                                    <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
+                                                                    <label>Será enviado para: {{ $diffSend[0] }}</label>
+                                                                </div>
+
+                                                                <div class="col-12 mt-4">
+                                                                    <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Remover cupom / Alterar local / Pagamento</button>
+                                                                </div>
+
                                               @elseif($diffSend[1] != null)
-                                                  <div class="col-12 col-lg-6 mt-4">
-                                                      <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
-                                                      <h5>Pagamento em {{ $diffSend[1] }}, troco para R$ {{ $diffSend[2] }}</h5>
-                                                  </div>
+                                                                <label for="troco">Troco para (alterar):</label>
+                                                                <input type="text" class="form-control w-50 editar-valor-ent" autocomplete="off" name="valEntregue" value="{{ $diffSend[2] }}">
+                                                                <span class="text-danger font-weight-bold ver-troco mt-2">Valor inválido para troco.</span><br>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6 mt-lg-4">
+                                            <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
+                                            <label>Será enviado para: {{ $diffSend[0] }}</label>
+                                        </div>
+
+                                        <div class="col-12 mt-4">
+                                            <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Remover cupom / Alterar local / Pagamento</button>
+                                        </div>
                                               @endif
 
                                                   <button class="hasCoupon" value="{{ $diffSend[1] }}" hidden></button>
@@ -139,20 +157,39 @@
 
                                                     @if($diffSend != null)
                                                         @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
-                                                            <div class="col-12 mt-4">
+                                                            <div class="col-12 col-lg-6 mt-4">
                                                                 <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/cartao-de-debito.png') }}" alt="pagamento" title="Pagamento em cartão" style="width: 80px; height: 80px"></a>
                                                                 <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                             </div>
+
+                                                                <div class="col-12 col-lg-6 mt-lg-4">
+                                                                    <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
+                                                                    <label>Será enviado para: {{ $diffSend[0] }}</label>
+                                                                </div>
+
+                                                                <div class="col-12 mt-4">
+                                                                    <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Remover cupom / Alterar local / Pagamento</button>
+                                                                </div>
                                                         @elseif($diffSend[1] != null)
-                                                            <div class="col-12 mt-4">
-                                                                <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
-                                                                <h5>Pagamento em {{ $diffSend[1] }}, troco para R${{ $diffSend[2] }}</h5>
-                                                            </div>
+                                                                <div class="col-12 col-lg-6">
+                                                                    <label for="troco">Troco para (alterar)sss:</label>
+                                                                    <input type="text" class="form-control w-50 editar-valor-ent" autocomplete="off" name="valEntregue" value="{{ $diffSend[2] }}">
+                                                                    <span class="text-danger font-weight-bold ver-troco mt-2">Valor inválido para troco.</span><br>
+                                                                </div>
+
+                                <div class="col-12 col-lg-6 ">
+                                    <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
+                                    <label>Será enviado para: {{ $diffSend[0] }}</label>
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Remover cupom / Alterar local / Pagamento</button>
+                                </div>
                                                         @endif
 
                                                             <button class="hasCoupon" value="{{ $diffSend[1] }}" hidden></button>
                                                     @else
-                                                        <div class="col-12 col-lg-6 mt-4 pagamento">
+                                                        <div class="col-12 col-lg-6 pagamento">
                                                             <label class="font-weight-bold" style="color:black; font-size: 18px;">Método de pagamento</label>
                                                             <select name="formaPagamento" style="cursor: pointer;" class="form-control forma-pagamento">
                                                                 <option value="invalid" disabled selected>Escolha uma opção</option>
@@ -164,11 +201,16 @@
                                                             </select>
                                                         </div>
 
-                                                        <div class="col-12 col-lg-6 mt-4 val-entregue">
+                                                        <div class="col-12 col-lg-6 mt-4 mt-lg-0 val-entregue">
                                                             <label class="font-weight-bold" style="color:black; font-size: 18px">Valor entregue</label>
                                                             <input type="text" autocomplete="off" class="form-control troco mb-2" name="valEntregue" placeholder="Cálculo de troco" required>
                                                             <span class="text-danger verifica-val-troco" style="font-size: 15px">O valor do troco não pode ser menor ou igual ao valor do pedido.</span>
                                                         </div>
+
+                                                            <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+                                                                <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
+                                                                <label>Será enviado para: {{ $exist[0]->address }}</label>
+                                                            </div>
                                                     @endif
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
@@ -193,10 +235,6 @@
 
 {{--                                                Verificando se o cupom foi inserido em um local diferente.    --}}
                                                 @if($diffSend != null)
-                                                    <div class="col-12 col-lg-6 local-entrega mt-3 mt-lg-0">
-                                                        <label class="font-weight-bold" style="color: black; font-size: 18px">Será entregue em</label>
-                                                        <input type="text" autocomplete="off" class="form-control end-entrega" name="localEntrega" required value="{{ $diffSend[0] }}" title="Local inserido junto com cupom.">
-                                                    </div>
 
                                                     @if($diffSend[1] != 'dinheiro' && $diffSend[1] != null)
                                                       <div class="col-12 col-lg-6 mt-4">
@@ -204,21 +242,32 @@
                                                           <h5>Pagamento em {{ $diffSend[1] }}</h5>
                                                       </div>
 
-                                                      <div class="col-12 col-lg-6 mt-lg-4 mt-2">
-                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local / Pagamento</button>
-                                                      </div>
+                                                            <div class="col-12 col-lg-6 mt-lg-4">
+                                                                <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
+                                                                <label>Será enviado para: {{ $diffSend[0] }}</label>
+                                                            </div>
+
+                                                            <div class="col-12 mt-4">
+                                                                <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Remover cupom / Alterar local / Pagamento</button>
+                                                            </div>
                                                     @elseif($diffSend[1] != null)
+
                                                       <div class="col-12 col-lg-6 mt-4">
                                                           <a href="https://pt.vecteezy.com/vetor-gratis/carteira" style="cursor: initial" target="_blank"><img src="{{ asset('logo/apenas-a-dinheiro.png') }}" alt="pagamento" title="Pagamento em dinheiro" style="width: 80px; height: 80px"></a>
                                                           <h5 class="mt-3">Pagamento em {{ $diffSend[1] }}</h5>
 
-                                                          <label for="troco">Troco para:</label>
+                                                          <label for="troco">Troco para (alterar):</label>
                                                               <input type="text" class="form-control w-50 editar-valor-ent" autocomplete="off" name="valEntregue" value="{{ $diffSend[2] }}">
-                                                                <span class="text-danger font-weight-bold ver-troco mt-2">Valor inválido para troco.</span><br>
+                                                              <span class="text-danger font-weight-bold ver-troco mt-2">Valor inválido para troco.</span><br>
                                                       </div>
 
-                                                      <div class="col-12 col-lg-6 mt-4">
-                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Alterar local / Pagamento</button>
+                                                        <div class="col-12 col-lg-6 mt-lg-4">
+                                                            <img src="{{ asset('logo/mapas.png') }}" style="width: 50px; height: 50px; border-radius: 5px" alt="Local de entrega">
+                                                            <label>Será enviado para: {{ $diffSend[0] }}</label>
+                                                        </div>
+
+                                                      <div class="col-12 mt-4">
+                                                          <button type="button" title="Alterar local de entrega." class="btn btn-primary float-right alterar-local-cupom">Remover cupom / Alterar local / Pagamento</button>
                                                       </div>
                                                     @endif
 
@@ -252,7 +301,7 @@
 
                                                         <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
                                                             <label class="font-weight-bold" style="color: black;font-size: 18px">Nº da residência (Complemento)</label>
-                                                            <input type="text" class="form-control adDeliver" name="adNumber" placeholder="Dê mais detalhes sobre a localização.">
+                                                            <input type="text" class="form-control adDeliver" name="adNumber" placeholder="Dê mais detalhes sobre a residência.">
                                                         </div>
 
                                                     <div class="col-12 col-lg-6 mt-4 mt-lg-4 bairro-entrega">
@@ -661,7 +710,7 @@
                     function shoot(){
                         Swal.fire({
                             title: 'Ei, atenção aqui!',
-                            html: 'Você tem um pedido em andamento para <b style="color: red">entrega em domicílio</b>, com isso não é possível escolher outra forma de retirada.',
+                            html: 'Você tem um pedido <b style="color: red">em andamento</b>, com isso não é possível escolher outro endereço.',
                             imageUrl: 'https://localhost/E-Pedidos/public/logo/resee.svg',
                             imageWidth: 400,
                             imageHeight: 200,

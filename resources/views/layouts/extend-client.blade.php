@@ -23,10 +23,24 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
+    <style>
+
+        <?php
+        $url = url()->current();
+        ?>
+
+        @if($url == 'http://localhost/E-Pedidos/public/finalizarCompra')
+        @media (max-width: 900px) {
+            body {
+               background-image: url({{ asset('logo/bgbg.png') }});
+            }
+        }
+        @endif
+    </style>
+
     @livewireStyles
 </head>
 <body>
-
 <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 
 <nav class="navbar navbar-expand-lg navbar-sup fixed-top bg-danger">

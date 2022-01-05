@@ -2002,7 +2002,7 @@ class TrayController extends Controller
 
             DB::table('trays')
                 ->where('idClient', '=', Auth::user()->id)
-                ->update(['totalValue' => $request->newPrice, 'address' => $request->diffEnd . ', '. $request->adSend. '. Bairro: ' . $request->district]);
+                ->update(['totalValue' => $request->newPrice, 'address' => $request->diffEnd . ', '. $request->adSend. '. Bairro: ' . $request->district . '. Ponto de referência: ' . $request->refPoint]);
 
         }
 
@@ -2089,7 +2089,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address. ', '. $clientAdNumber[0]->adNumber  . '. Bairro: ' . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address. ', '. $clientAdNumber[0]->adNumber  . '. Bairro: ' . $currentDistrictNow[0]->name . '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2137,7 +2137,7 @@ class TrayController extends Controller
                             ->get()->toArray();
 
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: ' . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: ' . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2184,7 +2184,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber. '. Bairro: ' . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber. '. Bairro: ' . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2231,7 +2231,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2278,7 +2278,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2325,7 +2325,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: ' . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: ' . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2372,7 +2372,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2419,7 +2419,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2466,7 +2466,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2513,7 +2513,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){
@@ -2549,7 +2549,7 @@ class TrayController extends Controller
                             ->where('id', '=', Auth::user()->id)
                             ->get()->toArray();
 
-                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name;
+                        $update->address = $userDataNow->address . ', '. $clientAdNumber[0]->adNumber .'. Bairro: '  . $currentDistrictNow[0]->name. '. Ponto de referência: ' . $userDataNow->refPoint;
                     }
 
                     if ($request->deliverType != 'Retirada no restaurante'){

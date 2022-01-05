@@ -110,6 +110,14 @@ class OrdersController extends Controller
         //Bairro diferente do cadastrado.
         $updatedDiffDistrict = $request->diffDistrict;
 
+        if ($request->diffDistrict == '' && $updGivingPrice[0]['disccountUsed'] != null){
+                $result = strstr($updGivingPrice[0]['address'], "Ponto", true);
+                $format = strstr($result, ":");
+                $format = trim($format, ':');
+                $format = trim($format);
+                $updatedDiffDistrict = rtrim($format, '.');
+        }
+
         //Verificando se o delivery continua aberto.
         $deliveryStatus = DB::table('delivery_status')->select('status')->where('id', '=', 1)->get()->toArray();
 
@@ -146,6 +154,10 @@ class OrdersController extends Controller
 
         $districtPrice = $districtPrice[0]->price;
 
+// ***** Esta variável foi inserida devido à necessidade da pizzaria. ********
+        $findPlace = Auth::user()->userOrderTray()->get()->toArray();
+
+
         //Verificando o valor do frete.
         if (count($pending) == 0 and count($going) == 0){
 
@@ -154,15 +166,20 @@ class OrdersController extends Controller
 
             $tray = Tray::find($id);
 
-
             $tray->deliverWay = 'Entrega em domicílio';
 
-//            $tray->deliverWay = $request->formaRetirada;
+//          $tray->deliverWay = $request->formaRetirada;
             if ($tray->payingMethod == null){
                 $tray->payingMethod = $request->formaPagamento;
             }
+
             if ($request->entrega == 'Entregaemcasa'){
                 $tray->address = $client[0]->address . ' ,' . $client[0]->adNumber . '. Ponto de referência: ' . $client[0]->refPoint;
+                $diffPlace = 'Nao';
+            }elseif($request->entrega == ''){
+
+                // ***** Este elseif foi inserido devido à necessidade da pizzaria ****
+                $tray->address = $findPlace[0]['address'];
                 $diffPlace = 'Nao';
             }else{
                 if ($request->pontoRef != ''){
@@ -178,17 +195,19 @@ class OrdersController extends Controller
                     if ($tray->address == null){
                         $tray->address = $request->localEntrega . ' ,' . $request->adNumber. '. Bairro: '. $request->diffDistrict .'. Ponto de referência: ' . $request->pontoRef;
                         $diffPlace = 'Sim';
-                    }else{
-                        $tray->address = $request->localEntrega;
-                        $diffPlace = 'Nao';
                     }
 
+// ******** Else comentado devido à limitação do restaurante *********.
+//                    else{
+//                        $tray->address = $request->localEntrega;
+//                        $diffPlace = 'Nao';
+//                    }
                 }
             }
 
-//            if ($tray->payingValue == null){
-//
-//            }
+            if ($tray->payingValue == null){
+
+            }
             $tray->payingValue = $request->valEntregue;
             $tray->clientComments = $request->obs;
 
@@ -214,37 +233,41 @@ class OrdersController extends Controller
 //                }
 //            }
         }else{
-            //Inserindo valores de entrega com base no dos pedidos correntes atuais.
-            if (count($pending) != 0){
-                $id = $order[0]['id'];
+//            //Inserindo valores de entrega com base no dos pedidos correntes atuais.
+//            if (count($pending) != 0){
+//                $id = $order[0]['id'];
+//
+//                //Capturando o bairro para pedidos pendentes
+//                $tray = Tray::find($id);
+//                $result = strstr($pending[0]->address, "Ponto", true);
+//                $format = strstr($result, ":");
+//                $format = trim($format, ':');
+//                $format = trim($format);
+//                $currentDistrict = $format;
+//                $tray->deliverWay = $pending[0]->deliverWay;
+//                if ($tray->payingMethod == null){
+//                    $tray->payingMethod = $request->formaPagamento;
+//                }
+//                $tray->address = $pending[0]->address;
+//                $tray->payingValue = $request->valEntregue;
+//                $tray->clientComments = $request->obs;
 
-                //Capturando o bairro para pedidos pendentes
-                $tray = Tray::find($id);
-                $result = strstr($pending[0]->address, "Ponto", true);
-                $format = strstr($result, ":");
-                $format = trim($format, ':');
-                $format = trim($format);
-                $currentDistrict = $format;
-                $tray->deliverWay = $pending[0]->deliverWay;
-                if ($tray->payingMethod == null){
-                    $tray->payingMethod = $request->formaPagamento;
-                }
-                $tray->address = $pending[0]->address;
-                $tray->payingValue = $request->valEntregue;
-                $tray->clientComments = $request->obs;
+            // *** inserir }elseif na linha abaixo ***.
 
-            }elseif(count($going) != 0){
+            if(count($going) != 0){
                 $diffPlace = 'Nao';
 
                 $id = $order[0]['id'];
 
                 //Encontrando endereço em caso de envio para outro local.
                 $tray = Tray::find($id);
-                $result = strstr($going[0]->address, "Ponto", true);
-                $format = strstr($result, ":");
-                $format = trim($format, ':');
-                $format = trim($format);
-                $thisClientDistrict = $format;
+//                $result = strstr($going[0]->address, "Ponto", true);
+//                $format = strstr($result, ":");
+//                $format = trim($format, ':');
+//                $format = trim($format);
+//                $thisClientDistrict = $format;
+                $thisClientDistrict = $going[0]->district;
+
 
                 $tray->deliverWay = $going[0]->deliverWay;
                 if ($tray->payingMethod == null){
@@ -262,7 +285,6 @@ class OrdersController extends Controller
         setlocale(LC_TIME, 'pt_BR', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
-        //Cadastrando novo pedido.
         $updOrder = Auth::user()->userOrderTray()->get()->toArray();
 
         if ($request->formaPagamento == 'Dinheiro' && $request->valEntregue < $updOrder[0]['totalValue'] && $request->formaRetirada != 'Retirada no restaurante'){

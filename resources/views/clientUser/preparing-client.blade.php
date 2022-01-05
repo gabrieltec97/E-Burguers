@@ -53,7 +53,7 @@
                </div>
 
            @elseif(count($order) > 1)
-               <div class="col-12 col-lg-5 mt-lg-2 mb-2 d-flex justify-content-center">
+               <div class="col-12 col-lg-5 mt-5 mb-2 d-flex justify-content-center">
                    <img src="{{ asset('logo/cook.svg') }}" class="prep-image">
                </div>
 
