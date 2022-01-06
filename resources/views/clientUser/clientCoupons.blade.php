@@ -11,9 +11,10 @@
                 <span class="text-light" style="font-size: 17px">Cupons disponíveis</span>
             </div>
             <div class="card-body">
+                <div class="row">
                 @foreach($coupons as $coupon)
-                    <div class="row">
-                        <div class="col-12">
+
+                        <div class="col-12 mt-3">
                             <div class="row">
                                 <div class="col-2 col-lg-1">
                                     <img src="{{ asset('logo/cupom.png') }}" class="img-cupom">
@@ -27,16 +28,12 @@
                                 </div>
 
                                 <div class="col-4 mb-4">
-                                    <span>Você terá direito a <span class="text-success">{{ $coupon->disccount }}</span> nos pedidos acima de <span class="text-danger">{{ $coupon->disccountRule }}</span> caso não tenha usado este cupom anteriormente.</span>
+                                    <span>Você terá direito a <span class="text-success">{{ $coupon->disccount }}</span> nos pedidos acima de R$ <span class="text-danger">{{ $coupon->disccountRule }}</span> caso não tenha usado este cupom anteriormente.</span>
                                 </div>
-
-                                @if(count($coupons) > 1)
-                                    <hr>
-                                @endif
                             </div>
                         </div>
-                    </div>
                 @endforeach
+                </div>
 
                 @if(count($coupons) == 0)
                     <h3 class="text-center">Poxa, nenhum cupom cadastrado...</h3>

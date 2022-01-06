@@ -13,7 +13,7 @@
                    @if($rated['rated'] == 0)
 
                       <div class="container">
-                          <div class="card">
+                          <div class="card mb-4">
                               <div class="card-header bg-dark">
                                   <span style="color: white; font-size: 17px">Faça uma avaliação sobre nós</span>
                               </div>
@@ -70,7 +70,7 @@
                    @else
 
                        <div class="container div-aval-desktop">
-                           <div class="card">
+                           <div class="card mb-4">
                                <h5 class="card-header bg-dark" style="color: white">Minhas avaliações</h5>
                                <div class="card-body">
                                   <div class="container-fluid">
@@ -166,7 +166,7 @@
            @else
 
                <div class="container div-aval-desktop">
-                   <div class="card">
+                   <div class="card mb-4">
                        <h5 class="card-header bg-dark" style="color: white">Minhas avaliações</h5>
                        <div class="card-body">
                            <div class="container-fluid">
@@ -194,14 +194,14 @@
 
                @if(count($itensToEvaluate ) != 0)
                    <div class="container div-aval-desktop">
-                       <div class="card">
+                       <div class="card mb-4">
                            <h5 class="card-header bg-dark" style="color: white">Itens para você avaliar</h5>
                            <div class="card-body">
                                <div class="container-fluid">
                                    <div class="row">
                                        @foreach($itensToEvaluate as $item)
                                            <div class="col-12 col-lg-3">
-                                               <img src="{{ asset($item[2]) }}" class="img-check img-fluid" style="margin-left: auto; margin-right: auto; border-radius: 5px">
+                                               <img src="{{ asset($item[2]) }}" class="img-check" style="margin-left: auto; margin-right: auto; border-radius: 5px; width: 190px; height: 130px">
                                                <label for="{{ $item[1] }}" class="mt-3">{{ $item[1] }}</label><br>
                                                <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalAvaliacao{{$item[0]}}">Avaliar</button>
                                            </div>
@@ -211,7 +211,7 @@
                                                <div class="modal-dialog modal-dialog-centered" role="document">
                                                    <div class="modal-content">
                                                        <div class="modal-header" style="background-color: #343a40">
-                                                           <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Qual nota você daria para esta pizza?</h5>
+                                                           <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Qual nota você daria para este item?</h5>
                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                <span aria-hidden="true">&times;</span>
                                                            </button>

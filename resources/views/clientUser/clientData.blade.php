@@ -19,7 +19,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-12 mt-4 mt-lg-5 col-sm-12">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header font-weight-bold" style="font-size: 25px; color: white; background-color: #343a40">Meus dados cadastrais</div>
 
                     <div class="card-body">

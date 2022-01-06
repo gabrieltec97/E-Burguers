@@ -1,7 +1,7 @@
 <div>
     <div class="container-fluid mt-5">
         <div class="row">
-            <div class="col-12 mt-lg-5 mt-4">
+            <div class="col-12 mt-lg-5 mt-4 mb-4">
                 <div class="card">
                     <div class="card-header font-weight-bold text-white bg-dark" style="font-size: 25px;">Meus pedidos - {{ count($countOrders) }} {{ count($countOrders) > 1 ? 'pedidos' : 'pedido' }}</div>
 

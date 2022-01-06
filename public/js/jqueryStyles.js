@@ -135,7 +135,6 @@ $(".select-cargo").change(function () {
     $(".user-Phone").mask('(00) 00000-0000');
     $(".userFixedPhone").mask('(00) 0000-0000');
 
-
 //Verificação e inserção de máscara em cadastro de alimentos.
 
 $(".verificaPreco").hide();

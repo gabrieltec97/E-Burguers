@@ -157,7 +157,7 @@
                                         <div class="col-12 mt-2 mt-lg-0 col-lg-6">
                                             <label for="name" class="font-weight-bold">{{ __('Telefone') }}</label>
 
-                                            <input id="phone" type="text" placeholder="(ddd) número" class="form-control w-100 @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" autocomplete="phone" min="9" max="12" autofocus required>
+                                            <input id="phone" type="text" placeholder="(ddd) número" class="userCad-phone form-control w-100 @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" autocomplete="phone" min="9" max="12" autofocus required>
 
                                             @error('phone')
                                             <span class="invalid-feedback" role="alert">
@@ -238,9 +238,30 @@
                                         </div>
 
                                         <div class="col-12 mt-3" style="margin-bottom: -10px">
-                                            <button type="submit" class="btn btn-primary float-right">
+                                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalLogin">
                                                 {{ __('Register') }}
                                             </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-danger">
+                                                <h5 class="modal-title" id="exampleModalLongTitle" style="color: white">Confirme seu cadastro</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 style="margin-bottom: -10px">Ao cadastrar-se, você confirma que preencheu todos os dados corretamente
+                                                    para que a entrega seja feita acertadamente.</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Voltar</button>
+                                                <button type="submit" class="btn btn-success">Registrar-se</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -252,7 +273,15 @@
         </div>
     </main>
 </div>
+
+<script src="{{asset('js/jquery.js')}}"></script>
+<script src="{{asset('js/jqueryStyles.js')}}"></script>
+<script src="{{asset('js/jquery.mask.js')}}"></script>
 </body>
+
+<script>
+    $(".userCad-phone").mask('(00) 000000000');
+</script>
 
 @if(session('msg'))
 

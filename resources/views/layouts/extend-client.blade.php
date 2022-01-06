@@ -17,8 +17,6 @@
     <!-- Styles -->
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{asset('js/jquery-toast-plugin/src/jquery.toast.css')}}" rel="stylesheet">
-    <script src="{{asset('js/jquery-toast-plugin/src/jquery.toast.js')}}"></script>
     <script src="https://kit.fontawesome.com/e656fe6405.js" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -153,7 +151,6 @@
 <script src="{{asset('js/jquery.js')}}"></script>
 <script src="{{asset('js/jqueryStyles.js')}}"></script>
 <script src="{{asset('js/jquery.mask.js')}}"></script>
-<script src="{{asset('js/jquery-toast-plugin/src/jquery.toast.js')}}"></script>
 
 @livewireScripts
 </body>
