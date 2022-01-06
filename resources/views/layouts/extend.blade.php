@@ -25,9 +25,6 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/bs4.pop.css') }}">
-    <link href="{{asset('js/jquery-toast-plugin/src/jquery.toast.css')}}" rel="stylesheet">
-    <script src="{{asset('js/jquery-toast-plugin/src/jquery.toast.js')}}"></script>
 
     <script src="https://kit.fontawesome.com/e656fe6405.js" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
@@ -276,7 +273,6 @@
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('js/bs4.pop.js') }}"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
@@ -290,7 +286,6 @@
 <script src="{{asset('js/sidebar.js')}}"></script>
 <script src="{{asset('js/chart.js/Chart.min.js')}}"></script>
 <script src="{{asset('js/demo/chart-pie-demo.js')}}"></script>
-<script src="{{asset('js/jquery-toast-plugin/src/jquery.toast.js')}}"></script>
 
 @if(isset($chart))
     <script src="https://unpkg.com/vue"></script>
