@@ -77,7 +77,15 @@
             <li class="nav-item" title="Painel com informações resumidas sobre as vendas">
                 <a class="nav-link" href="{{ route('entregas') }}">
                     <img src="{{ asset('logo/scooter.png') }}" style="width: 27px; height: 27px; margin-right: 2px; margin-bottom: 1px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
-                    <span class="font-weight-bold teste-span" style="color: white; font-size: 11px">Entregas</span></a>
+                    <span class="font-weight-bold teste-span" style="color: white; font-size: 11px">Entregas a Fazer</span></a>
+            </li>
+        @endcan
+
+        @can('Entregas')
+            <li class="nav-item" title="Painel com informações resumidas sobre as vendas">
+                <a class="nav-link" href="{{ route('minhasEntregas') }}">
+                    <img src="{{ asset('logo/verifica.png') }}" style="width: 28px; height: 28px; margin-right: 2px; margin-bottom: 2px;cursor: pointer; margin-top: 1px" alt="Pedido entregue">
+                    <span class="font-weight-bold teste-span" style="color: white; font-size: 11px">Entregas Realizadas</span></a>
             </li>
         @endcan
 

@@ -297,4 +297,260 @@ class DeliveryManController extends Controller
 
         return view('User.deliveryManDelivers', compact('delivers', 'countMonth', 'price', 'totalMonth', 'totalToday', 'deliveryMan', 'day', 'thisMonth', 'thisYear'));
     }
+
+    public function myDelivers()
+    {
+      setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+      date_default_timezone_set('America/Sao_Paulo');
+      $thisMonth = strftime('%B');
+      $thisYear = strftime('%Y');
+      $thisDay = strftime('%d');
+
+      $districts = DB::table('delivers')->select('name')->get()->toArray();
+      $total = array();
+
+      foreach ($districts as $district => $value){
+          $count = DB::table('orders')
+             ->select('id')
+             ->where('status', '=', 'Pedido Entregue')
+             ->where('idDeliverMan', '=', Auth::user()->id)
+             ->where('monthDay', '=', $thisDay)
+             ->where('month', '=', $thisMonth)
+             ->where('year', '=', $thisYear)
+             ->where('district', '=', $value->name)
+             ->get()->toArray();
+
+          array_push($total, ['bairro' => $value->name, 'total' => count($count)]);
+      }
+
+        $totalOntem = array();
+        $anoAnterior = $thisYear - 1;
+        $diaAnterior = $thisDay - 1;
+        $result = cal_days_in_month(CAL_GREGORIAN, 2, 2016) === 29;
+
+      if ($thisDay == 01 && $thisMonth == 'janeiro'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 31)
+                  ->where('month', '=', 'dezembro')
+                  ->where('year', '=', $anoAnterior)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'fevereiro'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 31)
+                  ->where('month', '=', 'janeiro')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'março'){
+
+          if ($result == true){
+              foreach ($districts as $district => $value){
+                  $count = DB::table('orders')
+                      ->select('id')
+                      ->where('status', '=', 'Pedido Entregue')
+                      ->where('idDeliverMan', '=', Auth::user()->id)
+                      ->where('monthDay', '=', 29)
+                      ->where('month', '=', 'fevereiro')
+                      ->where('year', '=', $thisYear)
+                      ->where('district', '=', $value->name)
+                      ->get()->toArray();
+
+                  array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+              }
+          }else{
+              foreach ($districts as $district => $value){
+                  $count = DB::table('orders')
+                      ->select('id')
+                      ->where('status', '=', 'Pedido Entregue')
+                      ->where('idDeliverMan', '=', Auth::user()->id)
+                      ->where('monthDay', '=', 28)
+                      ->where('month', '=', 'fevereiro')
+                      ->where('year', '=', $thisYear)
+                      ->where('district', '=', $value->name)
+                      ->get()->toArray();
+
+                  array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+              }
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'abril'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 31)
+                  ->where('month', '=', 'março')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'maio'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 30)
+                  ->where('month', '=', 'abril')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'junho'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 31)
+                  ->where('month', '=', 'maio')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'julho'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 30)
+                  ->where('month', '=', 'junho')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'agosto'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 31)
+                  ->where('month', '=', 'julho')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'setembro'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 31)
+                  ->where('month', '=', 'agosto')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'outubro'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 30)
+                  ->where('month', '=', 'setembro')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'novembro'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 31)
+                  ->where('month', '=', 'outubro')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }elseif($thisDay == 01 && $thisMonth == 'dezembro'){
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', 30)
+                  ->where('month', '=', 'novembro')
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+
+      }else{
+          foreach ($districts as $district => $value){
+              $count = DB::table('orders')
+                  ->select('id')
+                  ->where('status', '=', 'Pedido Entregue')
+                  ->where('idDeliverMan', '=', Auth::user()->id)
+                  ->where('monthDay', '=', $diaAnterior)
+                  ->where('month', '=', $thisMonth)
+                  ->where('year', '=', $thisYear)
+                  ->where('district', '=', $value->name)
+                  ->get()->toArray();
+
+              array_push($totalOntem, ['bairro' => $value->name, 'total' => count($count)]);
+          }
+      }
+
+      $countTotal = 0;
+      foreach ($total as $t => $v){
+          $countTotal += $v['total'];
+      }
+
+      $countOntem = 0;
+      foreach ($totalOntem as $t => $v){
+          $countOntem += $v['total'];
+      }
+      
+      return view('Deliver.mySending', compact('total', 'totalOntem', 'countTotal', 'countOntem'));
+    }
 }

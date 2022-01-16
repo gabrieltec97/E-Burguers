@@ -164,6 +164,8 @@ Route::get('/delivery', 'deliverController@deliveryStatus')->name('delivery')->m
 
 Route::get('/entregas', 'DeliveryManController@orders')->name('entregas')->middleware('auth');
 
+Route::get('/minhas-entregas', 'DeliveryManController@myDelivers')->name('minhasEntregas')->middleware('auth');
+
 Route::post('/changeDeliveryStatus', 'deliverController@changeStatus')->name('changeDeliveryStatus')->middleware('auth');
 
 Route::post('/editDeliveryStatus', 'deliverController@editStatus')->name('editDeliveryStatus')->middleware('auth');
