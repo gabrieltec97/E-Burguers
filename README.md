@@ -2,7 +2,7 @@
 
 ## 📘 Descrição
 
-O E-Burguers foi meu primeiro grande projeto onde fiz um clone das funcionalidades de um sistema de delivery que opera na cidade onde eu residia.
+O E-Burguers foi meu primeiro grande projeto desenvolvido em 2020/21 onde fiz um clone das funcionalidades de um sistema de delivery que opera na cidade onde eu residia. Ainda estava começando minha carreira de desenvolvedor fullstack e então decidi me desafiar a fazer este projeto para testar minha capacidade lógica e de resolução de problemas.
 
 ## 🚀 Tecnologias Utilizadas no projeto
 
@@ -23,35 +23,42 @@ Back-end:
 
 ## ✨ Principais Funcionalidades
 
-- Autenticação de usuários
 - Validação de formulários
-- Busca em tempo real de entregas via Id ou nome do cliente
-- Gerenciamento de entregas
-- Dashboard com comparativo mensal de entregas
-- Filtragem de entregas por mês
-- Informações de unidades com mais entregas
+- Dashboard com comparativo de vendas ao longo dos meses
+- Filtragem de vendas por mês
+- Informações de itens mais vendidos
+- Busca em tempo real de pedidos via Id ou nome do cliente
+- Gerenciamento de pedidos em tempo real
 - Controle de permissões (ACL)
+- Comparativo de venda de hoje com as vendas de ontem
+- Escolha de quais adicionais podem ser postos em quais produtos
+- Aplicação de cupons
+- Ativação/Desativação do delivery
+- Escolha de motoboy para realizar cada entrega
+- Escolha de pedido simples ou combo
 
 Gerenciamento total (CRUD) de:
 
 - Entregas
-- Unidades
+- Bairros
 - Usuários
+- Itens do cardápio
 
 ## 👥 Perfis de Acesso
 Administrador: Acesso total ao sistema, com gerenciamento de usuários, unidades e entregas.
 
 Operador: Gerenciamento total de entregas.
-## 🌐 O projeto está online!
 
-Acesse em: (https://e-locker.online)
+Cozinheiro: Acesso aos pedidos e alteração do status de preparo.
+
+Motoboy: Acesso aos dados do pedido e alteração do status para pedido entregue.
 
 ## 🛠️ Como rodar o projeto
 
 1. Tenha em sua máquina um ambiente que faça a emulação de um servidor, como Xampp ou Docker instalado e parametrizado.
 2. Clone o repositório:
 ```bash
-git clone https://github.com/gabrieltec97/E-Locker.git
+git clone https://github.com/gabrieltec97/E-burguers.git
 ```
 3. Copie o arquivo .env.example para .env
 4. Instale as dependências com o Composer:
